@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>互联网企业数字正念疗愈方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --teal: #5BA89C; --teal-light: #D4EDE8;
+    --coral: #D97A6A; --coral-light: #F5D9D3;
+    --lavender: #967BA5; --lavender-light: #EDE0F3;
+    --amber: #B89840; --amber-light: #F5EDCF;
+    --blue: #5A8FB5; --blue-light: #D6E6F2;
+    --mint: #6BB898; --mint-light: #D9F0E4;
+    --rose: #C47888; --rose-light: #F2DDE2;
+    --warm: #C47860; --warm-light: #F5DDD3;
+    --peach: #F5E0D0; --cream: #F5F0E1; --cream-pale: #FAF8F2;
+    --gold: #C9A84C; --gold-light: #FBF4D6;
+    --deep: #3A3448; --soft: #5A5466; --surface: #F0ECE4;
+    --olive: #7B8A5B; --olive-light: #E2E8D6;
+    --sky: #6AA5C6; --sky-light: #DCEEF8;
+    --plum: #8A6B9A; --plum-light: #E8D8F0;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: var(--cream-pale); color: var(--deep); overflow-x: hidden; line-height: 1.8; }
+
+  /* ===== Progress Bar ===== */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 1000; background: linear-gradient(90deg, var(--teal), var(--lavender), var(--coral), var(--amber)); width: 0%; transition: width 0.1s linear; }
+
+  /* ===== Nav Dots ===== */
+  .nav-dots { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column; gap: 10px; }
+  .nav-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(0,0,0,0.12); cursor: pointer; transition: all 0.4s cubic-bezier(0.4,0,0.2,1); position: relative; }
+  .nav-dot.active { background: var(--teal); transform: scale(1.5); box-shadow: 0 0 10px rgba(91,168,156,0.5); }
+  .nav-dot:hover { transform: scale(1.3); }
+  .nav-dot .tooltip { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: var(--deep); color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-dot:hover .tooltip { opacity: 1; }
+
+  /* ===== Hero ===== */
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(160deg, var(--teal-light) 0%, var(--cream) 30%, var(--lavender-light) 65%, var(--peach) 100%); }
+  .hero-bg-shapes { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .hero-shape { position: absolute; border-radius: 50%; opacity: 0.12; }
+  .hero-shape:nth-child(1) { width: 420px; height: 420px; background: var(--teal); top: -120px; right: -100px; animation: floatShape 9s ease-in-out infinite; }
+  .hero-shape:nth-child(2) { width: 320px; height: 320px; background: var(--lavender); bottom: -80px; left: -80px; animation: floatShape 11s ease-in-out infinite reverse; }
+  .hero-shape:nth-child(3) { width: 220px; height: 220px; background: var(--blue); top: 25%; left: 8%; animation: floatShape 13s ease-in-out infinite; }
+  .hero-shape:nth-child(4) { width: 160px; height: 160px; background: var(--amber); bottom: 20%; right: 15%; animation: floatShape 10s ease-in-out infinite reverse; }
+  @keyframes floatShape { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-20px) scale(1.05); } }
+
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 860px; padding: 40px 24px; }
+  .hero-badge { display: inline-block; padding: 6px 20px; background: rgba(91,168,156,0.15); border-radius: 20px; font-size: 13px; color: var(--teal); font-weight: 500; letter-spacing: 2px; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+  .hero-title { font-family: 'Noto Serif SC', serif; font-size: clamp(28px,4.5vw,48px); font-weight: 700; line-height: 1.35; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  .hero-title .accent { color: var(--teal); }
+  .hero-title .accent2 { color: var(--lavender); }
+  .hero-subtitle { font-size: clamp(14px,2vw,17px); color: var(--soft); font-weight: 300; margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-meta { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+  .hero-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--soft); }
+  .hero-meta-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+  .hero-meta-icon.teal { background: rgba(91,168,156,0.15); }
+  .hero-meta-icon.lavender { background: rgba(150,123,165,0.12); }
+  .hero-meta-icon.coral { background: rgba(217,122,106,0.12); }
+  .hero-meta-icon.amber { background: rgba(184,152,64,0.15); }
+  .hero-illustration { margin-top: 36px; opacity: 0; animation: fadeUp 1s 1s forwards; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .hero-illustration svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 16px 48px rgba(0,0,0,0.06)); }
+  .scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; animation: fadeUp 0.8s 1.4s forwards; }
+  .scroll-hint span { font-size: 11px; color: var(--soft); letter-spacing: 1px; }
+  .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); animation: scrollBounce 2s ease-in-out infinite; }
+  @keyframes scrollBounce { 0%,100% { transform: rotate(45deg) translate(0,0); opacity: 0.4; } 50% { transform: rotate(45deg) translate(4px,4px); opacity: 1; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-badge,.hero-title,.hero-subtitle,.hero-meta,.hero-illustration { transform: translateY(20px); }
+
+  /* ===== Module Sections ===== */
+  .module-section { padding: 80px 24px; position: relative; }
+  .module-section:nth-child(odd) { background: var(--cream-pale); }
+  .module-section:nth-child(even) { background: var(--surface); }
+  .module-container { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .module-section.reverse .module-container { direction: rtl; }
+  .module-section.reverse .module-container > * { direction: ltr; }
+
+  .module-text { display: flex; flex-direction: column; gap: 6px; }
+  .module-number { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .module-num-badge { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 700; color: #fff; }
+  .module-num-badge.m1 { background: linear-gradient(135deg, #5BA89C, #8CC8BE); }
+  .module-num-badge.m2 { background: linear-gradient(135deg, #967BA5, #BFA8CC); }
+  .module-num-badge.m3 { background: linear-gradient(135deg, #C47860, #D9A08A); }
+  .module-num-badge.m4 { background: linear-gradient(135deg, #5A8FB5, #8CB5D0); }
+  .module-num-badge.m5 { background: linear-gradient(135deg, #B89840, #D4BC6A); }
+  .module-num-badge.m6 { background: linear-gradient(135deg, #C47888, #D9A0AC); }
+  .module-label { font-size: 13px; letter-spacing: 2px; color: var(--soft); font-weight: 500; }
+
+  .module-title { font-family: 'Noto Serif SC', serif; font-size: clamp(22px,3.2vw,34px); font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+  .module-subtitle { font-size: 14px; font-weight: 500; margin-bottom: 14px; }
+  .module-subtitle.c1 { color: var(--teal); }
+  .module-subtitle.c2 { color: var(--lavender); }
+  .module-subtitle.c3 { color: var(--warm); }
+  .module-subtitle.c4 { color: var(--blue); }
+  .module-subtitle.c5 { color: var(--amber); }
+  .module-subtitle.c6 { color: var(--rose); }
+  .module-desc { font-size: 15px; color: var(--soft); line-height: 1.9; margin-bottom: 16px; }
+
+  .module-details { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .detail-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--soft); }
+  .detail-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+  .detail-icon.c1 { background: rgba(91,168,156,0.12); }
+  .detail-icon.c2 { background: rgba(150,123,165,0.12); }
+  .detail-icon.c3 { background: rgba(196,120,96,0.12); }
+  .detail-icon.c4 { background: rgba(90,143,181,0.12); }
+  .detail-icon.c5 { background: rgba(184,152,64,0.12); }
+  .detail-icon.c6 { background: rgba(196,120,136,0.12); }
+
+  .module-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .tag { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+  .tag.c1 { background: rgba(91,168,156,0.08); color: var(--teal); }
+  .tag.c2 { background: rgba(150,123,165,0.08); color: var(--lavender); }
+  .tag.c3 { background: rgba(196,120,96,0.08); color: var(--warm); }
+  .tag.c4 { background: rgba(90,143,181,0.08); color: var(--blue); }
+  .tag.c5 { background: rgba(184,152,64,0.08); color: var(--amber); }
+  .tag.c6 { background: rgba(196,120,136,0.08); color: var(--rose); }
+
+  .module-target { padding: 14px 18px; border-radius: 12px; font-size: 13px; color: var(--soft); line-height: 1.7; }
+  .module-target.c1 { background: rgba(91,168,156,0.06); border-left: 3px solid var(--teal); }
+  .module-target.c2 { background: rgba(150,123,165,0.06); border-left: 3px solid var(--lavender); }
+  .module-target.c3 { background: rgba(196,120,96,0.06); border-left: 3px solid var(--warm); }
+  .module-target.c4 { background: rgba(90,143,181,0.06); border-left: 3px solid var(--blue); }
+  .module-target.c5 { background: rgba(184,152,64,0.06); border-left: 3px solid var(--amber); }
+  .module-target.c6 { background: rgba(196,120,136,0.06); border-left: 3px solid var(--rose); }
+  .target-label { font-weight: 600; font-size: 12px; letter-spacing: 1px; margin-bottom: 4px; display: block; }
+
+  .module-visual { position: relative; }
+  .module-visual svg { width: 100%; height: auto; display: block; border-radius: 20px; filter: drop-shadow(0 12px 40px rgba(0,0,0,0.06)); }
+  .module-decoration { position: absolute; width: 80px; height: 80px; border-radius: 50%; opacity: 0.1; z-index: -1; }
+  .module-decoration.c1 { background: var(--teal); top: -20px; right: -20px; }
+  .module-decoration.c2 { background: var(--lavender); bottom: -20px; left: -20px; }
+  .module-decoration.c3 { background: var(--warm); top: -20px; left: -20px; }
+  .module-decoration.c4 { background: var(--blue); bottom: -20px; right: -20px; }
+  .module-decoration.c5 { background: var(--amber); top: -20px; right: -20px; }
+  .module-decoration.c6 { background: var(--rose); bottom: -20px; left: -20px; }
+
+  /* ===== Section Headers ===== */
+  .section-header { text-align: center; margin-bottom: 56px; }
+  .section-tag { display: inline-block; padding: 5px 16px; border-radius: 16px; font-size: 12px; letter-spacing: 2px; font-weight: 500; margin-bottom: 16px; }
+  .section-tag.s1 { background: rgba(91,168,156,0.12); color: var(--teal); }
+  .section-tag.s2 { background: rgba(150,123,165,0.12); color: var(--lavender); }
+  .section-tag.s3 { background: rgba(196,120,96,0.12); color: var(--warm); }
+  .section-tag.s4 { background: rgba(90,143,181,0.12); color: var(--blue); }
+  .section-tag.s5 { background: rgba(184,152,64,0.12); color: var(--amber); }
+  .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(26px,4vw,40px); font-weight: 700; margin-bottom: 12px; }
+  .section-subtitle { font-size: 15px; color: var(--soft); max-width: 600px; margin: 0 auto; }
+
+  /* ===== Grid Sections ===== */
+  .grid-section { padding: 100px 24px; }
+  .grid-section:nth-child(odd) { background: var(--cream-pale); }
+  .grid-section:nth-child(even) { background: var(--surface); }
+  .grid-container { max-width: 1100px; margin: 0 auto; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; margin-bottom: 40px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-bottom: 40px; }
+  .grid-card { padding: 28px; border-radius: 16px; background: var(--cream-pale); border: 1px solid rgba(155,143,168,0.06); transition: transform 0.3s, box-shadow 0.3s; }
+  .grid-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.06); }
+  .grid-card.surface { background: var(--surface); }
+  .grid-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; margin-bottom: 14px; }
+  .grid-card-icon.c1 { background: rgba(91,168,156,0.1); }
+  .grid-card-icon.c2 { background: rgba(196,120,96,0.1); }
+  .grid-card-icon.c3 { background: rgba(150,123,165,0.1); }
+  .grid-card-icon.c4 { background: rgba(184,152,64,0.15); }
+  .grid-card-icon.c5 { background: rgba(90,143,181,0.1); }
+  .grid-card-icon.c6 { background: rgba(196,120,136,0.1); }
+  .grid-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .grid-card p { font-size: 14px; color: var(--soft); line-height: 1.7; }
+
+  .grid-illustration { max-width: 700px; margin: 0 auto; border-radius: 20px; overflow: hidden; }
+  .grid-illustration svg { width: 100%; height: auto; display: block; }
+
+  /* ===== SDGs Section ===== */
+  .sdgs-section { padding: 100px 24px; background: linear-gradient(180deg, var(--surface), var(--cream-pale)); }
+  .sdgs-container { max-width: 1100px; margin: 0 auto; }
+  .sdgs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-bottom: 50px; }
+  .sdg-card { padding: 28px; border-radius: 16px; text-align: center; position: relative; overflow: hidden; transition: transform 0.3s; }
+  .sdg-card:hover { transform: translateY(-4px); }
+  .sdg-card:nth-child(1) { background: linear-gradient(135deg, rgba(91,168,156,0.08), rgba(91,168,156,0.02)); border: 1px solid rgba(91,168,156,0.1); }
+  .sdg-card:nth-child(2) { background: linear-gradient(135deg, rgba(90,143,181,0.08), rgba(90,143,181,0.02)); border: 1px solid rgba(90,143,181,0.1); }
+  .sdg-card:nth-child(3) { background: linear-gradient(135deg, rgba(184,152,64,0.1), rgba(184,152,64,0.02)); border: 1px solid rgba(184,152,64,0.12); }
+  .sdg-num { font-family: 'Noto Serif SC', serif; font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+  .sdg-card:nth-child(1) .sdg-num { color: var(--teal); }
+  .sdg-card:nth-child(2) .sdg-num { color: var(--blue); }
+  .sdg-card:nth-child(3) .sdg-num { color: var(--amber); }
+  .sdg-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .sdg-desc { font-size: 13px; color: var(--soft); line-height: 1.7; }
+
+  .esg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  .esg-card { padding: 28px; border-radius: 16px; transition: transform 0.3s; }
+  .esg-card:hover { transform: translateY(-4px); }
+  .esg-card:nth-child(1) { background: linear-gradient(135deg, rgba(150,123,165,0.08), rgba(150,123,165,0.02)); border: 1px solid rgba(150,123,165,0.1); }
+  .esg-card:nth-child(2) { background: linear-gradient(135deg, rgba(196,120,96,0.08), rgba(196,120,96,0.02)); border: 1px solid rgba(196,120,96,0.1); }
+  .esg-label { font-size: 13px; font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; }
+  .esg-card:nth-child(1) .esg-label { color: var(--lavender); }
+  .esg-card:nth-child(2) .esg-label { color: var(--warm); }
+  .esg-desc { font-size: 14px; color: var(--soft); line-height: 1.7; }
+
+  /* ===== Footer ===== */
+  .footer { padding: 60px 24px; text-align: center; background: linear-gradient(180deg, var(--surface), var(--cream-pale)); }
+  .footer-title { font-family: 'Noto Serif SC', serif; font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+  .footer-text { font-size: 14px; color: var(--soft); max-width: 500px; margin: 0 auto; }
+  .footer-hearts { margin-top: 24px; font-size: 24px; letter-spacing: 8px; opacity: 0.3; }
+
+  /* ===== Scroll Animations ===== */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+  .stagger > * { transition-delay: calc(var(--i,0) * 0.12s); }
+
+  /* ===== SVG Animations ===== */
+  .svg-float { animation: svgFloat 4s ease-in-out infinite; }
+  .svg-float-d { animation: svgFloat 4s ease-in-out 1s infinite; }
+  .svg-float-d2 { animation: svgFloat 4s ease-in-out 2s infinite; }
+  .svg-float-d3 { animation: svgFloat 4s ease-in-out 3s infinite; }
+  .svg-pulse { animation: svgPulse 3s ease-in-out infinite; }
+  .svg-breathe { animation: svgBreathe 5s ease-in-out infinite; }
+  .svg-rotate { animation: svgRotate 12s linear infinite; }
+  .svg-sway { animation: svgSway 6s ease-in-out infinite; }
+  .svg-glow { animation: svgGlow 4s ease-in-out infinite; }
+  .svg-draw { stroke-dasharray: 600; stroke-dashoffset: 600; animation: svgDraw 3s ease forwards; }
+  .svg-draw-slow { stroke-dasharray: 800; stroke-dashoffset: 800; animation: svgDraw 4s ease forwards; }
+  .svg-fade-in { opacity: 0; animation: svgFadeIn 1.2s ease forwards; }
+  .svg-fade-in-d { opacity: 0; animation: svgFadeIn 1.2s 0.4s ease forwards; }
+  .svg-fade-in-d2 { opacity: 0; animation: svgFadeIn 1.2s 0.8s ease forwards; }
+  .svg-fade-in-d3 { opacity: 0; animation: svgFadeIn 1.2s 1.2s ease forwards; }
+  .svg-fade-in-d4 { opacity: 0; animation: svgFadeIn 1.2s 1.6s ease forwards; }
+  .svg-fade-in-d5 { opacity: 0; animation: svgFadeIn 1.2s 2s ease forwards; }
+  .svg-scale-in { transform: scale(0); opacity: 0; animation: svgScaleIn 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .svg-ripple { transform: scale(0); opacity: 0; animation: svgRipple 2.5s ease-out forwards; }
+  .svg-ring { transform: scale(0); opacity: 0; animation: svgRing 3s ease-out infinite; }
+  .svg-ring-d { animation: svgRing 3s ease-out 1s infinite; }
+  .svg-ring-d2 { animation: svgRing 3s ease-out 2s infinite; }
+  .svg-shimmer { opacity: 0; animation: svgShimmer 3s ease-in-out infinite; }
+  .svg-rise { opacity: 0; transform: translateY(20px); animation: svgRise 1.5s ease forwards; }
+  .svg-slide-l { opacity: 0; transform: translateX(-30px); animation: svgSlideL 1s ease forwards; }
+  .svg-slide-r { opacity: 0; transform: translateX(30px); animation: svgSlideR 1s ease forwards; }
+  .svg-drop { opacity: 0; transform: translateY(-20px); animation: svgDrop 2.5s ease infinite; }
+  .svg-drop-d { animation: svgDrop 2.5s ease 0.8s infinite; }
+  .svg-drop-d2 { animation: svgDrop 2.5s ease 1.6s infinite; }
+  .svg-wave { animation: svgWave 3s ease-in-out infinite; }
+  .svg-spin-slow { animation: svgRotate 20s linear infinite; }
+  .svg-grow { transform: scaleY(0); transform-origin: bottom; animation: svgGrow 2s ease forwards; }
+  .svg-grow-d { animation: svgGrow 2s ease 0.3s forwards; }
+  .svg-grow-d2 { animation: svgGrow 2s ease 0.6s forwards; }
+  .svg-morph { animation: svgMorph 4s ease-in-out infinite; }
+
+  @keyframes svgFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes svgPulse { 0%,100% { transform: scale(1); opacity: 0.55; } 50% { transform: scale(1.15); opacity: 1; } }
+  @keyframes svgBreathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  @keyframes svgRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes svgSway { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  @keyframes svgGlow { 0%,100% { opacity: 0.1; } 50% { opacity: 0.28; } }
+  @keyframes svgDraw { to { stroke-dashoffset: 0; } }
+  @keyframes svgFadeIn { to { opacity: 1; } }
+  @keyframes svgScaleIn { to { transform: scale(1); opacity: 1; } }
+  @keyframes svgRipple { 0% { transform: scale(0); opacity: 0.5; } 100% { transform: scale(2.5); opacity: 0; } }
+  @keyframes svgRing { 0% { transform: scale(0.3); opacity: 0.6; } 100% { transform: scale(2.2); opacity: 0; } }
+  @keyframes svgShimmer { 0%,100% { opacity: 0; } 50% { opacity: 0.7; } }
+  @keyframes svgRise { to { opacity: 1; transform: translateY(0); } }
+  @keyframes svgSlideL { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgSlideR { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgDrop { 0% { opacity: 0; transform: translateY(-20px); } 15% { opacity: 0.8; } 60% { opacity: 0.5; transform: translateY(30px); } 80% { opacity: 0; transform: translateY(40px); } 100% { opacity: 0; transform: translateY(40px); } }
+  @keyframes svgWave { 0%,100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+  @keyframes svgGrow { to { transform: scaleY(1); } }
+  @keyframes svgMorph { 0%,100% { rx: 20; } 50% { rx: 30; } }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .module-container { grid-template-columns: 1fr; gap: 30px; }
+    .module-section.reverse .module-container { direction: ltr; }
+    .module-section { padding: 60px 20px; }
+    .grid-2, .grid-3, .sdgs-grid, .esg-row { grid-template-columns: 1fr; }
+    .nav-dots { right: 12px; gap: 8px; }
+    .nav-dot { width: 7px; height: 7px; }
+    .nav-dot .tooltip { display: none; }
+    .hero-meta { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="app-core"><span class="tooltip">APP核心功能</span></div>
+  <div class="nav-dot" data-target="app-game"><span class="tooltip">游戏化设计</span></div>
+  <div class="nav-dot" data-target="room-space"><span class="tooltip">冥想室空间</span></div>
+  <div class="nav-dot" data-target="room-rules"><span class="tooltip">使用规则</span></div>
+  <div class="nav-dot" data-target="hybrid-journey"><span class="tooltip">用户旅程</span></div>
+  <div class="nav-dot" data-target="hybrid-link"><span class="tooltip">线上线下联动</span></div>
+  <div class="nav-dot" data-target="data-protect"><span class="tooltip">数据保护</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs & ESG</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">互联网企业 · 数字正念疗愈方案</div>
+    <h1 class="hero-title">
+      用<span class="accent">数字科技</span>守护心灵<br>用<span class="accent2">正念关怀</span>赋能组织
+    </h1>
+    <p class="hero-subtitle">融合数字疗愈APP与线下冥想室的混合式心理健康干预方案，为互联网行业员工打造全方位的正念疗愈生态</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon teal">📱</div>
+        <span>数字疗愈APP</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon lavender">🧘</div>
+        <span>线下冥想室</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon coral">🔄</div>
+        <span>混合模式整合</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon amber">💚</div>
+        <span>SDGs & ESG</span>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <!-- Hero SVG: Digital mindfulness ecosystem -->
+      <svg viewBox="0 0 680 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="360" rx="20" fill="#FAF8F2"/>
+        <!-- Office building silhouette -->
+        <g opacity="0.06">
+          <rect x="20" y="180" width="50" height="140" rx="4" fill="#3A3448"/>
+          <rect x="80" y="150" width="40" height="170" rx="4" fill="#3A3448"/>
+          <rect x="130" y="200" width="55" height="120" rx="4" fill="#3A3448"/>
+          <rect x="500" y="160" width="45" height="160" rx="4" fill="#3A3448"/>
+          <rect x="555" y="190" width="50" height="130" rx="4" fill="#3A3448"/>
+          <rect x="615" y="170" width="45" height="150" rx="4" fill="#3A3448"/>
+        </g>
+        <!-- Central phone with mindfulness aura -->
+        <g class="svg-breathe">
+          <rect x="290" y="100" width="100" height="180" rx="16" fill="#fff" stroke="#D4EDE8" stroke-width="2"/>
+          <rect x="300" y="120" width="80" height="130" rx="8" fill="#D4EDE8" opacity="0.3"/>
+          <!-- Screen content: meditation circle -->
+          <circle cx="340" cy="175" r="30" stroke="#5BA89C" stroke-width="2" fill="none" opacity="0.5" class="svg-pulse"/>
+          <circle cx="340" cy="175" r="18" stroke="#5BA89C" stroke-width="1.5" fill="none" opacity="0.3" class="svg-pulse"/>
+          <circle cx="340" cy="175" r="6" fill="#5BA89C" opacity="0.4"/>
+          <!-- Screen icons row -->
+          <circle cx="315" cy="225" r="8" fill="#F5D9D3" opacity="0.6"/>
+          <circle cx="340" cy="225" r="8" fill="#D6E6F2" opacity="0.6"/>
+          <circle cx="365" cy="225" r="8" fill="#EDE0F3" opacity="0.6"/>
+          <!-- Home button -->
+          <circle cx="340" cy="265" r="5" stroke="#ccc" stroke-width="1" fill="none"/>
+        </g>
+        <!-- Aura rings around phone -->
+        <circle cx="340" cy="190" r="70" stroke="#5BA89C" stroke-width="1" fill="none" opacity="0.15" class="svg-ring"/>
+        <circle cx="340" cy="190" r="70" stroke="#967BA5" stroke-width="1" fill="none" opacity="0.15" class="svg-ring-d"/>
+        <circle cx="340" cy="190" r="70" stroke="#D97A6A" stroke-width="1" fill="none" opacity="0.15" class="svg-ring-d2"/>
+        <!-- Floating elements -->
+        <g class="svg-float">
+          <circle cx="180" cy="120" r="20" fill="#D4EDE8" opacity="0.6"/>
+          <text x="180" y="126" text-anchor="middle" font-size="18">🧘</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="500" cy="110" r="18" fill="#EDE0F3" opacity="0.6"/>
+          <text x="500" y="116" text-anchor="middle" font-size="16">😴</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="160" cy="240" r="16" fill="#F5D9D3" opacity="0.6"/>
+          <text x="160" y="246" text-anchor="middle" font-size="14">📊</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="520" cy="250" r="16" fill="#F5EDCF" opacity="0.6"/>
+          <text x="520" y="256" text-anchor="middle" font-size="14">🏆</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="220" cy="300" r="14" fill="#D6E6F2" opacity="0.5"/>
+          <text x="220" y="306" text-anchor="middle" font-size="12">💬</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="460" cy="310" r="14" fill="#D9F0E4" opacity="0.5"/>
+          <text x="460" y="316" text-anchor="middle" font-size="12">🌿</text>
+        </g>
+        <!-- Sparkle dots -->
+        <circle cx="250" cy="80" r="3" fill="#5BA89C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="430" cy="70" r="2.5" fill="#967BA5" opacity="0.3" class="svg-pulse"/>
+        <circle cx="560" cy="170" r="2" fill="#D97A6A" opacity="0.3" class="svg-pulse"/>
+        <circle cx="120" cy="180" r="2" fill="#B89840" opacity="0.3" class="svg-pulse"/>
+        <!-- Ground -->
+        <ellipse cx="340" cy="340" rx="280" ry="16" fill="#E8E3EE" opacity="0.2"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滚动探索</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== MODULE 1: APP Core Features ===== -->
+<section class="module-section" id="app-core">
+  <div class="module-container">
+    <div class="module-text reveal-left">
+      <div class="module-number">
+        <div class="module-num-badge m1">1</div>
+        <span class="module-label">模块一 · 核心功能</span>
+      </div>
+      <h2 class="module-title">数字疗愈APP</h2>
+      <div class="module-subtitle c1">六大核心功能模块</div>
+      <p class="module-desc">
+        基于数字疗法理念，打造集正念课程、情绪追踪、压力管理、睡眠改善、AI推荐与社区互动于一体的综合心理健康平台。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon c1">🧘</div>
+          <span><strong>正念课程库：</strong>5-30分钟不同时长，涵盖呼吸冥想、身体扫描、慈心冥想、睡眠冥想</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c1">😊</div>
+          <span><strong>情绪追踪：</strong>每日情绪打卡（表情+描述），自动生成情绪趋势图</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c1">💨</div>
+          <span><strong>压力管理工具箱：</strong>呼吸练习动画引导、渐进式肌肉放松、认知重构卡片</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c1">🌙</div>
+          <span><strong>睡眠改善模块：</strong>睡前冥想、白噪音/自然音效、睡眠日记</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c1">🤖</div>
+          <span><strong>个性化推荐：</strong>AI算法基于使用数据与情绪追踪推荐课程</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c1">💬</div>
+          <span><strong>社区互动：</strong>匿名"正念打卡墙"，员工自愿分享正念体验</span>
+        </div>
+      </div>
+    </div>
+    <div class="module-visual reveal-right">
+      <div class="module-decoration c1"></div>
+      <!-- APP Core Features SVG -->
+      <svg viewBox="0 0 440 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="480" rx="20" fill="#FAF8F2"/>
+        <!-- Phone frame -->
+        <rect x="140" y="30" width="160" height="300" rx="18" fill="#fff" stroke="#D4EDE8" stroke-width="2.5"/>
+        <rect x="152" y="55" width="136" height="245" rx="8" fill="#F0FAF8"/>
+        <!-- Status bar -->
+        <rect x="152" y="55" width="136" height="24" rx="8" fill="#5BA89C" opacity="0.15"/>
+        <text x="220" y="71" text-anchor="middle" font-size="10" fill="#5BA89C" font-weight="500">正念疗愈</text>
+        <!-- Course cards -->
+        <g class="svg-float">
+          <rect x="160" y="88" width="120" height="36" rx="8" fill="#D4EDE8" opacity="0.7"/>
+          <text x="172" y="104" font-size="9" fill="#3A3448" font-weight="500">🧘 呼吸冥想</text>
+          <text x="172" y="116" font-size="8" fill="#5A5466">5-15分钟</text>
+          <circle cx="268" cy="106" r="8" fill="#5BA89C" opacity="0.3"/>
+          <text x="268" y="110" text-anchor="middle" font-size="8">▶</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="160" y="130" width="120" height="36" rx="8" fill="#EDE0F3" opacity="0.5"/>
+          <text x="172" y="146" font-size="9" fill="#3A3448" font-weight="500">🌙 睡眠冥想</text>
+          <text x="172" y="158" font-size="8" fill="#5A5466">15-30分钟</text>
+          <circle cx="268" cy="148" r="8" fill="#967BA5" opacity="0.3"/>
+          <text x="268" y="152" text-anchor="middle" font-size="8">▶</text>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="160" y="172" width="120" height="36" rx="8" fill="#F5D9D3" opacity="0.5"/>
+          <text x="172" y="188" font-size="9" fill="#3A3448" font-weight="500">💪 身体扫描</text>
+          <text x="172" y="200" font-size="8" fill="#5A5466">20-30分钟</text>
+          <circle cx="268" cy="190" r="8" fill="#D97A6A" opacity="0.3"/>
+          <text x="268" y="194" text-anchor="middle" font-size="8">▶</text>
+        </g>
+        <!-- Emotion tracker -->
+        <rect x="160" y="218" width="120" height="40" rx="8" fill="#F5EDCF" opacity="0.5"/>
+        <text x="172" y="234" font-size="9" fill="#3A3448" font-weight="500">😊 今日情绪</text>
+        <g transform="translate(170, 242)">
+          <circle cx="0" cy="0" r="5" fill="#F5D9D3"/>
+          <circle cx="14" cy="0" r="5" fill="#D4EDE8"/>
+          <circle cx="28" cy="0" r="5" fill="#F5EDCF"/>
+          <circle cx="42" cy="0" r="5" fill="#EDE0F3"/>
+          <circle cx="56" cy="0" r="5" fill="#D6E6F2"/>
+        </g>
+        <!-- Bottom nav -->
+        <rect x="152" y="276" width="136" height="24" rx="8" fill="#fff" stroke="#eee" stroke-width="1"/>
+        <text x="178" y="292" text-anchor="middle" font-size="10">🏠</text>
+        <text x="206" y="292" text-anchor="middle" font-size="10">📊</text>
+        <text x="234" y="292" text-anchor="middle" font-size="10">🧘</text>
+        <text x="262" y="292" text-anchor="middle" font-size="10">👤</text>
+        <!-- Floating feature bubbles around phone -->
+        <g class="svg-float">
+          <rect x="20" y="60" width="100" height="44" rx="22" fill="#D4EDE8" opacity="0.7"/>
+          <text x="70" y="78" text-anchor="middle" font-size="10" fill="#3A3448" font-weight="500">🤖 AI推荐</text>
+          <text x="70" y="93" text-anchor="middle" font-size="8" fill="#5A5466">个性化课程</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="320" y="80" width="100" height="44" rx="22" fill="#EDE0F3" opacity="0.7"/>
+          <text x="370" y="98" text-anchor="middle" font-size="10" fill="#3A3448" font-weight="500">💨 压力工具箱</text>
+          <text x="370" y="113" text-anchor="middle" font-size="8" fill="#5A5466">即时减压</text>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="20" y="200" width="100" height="44" rx="22" fill="#F5D9D3" opacity="0.7"/>
+          <text x="70" y="218" text-anchor="middle" font-size="10" fill="#3A3448" font-weight="500">💬 匿名社区</text>
+          <text x="70" y="233" text-anchor="middle" font-size="8" fill="#5A5466">正念打卡墙</text>
+        </g>
+        <g class="svg-float-d3">
+          <rect x="320" y="220" width="100" height="44" rx="22" fill="#F5EDCF" opacity="0.7"/>
+          <text x="370" y="238" text-anchor="middle" font-size="10" fill="#3A3448" font-weight="500">🌙 睡眠改善</text>
+          <text x="370" y="253" text-anchor="middle" font-size="8" fill="#5A5466">白噪音·冥想</text>
+        </g>
+        <!-- Connecting lines -->
+        <line x1="120" y1="82" x2="140" y2="110" stroke="#5BA89C" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+        <line x1="320" y1="102" x2="300" y2="120" stroke="#967BA5" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+        <line x1="120" y1="222" x2="140" y2="200" stroke="#D97A6A" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+        <line x1="320" y1="242" x2="300" y2="210" stroke="#B89840" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+        <!-- Bottom label -->
+        <text x="220" y="360" text-anchor="middle" font-size="12" fill="#5A5466" font-weight="500">六大核心功能 · 一站式正念平台</text>
+        <!-- Emotion trend mini chart -->
+        <g class="svg-float" opacity="0.5">
+          <polyline points="160,420 190,410 220,415 250,400 280,405 310,390 340,395" stroke="#5BA89C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="340" cy="395" r="3" fill="#5BA89C" class="svg-pulse"/>
+          <text x="250" y="445" text-anchor="middle" font-size="9" fill="#5A5466">情绪趋势追踪</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 1B: Gamification ===== -->
+<section class="module-section reverse" id="app-game">
+  <div class="module-container">
+    <div class="module-visual reveal-left">
+      <div class="module-decoration c2"></div>
+      <!-- Gamification SVG -->
+      <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="440" rx="20" fill="#F0ECE4"/>
+        <!-- Trophy center -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="180" r="60" fill="#EDE0F3" opacity="0.3"/>
+          <circle cx="220" cy="180" r="40" fill="#EDE0F3" opacity="0.4"/>
+          <text x="220" y="175" text-anchor="middle" font-size="32">🏆</text>
+          <text x="220" y="198" text-anchor="middle" font-size="10" fill="#967BA5" font-weight="500">心灵能量</text>
+        </g>
+        <!-- Badge orbit -->
+        <circle cx="220" cy="180" r="100" stroke="#EDE0F3" stroke-width="1.5" fill="none" stroke-dasharray="8,6" class="svg-spin-slow"/>
+        <!-- 7-day badge -->
+        <g class="svg-float">
+          <circle cx="320" cy="180" r="24" fill="#D4EDE8" opacity="0.8"/>
+          <text x="320" y="176" text-anchor="middle" font-size="14">🔥</text>
+          <text x="320" y="192" text-anchor="middle" font-size="8" fill="#3A3448" font-weight="500">7天</text>
+        </g>
+        <!-- 30-day badge -->
+        <g class="svg-float-d">
+          <circle cx="220" cy="80" r="24" fill="#F5D9D3" opacity="0.8"/>
+          <text x="220" y="76" text-anchor="middle" font-size="14">⭐</text>
+          <text x="220" y="92" text-anchor="middle" font-size="8" fill="#3A3448" font-weight="500">30天</text>
+        </g>
+        <!-- 100-day badge -->
+        <g class="svg-float-d2">
+          <circle cx="120" cy="180" r="24" fill="#F5EDCF" opacity="0.8"/>
+          <text x="120" y="176" text-anchor="middle" font-size="14">💎</text>
+          <text x="120" y="192" text-anchor="middle" font-size="8" fill="#3A3448" font-weight="500">100天</text>
+        </g>
+        <!-- Energy bar -->
+        <g class="svg-float-d3">
+          <rect x="140" y="300" width="160" height="16" rx="8" fill="#EDE0F3" opacity="0.3"/>
+          <rect x="140" y="300" width="112" height="16" rx="8" fill="#967BA5" opacity="0.5"/>
+          <text x="220" y="312" text-anchor="middle" font-size="9" fill="#fff" font-weight="500">心灵能量值 70%</text>
+        </g>
+        <!-- Reward items -->
+        <g class="svg-float">
+          <rect x="60" y="340" width="90" height="50" rx="12" fill="#D4EDE8" opacity="0.6"/>
+          <text x="105" y="362" text-anchor="middle" font-size="14">☕</text>
+          <text x="105" y="380" text-anchor="middle" font-size="9" fill="#3A3448">咖啡券</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="175" y="340" width="90" height="50" rx="12" fill="#F5EDCF" opacity="0.6"/>
+          <text x="220" y="362" text-anchor="middle" font-size="14">⏰</text>
+          <text x="220" y="380" text-anchor="middle" font-size="9" fill="#3A3448">弹性休息</text>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="290" y="340" width="90" height="50" rx="12" fill="#F5D9D3" opacity="0.6"/>
+          <text x="335" y="362" text-anchor="middle" font-size="14">🎁</text>
+          <text x="335" y="380" text-anchor="middle" font-size="9" fill="#3A3448">企业福利</text>
+        </g>
+        <!-- Team challenge -->
+        <g class="svg-float-d3" opacity="0.6">
+          <rect x="100" y="410" width="240" height="24" rx="12" fill="#EDE0F3" opacity="0.4"/>
+          <text x="220" y="426" text-anchor="middle" font-size="10" fill="#967BA5" font-weight="500">🎯 部门正念挑战赛 · 团队凝聚力</text>
+        </g>
+        <!-- Sparkles -->
+        <circle cx="350" cy="100" r="3" fill="#967BA5" opacity="0.3" class="svg-pulse"/>
+        <circle cx="90" cy="120" r="2.5" fill="#D97A6A" opacity="0.3" class="svg-pulse"/>
+        <circle cx="370" cy="260" r="2" fill="#5BA89C" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+    <div class="module-text reveal-right">
+      <div class="module-number">
+        <div class="module-num-badge m2">2</div>
+        <span class="module-label">模块一 · 游戏化设计</span>
+      </div>
+      <h2 class="module-title">游戏化激励机制</h2>
+      <div class="module-subtitle c2">让正念练习成为习惯</div>
+      <p class="module-desc">
+        通过连续打卡奖励、心灵能量值累积和团队挑战赛三大机制，将正念练习转化为有趣且有成就感的日常习惯。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon c2">🔥</div>
+          <span><strong>连续打卡奖励：</strong>连续7天/30天/100天获得虚拟徽章，层层递进</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c2">⚡</div>
+          <span><strong>心灵能量值：</strong>冥想时长转化为能量值，可兑换咖啡券、弹性休息时间等企业福利</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c2">🏆</div>
+          <span><strong>团队挑战：</strong>部门间正念挑战赛，增强团队凝聚力与正向竞争</span>
+        </div>
+      </div>
+      <div class="module-tags">
+        <span class="tag c2">虚拟徽章</span>
+        <span class="tag c2">能量累积</span>
+        <span class="tag c2">福利兑换</span>
+        <span class="tag c2">团队竞赛</span>
+      </div>
+      <div class="module-target c2">
+        <span class="target-label">🎯 设计目标</span>
+        通过游戏化机制提升用户粘性与练习持续性，让正念融入日常工作节奏
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 2: Meditation Room Space ===== -->
+<section class="module-section" id="room-space">
+  <div class="module-container">
+    <div class="module-text reveal-left">
+      <div class="module-number">
+        <div class="module-num-badge m3">3</div>
+        <span class="module-label">模块二 · 空间配置</span>
+      </div>
+      <h2 class="module-title">线下冥想室设计</h2>
+      <div class="module-subtitle c3">打造宁静的身心修复空间</div>
+      <p class="module-desc">
+        在办公区域安静角落设置15-20平方米冥想室，可容纳6-8人同时使用，配备专业设备与自然元素装饰。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon c3">📍</div>
+          <span><strong>位置选择：</strong>办公区域安静角落，远离嘈杂区域</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c3">📐</div>
+          <span><strong>面积：</strong>15-20平方米，可容纳6-8人同时使用</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c3">🎨</div>
+          <span><strong>环境设计：</strong>柔和灯光、隔音处理、自然元素（绿植、水景）、舒适坐垫/躺椅</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c3">🔊</div>
+          <span><strong>设备配置：</strong>蓝牙音箱、空气净化器、香薰机（可选）、定时器</span>
+        </div>
+      </div>
+      <div class="module-tags">
+        <span class="tag c3">隔音处理</span>
+        <span class="tag c3">自然元素</span>
+        <span class="tag c3">舒适坐垫</span>
+        <span class="tag c3">专业设备</span>
+      </div>
+    </div>
+    <div class="module-visual reveal-right">
+      <div class="module-decoration c3"></div>
+      <!-- Meditation Room SVG -->
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Room walls -->
+        <rect x="60" y="60" width="320" height="280" rx="4" fill="#F5E0D0" opacity="0.3"/>
+        <rect x="60" y="60" width="320" height="280" rx="4" stroke="#D4C8B8" stroke-width="1.5" fill="none"/>
+        <!-- Floor -->
+        <rect x="60" y="260" width="320" height="80" rx="0" fill="#D4E8E2" opacity="0.2"/>
+        <!-- Window with soft light -->
+        <rect x="140" y="80" width="100" height="70" rx="6" fill="#D6E6F2" opacity="0.3"/>
+        <rect x="140" y="80" width="100" height="70" rx="6" stroke="#B8C8D8" stroke-width="1" fill="none"/>
+        <line x1="190" y1="80" x2="190" y2="150" stroke="#B8C8D8" stroke-width="0.8"/>
+        <line x1="140" y1="115" x2="240" y2="115" stroke="#B8C8D8" stroke-width="0.8"/>
+        <!-- Sunlight rays -->
+        <g class="svg-glow" opacity="0.15">
+          <polygon points="150,150 190,220 170,220" fill="#F5EDCF"/>
+          <polygon points="200,150 220,220 195,220" fill="#F5EDCF"/>
+        </g>
+        <!-- Plants -->
+        <g class="svg-sway">
+          <rect x="80" y="240" width="16" height="30" rx="3" fill="#C47860" opacity="0.4"/>
+          <circle cx="88" cy="230" r="14" fill="#5A988C" opacity="0.4"/>
+          <circle cx="78" cy="225" r="10" fill="#6BB898" opacity="0.35"/>
+          <circle cx="98" cy="228" r="11" fill="#5A988C" opacity="0.3"/>
+        </g>
+        <g class="svg-sway" style="animation-delay: 1s;">
+          <rect x="344" y="240" width="16" height="30" rx="3" fill="#C47860" opacity="0.4"/>
+          <circle cx="352" cy="230" r="14" fill="#5A988C" opacity="0.4"/>
+          <circle cx="342" cy="225" r="10" fill="#6BB898" opacity="0.35"/>
+          <circle cx="362" cy="228" r="11" fill="#5A988C" opacity="0.3"/>
+        </g>
+        <!-- Water feature -->
+        <g class="svg-wave">
+          <ellipse cx="350" cy="310" rx="25" ry="8" fill="#D6E6F2" opacity="0.4"/>
+          <path d="M330,310 Q340,305 350,310 Q360,315 370,310" stroke="#5A8FB5" stroke-width="1" fill="none" opacity="0.3"/>
+        </g>
+        <!-- Meditation cushions -->
+        <g class="svg-breathe">
+          <ellipse cx="160" cy="300" rx="25" ry="10" fill="#D4EDE8" opacity="0.6"/>
+          <circle cx="160" cy="280" r="14" fill="#F5D9D3" opacity="0.7"/>
+          <path d="M146,276 Q150,264 160,262 Q170,264 174,276" fill="#7A7486" opacity="0.3"/>
+          <path d="M154,282 Q152,288 154,292" stroke="#4A4458" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M166,282 Q168,288 166,292" stroke="#4A4458" stroke-width="0.8" fill="none" opacity="0.4"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay: 0.5s;">
+          <ellipse cx="220" cy="300" rx="25" ry="10" fill="#EDE0F3" opacity="0.5"/>
+          <circle cx="220" cy="280" r="14" fill="#F5D9D3" opacity="0.7"/>
+          <path d="M206,276 Q210,264 220,262 Q230,264 234,276" fill="#7A7486" opacity="0.3"/>
+          <path d="M214,282 Q212,288 214,292" stroke="#4A4458" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M226,282 Q228,288 226,292" stroke="#4A4458" stroke-width="0.8" fill="none" opacity="0.4"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay: 1s;">
+          <ellipse cx="280" cy="300" rx="25" ry="10" fill="#F5D9D3" opacity="0.5"/>
+          <circle cx="280" cy="280" r="14" fill="#F5D9D3" opacity="0.7"/>
+          <path d="M266,276 Q270,264 280,262 Q290,264 294,276" fill="#7A7486" opacity="0.3"/>
+          <path d="M274,282 Q272,288 274,292" stroke="#4A4458" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M286,282 Q288,288 286,292" stroke="#4A4458" stroke-width="0.8" fill="none" opacity="0.4"/>
+        </g>
+        <!-- Speaker -->
+        <g class="svg-float-d">
+          <rect x="80" y="170" width="30" height="40" rx="6" fill="#E8E3EE" opacity="0.6"/>
+          <circle cx="95" cy="185" r="6" fill="#D4D0C8" opacity="0.5"/>
+          <circle cx="95" cy="200" r="4" fill="#D4D0C8" opacity="0.4"/>
+          <text x="95" y="225" text-anchor="middle" font-size="8" fill="#5A5466">🔊</text>
+        </g>
+        <!-- Soft light glow -->
+        <circle cx="190" cy="90" r="40" fill="#F5EDCF" opacity="0.15" class="svg-glow"/>
+        <!-- Calming particles -->
+        <circle cx="130" cy="160" r="2" fill="#5BA89C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="310" cy="140" r="1.5" fill="#967BA5" opacity="0.3" class="svg-pulse"/>
+        <circle cx="250" cy="180" r="2" fill="#D97A6A" opacity="0.2" class="svg-pulse"/>
+        <!-- Labels -->
+        <text x="220" y="380" text-anchor="middle" font-size="12" fill="#5A5466" font-weight="500">宁静冥想空间 · 6-8人</text>
+        <text x="220" y="400" text-anchor="middle" font-size="10" fill="#5A5466" opacity="0.6">柔和灯光 · 隔音处理 · 自然元素</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 2B: Room Rules & Activities ===== -->
+<section class="module-section reverse" id="room-rules">
+  <div class="module-container">
+    <div class="module-visual reveal-left">
+      <div class="module-decoration c4"></div>
+      <!-- Rules & Activities SVG -->
+      <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="440" rx="20" fill="#F0ECE4"/>
+        <!-- Calendar base -->
+        <rect x="80" y="40" width="280" height="200" rx="16" fill="#fff" stroke="#D6E6F2" stroke-width="1.5"/>
+        <!-- Calendar header -->
+        <rect x="80" y="40" width="280" height="40" rx="16" fill="#5A8FB5" opacity="0.15"/>
+        <text x="220" y="66" text-anchor="middle" font-size="13" fill="#5A8FB5" font-weight="600">冥想室活动日程</text>
+        <!-- Weekly activity -->
+        <g class="svg-float">
+          <rect x="100" y="95" width="240" height="36" rx="8" fill="#D4EDE8" opacity="0.5"/>
+          <text x="120" y="112" font-size="10" fill="#5A988C" font-weight="600">每周</text>
+          <text x="155" y="112" font-size="10" fill="#3A3448">正念午休 · 30分钟团体冥想</text>
+          <text x="120" y="124" font-size="8" fill="#5A5466">专业正念导师带领</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="100" y="140" width="240" height="36" rx="8" fill="#EDE0F3" opacity="0.5"/>
+          <text x="120" y="157" font-size="10" fill="#967BA5" font-weight="600">每月</text>
+          <text x="155" y="157" font-size="10" fill="#3A3448">正念工作坊 · 主题深度探索</text>
+          <text x="120" y="169" font-size="8" fill="#5A5466">压力管理 · 情绪调节 · 正念沟通</text>
+        </g>
+        <!-- Time slots -->
+        <g class="svg-float-d2">
+          <rect x="100" y="185" width="70" height="28" rx="14" fill="#D6E6F2" opacity="0.5"/>
+          <text x="135" y="203" text-anchor="middle" font-size="9" fill="#5A8FB5">15分钟</text>
+        </g>
+        <g class="svg-float-d3">
+          <rect x="180" y="185" width="70" height="28" rx="14" fill="#D6E6F2" opacity="0.5"/>
+          <text x="215" y="203" text-anchor="middle" font-size="9" fill="#5A8FB5">30分钟</text>
+        </g>
+        <g class="svg-float">
+          <rect x="260" y="185" width="70" height="28" rx="14" fill="#D6E6F2" opacity="0.5"/>
+          <text x="295" y="203" text-anchor="middle" font-size="9" fill="#5A8FB5">60分钟</text>
+        </g>
+        <!-- Rules section -->
+        <rect x="80" y="260" width="280" height="160" rx="16" fill="#fff" stroke="#D4EDE8" stroke-width="1.5"/>
+        <text x="220" y="288" text-anchor="middle" font-size="13" fill="#5A988C" font-weight="600">使用规则</text>
+        <!-- Rule icons -->
+        <g class="svg-float">
+          <circle cx="130" cy="320" r="20" fill="#D4EDE8" opacity="0.5"/>
+          <text x="130" y="325" text-anchor="middle" font-size="16">📅</text>
+          <text x="130" y="355" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">预约制</text>
+          <text x="130" y="368" text-anchor="middle" font-size="8" fill="#5A5466">APP预约时段</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="220" cy="320" r="20" fill="#F5D9D3" opacity="0.5"/>
+          <text x="220" y="325" text-anchor="middle" font-size="16">🤫</text>
+          <text x="220" y="355" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">静默原则</text>
+          <text x="220" y="368" text-anchor="middle" font-size="8" fill="#5A5466">手机调至静音</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="310" cy="320" r="20" fill="#EDE0F3" opacity="0.5"/>
+          <text x="310" y="325" text-anchor="middle" font-size="16">📖</text>
+          <text x="310" y="355" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">使用引导</text>
+          <text x="310" y="368" text-anchor="middle" font-size="8" fill="#5A5466">姿势与呼吸图示</text>
+        </g>
+        <!-- Connecting dots -->
+        <circle cx="155" cy="320" r="2" fill="#5A988C" opacity="0.3"/>
+        <circle cx="175" cy="320" r="2" fill="#5A988C" opacity="0.2"/>
+        <circle cx="195" cy="320" r="2" fill="#5A988C" opacity="0.15"/>
+        <circle cx="245" cy="320" r="2" fill="#967BA5" opacity="0.15"/>
+        <circle cx="265" cy="320" r="2" fill="#967BA5" opacity="0.2"/>
+        <circle cx="285" cy="320" r="2" fill="#967BA5" opacity="0.3"/>
+        <!-- Bottom label -->
+        <text x="220" y="410" text-anchor="middle" font-size="10" fill="#5A5466" opacity="0.6">定期活动 · 规范管理 · 温馨体验</text>
+      </svg>
+    </div>
+    <div class="module-text reveal-right">
+      <div class="module-number">
+        <div class="module-num-badge m4">4</div>
+        <span class="module-label">模块二 · 规则与活动</span>
+      </div>
+      <h2 class="module-title">使用规则与定期活动</h2>
+      <div class="module-subtitle c4">规范运营，持续陪伴</div>
+      <p class="module-desc">
+        通过预约制管理、静默原则和使用引导确保冥想室的良好体验，配合定期活动营造持续的正念练习氛围。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon c4">📅</div>
+          <span><strong>预约制：</strong>通过APP预约使用时段（15/30/60分钟）</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c4">🤫</div>
+          <span><strong>静默原则：</strong>进入冥想室后保持安静，手机调至静音</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c4">📖</div>
+          <span><strong>使用引导：</strong>入口处张贴基础冥想姿势指南与呼吸练习图示</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c4">🧘</div>
+          <span><strong>每周正念午休：</strong>专业正念导师带领30分钟团体冥想</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c4">🎯</div>
+          <span><strong>每月正念工作坊：</strong>压力管理、情绪调节、正念沟通等主题</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 3: Hybrid Journey ===== -->
+<section class="module-section" id="hybrid-journey">
+  <div class="module-container">
+    <div class="module-text reveal-left">
+      <div class="module-number">
+        <div class="module-num-badge m5">5</div>
+        <span class="module-label">模块三 · 用户旅程</span>
+      </div>
+      <h2 class="module-title">混合模式整合流程</h2>
+      <div class="module-subtitle c5">线上线下无缝衔接的四阶段旅程</div>
+      <p class="module-desc">
+        从入门到自主维持，设计渐进式的四阶段用户旅程，让员工在数字与物理空间中自然建立正念练习习惯。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon c5">🌱</div>
+          <span><strong>入门阶段（第1周）：</strong>下载APP，完成DASS-21基线评估，获得个性化推荐，参加线下冥想室体验导览</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c5">📈</div>
+          <span><strong>建立习惯阶段（第2-4周）：</strong>每日APP打卡5-10分钟，每周至少使用线下冥想室1次，参加1次正念工作坊</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c5">🌿</div>
+          <span><strong>深化阶段（第5-8周）：</strong>根据APP推荐进阶课程，参与线下团体冥想，加入匿名社区互动</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c5">🌳</div>
+          <span><strong>自主维持阶段（第9周起）：</strong>建立个人化正念习惯，APP持续更新内容与个性化推荐</span>
+        </div>
+      </div>
+    </div>
+    <div class="module-visual reveal-right">
+      <div class="module-decoration c5"></div>
+      <!-- User Journey SVG -->
+      <svg viewBox="0 0 440 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="480" rx="20" fill="#FAF8F2"/>
+        <!-- Journey path (curved road) -->
+        <path d="M80,80 Q120,80 140,120 Q160,160 220,160 Q280,160 300,200 Q320,240 340,280 Q360,320 340,360 Q320,400 260,420 Q200,440 140,440" stroke="#E8E3EE" stroke-width="3" fill="none" stroke-dasharray="8,6" class="svg-draw-slow"/>
+        <!-- Stage 1: Seed -->
+        <g class="svg-scale-in">
+          <circle cx="100" cy="80" r="28" fill="#D4EDE8" opacity="0.6"/>
+          <text x="100" y="76" text-anchor="middle" font-size="18">🌱</text>
+          <text x="100" y="94" text-anchor="middle" font-size="8" fill="#3A3448" font-weight="600">第1周</text>
+        </g>
+        <g class="svg-fade-in-d">
+          <rect x="150" y="60" width="130" height="40" rx="10" fill="#D4EDE8" opacity="0.4"/>
+          <text x="215" y="76" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">下载APP · 基线评估</text>
+          <text x="215" y="90" text-anchor="middle" font-size="8" fill="#5A5466">个性化推荐 · 体验导览</text>
+        </g>
+        <!-- Stage 2: Sprout -->
+        <g class="svg-scale-in" style="animation-delay: 0.5s;">
+          <circle cx="220" cy="180" r="28" fill="#F5EDCF" opacity="0.6"/>
+          <text x="220" y="176" text-anchor="middle" font-size="18">📈</text>
+          <text x="220" y="194" text-anchor="middle" font-size="8" fill="#3A3448" font-weight="600">第2-4周</text>
+        </g>
+        <g class="svg-fade-in-d2">
+          <rect x="270" y="160" width="140" height="40" rx="10" fill="#F5EDCF" opacity="0.4"/>
+          <text x="340" y="176" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">每日打卡 · 冥想室使用</text>
+          <text x="340" y="190" text-anchor="middle" font-size="8" fill="#5A5466">每周1次线下 · 1次工作坊</text>
+        </g>
+        <!-- Stage 3: Growing -->
+        <g class="svg-scale-in" style="animation-delay: 1s;">
+          <circle cx="340" cy="300" r="28" fill="#EDE0F3" opacity="0.6"/>
+          <text x="340" y="296" text-anchor="middle" font-size="18">🌿</text>
+          <text x="340" y="314" text-anchor="middle" font-size="8" fill="#3A3448" font-weight="600">第5-8周</text>
+        </g>
+        <g class="svg-fade-in-d3">
+          <rect x="200" y="330" width="140" height="40" rx="10" fill="#EDE0F3" opacity="0.4"/>
+          <text x="270" y="346" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">进阶课程 · 团体冥想</text>
+          <text x="270" y="360" text-anchor="middle" font-size="8" fill="#5A5466">匿名社区互动</text>
+        </g>
+        <!-- Stage 4: Tree -->
+        <g class="svg-scale-in" style="animation-delay: 1.5s;">
+          <circle cx="160" cy="440" r="28" fill="#D9F0E4" opacity="0.6"/>
+          <text x="160" y="436" text-anchor="middle" font-size="18">🌳</text>
+          <text x="160" y="454" text-anchor="middle" font-size="8" fill="#3A3448" font-weight="600">第9周起</text>
+        </g>
+        <g class="svg-fade-in-d4">
+          <rect x="60" y="460" width="140" height="16" rx="8" fill="#D9F0E4" opacity="0.4"/>
+          <text x="130" y="472" text-anchor="middle" font-size="8" fill="#3A3448">自主维持 · 持续更新</text>
+        </g>
+        <!-- Connection arrows -->
+        <path d="M128,80 L192,80" stroke="#5A988C" stroke-width="1" stroke-dasharray="4,3" opacity="0.3" marker-end="url(#arrowT)"/>
+        <path d="M220,208 L220,152" stroke="#B89840" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+        <path d="M248,180 L312,180" stroke="#B89840" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+        <path d="M340,328 L340,272" stroke="#967BA5" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+        <!-- Sparkles -->
+        <circle cx="380" cy="120" r="2" fill="#5A988C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="60" cy="250" r="2.5" fill="#967BA5" opacity="0.3" class="svg-pulse"/>
+        <circle cx="400" cy="400" r="2" fill="#B89840" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 3B: Online-Offline Integration ===== -->
+<section class="module-section reverse" id="hybrid-link">
+  <div class="module-container">
+    <div class="module-visual reveal-left">
+      <div class="module-decoration c6"></div>
+      <!-- Integration SVG -->
+      <svg viewBox="0 0 440 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="400" rx="20" fill="#F0ECE4"/>
+        <!-- Left: Phone (online) -->
+        <g class="svg-float">
+          <rect x="40" y="100" width="80" height="140" rx="12" fill="#fff" stroke="#D4EDE8" stroke-width="1.5"/>
+          <rect x="48" y="118" width="64" height="100" rx="6" fill="#D4EDE8" opacity="0.2"/>
+          <text x="80" y="160" text-anchor="middle" font-size="24">📱</text>
+          <text x="80" y="180" text-anchor="middle" font-size="8" fill="#5A988C" font-weight="500">线上APP</text>
+        </g>
+        <!-- Right: Room (offline) -->
+        <g class="svg-float-d">
+          <rect x="320" y="100" width="80" height="140" rx="12" fill="#fff" stroke="#EDE0F3" stroke-width="1.5"/>
+          <text x="360" y="160" text-anchor="middle" font-size="24">🧘</text>
+          <text x="360" y="180" text-anchor="middle" font-size="8" fill="#967BA5" font-weight="500">线下冥想室</text>
+        </g>
+        <!-- Center: Connection hub -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="170" r="40" fill="#F5D9D3" opacity="0.2"/>
+          <circle cx="220" cy="170" r="28" fill="#F5D9D3" opacity="0.3"/>
+          <text x="220" y="166" text-anchor="middle" font-size="20">🔄</text>
+          <text x="220" y="182" text-anchor="middle" font-size="8" fill="#D97A6A" font-weight="500">联动</text>
+        </g>
+        <!-- Connection lines -->
+        <line x1="120" y1="170" x2="192" y2="170" stroke="#5A988C" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+        <line x1="248" y1="170" x2="320" y2="170" stroke="#967BA5" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+        <!-- Bidirectional arrows -->
+        <polygon points="190,165 192,170 190,175" fill="#5A988C" opacity="0.5"/>
+        <polygon points="250,165 248,170 250,175" fill="#967BA5" opacity="0.5"/>
+        <!-- Integration points -->
+        <g class="svg-float-d2">
+          <rect x="60" y="280" width="150" height="44" rx="12" fill="#D4EDE8" opacity="0.5"/>
+          <text x="135" y="298" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">📅 APP预约冥想室</text>
+          <text x="135" y="312" text-anchor="middle" font-size="8" fill="#5A5466">使用后自动记录并推荐</text>
+        </g>
+        <g class="svg-float-d3">
+          <rect x="230" y="280" width="150" height="44" rx="12" fill="#EDE0F3" opacity="0.5"/>
+          <text x="305" y="298" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">📖 工作坊复习</text>
+          <text x="305" y="312" text-anchor="middle" font-size="8" fill="#5A5466">线下内容APP复习版</text>
+        </g>
+        <g class="svg-float">
+          <rect x="120" y="340" width="200" height="44" rx="12" fill="#F5EDCF" opacity="0.5"/>
+          <text x="220" y="358" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">📊 数据驱动活动设计</text>
+          <text x="220" y="372" text-anchor="middle" font-size="8" fill="#5A5466">根据员工数据定制线下主题</text>
+        </g>
+        <!-- Pulse rings -->
+        <circle cx="220" cy="170" r="55" stroke="#D97A6A" stroke-width="1" fill="none" opacity="0.1" class="svg-ring"/>
+        <circle cx="220" cy="170" r="55" stroke="#5A988C" stroke-width="1" fill="none" opacity="0.1" class="svg-ring-d"/>
+      </svg>
+    </div>
+    <div class="module-text reveal-right">
+      <div class="module-number">
+        <div class="module-num-badge m6">6</div>
+        <span class="module-label">模块三 · 线上线下联动</span>
+      </div>
+      <h2 class="module-title">线上线下无缝联动</h2>
+      <div class="module-subtitle c6">数据驱动的闭环体验</div>
+      <p class="module-desc">
+        通过APP与线下冥想室的深度联动，形成"预约→使用→记录→推荐→再参与"的良性循环。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon c6">📅</div>
+          <span><strong>智能预约：</strong>APP预约线下冥想室，使用后自动记录并推荐后续课程</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c6">📖</div>
+          <span><strong>内容复习：</strong>线下工作坊内容在APP上提供复习版本，巩固学习效果</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon c6">📊</div>
+          <span><strong>数据驱动：</strong>APP数据为线下活动设计提供依据（如根据睡眠问题设计主题工作坊）</span>
+        </div>
+      </div>
+      <div class="module-target c6">
+        <span class="target-label">🎯 整合目标</span>
+        打通线上与线下壁垒，让数据流动驱动个性化服务，实现真正的混合式干预
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DATA PROTECTION ===== -->
+<section class="grid-section" id="data-protect">
+  <div class="grid-container">
+    <div class="section-header reveal">
+      <div class="section-tag s3">数据保护</div>
+      <h2 class="section-title">全方位数据保护体系</h2>
+      <p class="section-subtitle">法律合规、技术保障、制度约束三重防线，守护每一位员工的心理健康隐私</p>
+    </div>
+
+    <div class="grid-illustration reveal-scale">
+      <!-- Data Protection SVG -->
+      <svg viewBox="0 0 700 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="220" rx="20" fill="#FAF8F2"/>
+        <!-- Shield center -->
+        <g class="svg-breathe">
+          <path d="M350,30 L400,50 L400,100 Q400,140 350,160 Q300,140 300,100 L300,50 Z" fill="#D4EDE8" opacity="0.4" stroke="#5A988C" stroke-width="1.5"/>
+          <text x="350" y="100" text-anchor="middle" font-size="28">🛡️</text>
+          <text x="350" y="125" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="600">数据保护</text>
+        </g>
+        <!-- Three pillars -->
+        <g class="svg-float">
+          <rect x="40" y="50" width="160" height="130" rx="14" fill="#fff" stroke="#D4EDE8" stroke-width="1"/>
+          <rect x="40" y="50" width="160" height="30" rx="14" fill="#5A988C" opacity="0.12"/>
+          <text x="120" y="70" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="600">⚖️ 法律合规</text>
+          <text x="120" y="95" text-anchor="middle" font-size="9" fill="#5A5466">个人信息保护法</text>
+          <text x="120" y="110" text-anchor="middle" font-size="9" fill="#5A5466">数据安全法</text>
+          <text x="120" y="125" text-anchor="middle" font-size="9" fill="#5A5466">DPIA评估</text>
+          <text x="120" y="140" text-anchor="middle" font-size="9" fill="#5A5466">DPA协议</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="270" y="50" width="160" height="130" rx="14" fill="#fff" stroke="#EDE0F3" stroke-width="1"/>
+          <rect x="270" y="50" width="160" height="30" rx="14" fill="#967BA5" opacity="0.12"/>
+          <text x="350" y="70" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="600">🔐 技术保护</text>
+          <text x="350" y="95" text-anchor="middle" font-size="9" fill="#5A5466">数据最小化</text>
+          <text x="350" y="110" text-anchor="middle" font-size="9" fill="#5A5466">匿名化处理</text>
+          <text x="350" y="125" text-anchor="middle" font-size="9" fill="#5A5466">端到端加密</text>
+          <text x="350" y="140" text-anchor="middle" font-size="9" fill="#5A5466">本地存储优先</text>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="500" y="50" width="160" height="130" rx="14" fill="#fff" stroke="#F5D9D3" stroke-width="1"/>
+          <rect x="500" y="50" width="160" height="30" rx="14" fill="#D97A6A" opacity="0.12"/>
+          <text x="580" y="70" text-anchor="middle" font-size="11" fill="#D97A6A" font-weight="600">📋 制度保障</text>
+          <text x="580" y="95" text-anchor="middle" font-size="9" fill="#5A5466">隐私政策透明</text>
+          <text x="580" y="110" text-anchor="middle" font-size="9" fill="#5A5466">知情同意</text>
+          <text x="580" y="125" text-anchor="middle" font-size="9" fill="#5A5466">独立监督(DPO)</text>
+          <text x="580" y="140" text-anchor="middle" font-size="9" fill="#5A5466">季度审计</text>
+        </g>
+        <!-- Bottom: Anti-discrimination -->
+        <g class="svg-float-d3">
+          <rect x="150" y="190" width="400" height="24" rx="12" fill="#F5D9D3" opacity="0.3"/>
+          <text x="350" y="206" text-anchor="middle" font-size="10" fill="#D97A6A" font-weight="500">🚫 心理健康数据不得用于绩效考核、晋升决策或裁员依据</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="grid-2 stagger">
+      <div class="grid-card reveal" style="--i:0">
+        <div class="grid-card-icon c1">⚖️</div>
+        <h3>法律合规</h3>
+        <p>严格遵守《个人信息保护法》《数据安全法》，进行DPIA评估，与供应商签署DPA协议，明确数据权属与责任</p>
+      </div>
+      <div class="grid-card reveal" style="--i:1">
+        <div class="grid-card-icon c3">🔐</div>
+        <h3>技术保护</h3>
+        <p>数据最小化、匿名化处理、端到端加密、本地存储优先、权限分离（管理员仅查看匿名统计）、数据删除权</p>
+      </div>
+      <div class="grid-card reveal" style="--i:2">
+        <div class="grid-card-icon c2">📋</div>
+        <h3>制度保障</h3>
+        <p>隐私政策透明、知情同意、独立监督（DPO）、每季度数据安全审计、违反规定者纪律处分</p>
+      </div>
+      <div class="grid-card reveal" style="--i:3">
+        <div class="grid-card-icon c6">🚫</div>
+        <h3>反歧视保障</h3>
+        <p>明确规定心理健康数据不得用于绩效考核、晋升决策或裁员依据，违规管理人员将受到纪律处分</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONG-TERM MECHANISM ===== -->
+<section class="grid-section" id="longterm">
+  <div class="grid-container">
+    <div class="section-header reveal">
+      <div class="section-tag s2">长效保障</div>
+      <h2 class="section-title">可持续的长效保障机制</h2>
+      <p class="section-subtitle">从效果评估到管理层支持，构建自我运转的正念疗愈生态</p>
+    </div>
+
+    <div class="grid-illustration reveal-scale">
+      <!-- Long-term SVG -->
+      <svg viewBox="0 0 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="200" rx="20" fill="#F0ECE4"/>
+        <!-- Circular flow -->
+        <circle cx="350" cy="100" r="65" stroke="#EDE0F3" stroke-width="2" fill="none" stroke-dasharray="8,5" class="svg-spin-slow"/>
+        <!-- Center -->
+        <circle cx="350" cy="100" r="28" fill="#EDE0F3" opacity="0.4"/>
+        <text x="350" y="96" text-anchor="middle" font-size="18">♻️</text>
+        <text x="350" y="112" text-anchor="middle" font-size="8" fill="#967BA5" font-weight="500">持续运转</text>
+        <!-- Four nodes -->
+        <g class="svg-float">
+          <circle cx="350" cy="25" r="18" fill="#D4EDE8" opacity="0.7"/>
+          <text x="350" y="30" text-anchor="middle" font-size="14">📊</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="425" cy="75" r="18" fill="#EDE0F3" opacity="0.7"/>
+          <text x="425" y="80" text-anchor="middle" font-size="14">📚</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="425" cy="140" r="18" fill="#F5D9D3" opacity="0.7"/>
+          <text x="425" y="145" text-anchor="middle" font-size="14">🤝</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="275" cy="140" r="18" fill="#F5EDCF" opacity="0.7"/>
+          <text x="275" y="145" text-anchor="middle" font-size="14">💼</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="275" cy="75" r="18" fill="#D6E6F2" opacity="0.7"/>
+          <text x="275" y="80" text-anchor="middle" font-size="14">🎯</text>
+        </g>
+        <!-- Labels -->
+        <text x="350" y="10" text-anchor="middle" font-size="8" fill="#5A5466">效果评估</text>
+        <text x="460" y="72" text-anchor="start" font-size="8" fill="#5A5466">内容更新</text>
+        <text x="460" y="142" text-anchor="start" font-size="8" fill="#5A5466">专业支持</text>
+        <text x="240" y="142" text-anchor="end" font-size="8" fill="#5A5466">管理层支持</text>
+        <text x="240" y="72" text-anchor="end" font-size="8" fill="#5A5466">EAP转介</text>
+      </svg>
+    </div>
+
+    <div class="grid-2 stagger">
+      <div class="grid-card reveal" style="--i:0">
+        <div class="grid-card-icon c1">📊</div>
+        <h3>效果评估</h3>
+        <p>每3个月DASS-21简化版匿名调查、APP使用数据追踪（活跃用户数、平均时长、完成率）、线下冥想室使用率统计、满意度调查与定性反馈</p>
+      </div>
+      <div class="grid-card reveal" style="--i:1">
+        <div class="grid-card-icon c3">📚</div>
+        <h3>内容更新</h3>
+        <p>每季度更新APP课程内容，引入新的主题与引导师，保持内容新鲜感与吸引力</p>
+      </div>
+      <div class="grid-card reveal" style="--i:2">
+        <div class="grid-card-icon c2">🤝</div>
+        <h3>专业支持</h3>
+        <p>建立APP内一键转介至企业EAP心理咨询服务的通道，确保需要时能及时获得专业帮助</p>
+      </div>
+      <div class="grid-card reveal" style="--i:3">
+        <div class="grid-card-icon c4">💼</div>
+        <h3>管理层支持</h3>
+        <p>高管以身作则使用APP与冥想室，营造支持性的组织文化，消除参与顾虑</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs & ESG ===== -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag s5">可持续发展</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将员工心理健康与联合国可持续发展目标及ESG框架深度结合</p>
+    </div>
+
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0">
+        <div class="sdg-num">03</div>
+        <div class="sdg-title">良好健康与福祉</div>
+        <p class="sdg-desc">通过数字化手段扩大心理健康服务覆盖面，让更多员工获得优质正念疗愈资源</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:1">
+        <div class="sdg-num">08</div>
+        <div class="sdg-title">体面工作与经济增长</div>
+        <p class="sdg-desc">改善互联网行业员工工作条件与心理健康，减少因心理问题导致的效率损失</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:2">
+        <div class="sdg-num">09</div>
+        <div class="sdg-title">产业创新与基础设施</div>
+        <p class="sdg-desc">数字疗愈技术的创新应用，推动心理健康服务的数字化转型与产业升级</p>
+      </div>
+    </div>
+
+    <div class="esg-row stagger">
+      <div class="esg-card reveal" style="--i:0">
+        <div class="esg-label">ESG-S 社会责任</div>
+        <p class="esg-desc">企业利用技术创新保障员工心理健康，履行对员工福祉的社会责任，构建和谐劳动关系</p>
+      </div>
+      <div class="esg-card reveal" style="--i:1">
+        <div class="esg-label">ESG-G 公司治理</div>
+        <p class="esg-desc">建立完善的数据保护治理体系，确保心理健康数据的合规使用与安全管理</p>
+      </div>
+    </div>
+
+    <div class="grid-illustration reveal-scale">
+      <!-- SDGs ESG SVG -->
+      <svg viewBox="0 0 700 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="160" rx="20" fill="#FAF8F2"/>
+        <!-- SDG 3 -->
+        <g class="svg-float">
+          <rect x="30" y="30" width="140" height="100" rx="14" fill="#D4EDE8" opacity="0.4"/>
+          <text x="100" y="65" text-anchor="middle" font-size="28" font-weight="700" fill="#5A988C" opacity="0.5">3</text>
+          <text x="100" y="85" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">良好健康</text>
+          <text x="100" y="100" text-anchor="middle" font-size="8" fill="#5A5466">数字扩大覆盖</text>
+        </g>
+        <!-- SDG 8 -->
+        <g class="svg-float-d">
+          <rect x="190" y="30" width="140" height="100" rx="14" fill="#D6E6F2" opacity="0.4"/>
+          <text x="260" y="65" text-anchor="middle" font-size="28" font-weight="700" fill="#5A8FB5" opacity="0.5">8</text>
+          <text x="260" y="85" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">体面工作</text>
+          <text x="260" y="100" text-anchor="middle" font-size="8" fill="#5A5466">改善工作条件</text>
+        </g>
+        <!-- SDG 9 -->
+        <g class="svg-float-d2">
+          <rect x="350" y="30" width="140" height="100" rx="14" fill="#F5EDCF" opacity="0.4"/>
+          <text x="420" y="65" text-anchor="middle" font-size="28" font-weight="700" fill="#B89840" opacity="0.5">9</text>
+          <text x="420" y="85" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">产业创新</text>
+          <text x="420" y="100" text-anchor="middle" font-size="8" fill="#5A5466">数字疗愈创新</text>
+        </g>
+        <!-- ESG -->
+        <g class="svg-float-d3">
+          <rect x="510" y="30" width="160" height="100" rx="14" fill="#EDE0F3" opacity="0.3"/>
+          <text x="590" y="65" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="600">ESG</text>
+          <text x="590" y="85" text-anchor="middle" font-size="9" fill="#3A3448">S 社会责任</text>
+          <text x="590" y="100" text-anchor="middle" font-size="9" fill="#3A3448">G 公司治理</text>
+        </g>
+        <!-- Connection line -->
+        <line x1="170" y1="80" x2="190" y2="80" stroke="#5A988C" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+        <line x1="330" y1="80" x2="350" y2="80" stroke="#5A8FB5" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+        <line x1="490" y1="80" x2="510" y2="80" stroke="#B89840" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用科技守护心灵 🌿</h2>
+    <p class="footer-text">数字正念疗愈，让每一位互联网从业者都能在忙碌中找到内心的宁静与力量</p>
+    <div class="footer-hearts">🧘 💚 📱 🌿</div>
+  </div>
+</footer>
+
+<script>
+// Progress Bar
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+});
+
+// Navigation Dots
+const dots = document.querySelectorAll('.nav-dot');
+const sections = ['hero','app-core','app-game','room-space','room-rules','hybrid-journey','hybrid-link','data-protect','longterm','sdgs'];
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = dot.getAttribute('data-target');
+    document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+const sectionEls = sections.map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let current = 0;
+  sectionEls.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2) current = i;
+  });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === current);
+  });
+});
+
+// Scroll Reveal
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Parallax for hero shapes
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const shapes = document.querySelectorAll('.hero-shape');
+  shapes.forEach((shape, i) => {
+    const speed = 0.03 + i * 0.02;
+    shape.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+});
+</script>
+
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

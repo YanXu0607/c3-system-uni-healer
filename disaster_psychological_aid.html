@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>灾后心理援助 · 创伤知情艺术治疗8周方案</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+:root {
+  --lavender:#9B8FA8;--lavender-light:#E8E3EE;--teal:#6EC4B8;--teal-light:#D4EDE8;
+  --coral:#E08B7A;--coral-light:#F5D9D3;--cream:#F5F0E1;--cream-pale:#FAF8F2;
+  --yellow:#F4E4A6;--yellow-light:#FBF4D6;--peach:#F5E0D0;--deep:#4A4458;
+  --soft:#7A7486;--surface:#F0ECE4;--blue:#7BA7CC;--blue-light:#D6E6F2;
+  --mint:#8BC9A8;--mint-light:#D9F0E4;--rose:#D4899A;--rose-light:#F2DDE2;
+  --amber:#C9A84C;--amber-light:#F5EDCF;--sky:#7EB5D6;--sky-light:#DCEEF8;
+  --plum:#A68BB5;--plum-light:#EDE0F3;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC',sans-serif;color:var(--deep);background:var(--cream-pale);line-height:1.8;overflow-x:hidden}
+.progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--teal),var(--coral),var(--blue));transition:width .3s ease}
+.nav-dots{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:8px}
+.nav-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--soft);background:transparent;cursor:pointer;transition:all .3s ease;position:relative;text-decoration:none}
+.nav-dot.active{background:var(--teal);border-color:var(--teal);transform:scale(1.3)}
+.nav-dot:hover{border-color:var(--deep)}
+.nav-dot .dot-tip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.nav-dot:hover .dot-tip{opacity:1}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--cream) 0%,var(--peach) 30%,var(--lavender-light) 70%,var(--teal-light) 100%);position:relative;overflow:hidden;padding:60px 24px}
+.hero-content{text-align:center;max-width:800px;position:relative;z-index:2}
+.hero-badge{display:inline-block;padding:6px 20px;border-radius:20px;background:linear-gradient(135deg,var(--teal),var(--blue));color:#fff;font-size:14px;font-weight:500;margin-bottom:24px;letter-spacing:2px}
+.hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.3;margin-bottom:16px;color:var(--deep)}
+.hero-subtitle{font-size:clamp(14px,2vw,18px);color:var(--soft);margin-bottom:32px;font-weight:300}
+.hero-meta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.hero-meta-item{padding:8px 20px;border-radius:12px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);font-size:14px;color:var(--deep);font-weight:500;border:1px solid rgba(255,255,255,.8)}
+.hero-svg-wrap{margin-top:40px;display:flex;justify-content:center}
+.hero .float-shape{position:absolute;border-radius:50%;opacity:.15;filter:blur(40px)}
+.week-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 24px}
+.week-section:nth-child(odd){background:var(--cream-pale)}
+.week-section:nth-child(even){background:var(--surface)}
+.week-container{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.week-header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.week-num-badge{display:inline-flex;align-items:center;justify-content:center;padding:6px 16px;border-radius:20px;color:#fff;font-size:13px;font-weight:500;letter-spacing:1px}
+.week-num-badge.w1{background:linear-gradient(135deg,#6EC4B8,#A3D8D0)}
+.week-num-badge.w2{background:linear-gradient(135deg,#7BA7CC,#A8C8E0)}
+.week-num-badge.w3{background:linear-gradient(135deg,#E08B7A,#EAB8B0)}
+.week-theme{font-size:13px;color:var(--soft);font-weight:400;letter-spacing:1px}
+.week-title{font-family:'Noto Serif SC',serif;font-size:clamp(24px,3vw,36px);font-weight:700;margin-bottom:16px;color:var(--deep)}
+.week-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:20px}
+.week-details{list-style:none;margin-bottom:20px}
+.week-details li{padding:8px 0;font-size:14px;color:var(--deep);display:flex;align-items:flex-start;gap:10px}
+.week-details li::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;margin-top:8px;flex-shrink:0}
+.week-assess{padding:12px 16px;border-radius:10px;font-size:13px;color:var(--soft);border-left:3px solid var(--teal);background:var(--teal-light)}
+.week-assess.coral{border-left-color:var(--coral);background:var(--coral-light)}
+.week-assess.blue{border-left-color:var(--blue);background:var(--blue-light)}
+.week-svg-wrap{display:flex;justify-content:center;align-items:center}
+.week-svg-label{text-align:center;margin-top:12px;font-size:13px;color:var(--soft);letter-spacing:2px;font-weight:400}
+.adapt-section{padding:100px 24px;text-align:center;position:relative;overflow:hidden}
+.adapt-section .section-tag{display:inline-block;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:500;color:#fff;margin-bottom:20px;letter-spacing:2px}
+.adapt-section .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(24px,3.5vw,40px);font-weight:700;margin-bottom:12px;color:var(--deep)}
+.adapt-section .section-subtitle{font-size:clamp(14px,1.8vw,17px);color:var(--soft);max-width:700px;margin:0 auto 40px;line-height:1.8}
+.adapt-svg-wrap{display:flex;justify-content:center;margin-bottom:40px}
+.adapt-text{max-width:800px;margin:0 auto}
+.adapt-text p{padding:10px 0;font-size:15px;color:var(--deep);line-height:1.9;display:flex;align-items:flex-start;gap:10px;text-align:left}
+.adapt-text p::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;margin-top:10px;flex-shrink:0}
+.phase1-section{background:linear-gradient(135deg,var(--teal-light) 0%,var(--cream-pale) 50%,var(--mint-light) 100%)}
+.phase1-section .section-tag{background:linear-gradient(135deg,var(--teal),#A3D8D0)}
+.phase1-section .adapt-text p::before{background:var(--teal)}
+.phase2-section{background:linear-gradient(135deg,var(--coral-light) 0%,var(--peach) 50%,var(--yellow-light) 100%)}
+.phase2-section .section-tag{background:linear-gradient(135deg,var(--coral),#EAB8B0)}
+.phase2-section .adapt-text p::before{background:var(--coral)}
+.phase3-section{background:linear-gradient(135deg,var(--blue-light) 0%,var(--sky-light) 50%,var(--lavender-light) 100%)}
+.phase3-section .section-tag{background:linear-gradient(135deg,var(--blue),#A8C8E0)}
+.phase3-section .adapt-text p::before{background:var(--blue)}
+.assess-section{background:linear-gradient(135deg,var(--lavender-light) 0%,var(--cream) 50%,var(--yellow-light) 100%)}
+.assess-section .section-tag{background:linear-gradient(135deg,var(--lavender),var(--plum))}
+.assess-section .adapt-text p::before{background:var(--lavender)}
+.implement-section{background:linear-gradient(135deg,var(--mint-light) 0%,var(--teal-light) 50%,var(--cream-pale) 100%)}
+.implement-section .section-tag{background:linear-gradient(135deg,var(--mint),var(--teal))}
+.implement-section .adapt-text p::before{background:var(--mint)}
+.longterm-section{background:linear-gradient(135deg,var(--amber-light) 0%,var(--cream) 50%,var(--peach) 100%)}
+.longterm-section .section-tag{background:linear-gradient(135deg,var(--amber),#D4B85C)}
+.longterm-section .adapt-text p::before{background:var(--amber)}
+.sdgs-section{background:linear-gradient(135deg,var(--cream-pale) 0%,var(--surface) 50%,var(--blue-light) 100%)}
+.sdgs-section .section-tag{background:linear-gradient(135deg,var(--deep),var(--soft))}
+.sdgs-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto 40px}
+.sdg-card{padding:24px 20px;border-radius:16px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.9);text-align:left}
+.sdg-badge{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:700;color:#fff;margin-bottom:12px}
+.sdg-badge.sdg3{background:linear-gradient(135deg,var(--teal),#5AB0A4)}
+.sdg-badge.sdg11{background:linear-gradient(135deg,var(--blue),#6A97BC)}
+.sdg-badge.sdg13{background:linear-gradient(135deg,var(--mint),var(--amber))}
+.sdg-card h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--deep)}
+.sdg-card p{font-size:13px;color:var(--soft);line-height:1.7}
+.footer{padding:60px 24px;text-align:center;background:linear-gradient(135deg,var(--deep) 0%,#5A5468 100%);color:rgba(255,255,255,.8)}
+.footer h3{font-family:'Noto Serif SC',serif;font-size:22px;color:#fff;margin-bottom:8px}
+.footer p{font-size:14px;opacity:.7;letter-spacing:2px}
+@keyframes svg-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes svg-float-d{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes svg-float-d2{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes svg-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes svg-breathe{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.08);opacity:.8}}
+@keyframes svg-rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes svg-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes svg-glow{0%,100%{opacity:.4}50%{opacity:.9}}
+@keyframes svg-draw{to{stroke-dashoffset:0}}
+@keyframes svg-draw-slow{to{stroke-dashoffset:0}}
+@keyframes svg-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes svg-fade-in-d{from{opacity:0}to{opacity:1}}
+@keyframes svg-fade-in-d2{from{opacity:0}to{opacity:1}}
+@keyframes svg-fade-in-d3{from{opacity:0}to{opacity:1}}
+@keyframes svg-fade-in-d4{from{opacity:0}to{opacity:1}}
+@keyframes svg-scale-in{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes svg-ripple{0%{transform:scale(.5);opacity:.8}100%{transform:scale(2.5);opacity:0}}
+@keyframes svg-ring{0%{transform:scale(.8);opacity:.6}50%{transform:scale(1.1);opacity:.3}100%{transform:scale(.8);opacity:.6}}
+@keyframes svg-ring-d{0%{transform:scale(.9);opacity:.5}50%{transform:scale(1.15);opacity:.2}100%{transform:scale(.9);opacity:.5}}
+@keyframes svg-shimmer{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes svg-rise{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes svg-slide-l{from{transform:translateX(-30px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes svg-slide-r{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes svg-drop{0%{transform:translateY(-20px);opacity:0}60%{transform:translateY(0);opacity:1}80%{transform:translateY(-4px);opacity:.8}100%{transform:translateY(0);opacity:1}}
+@keyframes svg-drop-d{0%{transform:translateY(-25px);opacity:0}60%{transform:translateY(0);opacity:1}80%{transform:translateY(-5px);opacity:.8}100%{transform:translateY(0);opacity:1}}
+@keyframes reveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes reveal-left{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes reveal-right{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes reveal-scale{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.reveal,.reveal-left,.reveal-right,.reveal-scale{opacity:0}
+.reveal.visible{animation:reveal .8s ease forwards}
+.reveal-left.visible{animation:reveal-left .8s ease forwards}
+.reveal-right.visible{animation:reveal-right .8s ease forwards}
+.reveal-scale.visible{animation:reveal-scale .8s ease forwards}
+@media(max-width:768px){
+  .week-container{grid-template-columns:1fr;gap:30px}
+  .week-section{padding:60px 20px}
+  .nav-dots{display:none}
+  .sdgs-cards{grid-template-columns:1fr}
+  .adapt-section{padding:60px 20px}
+  .hero-meta{gap:8px}
+  .hero-meta-item{padding:6px 14px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <a class="nav-dot active" href="#hero"><span class="dot-tip">首页</span></a>
+  <a class="nav-dot" href="#phase1"><span class="dot-tip">第一阶段</span></a>
+  <a class="nav-dot" href="#week1"><span class="dot-tip">第1周 安全岛</span></a>
+  <a class="nav-dot" href="#week2"><span class="dot-tip">第2周 生命线</span></a>
+  <a class="nav-dot" href="#phase2"><span class="dot-tip">第二阶段</span></a>
+  <a class="nav-dot" href="#week3"><span class="dot-tip">第3周 情绪拼贴</span></a>
+  <a class="nav-dot" href="#week4"><span class="dot-tip">第4周 身体地图</span></a>
+  <a class="nav-dot" href="#week5"><span class="dot-tip">第5周 叙事剧场</span></a>
+  <a class="nav-dot" href="#phase3"><span class="dot-tip">第三阶段</span></a>
+  <a class="nav-dot" href="#week6"><span class="dot-tip">第6周 记忆墙</span></a>
+  <a class="nav-dot" href="#week7"><span class="dot-tip">第7周 感恩树</span></a>
+  <a class="nav-dot" href="#week8"><span class="dot-tip">第8周 未来愿景</span></a>
+  <a class="nav-dot" href="#assess"><span class="dot-tip">评估与实施</span></a>
+  <a class="nav-dot" href="#sdgs"><span class="dot-tip">SDGs</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="float-shape" style="width:300px;height:300px;background:var(--teal);top:10%;left:-5%;animation:svg-float 6s ease-in-out infinite"></div>
+  <div class="float-shape" style="width:250px;height:250px;background:var(--coral);top:60%;right:-5%;animation:svg-float-d 8s ease-in-out infinite"></div>
+  <div class="float-shape" style="width:200px;height:200px;background:var(--blue);bottom:10%;left:30%;animation:svg-float-d2 7s ease-in-out infinite"></div>
+  <div class="hero-content">
+    <div class="hero-badge reveal">灾后心理援助</div>
+    <h1 class="hero-title reveal">创伤知情艺术治疗 · 8周方案</h1>
+    <p class="hero-subtitle reveal">基于灾难心理援助阶段性恢复模型 · 三阶段递进式团体干预</p>
+    <div class="hero-meta reveal">
+      <span class="hero-meta-item">8周周期</span>
+      <span class="hero-meta-item">3个阶段</span>
+      <span class="hero-meta-item">艺术治疗</span>
+      <span class="hero-meta-item">团体框架</span>
+    </div>
+    <div class="hero-svg-wrap reveal-scale">
+      <svg viewBox="0 0 620 320" width="620" height="320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="heroGlow" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#F4E4A6" stop-opacity=".6"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity="0"/></radialGradient>
+          <radialGradient id="heroSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F4E4A6"/><stop offset="60%" stop-color="#F5E0D0"/><stop offset="100%" stop-color="#F5E0D0" stop-opacity="0"/></radialGradient>
+          <linearGradient id="heroBridge" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9B8FA8" stop-opacity=".4"/><stop offset="50%" stop-color="#6EC4B8"/><stop offset="100%" stop-color="#7BA7CC"/></linearGradient>
+        </defs>
+        <circle cx="310" cy="100" r="120" fill="url(#heroGlow)" style="animation:svg-glow 4s ease-in-out infinite"/>
+        <circle cx="310" cy="100" r="50" fill="url(#heroSun)" style="animation:svg-pulse 3s ease-in-out infinite"/>
+        <line x1="310" y1="40" x2="310" y2="20" stroke="#F4E4A6" stroke-width="2" opacity=".5" style="animation:svg-glow 2s ease-in-out infinite"/>
+        <line x1="350" y1="55" x2="365" y2="40" stroke="#F4E4A6" stroke-width="2" opacity=".5" style="animation:svg-glow 2s ease-in-out .3s infinite"/>
+        <line x1="270" y1="55" x2="255" y2="40" stroke="#F4E4A6" stroke-width="2" opacity=".5" style="animation:svg-glow 2s ease-in-out .6s infinite"/>
+        <line x1="370" y1="80" x2="390" y2="75" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out .9s infinite"/>
+        <line x1="250" y1="80" x2="230" y2="75" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out 1.2s infinite"/>
+        <path d="M80 250 L90 230 L85 210 L95 195 L88 180" stroke="#9B8FA8" stroke-width="1.5" fill="none" opacity=".5" style="animation:svg-fade-in 1s ease forwards"/>
+        <path d="M100 255 L110 240 L105 220" stroke="#9B8FA8" stroke-width="1" fill="none" opacity=".4" style="animation:svg-fade-in 1.2s ease forwards"/>
+        <path d="M60 260 L70 245 L65 230" stroke="#9B8FA8" stroke-width="1" fill="none" opacity=".4" style="animation:svg-fade-in 1.4s ease forwards"/>
+        <path d="M0 200 L0 320 L180 320 L180 200 Q160 180 140 200 Q120 180 100 200 Q80 180 60 200 Q40 180 20 200Z" fill="#E8E3EE" opacity=".6"/>
+        <path d="M440 200 Q460 180 480 200 Q500 180 520 200 Q540 180 560 200 Q580 180 600 200 Q620 180 620 200 L620 320 L440 320Z" fill="#D6E6F2" opacity=".6"/>
+        <path d="M180 220 Q250 190 310 185 Q370 190 440 220" stroke="url(#heroBridge)" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="400" stroke-dashoffset="400" style="animation:svg-draw 2.5s ease forwards .5s"/>
+        <line x1="210" y1="213" x2="210" y2="225" stroke="#6EC4B8" stroke-width="2" opacity=".6" style="animation:svg-fade-in .5s ease forwards 1.5s"/>
+        <line x1="250" y1="200" x2="250" y2="212" stroke="#6EC4B8" stroke-width="2" opacity=".6" style="animation:svg-fade-in .5s ease forwards 1.7s"/>
+        <line x1="290" y1="192" x2="290" y2="204" stroke="#6EC4B8" stroke-width="2" opacity=".6" style="animation:svg-fade-in .5s ease forwards 1.9s"/>
+        <line x1="330" y1="192" x2="330" y2="204" stroke="#6EC4B8" stroke-width="2" opacity=".6" style="animation:svg-fade-in .5s ease forwards 2.1s"/>
+        <line x1="370" y1="200" x2="370" y2="212" stroke="#7BA7CC" stroke-width="2" opacity=".6" style="animation:svg-fade-in .5s ease forwards 2.3s"/>
+        <line x1="410" y1="213" x2="410" y2="225" stroke="#7BA7CC" stroke-width="2" opacity=".6" style="animation:svg-fade-in .5s ease forwards 2.5s"/>
+        <circle cx="130" cy="195" r="14" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-float 3s ease-in-out infinite"/>
+        <path d="M124 201 Q130 193 136 201" fill="#9B8FA8" opacity=".4"/>
+        <rect x="120" y="209" width="20" height="28" rx="6" fill="#D6E6F2"/>
+        <line x1="140" y1="218" x2="165" y2="210" stroke="#D4899A" stroke-width="2" stroke-linecap="round" style="animation:svg-float 3s ease-in-out infinite"/>
+        <circle cx="490" cy="195" r="14" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-float-d 3s ease-in-out infinite"/>
+        <path d="M484 201 Q490 193 496 201" fill="#6EC4B8" opacity=".4"/>
+        <rect x="480" y="209" width="20" height="28" rx="6" fill="#D4EDE8"/>
+        <line x1="480" y1="218" x2="455" y2="210" stroke="#6EC4B8" stroke-width="2" stroke-linecap="round" style="animation:svg-float-d 3s ease-in-out infinite"/>
+        <circle cx="310" cy="172" r="12" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-float-d2 4s ease-in-out infinite"/>
+        <path d="M305 178 Q310 171 315 178" fill="#C9A84C" opacity=".4"/>
+        <rect x="302" y="184" width="16" height="24" rx="5" fill="#FBF4D6"/>
+        <circle cx="200" cy="150" r="3" fill="#F4E4A6" style="animation:svg-float 4s ease-in-out infinite"/>
+        <circle cx="260" cy="130" r="2.5" fill="#6EC4B8" style="animation:svg-float-d 5s ease-in-out infinite"/>
+        <circle cx="350" cy="125" r="3" fill="#7BA7CC" style="animation:svg-float-d2 4.5s ease-in-out infinite"/>
+        <circle cx="400" cy="140" r="2" fill="#E08B7A" style="animation:svg-float 5.5s ease-in-out infinite"/>
+        <circle cx="170" cy="170" r="2" fill="#D4899A" style="animation:svg-float-d 6s ease-in-out infinite"/>
+        <circle cx="440" cy="160" r="2.5" fill="#8BC9A8" style="animation:svg-float-d2 5s ease-in-out infinite"/>
+        <circle cx="310" cy="140" r="3.5" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+        <circle cx="230" cy="160" r="2" fill="#A68BB5" style="animation:svg-shimmer 4s ease-in-out 1s infinite"/>
+        <circle cx="380" cy="155" r="2" fill="#9B8FA8" style="animation:svg-shimmer 3.5s ease-in-out .5s infinite"/>
+        <path d="M0 280 Q50 270 100 280 Q150 290 200 280 Q250 270 300 280 Q350 290 400 280 Q450 270 500 280 Q550 290 600 280 Q620 275 620 280 L620 320 L0 320Z" fill="#D4EDE8" opacity=".3" stroke="#6EC4B8" stroke-width=".8" stroke-dasharray="800" stroke-dashoffset="800" style="animation:svg-draw 3s ease forwards"/>
+        <path d="M0 295 Q60 288 120 295 Q180 302 240 295 Q300 288 360 295 Q420 302 480 295 Q540 288 600 295 Q620 298 620 295 L620 320 L0 320Z" fill="#D6E6F2" opacity=".2" stroke="#7BA7CC" stroke-width=".6" stroke-dasharray="800" stroke-dashoffset="800" style="animation:svg-draw-slow 3.5s ease forwards"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 1 -->
+<section class="adapt-section phase1-section" id="phase1">
+  <span class="section-tag reveal">第一阶段</span>
+  <h2 class="section-title reveal">安全与稳定</h2>
+  <p class="section-subtitle reveal">第1-2周 · 建立心理安全感，稳定情绪，降低急性应激反应</p>
+  <div class="adapt-svg-wrap reveal-scale">
+    <svg viewBox="0 0 800 300" width="800" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="p1Glow" cx="50%" cy="60%" r="40%"><stop offset="0%" stop-color="#D4EDE8" stop-opacity=".5"/><stop offset="100%" stop-color="#D4EDE8" stop-opacity="0"/></radialGradient>
+        <linearGradient id="p1Beam" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F4E4A6" stop-opacity=".8"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity="0"/></linearGradient>
+      </defs>
+      <circle cx="400" cy="120" r="150" fill="url(#p1Glow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+      <rect x="180" y="100" width="30" height="140" rx="4" fill="#E8E3EE" stroke="#9B8FA8" stroke-width="1.5"/>
+      <rect x="175" y="90" width="40" height="20" rx="4" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1"/>
+      <circle cx="195" cy="100" r="8" fill="#F4E4A6" style="animation:svg-pulse 2s ease-in-out infinite"/>
+      <path d="M203 100 L350 60 L340 80Z" fill="url(#p1Beam)" style="animation:svg-rotate 8s linear infinite;transform-origin:195px 100px"/>
+      <path d="M203 100 L350 140 L340 120Z" fill="url(#p1Beam)" opacity=".5" style="animation:svg-rotate 8s linear infinite;transform-origin:195px 100px"/>
+      <rect x="180" y="130" width="30" height="8" rx="1" fill="#E08B7A" opacity=".5"/>
+      <rect x="180" y="160" width="30" height="8" rx="1" fill="#E08B7A" opacity=".5"/>
+      <rect x="180" y="190" width="30" height="8" rx="1" fill="#E08B7A" opacity=".5"/>
+      <path d="M0 240 Q100 230 200 240 Q300 250 400 240 Q500 230 600 240 Q700 250 800 240 L800 300 L0 300Z" fill="#D4EDE8" opacity=".4" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="800" stroke-dashoffset="800" style="animation:svg-draw 3s ease forwards"/>
+      <path d="M0 255 Q80 248 160 255 Q240 262 320 255 Q400 248 480 255 Q560 262 640 255 Q720 248 800 255 L800 300 L0 300Z" fill="#D4EDE8" opacity=".3" stroke="#6EC4B8" stroke-width=".8" stroke-dasharray="800" stroke-dashoffset="800" style="animation:svg-draw-slow 4s ease forwards"/>
+      <circle cx="260" cy="210" r="14" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-fade-in 1s ease forwards"/>
+      <path d="M254 216 Q260 208 266 216" fill="#9B8FA8" opacity=".4"/>
+      <rect x="250" y="224" width="20" height="28" rx="6" fill="#D6E6F2"/>
+      <circle cx="260" cy="225" r="35" fill="none" stroke="#6EC4B8" stroke-width="2" opacity=".4" style="animation:svg-breathe 4s ease-in-out infinite"/>
+      <circle cx="260" cy="225" r="45" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".2" style="animation:svg-breathe 4s ease-in-out 1s infinite"/>
+      <line x1="500" y1="50" x2="498" y2="65" stroke="#7BA7CC" stroke-width="1" opacity=".3" style="animation:svg-fade-in 2s ease forwards"/>
+      <line x1="530" y1="70" x2="528" y2="85" stroke="#7BA7CC" stroke-width="1" opacity=".2" style="animation:svg-fade-in-d 2.5s ease forwards"/>
+      <line x1="560" y1="40" x2="558" y2="55" stroke="#7BA7CC" stroke-width="1" opacity=".25" style="animation:svg-fade-in-d2 3s ease forwards"/>
+      <line x1="590" y1="60" x2="588" y2="75" stroke="#7BA7CC" stroke-width="1" opacity=".15" style="animation:svg-fade-in-d3 3.5s ease forwards"/>
+      <line x1="620" y1="45" x2="618" y2="60" stroke="#7BA7CC" stroke-width="1" opacity=".1" style="animation:svg-fade-in-d4 4s ease forwards"/>
+      <path d="M600 80 Q605 75 610 80 Q615 75 620 80" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float 5s ease-in-out infinite"/>
+      <path d="M640 60 Q644 56 648 60 Q652 56 656 60" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float-d 6s ease-in-out infinite"/>
+      <path d="M660 90 Q663 87 666 90 Q669 87 672 90" fill="none" stroke="#4A4458" stroke-width="1.2" style="animation:svg-float-d2 5.5s ease-in-out infinite"/>
+      <path d="M0 240 Q100 235 200 240 L300 240 Q350 238 400 240 L800 240 L800 300 L0 300Z" fill="#F5F0E1" opacity=".5"/>
+      <circle cx="300" cy="245" r="3" fill="#E08B7A" style="animation:svg-sway 3s ease-in-out infinite"/>
+      <circle cx="320" cy="248" r="2.5" fill="#D4899A" style="animation:svg-sway 3s ease-in-out .5s infinite"/>
+      <circle cx="340" cy="243" r="3" fill="#A68BB5" style="animation:svg-sway 3s ease-in-out 1s infinite"/>
+      <circle cx="450" cy="40" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+      <circle cx="500" cy="25" r="1.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+      <circle cx="550" cy="35" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+      <circle cx="700" cy="50" r="1.5" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+    </svg>
+  </div>
+</section>
+
+<!-- WEEK 1 -->
+<section class="week-section" id="week1">
+  <div class="week-container">
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w1">第1周</span><span class="week-theme">Safe Island Creation</span></div>
+      <h3 class="week-title reveal">安全岛创作</h3>
+      <p class="week-desc reveal">引导居民用绘画或拼贴方式描绘让自己感到安全的场景，治疗师提供丰富材料。同时进行grounding练习（五感觉察法），帮助居民从创伤闪回中回到当下。</p>
+      <ul class="week-details reveal">
+        <li>绘画 · 拼贴 · 旧杂志 · 布料等丰富材料</li>
+        <li>五感觉察法 grounding练习</li>
+        <li>从创伤闪回中回到当下</li>
+      </ul>
+      <div class="week-assess reveal">配合grounding五感觉察法，建立安全感锚点</div>
+    </div>
+    <div class="week-svg-wrap reveal-right">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="w1Glow" cx="50%" cy="45%" r="45%"><stop offset="0%" stop-color="#D4EDE8" stop-opacity=".5"/><stop offset="100%" stop-color="#D4EDE8" stop-opacity="0"/></radialGradient>
+            <radialGradient id="w1Island" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#8BC9A8"/><stop offset="100%" stop-color="#6EC4B8"/></radialGradient>
+          </defs>
+          <circle cx="220" cy="170" r="160" fill="url(#w1Glow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+          <circle cx="220" cy="170" r="130" fill="none" stroke="#6EC4B8" stroke-width="2" stroke-dasharray="8 4" opacity=".3" style="animation:svg-breathe 4s ease-in-out infinite"/>
+          <circle cx="220" cy="170" r="140" fill="none" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="4 6" opacity=".2" style="animation:svg-breathe 4s ease-in-out 1s infinite"/>
+          <ellipse cx="220" cy="220" rx="90" ry="40" fill="url(#w1Island)" opacity=".8"/>
+          <ellipse cx="220" cy="215" rx="85" ry="35" fill="#D9F0E4" opacity=".6"/>
+          <circle cx="170" cy="195" r="18" fill="#8BC9A8" opacity=".7" style="animation:svg-sway 4s ease-in-out infinite"/>
+          <rect x="167" y="210" width="6" height="15" rx="2" fill="#C9A84C" opacity=".6"/>
+          <circle cx="270" cy="200" r="15" fill="#8BC9A8" opacity=".6" style="animation:svg-sway 4s ease-in-out .5s infinite"/>
+          <rect x="267" y="212" width="5" height="12" rx="2" fill="#C9A84C" opacity=".5"/>
+          <circle cx="220" cy="190" r="20" fill="#6EC4B8" opacity=".5" style="animation:svg-sway 4s ease-in-out 1s infinite"/>
+          <rect x="217" y="205" width="6" height="16" rx="2" fill="#C9A84C" opacity=".6"/>
+          <circle cx="220" cy="198" r="12" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-fade-in 1s ease forwards"/>
+          <path d="M215 204 Q220 197 225 204" fill="#9B8FA8" opacity=".4"/>
+          <rect x="212" y="210" width="16" height="20" rx="5" fill="#D6E6F2"/>
+          <line x1="228" y1="218" x2="245" y2="225" stroke="#D4899A" stroke-width="2" stroke-linecap="round"/>
+          <rect x="240" y="218" width="25" height="18" rx="2" fill="#FAF8F2" stroke="#9B8FA8" stroke-width="1" style="animation:svg-fade-in 1.5s ease forwards"/>
+          <rect x="150" y="235" width="3" height="18" rx="1" fill="#E08B7A" style="animation:svg-float 4s ease-in-out infinite" transform="rotate(-15 151 244)"/>
+          <rect x="158" y="237" width="3" height="16" rx="1" fill="#7BA7CC" style="animation:svg-float-d 4.5s ease-in-out infinite" transform="rotate(10 159 245)"/>
+          <rect x="280" y="233" width="3" height="18" rx="1" fill="#A68BB5" style="animation:svg-float-d2 5s ease-in-out infinite" transform="rotate(-8 281 242)"/>
+          <circle cx="155" cy="258" r="4" fill="#E08B7A" style="animation:svg-pulse 3s ease-in-out infinite"/>
+          <circle cx="165" cy="256" r="4" fill="#7BA7CC" style="animation:svg-pulse 3s ease-in-out .3s infinite"/>
+          <circle cx="175" cy="258" r="4" fill="#F4E4A6" style="animation:svg-pulse 3s ease-in-out .6s infinite"/>
+          <circle cx="185" cy="256" r="4" fill="#8BC9A8" style="animation:svg-pulse 3s ease-in-out .9s infinite"/>
+          <g style="animation:svg-float 4s ease-in-out infinite"><ellipse cx="120" cy="120" rx="12" ry="8" fill="none" stroke="#7BA7CC" stroke-width="1.5"/><circle cx="120" cy="120" r="4" fill="#7BA7CC"/><text x="120" y="140" text-anchor="middle" font-size="9" fill="#7A7486">视觉</text></g>
+          <g style="animation:svg-float-d 4.5s ease-in-out infinite"><path d="M310 110 Q320 100 325 110 Q320 120 310 110" fill="none" stroke="#A68BB5" stroke-width="1.5"/><text x="318" y="130" text-anchor="middle" font-size="9" fill="#7A7486">听觉</text></g>
+          <g style="animation:svg-float-d2 5s ease-in-out infinite"><path d="M140 160 Q145 150 150 160" fill="none" stroke="#D4899A" stroke-width="1.5"/><text x="145" y="175" text-anchor="middle" font-size="9" fill="#7A7486">嗅觉</text></g>
+          <g style="animation:svg-float 5.5s ease-in-out infinite"><circle cx="300" cy="155" r="8" fill="none" stroke="#C9A84C" stroke-width="1.5"/><circle cx="300" cy="155" r="3" fill="#C9A84C"/><text x="300" y="173" text-anchor="middle" font-size="9" fill="#7A7486">触觉</text></g>
+          <g style="animation:svg-float-d 6s ease-in-out infinite"><circle cx="220" cy="110" r="5" fill="#E08B7A" opacity=".7"/><circle cx="215" cy="106" r="3" fill="#F5D9D3"/><circle cx="225" cy="106" r="3" fill="#F5D9D3"/><circle cx="215" cy="114" r="3" fill="#F5D9D3"/><circle cx="225" cy="114" r="3" fill="#F5D9D3"/><text x="220" y="130" text-anchor="middle" font-size="9" fill="#7A7486">味觉</text></g>
+          <path d="M0 290 Q55 280 110 290 Q165 300 220 290 Q275 280 330 290 Q385 300 440 290 L440 380 L0 380Z" fill="#D4EDE8" opacity=".3" stroke="#6EC4B8" stroke-width=".8" stroke-dasharray="600" stroke-dashoffset="600" style="animation:svg-draw 3s ease forwards"/>
+          <path d="M0 310 Q60 302 120 310 Q180 318 240 310 Q300 302 360 310 Q420 318 440 310 L440 380 L0 380Z" fill="#D4EDE8" opacity=".2" stroke="#6EC4B8" stroke-width=".6" stroke-dasharray="600" stroke-dashoffset="600" style="animation:svg-draw-slow 4s ease forwards"/>
+          <circle cx="100" cy="60" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="180" cy="45" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <circle cx="260" cy="55" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+          <circle cx="340" cy="50" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+          <circle cx="380" cy="70" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out 2s infinite"/>
+          <circle cx="60" cy="80" r="1.5" fill="#F4E4A6" style="animation:svg-shimmer 5s ease-in-out .8s infinite"/>
+          <text x="220" y="360" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">安全 · 觉察 · 回到当下</text>
+        </svg>
+        <div class="week-svg-label">安全岛场景</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 2 -->
+<section class="week-section" id="week2">
+  <div class="week-container">
+    <div class="week-svg-wrap reveal-left">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="w2Sun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F4E4A6"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity="0"/></radialGradient>
+          </defs>
+          <circle cx="380" cy="60" r="50" fill="url(#w2Sun)" style="animation:svg-glow 4s ease-in-out infinite"/>
+          <circle cx="380" cy="60" r="20" fill="#F4E4A6" style="animation:svg-pulse 3s ease-in-out infinite"/>
+          <line x1="380" y1="25" x2="380" y2="10" stroke="#F4E4A6" stroke-width="2" opacity=".5" style="animation:svg-glow 2s ease-in-out infinite"/>
+          <line x1="405" y1="35" x2="415" y2="25" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out .4s infinite"/>
+          <line x1="415" y1="60" x2="430" y2="60" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out .8s infinite"/>
+          <path d="M30 250 Q80 220 130 240 Q180 260 220 230 Q260 200 300 220 Q340 240 380 210 Q400 195 420 200" stroke="#D4EDE8" stroke-width="6" fill="none" stroke-linecap="round" opacity=".4"/>
+          <path d="M30 250 Q80 220 130 240 Q180 260 220 230 Q260 200 300 220 Q340 240 380 210 Q400 195 420 200" stroke="#6EC4B8" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="600" stroke-dashoffset="600" style="animation:svg-draw 3s ease forwards"/>
+          <path d="M0 280 Q60 250 120 270 Q180 290 240 270 Q300 250 360 270 Q420 290 440 280 L440 380 L0 380Z" fill="#D9F0E4" opacity=".3"/>
+          <circle cx="100" cy="232" r="8" fill="#F4E4A6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-scale-in .5s ease forwards 1s;transform-origin:100px 232px"/>
+          <circle cx="180" cy="252" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-scale-in .5s ease forwards 1.5s;transform-origin:180px 252px"/>
+          <circle cx="260" cy="218" r="8" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-scale-in .5s ease forwards 2s;transform-origin:260px 218px"/>
+          <circle cx="340" cy="228" r="8" fill="#D6E6F2" stroke="#7BA7CC" stroke-width="1.5" style="animation:svg-scale-in .5s ease forwards 2.5s;transform-origin:340px 228px"/>
+          <circle cx="150" cy="220" r="11" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-float 3s ease-in-out infinite"/>
+          <path d="M145 225 Q150 219 155 225" fill="#9B8FA8" opacity=".4"/>
+          <rect x="142" y="231" width="16" height="22" rx="5" fill="#D6E6F2"/>
+          <circle cx="195" cy="215" r="11" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-float-d 3.5s ease-in-out infinite"/>
+          <path d="M190 220 Q195 214 200 220" fill="#6EC4B8" opacity=".4"/>
+          <rect x="187" y="226" width="16" height="22" rx="5" fill="#D4EDE8"/>
+          <circle cx="240" cy="222" r="11" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-float-d2 4s ease-in-out infinite"/>
+          <path d="M235 227 Q240 221 245 227" fill="#C9A84C" opacity=".4"/>
+          <rect x="232" y="233" width="16" height="22" rx="5" fill="#FBF4D6"/>
+          <circle cx="195" cy="200" r="12" fill="none" stroke="#6EC4B8" stroke-width="1.5" opacity=".4" style="animation:svg-breathe 3s ease-in-out infinite"/>
+          <circle cx="195" cy="200" r="18" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".2" style="animation:svg-breathe 3s ease-in-out .5s infinite"/>
+          <circle cx="195" cy="200" r="24" fill="none" stroke="#6EC4B8" stroke-width=".8" opacity=".1" style="animation:svg-breathe 3s ease-in-out 1s infinite"/>
+          <circle cx="120" cy="180" r="10" fill="#F2DDE2" opacity=".7" style="animation:svg-float 4s ease-in-out infinite"/>
+          <text x="120" y="184" text-anchor="middle" font-size="8" fill="#D4899A">爱</text>
+          <circle cx="220" cy="170" r="10" fill="#D9F0E4" opacity=".7" style="animation:svg-float-d 5s ease-in-out infinite"/>
+          <text x="220" y="174" text-anchor="middle" font-size="8" fill="#6EC4B8">力</text>
+          <circle cx="310" cy="175" r="10" fill="#FBF4D6" opacity=".7" style="animation:svg-float-d2 4.5s ease-in-out infinite"/>
+          <text x="310" y="179" text-anchor="middle" font-size="8" fill="#C9A84C">望</text>
+          <circle cx="70" cy="265" r="3" fill="#E08B7A" style="animation:svg-sway 3s ease-in-out infinite"/>
+          <circle cx="160" cy="270" r="2.5" fill="#D4899A" style="animation:svg-sway 3s ease-in-out .5s infinite"/>
+          <circle cx="290" cy="250" r="3" fill="#A68BB5" style="animation:svg-sway 3s ease-in-out 1s infinite"/>
+          <circle cx="370" cy="245" r="2.5" fill="#8BC9A8" style="animation:svg-sway 3s ease-in-out 1.5s infinite"/>
+          <line x1="80" y1="268" x2="80" y2="278" stroke="#8BC9A8" stroke-width="1" style="animation:svg-sway 3s ease-in-out .3s infinite"/>
+          <line x1="300" y1="253" x2="300" y2="263" stroke="#8BC9A8" stroke-width="1" style="animation:svg-sway 3s ease-in-out .8s infinite"/>
+          <circle cx="50" cy="100" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="150" cy="80" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <circle cx="280" cy="90" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+          <circle cx="350" cy="100" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+          <line x1="161" y1="230" x2="187" y2="225" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="3 3" opacity=".4" stroke-dasharray="30" stroke-dashoffset="30" style="animation:svg-draw 2s ease forwards 2s"/>
+          <line x1="203" y1="230" x2="232" y2="232" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="3 3" opacity=".4" stroke-dasharray="30" stroke-dashoffset="30" style="animation:svg-draw 2s ease forwards 2.5s"/>
+          <text x="220" y="360" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">资源 · 成就 · 自我效能</text>
+        </svg>
+        <div class="week-svg-label">生命线场景</div>
+      </div>
+    </div>
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w1">第2周</span><span class="week-theme">Group Lifeline</span></div>
+      <h3 class="week-title reveal">团体生命线</h3>
+      <p class="week-desc reveal">每位居民在长卷上绘制自己人生中的重要时刻和积极资源，强调灾难前的能力与成就，重建自我效能感。配合呼吸放松训练。</p>
+      <ul class="week-details reveal">
+        <li>长卷绘制人生重要时刻</li>
+        <li>强调灾难前能力与成就</li>
+        <li>腹式呼吸 + 渐进式肌肉放松</li>
+      </ul>
+      <div class="week-assess reveal">重建自我效能感，配合呼吸放松训练</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 2 -->
+<section class="adapt-section phase2-section" id="phase2">
+  <span class="section-tag reveal">第二阶段</span>
+  <h2 class="section-title reveal">创伤处理与表达</h2>
+  <p class="section-subtitle reveal">第3-5周 · 通过非语言艺术媒介安全表达创伤体验，促进情绪释放与认知重构</p>
+  <div class="adapt-svg-wrap reveal-scale">
+    <svg viewBox="0 0 800 300" width="800" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="p2Glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F5D9D3" stop-opacity=".4"/><stop offset="100%" stop-color="#F5D9D3" stop-opacity="0"/></radialGradient>
+        <linearGradient id="p2Energy" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9B8FA8"/><stop offset="50%" stop-color="#E08B7A"/><stop offset="100%" stop-color="#F4E4A6"/></linearGradient>
+      </defs>
+      <circle cx="400" cy="150" r="140" fill="url(#p2Glow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+      <ellipse cx="250" cy="160" rx="50" ry="70" fill="#E8E3EE" stroke="#9B8FA8" stroke-width="2" opacity=".7"/>
+      <ellipse cx="250" cy="160" rx="40" ry="55" fill="#D4EDE8" opacity=".3"/>
+      <circle cx="250" cy="140" r="12" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" opacity=".6"/>
+      <rect x="242" y="155" width="16" height="22" rx="5" fill="#D6E6F2" opacity=".5"/>
+      <path d="M215 130 Q250 120 285 130" fill="none" stroke="#9B8FA8" stroke-width="1" opacity=".4" style="animation:svg-breathe 3s ease-in-out infinite"/>
+      <path d="M210 160 Q250 150 290 160" fill="none" stroke="#9B8FA8" stroke-width="1" opacity=".3" style="animation:svg-breathe 3s ease-in-out .5s infinite"/>
+      <path d="M215 190 Q250 180 285 190" fill="none" stroke="#9B8FA8" stroke-width="1" opacity=".4" style="animation:svg-breathe 3s ease-in-out 1s infinite"/>
+      <path d="M300 160 Q350 140 400 150 Q450 160 500 140 Q530 130 550 150" stroke="url(#p2Energy)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="400" stroke-dashoffset="400" style="animation:svg-draw 3s ease forwards"/>
+      <g style="animation:svg-float 4s ease-in-out infinite" transform="translate(550,130)">
+        <ellipse cx="-15" cy="0" rx="18" ry="25" fill="#E08B7A" opacity=".6" style="animation:svg-sway 2s ease-in-out infinite;transform-origin:-15px 0px"/>
+        <ellipse cx="15" cy="0" rx="18" ry="25" fill="#F4E4A6" opacity=".6" style="animation:svg-sway 2s ease-in-out .5s infinite;transform-origin:15px 0px"/>
+        <ellipse cx="-10" cy="15" rx="12" ry="16" fill="#D4899A" opacity=".5"/>
+        <ellipse cx="10" cy="15" rx="12" ry="16" fill="#C9A84C" opacity=".5"/>
+        <rect x="-2" y="-20" width="4" height="40" rx="2" fill="#4A4458" opacity=".6"/>
+        <path d="M0 -20 Q-8 -30 -12 -28" fill="none" stroke="#4A4458" stroke-width="1" opacity=".5"/>
+        <path d="M0 -20 Q8 -30 12 -28" fill="none" stroke="#4A4458" stroke-width="1" opacity=".5"/>
+      </g>
+      <circle cx="560" cy="195" r="12" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-fade-in 1.5s ease forwards"/>
+      <path d="M555 201 Q560 194 565 201" fill="#6EC4B8" opacity=".4"/>
+      <rect x="552" y="207" width="16" height="22" rx="5" fill="#D4EDE8"/>
+      <line x1="552" y1="212" x2="540" y2="200" stroke="#6EC4B8" stroke-width="2" stroke-linecap="round"/>
+      <line x1="568" y1="212" x2="580" y2="200" stroke="#6EC4B8" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="350" cy="100" r="5" fill="#E08B7A" opacity=".6" style="animation:svg-rotate 8s linear infinite;transform-origin:400px 150px"/>
+      <circle cx="420" cy="90" r="4" fill="#A68BB5" opacity=".5" style="animation:svg-rotate 10s linear infinite;transform-origin:400px 150px"/>
+      <circle cx="380" cy="200" r="5" fill="#F4E4A6" opacity=".6" style="animation:svg-rotate 7s linear infinite reverse;transform-origin:400px 150px"/>
+      <circle cx="450" cy="180" r="4" fill="#6EC4B8" opacity=".5" style="animation:svg-rotate 9s linear infinite;transform-origin:400px 150px"/>
+      <circle cx="330" cy="170" r="3" fill="#D4899A" opacity=".5" style="animation:svg-rotate 11s linear infinite reverse;transform-origin:400px 150px"/>
+      <circle cx="470" cy="120" r="4" fill="#7BA7CC" opacity=".4" style="animation:svg-rotate 8s linear infinite;transform-origin:400px 150px"/>
+      <circle cx="180" cy="100" r="3" fill="#9B8FA8" opacity=".4" style="animation:svg-float 5s ease-in-out infinite"/>
+      <circle cx="650" cy="100" r="3" fill="#F4E4A6" opacity=".5" style="animation:svg-float-d 6s ease-in-out infinite"/>
+      <circle cx="700" cy="150" r="2.5" fill="#6EC4B8" opacity=".4" style="animation:svg-float-d2 5.5s ease-in-out infinite"/>
+      <path d="M0 260 Q200 250 400 260 Q600 270 800 260 L800 300 L0 300Z" fill="#F5E0D0" opacity=".3"/>
+      <circle cx="150" cy="265" r="3" fill="#E08B7A" opacity=".5" style="animation:svg-sway 3s ease-in-out infinite"/>
+      <circle cx="650" cy="258" r="3" fill="#8BC9A8" opacity=".5" style="animation:svg-sway 3s ease-in-out .5s infinite"/>
+    </svg>
+  </div>
+</section>
+
+<!-- WEEK 3 -->
+<section class="week-section" id="week3">
+  <div class="week-container">
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w3">第3周</span><span class="week-theme">Emotion Collage</span></div>
+      <h3 class="week-title reveal">情绪拼贴</h3>
+      <p class="week-desc reveal">居民借助各类色彩、图文素材拼贴呈现灾后复杂情绪与内心感受。以非语言、象征性的艺术方式外化难以言说的创伤体验。</p>
+      <ul class="week-details reveal">
+        <li>色彩 · 图文素材拼贴</li>
+        <li>非语言象征性艺术表达</li>
+        <li>外化创伤体验，降低心理阻力</li>
+      </ul>
+      <div class="week-assess coral reveal">以非语言方式安全表达创伤，促进情绪外化与释放</div>
+    </div>
+    <div class="week-svg-wrap reveal-right">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="w3Glow" cx="50%" cy="45%" r="40%"><stop offset="0%" stop-color="#F5D9D3" stop-opacity=".3"/><stop offset="100%" stop-color="#F5D9D3" stop-opacity="0"/></radialGradient></defs>
+          <circle cx="220" cy="170" r="150" fill="url(#w3Glow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+          <rect x="100" y="80" width="240" height="200" rx="8" fill="#FAF8F2" stroke="#9B8FA8" stroke-width="2"/>
+          <rect x="105" y="85" width="230" height="190" rx="5" fill="none" stroke="#E8E3EE" stroke-width="1"/>
+          <rect x="140" y="120" width="35" height="28" rx="3" fill="#E08B7A" opacity=".8" transform="rotate(-8 157 134)" style="animation:svg-scale-in .5s ease forwards .5s;transform-origin:157px 134px"/>
+          <rect x="180" y="110" width="30" height="25" rx="3" fill="#C9A84C" opacity=".7" transform="rotate(5 195 122)" style="animation:svg-scale-in .5s ease forwards .8s;transform-origin:195px 122px"/>
+          <rect x="215" y="115" width="32" height="26" rx="3" fill="#9B8FA8" opacity=".7" transform="rotate(-3 231 128)" style="animation:svg-scale-in .5s ease forwards 1.1s;transform-origin:231px 128px"/>
+          <rect x="255" y="125" width="28" height="24" rx="3" fill="#6EC4B8" opacity=".7" transform="rotate(7 269 137)" style="animation:svg-scale-in .5s ease forwards 1.4s;transform-origin:269px 137px"/>
+          <rect x="130" y="155" width="30" height="25" rx="3" fill="#D4899A" opacity=".7" transform="rotate(4 145 167)" style="animation:svg-scale-in .5s ease forwards 1.7s;transform-origin:145px 167px"/>
+          <rect x="170" y="150" width="35" height="28" rx="3" fill="#F4E4A6" opacity=".8" transform="rotate(-6 187 164)" style="animation:svg-scale-in .5s ease forwards 2s;transform-origin:187px 164px"/>
+          <rect x="215" y="148" width="28" height="30" rx="3" fill="#E08B7A" opacity=".6" transform="rotate(8 229 163)" style="animation:svg-scale-in .5s ease forwards 2.3s;transform-origin:229px 163px"/>
+          <rect x="255" y="155" width="32" height="24" rx="3" fill="#A68BB5" opacity=".7" transform="rotate(-4 271 167)" style="animation:svg-scale-in .5s ease forwards 2.6s;transform-origin:271px 167px"/>
+          <rect x="145" y="190" width="30" height="25" rx="3" fill="#7BA7CC" opacity=".7" transform="rotate(6 160 202)" style="animation:svg-scale-in .5s ease forwards 2.9s;transform-origin:160px 202px"/>
+          <rect x="185" y="188" width="35" height="26" rx="3" fill="#8BC9A8" opacity=".6" transform="rotate(-5 202 201)" style="animation:svg-scale-in .5s ease forwards 3.2s;transform-origin:202px 201px"/>
+          <rect x="230" y="185" width="28" height="28" rx="3" fill="#C9A84C" opacity=".7" transform="rotate(3 244 199)" style="animation:svg-scale-in .5s ease forwards 3.5s;transform-origin:244px 199px"/>
+          <rect x="270" y="190" width="25" height="22" rx="3" fill="#D4899A" opacity=".6" transform="rotate(-7 282 201)" style="animation:svg-scale-in .5s ease forwards 3.8s;transform-origin:282px 201px"/>
+          <path d="M220 240 Q180 210 160 190 Q140 170 160 155 Q180 140 200 160 Q210 170 220 185 Q230 170 240 160 Q260 140 280 155 Q300 170 280 190 Q260 210 220 240Z" fill="none" stroke="#E08B7A" stroke-width="1.5" opacity=".3" stroke-dasharray="500" stroke-dashoffset="500" style="animation:svg-draw 4s ease forwards 1s"/>
+          <circle cx="310" cy="160" r="10" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-fade-in 1s ease forwards"/>
+          <rect x="300" y="168" width="20" height="8" rx="3" fill="#F5D9D3" stroke="#D4899A" stroke-width="1" style="animation:svg-fade-in 1s ease forwards"/>
+          <rect x="295" y="148" width="15" height="12" rx="2" fill="#F4E4A6" opacity=".8" transform="rotate(10 302 154)" style="animation:svg-float 3s ease-in-out infinite"/>
+          <g style="animation:svg-float-d 4s ease-in-out infinite" transform="translate(80,130)"><line x1="0" y1="0" x2="15" y2="20" stroke="#4A4458" stroke-width="2"/><line x1="0" y1="0" x2="15" y2="-20" stroke="#4A4458" stroke-width="2"/><circle cx="0" cy="0" r="3" fill="#4A4458"/></g>
+          <circle cx="160" cy="300" r="6" fill="#E08B7A" opacity=".5" style="animation:svg-ripple 2s ease-in-out infinite"/>
+          <circle cx="220" cy="310" r="5" fill="#A68BB5" opacity=".5" style="animation:svg-ripple 2s ease-in-out .5s infinite"/>
+          <circle cx="280" cy="295" r="6" fill="#6EC4B8" opacity=".5" style="animation:svg-ripple 2s ease-in-out 1s infinite"/>
+          <path d="M80 290 Q130 280 180 290 Q230 300 280 290 Q330 280 380 290" stroke="#E08B7A" stroke-width="1.5" fill="none" opacity=".3" stroke-dasharray="400" stroke-dashoffset="400" style="animation:svg-draw 3s ease forwards"/>
+          <path d="M60 305 Q120 295 180 305 Q240 315 300 305 Q360 295 400 305" stroke="#A68BB5" stroke-width="1" fill="none" opacity=".2" stroke-dasharray="400" stroke-dashoffset="400" style="animation:svg-draw-slow 4s ease forwards"/>
+          <rect x="120" y="50" width="12" height="10" rx="1" fill="#E08B7A" opacity=".5" transform="rotate(20 126 55)" style="animation:svg-drop 4s ease-in-out infinite"/>
+          <rect x="250" y="40" width="10" height="8" rx="1" fill="#C9A84C" opacity=".4" transform="rotate(-15 255 44)" style="animation:svg-drop-d 5s ease-in-out infinite"/>
+          <rect x="340" y="55" width="11" height="9" rx="1" fill="#6EC4B8" opacity=".4" transform="rotate(10 345 59)" style="animation:svg-drop 4.5s ease-in-out 1s infinite"/>
+          <circle cx="60" cy="100" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="380" cy="80" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <circle cx="400" cy="200" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+          <text x="220" y="355" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">色彩 · 表达 · 释放</text>
+        </svg>
+        <div class="week-svg-label">情绪拼贴场景</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 4 -->
+<section class="week-section" id="week4">
+  <div class="week-container">
+    <div class="week-svg-wrap reveal-left">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="w4Glow" cx="50%" cy="45%" r="40%"><stop offset="0%" stop-color="#F5D9D3" stop-opacity=".3"/><stop offset="100%" stop-color="#F5D9D3" stop-opacity="0"/></radialGradient></defs>
+          <circle cx="220" cy="180" r="160" fill="url(#w4Glow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+          <circle cx="220" cy="180" r="120" fill="none" stroke="#6EC4B8" stroke-width="1.5" opacity=".2" style="animation:svg-breathe 5s ease-in-out infinite"/>
+          <circle cx="220" cy="180" r="140" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".1" style="animation:svg-breathe 5s ease-in-out 1s infinite"/>
+          <circle cx="220" cy="100" r="28" fill="#F5D9D3" stroke="#D4899A" stroke-width="2"/>
+          <rect x="212" y="126" width="16" height="10" rx="4" fill="#F5D9D3"/>
+          <path d="M180 136 Q180 130 200 130 L240 130 Q260 130 260 136 L265 250 Q265 260 255 260 L185 260 Q175 260 175 250Z" fill="#D6E6F2" stroke="#7BA7CC" stroke-width="1.5" opacity=".8"/>
+          <path d="M180 145 Q160 160 155 190" stroke="#D6E6F2" stroke-width="12" fill="none" stroke-linecap="round" opacity=".7"/>
+          <path d="M260 145 Q280 160 285 190" stroke="#D6E6F2" stroke-width="12" fill="none" stroke-linecap="round" opacity=".7"/>
+          <circle cx="155" cy="190" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+          <circle cx="285" cy="190" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+          <circle cx="220" cy="85" r="8" fill="#E08B7A" opacity=".6" style="animation:svg-pulse 2s ease-in-out infinite"><animate attributeName="opacity" values=".6;.2;.6" dur="4s" repeatCount="indefinite"/></circle>
+          <circle cx="220" cy="170" r="12" fill="#D4899A" opacity=".5" style="animation:svg-pulse 2.5s ease-in-out .3s infinite"><animate attributeName="opacity" values=".5;.15;.5" dur="5s" repeatCount="indefinite"/></circle>
+          <circle cx="220" cy="220" r="10" fill="#C9A84C" opacity=".5" style="animation:svg-pulse 2s ease-in-out .6s infinite"><animate attributeName="opacity" values=".5;.15;.5" dur="4.5s" repeatCount="indefinite"/></circle>
+          <circle cx="185" cy="140" r="7" fill="#A68BB5" opacity=".5" style="animation:svg-pulse 2.2s ease-in-out .9s infinite"><animate attributeName="opacity" values=".5;.15;.5" dur="4s" repeatCount="indefinite"/></circle>
+          <circle cx="255" cy="140" r="7" fill="#A68BB5" opacity=".5" style="animation:svg-pulse 2.2s ease-in-out 1.2s infinite"><animate attributeName="opacity" values=".5;.15;.5" dur="4s" repeatCount="indefinite"/></circle>
+          <line x1="220" y1="85" x2="220" y2="60" stroke="#E08B7A" stroke-width="1" opacity=".4" stroke-dasharray="30" stroke-dashoffset="30" style="animation:svg-draw 2s ease forwards"/>
+          <line x1="220" y1="170" x2="180" y2="155" stroke="#D4899A" stroke-width="1" opacity=".3" stroke-dasharray="30" stroke-dashoffset="30" style="animation:svg-draw 2s ease forwards .5s"/>
+          <line x1="220" y1="170" x2="260" y2="155" stroke="#D4899A" stroke-width="1" opacity=".3" stroke-dasharray="30" stroke-dashoffset="30" style="animation:svg-draw 2s ease forwards 1s"/>
+          <line x1="220" y1="220" x2="200" y2="240" stroke="#C9A84C" stroke-width="1" opacity=".3" stroke-dasharray="30" stroke-dashoffset="30" style="animation:svg-draw 2s ease forwards 1.5s"/>
+          <line x1="220" y1="220" x2="240" y2="240" stroke="#C9A84C" stroke-width="1" opacity=".3" stroke-dasharray="30" stroke-dashoffset="30" style="animation:svg-draw 2s ease forwards 2s"/>
+          <g style="animation:svg-float 4s ease-in-out infinite" transform="translate(340,150)"><circle cx="0" cy="0" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/><rect x="2" y="5" width="3" height="20" rx="1" fill="#C9A84C"/><rect x="0" y="23" width="7" height="4" rx="1" fill="#E08B7A"/></g>
+          <circle cx="220" cy="180" r="80" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".3" style="animation:svg-ring 4s ease-in-out infinite"/>
+          <circle cx="220" cy="180" r="100" fill="none" stroke="#6EC4B8" stroke-width=".8" opacity=".2" style="animation:svg-ring-d 4s ease-in-out 1s infinite"/>
+          <rect x="270" y="72" width="40" height="16" rx="4" fill="#F5D9D3" opacity=".8"/>
+          <text x="290" y="83" text-anchor="middle" font-size="8" fill="#E08B7A">紧张</text>
+          <rect x="275" y="162" width="40" height="16" rx="4" fill="#F2DDE2" opacity=".8"/>
+          <text x="295" y="173" text-anchor="middle" font-size="8" fill="#D4899A">心悸</text>
+          <rect x="275" y="212" width="40" height="16" rx="4" fill="#FBF4D6" opacity=".8"/>
+          <text x="295" y="223" text-anchor="middle" font-size="8" fill="#C9A84C">紧绷</text>
+          <circle cx="60" cy="80" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="380" cy="100" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <circle cx="50" cy="250" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+          <circle cx="390" cy="280" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+          <text x="220" y="355" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">觉察 · 释放 · 疗愈</text>
+        </svg>
+        <div class="week-svg-label">身体地图场景</div>
+      </div>
+    </div>
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w3">第4周</span><span class="week-theme">Body Mapping</span></div>
+      <h3 class="week-title reveal">身体地图绘制</h3>
+      <p class="week-desc reveal">引导居民绘制身体感受地图，标注灾后躯体紧张、疼痛、心悸、紧绷等应激体感位置。帮助个体觉察创伤在身体中的留存印记。</p>
+      <ul class="week-details reveal">
+        <li>绘制身体感受地图</li>
+        <li>标注紧张、疼痛、心悸等体感</li>
+        <li>视觉化释放躯体化情绪</li>
+      </ul>
+      <div class="week-assess coral reveal">帮助个体觉察创伤在身体中的留存印记</div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 5 -->
+<section class="week-section" id="week5">
+  <div class="week-container">
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w3">第5周</span><span class="week-theme">Group Narrative Theater</span></div>
+      <h3 class="week-title reveal">团体叙事剧场</h3>
+      <p class="week-desc reveal">以轻度角色扮演、情景演绎的戏剧治疗形式，温和重现灾后经历与互助片段。在安全的团体氛围中重构创伤叙事。</p>
+      <ul class="week-details reveal">
+        <li>轻度角色扮演 · 情景演绎</li>
+        <li>安全团体氛围重构叙事</li>
+        <li>团体共鸣消解孤独感</li>
+      </ul>
+      <div class="week-assess coral reveal">在安全团体氛围中重构创伤叙事，消解孤独感</div>
+    </div>
+    <div class="week-svg-wrap reveal-right">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="w5Spotlight" cx="50%" cy="20%" r="60%"><stop offset="0%" stop-color="#F4E4A6" stop-opacity=".4"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity="0"/></radialGradient></defs>
+          <circle cx="220" cy="80" r="180" fill="url(#w5Spotlight)" style="animation:svg-glow 4s ease-in-out infinite"/>
+          <rect x="40" y="60" width="360" height="240" rx="8" fill="none" stroke="#9B8FA8" stroke-width="2"/>
+          <rect x="40" y="240" width="360" height="60" fill="#F5F0E1" opacity=".5"/>
+          <line x1="40" y1="240" x2="400" y2="240" stroke="#9B8FA8" stroke-width="1.5"/>
+          <path d="M40 60 Q55 80 50 120 Q45 160 55 200 Q50 240 40 300" fill="#E08B7A" opacity=".3" style="animation:svg-sway 4s ease-in-out infinite"/>
+          <path d="M40 60 Q60 90 55 130 Q50 170 60 210 Q55 250 45 300" fill="#D4899A" opacity=".2" style="animation:svg-sway 4s ease-in-out .5s infinite"/>
+          <path d="M400 60 Q385 80 390 120 Q395 160 385 200 Q390 240 400 300" fill="#E08B7A" opacity=".3" style="animation:svg-sway 4s ease-in-out 1s infinite"/>
+          <path d="M400 60 Q380 90 385 130 Q390 170 380 210 Q385 250 395 300" fill="#D4899A" opacity=".2" style="animation:svg-sway 4s ease-in-out 1.5s infinite"/>
+          <circle cx="140" cy="175" r="12" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-float 3s ease-in-out infinite"/>
+          <path d="M135 181 Q140 174 145 181" fill="#9B8FA8" opacity=".4"/>
+          <rect x="132" y="187" width="16" height="28" rx="5" fill="#D6E6F2"/>
+          <line x1="132" y1="195" x2="120" y2="210" stroke="#D4899A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="148" y1="195" x2="160" y2="205" stroke="#D4899A" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="220" cy="170" r="12" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-float-d 3.5s ease-in-out infinite"/>
+          <path d="M215 176 Q220 169 225 176" fill="#6EC4B8" opacity=".4"/>
+          <rect x="212" y="182" width="16" height="28" rx="5" fill="#D4EDE8"/>
+          <line x1="212" y1="190" x2="200" y2="205" stroke="#6EC4B8" stroke-width="2" stroke-linecap="round"/>
+          <line x1="228" y1="190" x2="240" y2="200" stroke="#6EC4B8" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="300" cy="200" r="12" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-float-d2 4s ease-in-out infinite"/>
+          <path d="M295 206 Q300 199 305 206" fill="#C9A84C" opacity=".4"/>
+          <rect x="292" y="212" width="16" height="20" rx="5" fill="#FBF4D6"/>
+          <circle cx="180" cy="185" r="10" fill="#EDE0F3" stroke="#A68BB5" stroke-width="1.5" style="animation:svg-fade-in 1s ease forwards"/>
+          <rect x="173" y="195" width="14" height="24" rx="5" fill="#EDE0F3" opacity=".8"/>
+          <g style="animation:svg-float 4s ease-in-out infinite"><ellipse cx="140" cy="145" rx="30" ry="15" fill="white" opacity=".7" stroke="#9B8FA8" stroke-width="1"/><text x="140" y="149" text-anchor="middle" font-size="8" fill="#7A7486">我记得...</text><path d="M140 160 L140 170" stroke="white" stroke-width="2"/></g>
+          <g style="animation:svg-float-d 4.5s ease-in-out infinite"><ellipse cx="220" cy="138" rx="35" ry="15" fill="white" opacity=".7" stroke="#6EC4B8" stroke-width="1"/><text x="220" y="142" text-anchor="middle" font-size="8" fill="#7A7486">我们一起</text><path d="M220 153 L220 163" stroke="white" stroke-width="2"/></g>
+          <g style="animation:svg-float-d2 5s ease-in-out infinite"><ellipse cx="300" cy="172" rx="28" ry="14" fill="white" opacity=".7" stroke="#C9A84C" stroke-width="1"/><text x="300" y="176" text-anchor="middle" font-size="8" fill="#7A7486">感谢</text><path d="M300 186 L300 193" stroke="white" stroke-width="2"/></g>
+          <g style="animation:svg-sway 3s ease-in-out infinite" transform="translate(70,90)"><circle cx="0" cy="0" r="12" fill="#F4E4A6" stroke="#C9A84C" stroke-width="1"/><circle cx="-4" cy="-2" r="2" fill="#4A4458"/><circle cx="4" cy="-2" r="2" fill="#4A4458"/><path d="M-5 4 Q0 8 5 4" fill="none" stroke="#4A4458" stroke-width="1"/></g>
+          <g style="animation:svg-sway 3s ease-in-out .5s infinite" transform="translate(370,90)"><circle cx="0" cy="0" r="12" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/><circle cx="-4" cy="-2" r="2" fill="#4A4458"/><circle cx="4" cy="-2" r="2" fill="#4A4458"/><path d="M-5 6 Q0 2 5 6" fill="none" stroke="#4A4458" stroke-width="1"/></g>
+          <line x1="152" y1="195" x2="212" y2="190" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="4 3" opacity=".4" stroke-dasharray="80" stroke-dashoffset="80" style="animation:svg-draw 2s ease forwards 1s"/>
+          <line x1="228" y1="195" x2="292" y2="205" stroke="#C9A84C" stroke-width="1" stroke-dasharray="4 3" opacity=".4" stroke-dasharray="80" stroke-dashoffset="80" style="animation:svg-draw 2s ease forwards 1.5s"/>
+          <circle cx="100" cy="310" r="8" fill="#9B8FA8" opacity=".2"/><rect x="94" y="318" width="12" height="15" rx="4" fill="#9B8FA8" opacity=".15"/>
+          <circle cx="160" cy="315" r="8" fill="#9B8FA8" opacity=".2"/><rect x="154" y="323" width="12" height="15" rx="4" fill="#9B8FA8" opacity=".15"/>
+          <circle cx="220" cy="312" r="8" fill="#9B8FA8" opacity=".2"/><rect x="214" y="320" width="12" height="15" rx="4" fill="#9B8FA8" opacity=".15"/>
+          <circle cx="280" cy="315" r="8" fill="#9B8FA8" opacity=".2"/><rect x="274" y="323" width="12" height="15" rx="4" fill="#9B8FA8" opacity=".15"/>
+          <circle cx="340" cy="310" r="8" fill="#9B8FA8" opacity=".2"/><rect x="334" y="318" width="12" height="15" rx="4" fill="#9B8FA8" opacity=".15"/>
+          <circle cx="80" cy="50" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="180" cy="45" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <circle cx="260" cy="42" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+          <circle cx="350" cy="48" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+          <circle cx="130" cy="55" r="1.5" fill="#F4E4A6" style="animation:svg-shimmer 5s ease-in-out 2s infinite"/>
+          <circle cx="310" cy="50" r="1.5" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out 2.5s infinite"/>
+          <text x="220" y="365" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">叙事 · 共鸣 · 和解</text>
+        </svg>
+        <div class="week-svg-label">叙事剧场场景</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 3 -->
+<section class="adapt-section phase3-section" id="phase3">
+  <span class="section-tag reveal">第三阶段</span>
+  <h2 class="section-title reveal">重建与联结</h2>
+  <p class="section-subtitle reveal">第6-8周 · 增强社区凝聚力，重建社会支持网络，促进意义重构与未来展望</p>
+  <div class="adapt-svg-wrap reveal-scale">
+    <svg viewBox="0 0 800 300" width="800" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="p3Sun" cx="50%" cy="30%" r="40%"><stop offset="0%" stop-color="#F4E4A6" stop-opacity=".5"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="400" cy="80" r="100" fill="url(#p3Sun)" style="animation:svg-glow 5s ease-in-out infinite"/>
+      <circle cx="400" cy="80" r="35" fill="#F4E4A6" style="animation:svg-pulse 3s ease-in-out infinite"/>
+      <line x1="400" y1="30" x2="400" y2="10" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out infinite"/>
+      <line x1="440" y1="45" x2="455" y2="30" stroke="#F4E4A6" stroke-width="2" opacity=".3" style="animation:svg-glow 2s ease-in-out .4s infinite"/>
+      <line x1="360" y1="45" x2="345" y2="30" stroke="#F4E4A6" stroke-width="2" opacity=".3" style="animation:svg-glow 2s ease-in-out .8s infinite"/>
+      <path d="M0 220 Q200 210 400 220 Q600 230 800 220 L800 300 L0 300Z" fill="#D9F0E4" opacity=".3"/>
+      <g style="animation:svg-rise 1.5s ease forwards"><rect x="120" y="170" width="50" height="50" rx="3" fill="#D6E6F2" stroke="#7BA7CC" stroke-width="1.5"/><path d="M115 170 L145 140 L175 170Z" fill="#7BA7CC" opacity=".7"/><rect x="138" y="190" width="14" height="30" rx="2" fill="#F5F0E1"/><rect x="125" y="180" width="10" height="10" rx="1" fill="#DCEEF8"/></g>
+      <g style="animation:svg-rise 1.5s ease forwards .3s"><rect x="220" y="175" width="45" height="45" rx="3" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5"/><path d="M215 175 L242 148 L270 175Z" fill="#6EC4B8" opacity=".7"/><rect x="234" y="193" width="12" height="27" rx="2" fill="#F5F0E1"/><rect x="224" y="183" width="8" height="8" rx="1" fill="#D4EDE8"/></g>
+      <g style="animation:svg-rise 1.5s ease forwards .6s"><rect x="530" y="172" width="48" height="48" rx="3" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5"/><path d="M525 172 L554 145 L583 172Z" fill="#C9A84C" opacity=".7"/><rect x="543" y="190" width="12" height="30" rx="2" fill="#F5F0E1"/><rect x="535" y="180" width="8" height="8" rx="1" fill="#FBF4D6"/></g>
+      <g style="animation:svg-rise 1.5s ease forwards .9s"><rect x="630" y="168" width="52" height="52" rx="3" fill="#F2DDE2" stroke="#D4899A" stroke-width="1.5"/><path d="M625 168 L656 138 L687 168Z" fill="#D4899A" opacity=".7"/><rect x="648" y="188" width="14" height="32" rx="2" fill="#F5F0E1"/><rect x="636" y="178" width="10" height="10" rx="1" fill="#F2DDE2"/></g>
+      <rect x="395" y="160" width="10" height="60" rx="3" fill="#C9A84C" opacity=".7"/>
+      <circle cx="400" cy="140" r="35" fill="#8BC9A8" opacity=".6" style="animation:svg-sway 5s ease-in-out infinite;transform-origin:400px 200px"/>
+      <circle cx="380" cy="150" r="25" fill="#6EC4B8" opacity=".5" style="animation:svg-sway 5s ease-in-out .5s infinite;transform-origin:380px 200px"/>
+      <circle cx="420" cy="148" r="28" fill="#8BC9A8" opacity=".5" style="animation:svg-sway 5s ease-in-out 1s infinite;transform-origin:420px 200px"/>
+      <circle cx="400" cy="130" r="15" fill="#D9F0E4" opacity=".4" style="animation:svg-scale-in 2s ease forwards;transform-origin:400px 130px"/>
+      <path d="M395 220 Q380 230 360 235" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity=".4" stroke-dasharray="50" stroke-dashoffset="50" style="animation:svg-draw 2s ease forwards 1s"/>
+      <path d="M405 220 Q420 230 440 235" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity=".4" stroke-dasharray="50" stroke-dashoffset="50" style="animation:svg-draw 2s ease forwards 1.5s"/>
+      <path d="M400 220 Q400 240 395 250" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity=".3" stroke-dasharray="40" stroke-dashoffset="40" style="animation:svg-draw 2s ease forwards 2s"/>
+      <circle cx="320" cy="195" r="10" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-float 3s ease-in-out infinite"/>
+      <rect x="313" y="205" width="14" height="20" rx="4" fill="#D6E6F2"/>
+      <rect x="325" y="198" width="12" height="8" rx="2" fill="#F5F0E1" stroke="#C9A84C" stroke-width=".8"/>
+      <circle cx="480" cy="192" r="10" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-float-d 3.5s ease-in-out infinite"/>
+      <rect x="473" y="202" width="14" height="20" rx="4" fill="#D4EDE8"/>
+      <circle cx="700" cy="195" r="10" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-float-d2 4s ease-in-out infinite"/>
+      <rect x="693" y="205" width="14" height="20" rx="4" fill="#FBF4D6"/>
+      <line x1="707" y1="210" x2="718" y2="195" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+      <path d="M150 60 Q155 55 160 60 Q165 55 170 60" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float 5s ease-in-out infinite"/>
+      <path d="M200 50 Q204 46 208 50 Q212 46 216 50" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float 5s ease-in-out .3s infinite"/>
+      <path d="M250 55 Q253 52 256 55 Q259 52 262 55" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float 5s ease-in-out .6s infinite"/>
+      <path d="M550 55 Q554 51 558 55 Q562 51 566 55" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float-d 5.5s ease-in-out infinite"/>
+      <path d="M600 48 Q603 45 606 48 Q609 45 612 48" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float-d 5.5s ease-in-out .3s infinite"/>
+      <line x1="330" y1="200" x2="473" y2="200" stroke="#7BA7CC" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="160" stroke-dashoffset="160" style="animation:svg-draw 2s ease forwards 1s"/>
+      <circle cx="350" cy="230" r="3" fill="#E08B7A" style="animation:svg-sway 3s ease-in-out infinite"/>
+      <circle cx="450" cy="228" r="2.5" fill="#D4899A" style="animation:svg-sway 3s ease-in-out .5s infinite"/>
+      <circle cx="550" cy="232" r="3" fill="#A68BB5" style="animation:svg-sway 3s ease-in-out 1s infinite"/>
+    </svg>
+  </div>
+</section>
+
+<!-- WEEK 6 -->
+<section class="week-section" id="week6">
+  <div class="week-container">
+    <div class="week-svg-wrap reveal-left">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="w6Mural" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#9B8FA8" stop-opacity=".4"/><stop offset="50%" stop-color="#7BA7CC" stop-opacity=".3"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity=".4"/></linearGradient></defs>
+          <rect x="60" y="60" width="320" height="220" rx="6" fill="#F5F0E1" stroke="#C9A84C" stroke-width="2"/>
+          <rect x="70" y="70" width="300" height="200" rx="4" fill="url(#w6Mural)"/>
+          <path d="M80 100 Q90 85 100 100 Q95 95 105 90" stroke="#9B8FA8" stroke-width="2" fill="none" opacity=".5" style="animation:svg-fade-in 1s ease forwards"/>
+          <path d="M100 110 Q110 95 120 110" stroke="#9B8FA8" stroke-width="1.5" fill="none" opacity=".4" style="animation:svg-fade-in-d 1.5s ease forwards"/>
+          <line x1="85" y1="120" x2="83" y2="135" stroke="#7BA7CC" stroke-width="1" opacity=".3"/>
+          <line x1="95" y1="115" x2="93" y2="130" stroke="#7BA7CC" stroke-width="1" opacity=".3"/>
+          <circle cx="330" cy="100" r="25" fill="#F4E4A6" opacity=".6" style="animation:svg-glow 3s ease-in-out infinite"/>
+          <circle cx="330" cy="100" r="12" fill="#F4E4A6" style="animation:svg-pulse 2s ease-in-out infinite"/>
+          <path d="M120 180 Q180 160 220 170 Q260 180 300 160 Q320 150 340 155" stroke="#6EC4B8" stroke-width="2" fill="none" opacity=".5" stroke-dasharray="300" stroke-dashoffset="300" style="animation:svg-draw 3s ease forwards"/>
+          <circle cx="150" cy="150" r="10" fill="#E08B7A" opacity=".6" style="animation:svg-scale-in .5s ease forwards .5s;transform-origin:150px 150px"/>
+          <circle cx="200" cy="140" r="10" fill="#7BA7CC" opacity=".6" style="animation:svg-scale-in .5s ease forwards 1s;transform-origin:200px 140px"/>
+          <circle cx="250" cy="145" r="10" fill="#8BC9A8" opacity=".6" style="animation:svg-scale-in .5s ease forwards 1.5s;transform-origin:250px 145px"/>
+          <circle cx="300" cy="135" r="10" fill="#C9A84C" opacity=".6" style="animation:svg-scale-in .5s ease forwards 2s;transform-origin:300px 135px"/>
+          <circle cx="175" cy="180" r="10" fill="#A68BB5" opacity=".6" style="animation:svg-scale-in .5s ease forwards 2.5s;transform-origin:175px 180px"/>
+          <circle cx="225" cy="175" r="10" fill="#D4899A" opacity=".6" style="animation:svg-scale-in .5s ease forwards 3s;transform-origin:225px 175px"/>
+          <circle cx="275" cy="170" r="10" fill="#F4E4A6" opacity=".6" style="animation:svg-scale-in .5s ease forwards 3.5s;transform-origin:275px 170px"/>
+          <path d="M220 240 Q190 215 175 200 Q160 185 175 175 Q190 165 205 180 Q215 190 220 200 Q225 190 235 180 Q250 165 265 175 Q280 185 265 200 Q250 215 220 240Z" fill="none" stroke="#E08B7A" stroke-width="1.5" opacity=".3" stroke-dasharray="400" stroke-dashoffset="400" style="animation:svg-draw 3s ease forwards 2s"/>
+          <path d="M90 200 Q120 195 150 200" stroke="#E08B7A" stroke-width="3" fill="none" opacity=".4" stroke-dasharray="80" stroke-dashoffset="80" style="animation:svg-draw 2s ease forwards 1s"/>
+          <path d="M280 190 Q310 185 340 190" stroke="#6EC4B8" stroke-width="3" fill="none" opacity=".4" stroke-dasharray="80" stroke-dashoffset="80" style="animation:svg-draw 2s ease forwards 1.5s"/>
+          <circle cx="130" cy="310" r="11" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-float 3s ease-in-out infinite"/>
+          <rect x="123" y="321" width="14" height="22" rx="5" fill="#D6E6F2"/>
+          <line x1="137" y1="328" x2="155" y2="310" stroke="#D4899A" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="220" cy="315" r="11" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-float-d 3.5s ease-in-out infinite"/>
+          <rect x="213" y="326" width="14" height="22" rx="5" fill="#D4EDE8"/>
+          <circle cx="310" cy="312" r="11" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-float-d2 4s ease-in-out infinite"/>
+          <rect x="303" y="323" width="14" height="22" rx="5" fill="#FBF4D6"/>
+          <line x1="303" y1="330" x2="285" y2="312" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="100" cy="285" r="4" fill="#E08B7A" style="animation:svg-rise 1s ease forwards"/>
+          <circle cx="160" cy="288" r="3.5" fill="#D4899A" style="animation:svg-rise 1s ease forwards .3s"/>
+          <circle cx="280" cy="286" r="4" fill="#8BC9A8" style="animation:svg-rise 1s ease forwards .6s"/>
+          <circle cx="340" cy="284" r="3.5" fill="#A68BB5" style="animation:svg-rise 1s ease forwards .9s"/>
+          <line x1="100" y1="289" x2="100" y2="300" stroke="#8BC9A8" stroke-width="1"/>
+          <line x1="160" y1="292" x2="160" y2="300" stroke="#8BC9A8" stroke-width="1"/>
+          <line x1="280" y1="290" x2="280" y2="300" stroke="#8BC9A8" stroke-width="1"/>
+          <line x1="340" y1="288" x2="340" y2="300" stroke="#8BC9A8" stroke-width="1"/>
+          <line x1="141" y1="325" x2="213" y2="330" stroke="#7BA7CC" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="80" stroke-dashoffset="80" style="animation:svg-draw 2s ease forwards 2s"/>
+          <line x1="227" y1="330" x2="303" y2="327" stroke="#7BA7CC" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="80" stroke-dashoffset="80" style="animation:svg-draw 2s ease forwards 2.5s"/>
+          <circle cx="50" cy="80" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="390" cy="70" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <text x="220" y="365" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">记忆 · 韧性 · 集体</text>
+        </svg>
+        <div class="week-svg-label">记忆墙场景</div>
+      </div>
+    </div>
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w2">第6周</span><span class="week-theme">Community Memory Wall</span></div>
+      <h3 class="week-title reveal">社区记忆墙</h3>
+      <p class="week-desc reveal">全体居民共同创作一面大型壁画，记录灾难经历与社区恢复历程，作为集体记忆与韧性的象征。</p>
+      <ul class="week-details reveal">
+        <li>共同创作大型壁画</li>
+        <li>记录灾难经历与恢复历程</li>
+        <li>集体记忆与韧性的象征</li>
+      </ul>
+      <div class="week-assess blue reveal">集体记忆与韧性的象征，增强社区凝聚力</div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 7 -->
+<section class="week-section" id="week7">
+  <div class="week-container">
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w2">第7周</span><span class="week-theme">Gratitude & Connection</span></div>
+      <h3 class="week-title reveal">感恩与联结</h3>
+      <p class="week-desc reveal">开展慈悲冥想团体练习，引导居民对帮助过自己的人表达感恩。配合"感恩树"艺术活动——在树上挂满写有感恩内容的叶子。</p>
+      <ul class="week-details reveal">
+        <li>慈悲冥想团体练习</li>
+        <li>对帮助者表达感恩与善意</li>
+        <li>感恩树——挂满感恩内容的叶子</li>
+      </ul>
+      <div class="week-assess blue reveal">培育感恩心态，深化人际联结与社区善意</div>
+    </div>
+    <div class="week-svg-wrap reveal-right">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="w7Light" cx="50%" cy="20%" r="50%"><stop offset="0%" stop-color="#F4E4A6" stop-opacity=".4"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity="0"/></radialGradient></defs>
+          <circle cx="220" cy="60" r="120" fill="url(#w7Light)" style="animation:svg-glow 5s ease-in-out infinite"/>
+          <!-- Tree trunk -->
+          <rect x="210" y="150" width="20" height="120" rx="5" fill="#C9A84C" opacity=".7"/>
+          <!-- Roots -->
+          <path d="M210 270 Q190 280 170 285" stroke="#C9A84C" stroke-width="3" fill="none" opacity=".5" stroke-dasharray="50" stroke-dashoffset="50" style="animation:svg-draw 2s ease forwards"/>
+          <path d="M230 270 Q250 280 270 285" stroke="#C9A84C" stroke-width="3" fill="none" opacity=".5" stroke-dasharray="50" stroke-dashoffset="50" style="animation:svg-draw 2s ease forwards .5s"/>
+          <path d="M220 270 Q220 290 218 300" stroke="#C9A84C" stroke-width="2" fill="none" opacity=".4" stroke-dasharray="40" stroke-dashoffset="40" style="animation:svg-draw 2s ease forwards 1s"/>
+          <!-- Branches and canopy -->
+          <circle cx="220" cy="120" r="50" fill="#8BC9A8" opacity=".5" style="animation:svg-sway 5s ease-in-out infinite;transform-origin:220px 150px"/>
+          <circle cx="180" cy="130" r="35" fill="#6EC4B8" opacity=".4" style="animation:svg-sway 5s ease-in-out .5s infinite;transform-origin:180px 150px"/>
+          <circle cx="260" cy="125" r="38" fill="#8BC9A8" opacity=".4" style="animation:svg-sway 5s ease-in-out 1s infinite;transform-origin:260px 150px"/>
+          <circle cx="200" cy="100" r="30" fill="#D9F0E4" opacity=".5" style="animation:svg-sway 5s ease-in-out .3s infinite;transform-origin:200px 130px"/>
+          <circle cx="240" cy="95" r="32" fill="#D9F0E4" opacity=".4" style="animation:svg-sway 5s ease-in-out .8s infinite;transform-origin:240px 125px"/>
+          <!-- Leaves appearing one by one -->
+          <ellipse cx="160" cy="110" rx="8" ry="5" fill="#C9A84C" opacity=".7" style="animation:svg-scale-in .5s ease forwards .5s;transform-origin:160px 110px"/>
+          <ellipse cx="190" cy="90" rx="7" ry="4" fill="#F4E4A6" opacity=".7" style="animation:svg-scale-in .5s ease forwards 1s;transform-origin:190px 90px"/>
+          <ellipse cx="250" cy="85" rx="8" ry="5" fill="#8BC9A8" opacity=".7" style="animation:svg-scale-in .5s ease forwards 1.5s;transform-origin:250px 85px"/>
+          <ellipse cx="280" cy="105" rx="7" ry="4" fill="#C9A84C" opacity=".7" style="animation:svg-scale-in .5s ease forwards 2s;transform-origin:280px 105px"/>
+          <ellipse cx="175" cy="135" rx="7" ry="4" fill="#F4E4A6" opacity=".6" style="animation:svg-scale-in .5s ease forwards 2.5s;transform-origin:175px 135px"/>
+          <ellipse cx="265" cy="130" rx="8" ry="5" fill="#8BC9A8" opacity=".6" style="animation:svg-scale-in .5s ease forwards 3s;transform-origin:265px 130px"/>
+          <!-- Heart-shaped leaves -->
+          <path d="M210 80 Q205 75 208 72 Q211 69 214 72 Q217 69 220 72 Q223 75 218 80Z" fill="#D4899A" opacity=".6" style="animation:svg-scale-in .5s ease forwards 3.5s;transform-origin:214px 76px"/>
+          <path d="M240 100 Q235 95 238 92 Q241 89 244 92 Q247 89 250 92 Q253 95 248 100Z" fill="#E08B7A" opacity=".5" style="animation:svg-scale-in .5s ease forwards 4s;transform-origin:244px 96px"/>
+          <!-- People sitting around tree -->
+          <circle cx="120" cy="310" r="11" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-fade-in 1s ease forwards"/>
+          <path d="M115 316 Q120 309 125 316" fill="#9B8FA8" opacity=".4"/>
+          <rect x="112" y="321" width="16" height="20" rx="5" fill="#D6E6F2"/>
+          <circle cx="220" cy="315" r="11" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-fade-in-d 1s ease forwards"/>
+          <path d="M215 321 Q220 314 225 321" fill="#6EC4B8" opacity=".4"/>
+          <rect x="212" y="326" width="16" height="20" rx="5" fill="#D4EDE8"/>
+          <circle cx="320" cy="312" r="11" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-fade-in-d2 1s ease forwards"/>
+          <path d="M315 318 Q320 311 325 318" fill="#C9A84C" opacity=".4"/>
+          <rect x="312" y="323" width="16" height="20" rx="5" fill="#FBF4D6"/>
+          <circle cx="170" cy="320" r="10" fill="#EDE0F3" stroke="#A68BB5" stroke-width="1.5" style="animation:svg-fade-in-d3 1s ease forwards"/>
+          <rect x="163" y="330" width="14" height="18" rx="5" fill="#EDE0F3" opacity=".8"/>
+          <!-- Connection lines from people to tree -->
+          <line x1="131" y1="310" x2="180" y2="180" stroke="#C9A84C" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards 1s"/>
+          <line x1="220" y1="315" x2="220" y2="170" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards 1.5s"/>
+          <line x1="309" y1="312" x2="260" y2="170" stroke="#C9A84C" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards 2s"/>
+          <!-- Meditation circles -->
+          <circle cx="120" cy="325" r="20" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".3" style="animation:svg-breathe 4s ease-in-out infinite"/>
+          <circle cx="220" cy="330" r="20" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".3" style="animation:svg-breathe 4s ease-in-out .5s infinite"/>
+          <circle cx="320" cy="327" r="20" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".3" style="animation:svg-breathe 4s ease-in-out 1s infinite"/>
+          <!-- Birds on branches -->
+          <path d="M170 95 Q174 91 178 95 Q182 91 186 95" fill="none" stroke="#4A4458" stroke-width="1.2" style="animation:svg-float 4s ease-in-out infinite"/>
+          <path d="M260 90 Q263 87 266 90 Q269 87 272 90" fill="none" stroke="#4A4458" stroke-width="1.2" style="animation:svg-float-d 4.5s ease-in-out infinite"/>
+          <!-- Light rays -->
+          <line x1="220" y1="30" x2="220" y2="15" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out infinite"/>
+          <line x1="250" y1="35" x2="260" y2="22" stroke="#F4E4A6" stroke-width="1.5" opacity=".3" style="animation:svg-glow 2s ease-in-out .5s infinite"/>
+          <line x1="190" y1="35" x2="180" y2="22" stroke="#F4E4A6" stroke-width="1.5" opacity=".3" style="animation:svg-glow 2s ease-in-out 1s infinite"/>
+          <!-- Shimmer -->
+          <circle cx="60" cy="60" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="380" cy="50" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <circle cx="100" cy="40" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+          <circle cx="350" cy="70" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+          <text x="220" y="365" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">感恩 · 联结 · 善意</text>
+        </svg>
+        <div class="week-svg-label">感恩树场景</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 8 -->
+<section class="week-section" id="week8">
+  <div class="week-container">
+    <div class="week-svg-wrap reveal-left">
+      <div>
+        <svg viewBox="0 0 440 380" width="440" height="380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="w8Sunrise" cx="50%" cy="30%" r="50%"><stop offset="0%" stop-color="#F4E4A6" stop-opacity=".6"/><stop offset="100%" stop-color="#F4E4A6" stop-opacity="0"/></radialGradient>
+            <linearGradient id="w8Sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#DCEEF8"/><stop offset="100%" stop-color="#D6E6F2" stop-opacity=".3"/></linearGradient>
+          </defs>
+          <!-- Sky gradient -->
+          <rect x="0" y="0" width="440" height="250" fill="url(#w8Sky)" opacity=".3"/>
+          <!-- Sunrise -->
+          <circle cx="220" cy="80" r="100" fill="url(#w8Sunrise)" style="animation:svg-glow 5s ease-in-out infinite"/>
+          <circle cx="220" cy="80" r="35" fill="#F4E4A6" style="animation:svg-pulse 3s ease-in-out infinite"/>
+          <!-- Sun rays -->
+          <line x1="220" y1="30" x2="220" y2="10" stroke="#F4E4A6" stroke-width="2" opacity=".5" style="animation:svg-glow 2s ease-in-out infinite"/>
+          <line x1="260" y1="45" x2="275" y2="30" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out .4s infinite"/>
+          <line x1="180" y1="45" x2="165" y2="30" stroke="#F4E4A6" stroke-width="2" opacity=".4" style="animation:svg-glow 2s ease-in-out .8s infinite"/>
+          <line x1="290" y1="70" x2="310" y2="65" stroke="#F4E4A6" stroke-width="1.5" opacity=".3" style="animation:svg-glow 2s ease-in-out 1.2s infinite"/>
+          <line x1="150" y1="70" x2="130" y2="65" stroke="#F4E4A6" stroke-width="1.5" opacity=".3" style="animation:svg-glow 2s ease-in-out 1.6s infinite"/>
+          <!-- Path leading forward -->
+          <path d="M180 300 Q200 280 220 260 Q240 240 260 220 Q280 200 300 180" stroke="#C9A84C" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200" style="animation:svg-draw 3s ease forwards"/>
+          <!-- Ground -->
+          <path d="M0 280 Q110 270 220 280 Q330 290 440 280 L440 380 L0 380Z" fill="#D9F0E4" opacity=".3"/>
+          <!-- Person walking forward -->
+          <circle cx="240" cy="240" r="12" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-float 3s ease-in-out infinite"/>
+          <path d="M235 246 Q240 239 245 246" fill="#6EC4B8" opacity=".4"/>
+          <rect x="233" y="252" width="14" height="22" rx="5" fill="#D4EDE8"/>
+          <line x1="247" y1="258" x2="258" y2="248" stroke="#6EC4B8" stroke-width="2" stroke-linecap="round"/>
+          <!-- House in distance -->
+          <g style="animation:svg-fade-in 2s ease forwards"><rect x="310" y="155" width="35" height="30" rx="3" fill="#D6E6F2" stroke="#7BA7CC" stroke-width="1.5" opacity=".6"/><path d="M307 155 L327 138 L348 155Z" fill="#7BA7CC" opacity=".5"/><rect x="322" y="168" width="10" height="17" rx="2" fill="#F5F0E1" opacity=".6"/></g>
+          <!-- Birds flying toward sunrise -->
+          <path d="M140 70 Q144 66 148 70 Q152 66 156 70" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float 5s ease-in-out infinite"/>
+          <path d="M180 55 Q183 52 186 55 Q189 52 192 55" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float 5s ease-in-out .3s infinite"/>
+          <path d="M260 50 Q263 47 266 50 Q269 47 272 50" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float-d 5.5s ease-in-out infinite"/>
+          <path d="M300 60 Q303 57 306 60 Q309 57 312 60" fill="none" stroke="#4A4458" stroke-width="1.5" style="animation:svg-float-d 5.5s ease-in-out .3s infinite"/>
+          <!-- Flowers blooming along path -->
+          <circle cx="190" cy="290" r="4" fill="#E08B7A" style="animation:svg-scale-in .5s ease forwards .5s;transform-origin:190px 290px"/>
+          <circle cx="210" cy="275" r="3.5" fill="#D4899A" style="animation:svg-scale-in .5s ease forwards 1s;transform-origin:210px 275px"/>
+          <circle cx="250" cy="255" r="4" fill="#8BC9A8" style="animation:svg-rise 1s ease forwards .5s"/>
+          <circle cx="270" cy="240" r="3.5" fill="#A68BB5" style="animation:svg-rise 1s ease forwards 1s"/>
+          <circle cx="290" cy="225" r="4" fill="#C9A84C" style="animation:svg-rise 1s ease forwards 1.5s"/>
+          <line x1="190" y1="294" x2="190" y2="305" stroke="#8BC9A8" stroke-width="1"/>
+          <line x1="250" y1="259" x2="250" y2="268" stroke="#8BC9A8" stroke-width="1"/>
+          <line x1="290" y1="229" x2="290" y2="238" stroke="#8BC9A8" stroke-width="1"/>
+          <!-- Certificate/ribbon element -->
+          <g style="animation:svg-fade-in 1.5s ease forwards" transform="translate(350,200)">
+            <rect x="0" y="0" width="30" height="22" rx="3" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1"/>
+            <path d="M5 22 L0 30 L8 26 L12 32 L15 24" fill="#C9A84C" opacity=".5"/>
+            <path d="M25 22 L30 30 L22 26 L18 32 L15 24" fill="#C9A84C" opacity=".5"/>
+          </g>
+          <!-- Upward arrows showing growth -->
+          <path d="M80 200 L80 170" stroke="#7BA7CC" stroke-width="2" fill="none" stroke-linecap="round" style="animation:svg-rise 1.5s ease forwards"/>
+          <path d="M75 175 L80 165 L85 175" stroke="#7BA7CC" stroke-width="2" fill="none" stroke-linecap="round" style="animation:svg-rise 1.5s ease forwards"/>
+          <path d="M100 210 L100 185" stroke="#6EC4B8" stroke-width="2" fill="none" stroke-linecap="round" style="animation:svg-rise 1.5s ease forwards .3s"/>
+          <path d="M95 190 L100 180 L105 190" stroke="#6EC4B8" stroke-width="2" fill="none" stroke-linecap="round" style="animation:svg-rise 1.5s ease forwards .3s"/>
+          <!-- Rainbow arc -->
+          <path d="M60 120 Q220 20 380 120" stroke="#E08B7A" stroke-width="3" fill="none" opacity=".3" stroke-dasharray="400" stroke-dashoffset="400" style="animation:svg-draw 4s ease forwards"/>
+          <path d="M70 125 Q220 30 370 125" stroke="#F4E4A6" stroke-width="3" fill="none" opacity=".3" stroke-dasharray="380" stroke-dashoffset="380" style="animation:svg-draw 4s ease forwards .5s"/>
+          <path d="M80 130 Q220 40 360 130" stroke="#8BC9A8" stroke-width="3" fill="none" opacity=".3" stroke-dasharray="360" stroke-dashoffset="360" style="animation:svg-draw 4s ease forwards 1s"/>
+          <path d="M90 135 Q220 50 350 135" stroke="#7BA7CC" stroke-width="3" fill="none" opacity=".3" stroke-dasharray="340" stroke-dashoffset="340" style="animation:svg-draw 4s ease forwards 1.5s"/>
+          <!-- Stars twinkling -->
+          <circle cx="50" cy="50" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+          <circle cx="120" cy="35" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+          <circle cx="330" cy="40" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+          <circle cx="400" cy="55" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+          <circle cx="390" cy="100" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out 2s infinite"/>
+          <!-- Community members waving in background -->
+          <circle cx="350" cy="250" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1" opacity=".5" style="animation:svg-breathe 3s ease-in-out infinite"/>
+          <rect x="344" y="258" width="12" height="16" rx="4" fill="#D6E6F2" opacity=".5"/>
+          <circle cx="370" cy="248" r="8" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1" opacity=".5" style="animation:svg-breathe 3s ease-in-out .5s infinite"/>
+          <rect x="364" y="256" width="12" height="16" rx="4" fill="#D4EDE8" opacity=".5"/>
+          <circle cx="390" cy="252" r="8" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1" opacity=".5" style="animation:svg-breathe 3s ease-in-out 1s infinite"/>
+          <rect x="384" y="260" width="12" height="16" rx="4" fill="#FBF4D6" opacity=".5"/>
+          <text x="220" y="360" text-anchor="middle" font-size="12" fill="#7A7486" letter-spacing="3">愿景 · 希望 · 新生</text>
+        </svg>
+        <div class="week-svg-label">未来愿景场景</div>
+      </div>
+    </div>
+    <div class="week-text">
+      <div class="week-header reveal"><span class="week-num-badge w2">第8周</span><span class="week-theme">Future Vision</span></div>
+      <h3 class="week-title reveal">未来愿景</h3>
+      <p class="week-desc reveal">每位居民创作"我的未来家园"主题作品，并进行团体分享。举行闭幕仪式，颁发参与证书，提供后续心理支持资源信息。</p>
+      <ul class="week-details reveal">
+        <li>创作"我的未来家园"主题作品</li>
+        <li>团体分享与闭幕仪式</li>
+        <li>颁发证书，提供后续支持资源</li>
+      </ul>
+      <div class="week-assess blue reveal">展望未来，整合8周成长，开启新的生活篇章</div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSESSMENT -->
+<section class="adapt-section assess-section" id="assess">
+  <span class="section-tag reveal">评估指标</span>
+  <h2 class="section-title reveal">评估与监测</h2>
+  <div class="adapt-svg-wrap reveal-scale">
+    <svg viewBox="0 0 800 350" width="800" height="350" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="asGlow" cx="50%" cy="40%" r="40%"><stop offset="0%" stop-color="#E8E3EE" stop-opacity=".3"/><stop offset="100%" stop-color="#E8E3EE" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="400" cy="140" r="140" fill="url(#asGlow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+      <!-- Card 1: Participation Rate -->
+      <rect x="80" y="60" width="260" height="180" rx="12" fill="white" opacity=".7" stroke="#9B8FA8" stroke-width="1.5"/>
+      <text x="210" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#4A4458">社区参与率</text>
+      <!-- People icons filling up -->
+      <circle cx="120" cy="120" r="8" fill="#6EC4B8" opacity=".6" style="animation:svg-scale-in .5s ease forwards .5s;transform-origin:120px 120px"/>
+      <rect x="114" y="128" width="12" height="16" rx="4" fill="#6EC4B8" opacity=".5"/>
+      <circle cx="150" cy="120" r="8" fill="#7BA7CC" opacity=".6" style="animation:svg-scale-in .5s ease forwards .8s;transform-origin:150px 120px"/>
+      <rect x="144" y="128" width="12" height="16" rx="4" fill="#7BA7CC" opacity=".5"/>
+      <circle cx="180" cy="120" r="8" fill="#E08B7A" opacity=".6" style="animation:svg-scale-in .5s ease forwards 1.1s;transform-origin:180px 120px"/>
+      <rect x="174" y="128" width="12" height="16" rx="4" fill="#E08B7A" opacity=".5"/>
+      <circle cx="210" cy="120" r="8" fill="#C9A84C" opacity=".6" style="animation:svg-scale-in .5s ease forwards 1.4s;transform-origin:210px 120px"/>
+      <rect x="204" y="128" width="12" height="16" rx="4" fill="#C9A84C" opacity=".5"/>
+      <circle cx="240" cy="120" r="8" fill="#A68BB5" opacity=".6" style="animation:svg-scale-in .5s ease forwards 1.7s;transform-origin:240px 120px"/>
+      <rect x="234" y="128" width="12" height="16" rx="4" fill="#A68BB5" opacity=".5"/>
+      <circle cx="270" cy="120" r="8" fill="#8BC9A8" opacity=".6" style="animation:svg-scale-in .5s ease forwards 2s;transform-origin:270px 120px"/>
+      <rect x="264" y="128" width="12" height="16" rx="4" fill="#8BC9A8" opacity=".5"/>
+      <circle cx="300" cy="120" r="8" fill="#D4899A" opacity=".6" style="animation:svg-scale-in .5s ease forwards 2.3s;transform-origin:300px 120px"/>
+      <rect x="294" y="128" width="12" height="16" rx="4" fill="#D4899A" opacity=".5"/>
+      <!-- Progress bar -->
+      <rect x="110" y="165" width="200" height="12" rx="6" fill="#E8E3EE"/>
+      <rect x="110" y="165" width="0" height="12" rx="6" fill="#6EC4B8" opacity=".8">
+        <animate attributeName="width" from="0" to="160" dur="2s" fill="freeze" begin="1s"/>
+      </rect>
+      <text x="210" y="200" text-anchor="middle" font-size="11" fill="#7A7486">80% 持续参与率</text>
+      <!-- Card 2: Resilience Index -->
+      <rect x="460" y="60" width="260" height="180" rx="12" fill="white" opacity=".7" stroke="#7BA7CC" stroke-width="1.5"/>
+      <text x="590" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#4A4458">社区韧性指数</text>
+      <!-- Bar chart -->
+      <rect x="490" y="180" width="25" height="40" rx="3" fill="#9B8FA8" opacity=".4" style="animation:svg-rise 1s ease forwards"/>
+      <rect x="525" y="160" width="25" height="60" rx="3" fill="#7BA7CC" opacity=".5" style="animation:svg-rise 1s ease forwards .3s"/>
+      <rect x="560" y="140" width="25" height="80" rx="3" fill="#6EC4B8" opacity=".6" style="animation:svg-rise 1s ease forwards .6s"/>
+      <rect x="595" y="120" width="25" height="100" rx="3" fill="#8BC9A8" opacity=".7" style="animation:svg-rise 1s ease forwards .9s"/>
+      <rect x="630" y="110" width="25" height="110" rx="3" fill="#C9A84C" opacity=".7" style="animation:svg-rise 1s ease forwards 1.2s"/>
+      <rect x="665" y="105" width="25" height="115" rx="3" fill="#E08B7A" opacity=".7" style="animation:svg-rise 1s ease forwards 1.5s"/>
+      <text x="590" y="200" text-anchor="middle" font-size="11" fill="#7A7486">CD-RISC 前后测对比</text>
+      <!-- Connection arrows -->
+      <path d="M340 150 Q400 130 460 150" stroke="#9B8FA8" stroke-width="2" fill="none" stroke-dasharray="8 4" opacity=".4" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards 1s"/>
+      <!-- Trend line -->
+      <path d="M100 280 Q200 260 300 240 Q400 220 500 200 Q600 180 700 160" stroke="#6EC4B8" stroke-width="2" fill="none" opacity=".5" stroke-dasharray="700" stroke-dashoffset="700" style="animation:svg-draw 3s ease forwards"/>
+      <path d="M100 290 Q200 275 300 260 Q400 245 500 230 Q600 215 700 200" stroke="#7BA7CC" stroke-width="1.5" fill="none" opacity=".3" stroke-dasharray="700" stroke-dashoffset="700" style="animation:svg-draw-slow 4s ease forwards"/>
+      <!-- Pulse dots on graph -->
+      <circle cx="200" cy="270" r="5" fill="#6EC4B8" opacity=".6" style="animation:svg-pulse 2s ease-in-out infinite"/>
+      <circle cx="400" cy="235" r="5" fill="#7BA7CC" opacity=".6" style="animation:svg-pulse 2s ease-in-out .5s infinite"/>
+      <circle cx="600" cy="195" r="5" fill="#8BC9A8" opacity=".6" style="animation:svg-pulse 2s ease-in-out 1s infinite"/>
+      <!-- Labels -->
+      <text x="100" y="310" text-anchor="middle" font-size="10" fill="#7A7486">前测</text>
+      <text x="400" y="260" text-anchor="middle" font-size="10" fill="#7A7486">中期</text>
+      <text x="700" y="175" text-anchor="middle" font-size="10" fill="#7A7486">后测</text>
+      <!-- Shimmer -->
+      <circle cx="50" cy="100" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+      <circle cx="750" cy="80" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+      <circle cx="400" cy="40" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+    </svg>
+  </div>
+  <div class="adapt-text reveal">
+    <p>社区参与率：统计活动出勤、持续参与情况，评估项目普及度与居民接纳度</p>
+    <p>社区韧性指数：CD-RISC心理韧性量表前后测，评价居民与社区整体复原能力</p>
+    <p>开展项目前后测，对比整体心理韧性水平变化</p>
+  </div>
+</section>
+
+<!-- IMPLEMENTATION -->
+<section class="adapt-section implement-section" id="implement">
+  <span class="section-tag reveal">实施适配</span>
+  <h2 class="section-title reveal">文化适切与包容性</h2>
+  <div class="adapt-svg-wrap reveal-scale">
+    <svg viewBox="0 0 800 350" width="800" height="350" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="imGlow" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#D9F0E4" stop-opacity=".3"/><stop offset="100%" stop-color="#D9F0E4" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="400" cy="175" r="160" fill="url(#imGlow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+      <!-- Community scene -->
+      <!-- Traditional architecture -->
+      <rect x="100" y="140" width="80" height="70" rx="4" fill="#F5F0E1" stroke="#C9A84C" stroke-width="1.5"/>
+      <path d="M90 140 L140 100 L190 140Z" fill="#C9A84C" opacity=".5"/>
+      <rect x="130" y="175" width="20" height="35" rx="3" fill="#F5E0D0"/>
+      <!-- Local patterns -->
+      <rect x="105" y="150" width="15" height="15" rx="2" fill="#E08B7A" opacity=".3" style="animation:svg-pulse 3s ease-in-out infinite"/>
+      <rect x="160" y="150" width="15" height="15" rx="2" fill="#6EC4B8" opacity=".3" style="animation:svg-pulse 3s ease-in-out .5s infinite"/>
+      <!-- Diverse people -->
+      <!-- Elderly person -->
+      <circle cx="300" cy="200" r="12" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5" style="animation:svg-float 3s ease-in-out infinite"/>
+      <path d="M295 206 Q300 199 305 206" fill="#9B8FA8" opacity=".4"/>
+      <rect x="293" y="212" width="14" height="22" rx="5" fill="#D6E6F2"/>
+      <line x1="293" y1="218" x2="283" y2="230" stroke="#D4899A" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Walking stick -->
+      <line x1="283" y1="230" x2="280" y2="255" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+      <!-- Child -->
+      <circle cx="360" cy="215" r="9" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5" style="animation:svg-float-d 3s ease-in-out infinite"/>
+      <rect x="354" y="224" width="12" height="16" rx="4" fill="#D4EDE8"/>
+      <!-- Person with wheelchair -->
+      <circle cx="440" cy="205" r="11" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5" style="animation:svg-float-d2 4s ease-in-out infinite"/>
+      <rect x="434" y="216" width="12" height="18" rx="4" fill="#FBF4D6"/>
+      <circle cx="430" cy="245" r="10" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity=".5"/>
+      <circle cx="450" cy="245" r="10" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity=".5"/>
+      <line x1="430" y1="245" x2="450" y2="245" stroke="#C9A84C" stroke-width="1" opacity=".4"/>
+      <!-- Another person -->
+      <circle cx="520" cy="200" r="11" fill="#EDE0F3" stroke="#A68BB5" stroke-width="1.5" style="animation:svg-fade-in 1s ease forwards"/>
+      <rect x="514" y="211" width="14" height="20" rx="5" fill="#EDE0F3" opacity=".8"/>
+      <!-- Support network web -->
+      <line x1="312" y1="210" x2="351" y2="220" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="50" stroke-dashoffset="50" style="animation:svg-draw 2s ease forwards 1s"/>
+      <line x1="366" y1="225" x2="429" y2="215" stroke="#C9A84C" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="70" stroke-dashoffset="70" style="animation:svg-draw 2s ease forwards 1.5s"/>
+      <line x1="451" y1="215" x2="514" y2="210" stroke="#A68BB5" stroke-width="1" stroke-dasharray="4 3" opacity=".3" stroke-dasharray="70" stroke-dashoffset="70" style="animation:svg-draw 2s ease forwards 2s"/>
+      <line x1="300" y1="220" x2="520" y2="210" stroke="#7BA7CC" stroke-width="1" stroke-dasharray="4 3" opacity=".2" stroke-dasharray="230" stroke-dashoffset="230" style="animation:svg-draw 3s ease forwards 2.5s"/>
+      <!-- Shield/protection symbols -->
+      <circle cx="400" cy="130" r="25" fill="none" stroke="#6EC4B8" stroke-width="2" opacity=".3" style="animation:svg-breathe 4s ease-in-out infinite"/>
+      <circle cx="400" cy="130" r="35" fill="none" stroke="#6EC4B8" stroke-width="1" opacity=".2" style="animation:svg-breathe 4s ease-in-out 1s infinite"/>
+      <path d="M400 110 L410 120 L410 135 Q410 145 400 150 Q390 145 390 135 L390 120Z" fill="#6EC4B8" opacity=".15" stroke="#6EC4B8" stroke-width="1"/>
+      <!-- Heart symbols -->
+      <path d="M250 160 Q245 155 248 152 Q251 149 254 152 Q257 149 260 152 Q263 155 258 160Z" fill="#D4899A" opacity=".5" style="animation:svg-pulse 3s ease-in-out infinite"/>
+      <path d="M550 155 Q545 150 548 147 Q551 144 554 147 Q557 144 560 147 Q563 150 558 155Z" fill="#D4899A" opacity=".5" style="animation:svg-pulse 3s ease-in-out .5s infinite"/>
+      <!-- Ground -->
+      <path d="M0 270 Q200 260 400 270 Q600 280 800 270 L800 350 L0 350Z" fill="#D9F0E4" opacity=".2"/>
+      <!-- Flowers -->
+      <circle cx="200" cy="270" r="3" fill="#E08B7A" style="animation:svg-sway 3s ease-in-out infinite"/>
+      <circle cx="600" cy="268" r="3" fill="#8BC9A8" style="animation:svg-sway 3s ease-in-out .5s infinite"/>
+      <circle cx="700" cy="272" r="2.5" fill="#A68BB5" style="animation:svg-sway 3s ease-in-out 1s infinite"/>
+      <!-- Shimmer -->
+      <circle cx="80" cy="80" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+      <circle cx="720" cy="90" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+      <circle cx="400" cy="50" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+    </svg>
+  </div>
+  <div class="adapt-text reveal">
+    <p>活动以自愿参与为原则，避免创伤强制暴露</p>
+    <p>融入本土文化与传统艺术形式</p>
+    <p>提供方言适配支持，兼顾老人、儿童、残障人群</p>
+    <p>联动社区骨干与本地心理机构</p>
+  </div>
+</section>
+
+<!-- LONG-TERM -->
+<section class="adapt-section longterm-section" id="longterm">
+  <span class="section-tag reveal">长期保障</span>
+  <h2 class="section-title reveal">可持续帮扶体系</h2>
+  <div class="adapt-svg-wrap reveal-scale">
+    <svg viewBox="0 0 800 300" width="800" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="ltGlow" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#F5EDCF" stop-opacity=".3"/><stop offset="100%" stop-color="#F5EDCF" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="400" cy="150" r="130" fill="url(#ltGlow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+      <!-- Cycle nodes -->
+      <!-- Node 1: Community Space (top) -->
+      <circle cx="400" cy="60" r="35" fill="white" opacity=".7" stroke="#6EC4B8" stroke-width="2"/>
+      <rect x="388" y="48" width="24" height="18" rx="3" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1"/>
+      <path d="M385 48 L400 35 L415 48Z" fill="#6EC4B8" opacity=".5"/>
+      <text x="400" y="105" text-anchor="middle" font-size="10" fill="#6EC4B8">社区空间</text>
+      <!-- Node 2: Peer Support (right) -->
+      <circle cx="560" cy="150" r="35" fill="white" opacity=".7" stroke="#7BA7CC" stroke-width="2"/>
+      <circle cx="553" cy="143" r="7" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+      <rect x="548" y="150" width="10" height="14" rx="3" fill="#D6E6F2"/>
+      <circle cx="567" cy="143" r="7" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1"/>
+      <rect x="562" y="150" width="10" height="14" rx="3" fill="#D4EDE8"/>
+      <text x="560" y="200" text-anchor="middle" font-size="10" fill="#7BA7CC">同伴支持</text>
+      <!-- Node 3: Tool Kit (bottom) -->
+      <circle cx="400" cy="240" r="35" fill="white" opacity=".7" stroke="#C9A84C" stroke-width="2"/>
+      <rect x="388" y="230" width="24" height="16" rx="3" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1"/>
+      <rect x="392" y="234" width="6" height="8" rx="1" fill="#C9A84C" opacity=".5"/>
+      <rect x="402" y="234" width="6" height="8" rx="1" fill="#C9A84C" opacity=".5"/>
+      <text x="400" y="290" text-anchor="middle" font-size="10" fill="#C9A84C">工具包</text>
+      <!-- Node 4: Reconstruction (left) -->
+      <circle cx="240" cy="150" r="35" fill="white" opacity=".7" stroke="#E08B7A" stroke-width="2"/>
+      <rect x="228" y="140" width="24" height="18" rx="3" fill="#F5D9D3" stroke="#E08B7A" stroke-width="1"/>
+      <path d="M225 140 L240 128 L255 140Z" fill="#E08B7A" opacity=".5"/>
+      <text x="240" y="200" text-anchor="middle" font-size="10" fill="#E08B7A">重建规划</text>
+      <!-- Rotating arrows connecting nodes -->
+      <path d="M430 80 Q500 90 540 120" stroke="#9B8FA8" stroke-width="2" fill="none" opacity=".4" stroke-dasharray="120" stroke-dashoffset="120" style="animation:svg-draw 2s ease forwards"/>
+      <path d="M560 185 Q540 220 430 235" stroke="#9B8FA8" stroke-width="2" fill="none" opacity=".4" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards .5s"/>
+      <path d="M370 235 Q280 220 260 185" stroke="#9B8FA8" stroke-width="2" fill="none" opacity=".4" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards 1s"/>
+      <path d="M240 120 Q260 90 370 75" stroke="#9B8FA8" stroke-width="2" fill="none" opacity=".4" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards 1.5s"/>
+      <!-- Arrow tips -->
+      <path d="M540 120 L535 112 L543 115Z" fill="#9B8FA8" opacity=".5" style="animation:svg-fade-in 1s ease forwards 2s"/>
+      <path d="M430 235 L435 228 L438 237Z" fill="#9B8FA8" opacity=".5" style="animation:svg-fade-in 1s ease forwards 2.5s"/>
+      <path d="M260 185 L265 178 L268 187Z" fill="#9B8FA8" opacity=".5" style="animation:svg-fade-in 1s ease forwards 3s"/>
+      <path d="M370 75 L375 68 L378 77Z" fill="#9B8FA8" opacity=".5" style="animation:svg-fade-in 1s ease forwards 3.5s"/>
+      <!-- Growing plant in center -->
+      <rect x="396" y="140" width="8" height="30" rx="2" fill="#8BC9A8" opacity=".6" style="animation:svg-rise 1.5s ease forwards"/>
+      <circle cx="400" cy="135" r="15" fill="#8BC9A8" opacity=".5" style="animation:svg-scale-in 1.5s ease forwards .5s;transform-origin:400px 135px"/>
+      <circle cx="390" cy="140" r="10" fill="#6EC4B8" opacity=".4" style="animation:svg-scale-in 1.5s ease forwards 1s;transform-origin:390px 140px"/>
+      <circle cx="410" cy="138" r="12" fill="#D9F0E4" opacity=".4" style="animation:svg-scale-in 1.5s ease forwards 1.5s;transform-origin:410px 138px"/>
+      <!-- Foundation blocks at base -->
+      <rect x="370" y="265" width="20" height="10" rx="2" fill="#C9A84C" opacity=".4" style="animation:svg-fade-in 1s ease forwards 2s"/>
+      <rect x="395" y="265" width="20" height="10" rx="2" fill="#C9A84C" opacity=".4" style="animation:svg-fade-in-d 1s ease forwards 2.5s"/>
+      <rect x="420" y="265" width="20" height="10" rx="2" fill="#C9A84C" opacity=".4" style="animation:svg-fade-in-d2 1s ease forwards 3s"/>
+      <!-- Shimmer -->
+      <circle cx="100" cy="80" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+      <circle cx="700" cy="90" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+      <circle cx="150" cy="250" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+      <circle cx="650" cy="240" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+    </svg>
+  </div>
+  <div class="adapt-text reveal">
+    <p>依托社区打造常设艺术疗愈空间，培育本土同伴支持队伍</p>
+    <p>整合为灾后心理恢复工具包，纳入地方重建规划</p>
+    <p>形成可复用、可持续的社区心理应急帮扶体系</p>
+  </div>
+</section>
+
+<!-- SDGs -->
+<section class="adapt-section sdgs-section" id="sdgs">
+  <span class="section-tag reveal">SDGs 目标融合</span>
+  <h2 class="section-title reveal">可持续发展目标</h2>
+  <div class="sdgs-cards reveal">
+    <div class="sdg-card">
+      <span class="sdg-badge sdg3">SDG 3</span>
+      <h4>良好健康与福祉</h4>
+      <p>缓解灾后创伤症状，修复居民心理健康</p>
+    </div>
+    <div class="sdg-card">
+      <span class="sdg-badge sdg11">SDG 11</span>
+      <h4>可持续社区</h4>
+      <p>重塑邻里联结，提升社区抗灾韧性与凝聚力</p>
+    </div>
+    <div class="sdg-card">
+      <span class="sdg-badge sdg13">SDG 13</span>
+      <h4>气候行动</h4>
+      <p>强化社区应对气候灾害的心理储备</p>
+    </div>
+  </div>
+  <div class="adapt-svg-wrap reveal-scale">
+    <svg viewBox="0 0 900 350" width="900" height="350" xmlns="http://www.w3.org/2000/svg">
+      <defs><radialGradient id="sdgGlow" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#D6E6F2" stop-opacity=".3"/><stop offset="100%" stop-color="#D6E6F2" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="450" cy="175" r="140" fill="url(#sdgGlow)" style="animation:svg-glow 5s ease-in-out infinite"/>
+      <!-- SDG 3 circle (top-left) -->
+      <circle cx="250" cy="100" r="50" fill="white" opacity=".6" stroke="#6EC4B8" stroke-width="2"/>
+      <text x="250" y="95" text-anchor="middle" font-size="18" font-weight="700" fill="#6EC4B8">3</text>
+      <text x="250" y="115" text-anchor="middle" font-size="9" fill="#7A7486">健康</text>
+      <!-- SDG 11 circle (top-right) -->
+      <circle cx="650" cy="100" r="50" fill="white" opacity=".6" stroke="#7BA7CC" stroke-width="2"/>
+      <text x="650" y="95" text-anchor="middle" font-size="18" font-weight="700" fill="#7BA7CC">11</text>
+      <text x="650" y="115" text-anchor="middle" font-size="9" fill="#7A7486">社区</text>
+      <!-- SDG 13 circle (bottom-center) -->
+      <circle cx="450" cy="280" r="50" fill="white" opacity=".6" stroke="#8BC9A8" stroke-width="2"/>
+      <text x="450" y="275" text-anchor="middle" font-size="18" font-weight="700" fill="#8BC9A8">13</text>
+      <text x="450" y="295" text-anchor="middle" font-size="9" fill="#7A7486">气候</text>
+      <!-- Community in center -->
+      <circle cx="450" cy="175" r="40" fill="white" opacity=".5" stroke="#C9A84C" stroke-width="2"/>
+      <circle cx="440" cy="165" r="7" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+      <rect x="435" y="172" width="10" height="14" rx="3" fill="#D6E6F2"/>
+      <circle cx="460" cy="165" r="7" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1"/>
+      <rect x="455" y="172" width="10" height="14" rx="3" fill="#D4EDE8"/>
+      <circle cx="450" cy="185" r="6" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1"/>
+      <rect x="445" y="191" width="10" height="12" rx="3" fill="#FBF4D6"/>
+      <!-- Connection lines SDGs to community -->
+      <line x1="295" y1="125" x2="415" y2="160" stroke="#6EC4B8" stroke-width="2" opacity=".3" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards"/>
+      <line x1="605" y1="125" x2="485" y2="160" stroke="#7BA7CC" stroke-width="2" opacity=".3" stroke-dasharray="150" stroke-dashoffset="150" style="animation:svg-draw 2s ease forwards .5s"/>
+      <line x1="450" y1="230" x2="450" y2="215" stroke="#8BC9A8" stroke-width="2" opacity=".3" stroke-dasharray="20" stroke-dashoffset="20" style="animation:svg-draw 2s ease forwards 1s"/>
+      <!-- Inter-SDG connections -->
+      <line x1="295" y1="90" x2="605" y2="90" stroke="#9B8FA8" stroke-width="1" stroke-dasharray="6 4" opacity=".2" stroke-dasharray="320" stroke-dashoffset="320" style="animation:svg-draw 3s ease forwards 1.5s"/>
+      <line x1="270" y1="140" x2="420" y2="250" stroke="#9B8FA8" stroke-width="1" stroke-dasharray="6 4" opacity=".2" stroke-dasharray="200" stroke-dashoffset="200" style="animation:svg-draw 3s ease forwards 2s"/>
+      <line x1="630" y1="140" x2="480" y2="250" stroke="#9B8FA8" stroke-width="1" stroke-dasharray="6 4" opacity=".2" stroke-dasharray="200" stroke-dashoffset="200" style="animation:svg-draw 3s ease forwards 2.5s"/>
+      <!-- Growth elements -->
+      <circle cx="350" cy="140" r="8" fill="#8BC9A8" opacity=".4" style="animation:svg-rise 1s ease forwards"/>
+      <circle cx="550" cy="140" r="8" fill="#8BC9A8" opacity=".4" style="animation:svg-rise 1s ease forwards .3s"/>
+      <circle cx="400" cy="220" r="6" fill="#D9F0E4" opacity=".4" style="animation:svg-rise 1s ease forwards .6s"/>
+      <circle cx="500" cy="220" r="6" fill="#D9F0E4" opacity=".4" style="animation:svg-rise 1s ease forwards .9s"/>
+      <!-- Shield symbols for resilience -->
+      <circle cx="450" cy="175" r="55" fill="none" stroke="#6EC4B8" stroke-width="1.5" opacity=".2" style="animation:svg-breathe 4s ease-in-out infinite"/>
+      <circle cx="450" cy="175" r="65" fill="none" stroke="#7BA7CC" stroke-width="1" opacity=".15" style="animation:svg-breathe 4s ease-in-out 1s infinite"/>
+      <!-- Shimmer -->
+      <circle cx="100" cy="80" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out infinite"/>
+      <circle cx="800" cy="90" r="2.5" fill="#F4E4A6" style="animation:svg-shimmer 4s ease-in-out .5s infinite"/>
+      <circle cx="150" cy="280" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3.5s ease-in-out 1s infinite"/>
+      <circle cx="750" cy="270" r="2" fill="#F4E4A6" style="animation:svg-shimmer 4.5s ease-in-out 1.5s infinite"/>
+      <circle cx="450" cy="50" r="2" fill="#F4E4A6" style="animation:svg-shimmer 3s ease-in-out 2s infinite"/>
+    </svg>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <h3>灾后心理援助 · 创伤知情艺术治疗</h3>
+  <p>8周 · 3阶段 · 温和安全的团体干预</p>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+// Progress Bar
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  progressBar.style.width = scrollPercent + '%';
+});
+
+// IntersectionObserver for reveal animations
+const observerOptions = { threshold: 0.12, rootMargin: '-40px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  observer.observe(el);
+});
+
+// Nav dots active state
+const sections = document.querySelectorAll('section[id]');
+const navDots = document.querySelectorAll('.nav-dot');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      navDots.forEach(dot => {
+        dot.classList.remove('active');
+        if (dot.getAttribute('href') === '#' + id) {
+          dot.classList.add('active');
+        }
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(section => navObserver.observe(section));
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

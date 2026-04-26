@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿芽计划 — 农村女性疗愈与可持续发展赋能项目</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --forest:#4A7C59;--forest-light:#D4E8DA;--forest-pale:#EAF5EE;
+    --sage:#6B9B6E;--sage-light:#D9EDDA;
+    --moss:#7B8F5B;--moss-light:#DDE8D0;
+    --earth:#A08060;--earth-light:#EDE4D8;
+    --terracotta:#C47860;--terracotta-light:#F5DDD3;
+    --warm:#D4956A;--warm-light:#FAEDE0;
+    --gold:#C9A84C;--gold-light:#FBF4D6;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --peach:#F5E0D0;
+    --deep:#3A3D2E;--soft:#5A6050;--surface:#F0ECE4;
+    --water:#6BA3BE;--water-light:#D6EAF2;
+    --lavender:#9B8FA8;--lavender-light:#E8E3EE;
+    --rose:#C47888;--rose-light:#F2DDE2;
+    --blue:#5A8FB5;--blue-light:#D6E6F2;
+    --mint:#8BC9A8;--mint-light:#D9F0E4;
+    --amber:#B89840;--amber-light:#F5EDCF;
+    --plum:#8A6B9A;--plum-light:#E8D8F0;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--forest),var(--gold),var(--terracotta),var(--sage));width:0%;transition:width .1s linear}
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:8px}
+  .nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--forest);transform:scale(1.5);box-shadow:0 0 10px rgba(74,124,89,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:18px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:3px 10px;border-radius:5px;font-size:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--forest-pale) 0%,var(--cream) 35%,var(--warm-light) 70%,var(--gold-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--forest);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--gold);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--sage);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--terracotta);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(74,124,89,.12);border-radius:20px;font-size:13px;color:var(--forest);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(30px,5vw,54px);font-weight:700;line-height:1.3;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--forest)}.hero-title .accent2{color:var(--terracotta)}
+  .hero-subtitle{font-size:clamp(14px,2vw,18px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .hero-meta-icon.green{background:rgba(74,124,89,.12)}.hero-meta-icon.warm{background:rgba(196,120,96,.12)}
+  .hero-meta-icon.gold{background:rgba(201,168,76,.15)}.hero-meta-icon.blue{background:rgba(90,143,181,.12)}
+  .hero-illustration{margin-top:40px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:640px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block}
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.overview{background:rgba(74,124,89,.1);color:var(--forest)}
+  .section-tag.impl{background:rgba(160,128,96,.1);color:var(--earth)}
+  .section-tag.longterm{background:rgba(107,155,110,.1);color:var(--sage)}
+  .section-tag.sdgs{background:rgba(201,168,76,.15);color:#A08050}
+  .section-tag.followup{background:rgba(90,143,181,.1);color:var(--blue)}
+  .section-tag.benefit{background:rgba(196,120,136,.1);color:var(--rose)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,42px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+
+  .overview-section{padding:100px 24px;background:var(--surface)}
+  .overview-container{max-width:1100px;margin:0 auto}
+  .overview-visual{max-width:800px;margin:0 auto 50px}
+  .overview-visual svg{width:100%;height:auto;display:block}
+  .layer-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .layer-card{padding:28px;border-radius:16px;text-align:center;transition:transform .3s,box-shadow .3s}
+  .layer-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .layer-card.l1{background:linear-gradient(135deg,rgba(74,124,89,.08),rgba(74,124,89,.02));border:1px solid rgba(74,124,89,.1)}
+  .layer-card.l2{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.1)}
+  .layer-card.l3{background:linear-gradient(135deg,rgba(196,120,96,.08),rgba(196,120,96,.02));border:1px solid rgba(196,120,96,.1)}
+  .layer-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px}
+  .layer-icon.l1{background:rgba(74,124,89,.1)}.layer-icon.l2{background:rgba(201,168,76,.12)}.layer-icon.l3{background:rgba(196,120,96,.1)}
+  .layer-card h3{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;margin-bottom:4px}
+  .layer-card .layer-sub{font-size:13px;font-weight:500;margin-bottom:10px}
+  .layer-card.l1 .layer-sub{color:var(--forest)}.layer-card.l2 .layer-sub{color:var(--gold)}.layer-card.l3 .layer-sub{color:var(--terracotta)}
+  .layer-card p{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .week-section{min-height:100vh;display:flex;align-items:center;padding:80px 24px;position:relative}
+  .week-section:nth-child(odd){background:var(--cream-pale)}.week-section:nth-child(even){background:var(--surface)}
+  .week-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .week-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+  .week-num-badge{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:#fff}
+  .week-num-badge.l1{background:linear-gradient(135deg,#4A7C59,#6BAF7A)}
+  .week-num-badge.l2{background:linear-gradient(135deg,#C9A84C,#E0C870)}
+  .week-num-badge.l3{background:linear-gradient(135deg,#C47860,#E09880)}
+  .week-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+  .week-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.2vw,34px);font-weight:700;margin-bottom:4px;line-height:1.4}
+  .week-theme{font-size:14px;font-weight:500;margin-bottom:14px}
+  .week-theme.l1{color:var(--forest)}.week-theme.l2{color:var(--gold)}.week-theme.l3{color:var(--terracotta)}
+  .week-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:18px}
+  .week-details{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+  .detail-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--soft)}
+  .detail-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+  .detail-icon.l1{background:rgba(74,124,89,.1)}.detail-icon.l2{background:rgba(201,168,76,.1)}.detail-icon.l3{background:rgba(196,120,96,.1)}
+  .week-goal{padding:14px 18px;border-radius:12px;font-size:13px;color:var(--soft);line-height:1.7}
+  .week-goal.l1{background:rgba(74,124,89,.06);border-left:3px solid var(--forest)}
+  .week-goal.l2{background:rgba(201,168,76,.06);border-left:3px solid var(--gold)}
+  .week-goal.l3{background:rgba(196,120,96,.06);border-left:3px solid var(--terracotta)}
+  .goal-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+  .week-visual{position:relative}
+  .week-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+
+  .info-section{padding:100px 24px;position:relative}
+  .info-section.impl{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .info-section.longterm{background:var(--cream-pale)}
+  .info-section.sdgs{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .info-section.followup{background:var(--surface)}
+  .info-section.benefit{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .info-container{max-width:1100px;margin:0 auto}
+
+  .followup-list{display:flex;flex-direction:column;gap:16px;max-width:800px;margin:0 auto 40px}
+  .followup-item{display:flex;align-items:flex-start;gap:14px;padding:18px 22px;border-radius:14px;background:var(--cream-pale);border:1px solid rgba(90,143,181,.06);transition:transform .3s}
+  .followup-item:hover{transform:translateX(6px)}
+  .followup-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(90,143,181,.1)}
+  .followup-text h4{font-size:14px;font-weight:600;margin-bottom:2px}
+  .followup-text p{font-size:13px;color:var(--soft);line-height:1.6}
+
+  .impl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .impl-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(160,128,96,.06);transition:transform .3s,box-shadow .3s}
+  .impl-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .impl-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .impl-card-icon.c1{background:rgba(74,124,89,.1)}.impl-card-icon.c2{background:rgba(160,128,96,.1)}
+  .impl-card-icon.c3{background:rgba(201,168,76,.1)}.impl-card-icon.c4{background:rgba(196,120,96,.1)}
+  .impl-card-icon.c5{background:rgba(90,143,181,.1)}
+  .impl-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .impl-card p{font-size:14px;color:var(--soft);line-height:1.7}
+
+  .longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(74,124,89,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .longterm-card-icon.l1{background:rgba(74,124,89,.1)}.longterm-card-icon.l2{background:rgba(196,120,96,.1)}
+  .longterm-card-icon.l3{background:rgba(90,143,181,.1)}.longterm-card-icon.l4{background:rgba(201,168,76,.12)}
+  .longterm-card-icon.l5{background:rgba(155,143,168,.1)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .sdgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:40px}
+  .sdg-card{padding:18px;border-radius:14px;text-align:center;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-3px)}
+  .sdg-card:nth-child(6n+1){background:linear-gradient(135deg,rgba(229,61,52,.06),rgba(229,61,52,.01));border:1px solid rgba(229,61,52,.08)}
+  .sdg-card:nth-child(6n+2){background:linear-gradient(135deg,rgba(74,124,89,.06),rgba(74,124,89,.01));border:1px solid rgba(74,124,89,.08)}
+  .sdg-card:nth-child(6n+3){background:linear-gradient(135deg,rgba(221,19,103,.06),rgba(221,19,103,.01));border:1px solid rgba(221,19,103,.08)}
+  .sdg-card:nth-child(6n+4){background:linear-gradient(135deg,rgba(76,159,56,.06),rgba(76,159,56,.01));border:1px solid rgba(76,159,56,.08)}
+  .sdg-card:nth-child(6n+5){background:linear-gradient(135deg,rgba(254,126,21,.06),rgba(254,126,21,.01));border:1px solid rgba(254,126,21,.08)}
+  .sdg-card:nth-child(6n+6){background:linear-gradient(135deg,rgba(90,143,181,.06),rgba(90,143,181,.01));border:1px solid rgba(90,143,181,.08)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:26px;font-weight:700;margin-bottom:4px}
+  .sdg-card:nth-child(6n+1) .sdg-num{color:#E53D34}.sdg-card:nth-child(6n+2) .sdg-num{color:var(--forest)}
+  .sdg-card:nth-child(6n+3) .sdg-num{color:#DD1367}.sdg-card:nth-child(6n+4) .sdg-num{color:#4C9F38}
+  .sdg-card:nth-child(6n+5) .sdg-num{color:#FE7E15}.sdg-card:nth-child(6n+6) .sdg-num{color:var(--blue)}
+  .sdg-title{font-size:12px;font-weight:600;margin-bottom:5px}.sdg-desc{font-size:11px;color:var(--soft);line-height:1.6}
+
+  .esg-box{padding:28px 32px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(201,168,76,.1);margin-bottom:40px}
+  .esg-box h3{font-size:16px;font-weight:600;margin-bottom:16px;text-align:center}
+  .esg-items{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .esg-item{padding:16px;border-radius:12px;text-align:center}
+  .esg-item.s{background:rgba(74,124,89,.06)}.esg-item.e{background:rgba(90,143,181,.06)}.esg-item.g{background:rgba(201,168,76,.06)}
+  .esg-item h4{font-size:14px;font-weight:600;margin-bottom:6px}
+  .esg-item.s h4{color:var(--forest)}.esg-item.e h4{color:var(--blue)}.esg-item.g h4{color:var(--gold)}
+  .esg-item p{font-size:12px;color:var(--soft);line-height:1.6}
+
+  .benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .benefit-card{padding:28px;border-radius:16px;text-align:center;transition:transform .3s}
+  .benefit-card:hover{transform:translateY(-4px)}
+  .benefit-card.b1{background:linear-gradient(135deg,rgba(196,120,136,.08),rgba(196,120,136,.02));border:1px solid rgba(196,120,136,.1)}
+  .benefit-card.b2{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.1)}
+  .benefit-card.b3{background:linear-gradient(135deg,rgba(74,124,89,.08),rgba(74,124,89,.02));border:1px solid rgba(74,124,89,.1)}
+  .benefit-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px}
+  .benefit-icon.b1{background:rgba(196,120,136,.1)}.benefit-icon.b2{background:rgba(201,168,76,.12)}.benefit-icon.b3{background:rgba(74,124,89,.1)}
+  .benefit-card h3{font-size:16px;font-weight:600;margin-bottom:10px}
+  .benefit-card ul{list-style:none;text-align:left}
+  .benefit-card li{font-size:13px;color:var(--soft);line-height:1.7;padding:3px 0 3px 18px;position:relative}
+  .benefit-card li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%}
+  .benefit-card.b1 li::before{background:var(--rose)}.benefit-card.b2 li::before{background:var(--gold)}.benefit-card.b3 li::before{background:var(--forest)}
+
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-sway{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{animation:svgGlow 4s ease-in-out infinite}
+  .svg-rotate{animation:svgRotate 20s linear infinite}
+  .svg-grow{animation:svgGrow 3s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:800;stroke-dashoffset:800;animation:svgDraw 3s ease forwards}
+  .svg-draw-slow{stroke-dasharray:1200;stroke-dashoffset:1200;animation:svgDraw 5s ease forwards}
+  .svg-fade-in{opacity:0;animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0;animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0;animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0;animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0;animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0;animation:svgRipple 2.5s ease-out forwards}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}
+  .svg-ring-d{animation:svgRing 3s ease-out 1s infinite}
+  .svg-ring-d2{animation:svgRing 3s ease-out 2s infinite}
+  .svg-shimmer{opacity:0;animation:svgShimmer 3s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px);animation:svgRise 1.5s ease forwards}
+  .svg-slide-l{opacity:0;transform:translateX(-30px);animation:svgSlideL 1s ease forwards}
+  .svg-slide-r{opacity:0;transform:translateX(30px);animation:svgSlideR 1s ease forwards}
+  .svg-drop{opacity:0;transform:translateY(-20px);animation:svgDrop 2.5s ease infinite}
+  .svg-drop-d{animation:svgDrop 2.5s ease .8s infinite}
+  .svg-drop-d2{animation:svgDrop 2.5s ease 1.6s infinite}
+  .svg-wave{animation:svgWave 3s ease-in-out infinite}
+  .svg-sprout{animation:svgSprout 4s ease-in-out infinite}
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.08}50%{opacity:.22}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgGrow{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2);opacity:0}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.6}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.7}60%{opacity:.4;transform:translateY(30px)}80%{opacity:0;transform:translateY(40px)}100%{opacity:0;transform:translateY(40px)}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes svgSprout{0%,100%{transform:scaleY(1) translateY(0)}50%{transform:scaleY(1.08) translateY(-2px)}}
+
+  @media(max-width:768px){
+    .week-container{grid-template-columns:1fr;gap:32px}
+    .week-section{padding:60px 20px}
+    .layer-cards,.sdgs-grid,.impl-grid,.longterm-grid,.benefit-grid,.esg-items{grid-template-columns:1fr}
+    .nav-dots{right:12px;gap:6px}.nav-dot{width:6px;height:6px}.nav-dot .tooltip{display:none}
+    .hero-meta{gap:14px}
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="overview"><span class="tooltip">三层架构</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周</span></div>
+  <div class="nav-dot" data-target="week5"><span class="tooltip">第5周</span></div>
+  <div class="nav-dot" data-target="week6"><span class="tooltip">第6周</span></div>
+  <div class="nav-dot" data-target="week7"><span class="tooltip">第7周</span></div>
+  <div class="nav-dot" data-target="week8"><span class="tooltip">第8周</span></div>
+  <div class="nav-dot" data-target="week9"><span class="tooltip">第9周</span></div>
+  <div class="nav-dot" data-target="week10"><span class="tooltip">第10周</span></div>
+  <div class="nav-dot" data-target="week11"><span class="tooltip">第11周</span></div>
+  <div class="nav-dot" data-target="week12"><span class="tooltip">第12周</span></div>
+  <div class="nav-dot" data-target="followup"><span class="tooltip">跟进支持</span></div>
+  <div class="nav-dot" data-target="impl"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+  <div class="nav-dot" data-target="benefit"><span class="tooltip">社会效益</span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">🌱 农村女性赋能项目</div>
+    <h1 class="hero-title"><span class="accent">绿芽计划</span><br>疗愈与可持续发展赋能</h1>
+    <p class="hero-subtitle">为农村女性量身打造的12周核心课程，融合内在疗愈、能力建设与行动转化，开启自我成长与社区变革的旅程</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon green">🌱</div><span>12周核心课程</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon warm">🤝</div><span>6个月跟进支持</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon gold">🌾</div><span>三层递进赋能</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon blue">🌍</div><span>14项SDGs融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="640" height="360" rx="20" fill="#FAF8F2"/>
+        <ellipse cx="320" cy="320" rx="280" ry="30" fill="#D4E8DA" opacity="0.3"/>
+        <path d="M40 310 Q160 295 320 300 Q480 305 600 295" stroke="#8BC9A8" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <g class="svg-breathe">
+          <path d="M260 280 Q250 260 255 240 Q260 230 270 235 Q275 240 272 260 L280 270" fill="#F5D9D3" opacity="0.8"/>
+          <path d="M380 280 Q390 260 385 240 Q380 230 370 235 Q365 240 368 260 L360 270" fill="#F5D9D3" opacity="0.8"/>
+          <path d="M320 270 L320 180" stroke="#4A7C59" stroke-width="4" stroke-linecap="round" class="svg-grow"/>
+          <path d="M320 230 Q290 210 280 180 Q310 195 320 220" fill="#6B9B6E" opacity="0.7" class="svg-sway"/>
+          <path d="M320 210 Q350 190 360 160 Q330 175 320 200" fill="#4A7C59" opacity="0.6" class="svg-sway"/>
+          <path d="M320 250 Q295 240 285 215 Q310 225 320 245" fill="#8BC9A8" opacity="0.5" class="svg-sway"/>
+          <path d="M320 195 Q345 180 355 150 Q325 165 320 185" fill="#6B9B6E" opacity="0.5" class="svg-sway"/>
+        </g>
+        <g class="svg-float">
+          <circle cx="140" cy="200" r="20" fill="#F5D9D3"/>
+          <path d="M120 196 Q124 178 140 175 Q156 178 160 196" fill="#7A7486" opacity="0.4"/>
+          <circle cx="134" cy="198" r="1.5" fill="#4A4458"/><circle cx="146" cy="198" r="1.5" fill="#4A4458"/>
+          <path d="M136 206 Q140 209 144 206" stroke="#C47860" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M126 214 Q122 240 124 270 L156 270 Q158 240 154 214 Q140 208 126 214Z" fill="#4A7C59" opacity="0.5"/>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="500" cy="200" r="20" fill="#F5D9D3"/>
+          <path d="M480 196 Q484 178 500 175 Q516 178 520 196" fill="#7A7486" opacity="0.4"/>
+          <circle cx="494" cy="198" r="1.5" fill="#4A4458"/><circle cx="506" cy="198" r="1.5" fill="#4A4458"/>
+          <path d="M496 206 Q500 209 504 206" stroke="#C47860" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M486 214 Q482 240 484 270 L516 270 Q518 240 514 214 Q500 208 486 214Z" fill="#C9A84C" opacity="0.4"/>
+        </g>
+        <g class="svg-float-d2"><circle cx="80" cy="130" r="14" fill="#D4E8DA" opacity="0.6"/><text x="80" y="136" text-anchor="middle" font-size="14">🌿</text></g>
+        <g class="svg-float-d3"><circle cx="560" cy="120" r="14" fill="#FBF4D6" opacity="0.6"/><text x="560" y="126" text-anchor="middle" font-size="14">🌾</text></g>
+        <g class="svg-float"><circle cx="200" cy="100" r="12" fill="#F5DDD3" opacity="0.6"/><text x="200" y="106" text-anchor="middle" font-size="12">💛</text></g>
+        <g class="svg-float-d2"><circle cx="440" cy="110" r="12" fill="#D6EAF2" opacity="0.6"/><text x="440" y="116" text-anchor="middle" font-size="12">🦋</text></g>
+        <circle cx="320" cy="140" r="3" fill="#4A7C59" opacity="0.3" class="svg-pulse"/>
+        <circle cx="280" cy="160" r="2" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="360" cy="150" r="2.5" fill="#C47860" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="overview-section" id="overview">
+  <div class="overview-container">
+    <div class="section-header reveal">
+      <div class="section-tag overview">项目架构</div>
+      <h2 class="section-title">三层递进赋能体系</h2>
+      <p class="section-subtitle">从内在疗愈到能力建设，再到行动转化，层层深入，助力农村女性实现全面成长</p>
+    </div>
+    <div class="overview-visual reveal-scale">
+      <svg viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="300" rx="20" fill="#FAF8F2"/>
+        <circle cx="400" cy="150" r="120" stroke="#C47860" stroke-width="2" fill="none" opacity="0.15" stroke-dasharray="8,6" class="svg-rotate"/>
+        <circle cx="400" cy="150" r="85" stroke="#C9A84C" stroke-width="2" fill="none" opacity="0.2" stroke-dasharray="6,5" class="svg-rotate"/>
+        <circle cx="400" cy="150" r="50" stroke="#4A7C59" stroke-width="2" fill="none" opacity="0.25" stroke-dasharray="4,4" class="svg-rotate"/>
+        <g class="svg-breathe">
+          <circle cx="400" cy="150" r="28" fill="#D4E8DA" opacity="0.5"/>
+          <text x="400" y="145" text-anchor="middle" font-size="22">🌱</text>
+          <text x="400" y="165" text-anchor="middle" font-size="10" fill="#4A7C59" font-weight="600">绿芽计划</text>
+        </g>
+        <g class="svg-float"><rect x="540" y="40" width="140" height="44" rx="22" fill="rgba(196,120,96,0.08)" stroke="rgba(196,120,96,0.15)" stroke-width="1"/><text x="610" y="58" text-anchor="middle" font-size="12" fill="#C47860" font-weight="600">③ 创造改变</text><text x="610" y="74" text-anchor="middle" font-size="10" fill="#7A7486">第9-12周</text></g>
+        <g class="svg-float-d"><rect x="540" y="120" width="140" height="44" rx="22" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.15)" stroke-width="1"/><text x="610" y="138" text-anchor="middle" font-size="12" fill="#B89840" font-weight="600">② 掌握技能</text><text x="610" y="154" text-anchor="middle" font-size="10" fill="#7A7486">第5-8周</text></g>
+        <g class="svg-float-d2"><rect x="540" y="200" width="140" height="44" rx="22" fill="rgba(74,124,89,0.08)" stroke="rgba(74,124,89,0.15)" stroke-width="1"/><text x="610" y="218" text-anchor="middle" font-size="12" fill="#4A7C59" font-weight="600">① 看见自己</text><text x="610" y="234" text-anchor="middle" font-size="10" fill="#7A7486">第1-4周</text></g>
+        <line x1="520" y1="62" x2="540" y2="62" stroke="#C47860" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+        <line x1="485" y1="142" x2="540" y2="142" stroke="#C9A84C" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+        <line x1="450" y1="210" x2="540" y2="222" stroke="#4A7C59" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+        <g class="svg-float-d2"><circle cx="120" cy="80" r="20" fill="#D4E8DA" opacity="0.6"/><text x="120" y="86" text-anchor="middle" font-size="18">🧘</text><text x="120" y="115" text-anchor="middle" font-size="10" fill="#5A6050">疗愈</text></g>
+        <g class="svg-float"><circle cx="120" cy="150" r="20" fill="#FBF4D6" opacity="0.6"/><text x="120" y="156" text-anchor="middle" font-size="18">🛠️</text><text x="120" y="185" text-anchor="middle" font-size="10" fill="#5A6050">技能</text></g>
+        <g class="svg-float-d3"><circle cx="120" cy="220" r="20" fill="#F5DDD3" opacity="0.6"/><text x="120" y="226" text-anchor="middle" font-size="18">🚀</text><text x="120" y="255" text-anchor="middle" font-size="10" fill="#5A6050">行动</text></g>
+      </svg>
+    </div>
+    <div class="layer-cards stagger">
+      <div class="layer-card l1 reveal" style="--i:0"><div class="layer-icon l1">🌱</div><h3>第一层</h3><div class="layer-sub">内在疗愈层</div><p>第1-4周"看见自己"，建立安全空间，释放情绪，重建自我价值，联结身体与土地</p></div>
+      <div class="layer-card l2 reveal" style="--i:1"><div class="layer-icon l2">🛠️</div><h3>第二层</h3><div class="layer-sub">能力建设层</div><p>第5-8周"掌握技能"，学习可持续农业、传统手工艺、环保创业与健康知识</p></div>
+      <div class="layer-card l3 reveal" style="--i:2"><div class="layer-icon l3">🚀</div><h3>第三层</h3><div class="layer-sub">行动转化层</div><p>第9-12周"创造改变"，设计社区项目，实施落地，展示成果，规划未来</p></div>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week1">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge l1">1</div><span class="week-label">第一层 · 内在疗愈</span></div>
+      <h2 class="week-title">安全空间建立</h2>
+      <div class="week-theme l1">围坐分享，建立信任</div>
+      <p class="week-desc">通过围坐分享"我的名字的故事"、共同制定团体契约、身体扫描冥想，为参与者营造一个安全、信任、温暖的团体氛围。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l1">💬</div><span>围坐分享"我的名字的故事"</span></div><div class="detail-item"><div class="detail-icon l1">📝</div><span>共同制定团体契约</span></div><div class="detail-item"><div class="detail-icon l1">🧘</div><span>身体扫描冥想</span></div></div>
+      <div class="week-goal l1"><span class="goal-label">🎯 目标</span>建立信任、安全感与团体归属</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+      <ellipse cx="220" cy="300" rx="140" ry="60" fill="#D4E8DA" opacity="0.25"/>
+      <g class="svg-breathe"><rect x="214" y="260" width="12" height="20" rx="3" fill="#F5E0D0"/><path d="M220 260 Q215 240 220 225 Q225 240 220 260Z" fill="#C9A84C" opacity="0.6"/><path d="M220 255 Q218 245 220 235 Q222 245 220 255Z" fill="#E08B7A" opacity="0.4"/></g>
+      <g class="svg-float"><circle cx="220" cy="190" r="16" fill="#F5D9D3"/><path d="M206 187 Q209 174 220 172 Q231 174 234 187" fill="#7A7486" opacity="0.4"/><path d="M208 202 Q206 220 208 240 L232 240 Q234 220 232 202 Q220 197 208 202Z" fill="#4A7C59" opacity="0.4"/></g>
+      <g class="svg-float-d"><circle cx="140" cy="230" r="16" fill="#F5D9D3"/><path d="M126 227 Q129 214 140 212 Q151 214 154 227" fill="#7A7486" opacity="0.4"/><path d="M128 242 Q126 260 128 275 L152 275 Q154 260 152 242 Q140 237 128 242Z" fill="#C9A84C" opacity="0.35"/></g>
+      <g class="svg-float-d2"><circle cx="300" cy="230" r="16" fill="#F5D9D3"/><path d="M286 227 Q289 214 300 212 Q311 214 314 227" fill="#7A7486" opacity="0.4"/><path d="M288 242 Q286 260 288 275 L312 275 Q314 260 312 242 Q300 237 288 242Z" fill="#C47860" opacity="0.35"/></g>
+      <g class="svg-float-d3"><circle cx="160" cy="310" r="16" fill="#F5D9D3"/><path d="M146 307 Q149 294 160 292 Q171 294 174 307" fill="#7A7486" opacity="0.4"/><path d="M148 322 Q146 340 148 355 L172 355 Q174 340 172 322 Q160 317 148 322Z" fill="#6BA3BE" opacity="0.35"/></g>
+      <g class="svg-float"><circle cx="280" cy="310" r="16" fill="#F5D9D3"/><path d="M266 307 Q269 294 280 292 Q291 294 294 307" fill="#7A7486" opacity="0.4"/><path d="M268 322 Q266 340 268 355 L292 355 Q294 340 292 322 Q280 317 268 322Z" fill="#8BC9A8" opacity="0.35"/></g>
+      <g class="svg-float-d" opacity="0.6"><rect x="60" y="140" width="60" height="28" rx="14" fill="#D4E8DA"/><text x="90" y="158" text-anchor="middle" font-size="10" fill="#4A7C59">我是…</text></g>
+      <g class="svg-float-d2" opacity="0.6"><rect x="320" y="140" width="60" height="28" rx="14" fill="#FBF4D6"/><text x="350" y="158" text-anchor="middle" font-size="10" fill="#B89840">信任…</text></g>
+      <circle cx="180" cy="170" r="3" fill="#C47888" opacity="0.3" class="svg-pulse"/>
+      <circle cx="260" cy="170" r="3" fill="#C47888" opacity="0.3" class="svg-pulse"/></svg>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week2">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+      <ellipse cx="220" cy="370" rx="160" ry="25" fill="#D4E8DA" opacity="0.2"/>
+      <rect x="206" y="160" width="28" height="180" rx="8" fill="#A08060" opacity="0.4"/>
+      <g class="svg-sway"><circle cx="220" cy="130" r="70" fill="#4A7C59" opacity="0.15"/><circle cx="180" cy="150" r="50" fill="#6B9B6E" opacity="0.12"/><circle cx="260" cy="145" r="55" fill="#8BC9A8" opacity="0.1"/></g>
+      <g class="svg-float"><circle cx="180" cy="110" r="12" fill="#F5D9D3" opacity="0.7"/><text x="180" y="115" text-anchor="middle" font-size="12">😢</text></g>
+      <g class="svg-float-d"><circle cx="250" cy="100" r="12" fill="#FBF4D6" opacity="0.7"/><text x="250" y="105" text-anchor="middle" font-size="12">😤</text></g>
+      <g class="svg-float-d2"><circle cx="210" cy="80" r="12" fill="#D4E8DA" opacity="0.7"/><text x="210" y="85" text-anchor="middle" font-size="12">😰</text></g>
+      <g class="svg-float-d3"><circle cx="270" cy="140" r="12" fill="#D6EAF2" opacity="0.7"/><text x="270" y="145" text-anchor="middle" font-size="12">💪</text></g>
+      <g class="svg-float"><circle cx="160" cy="140" r="12" fill="#E8E3EE" opacity="0.7"/><text x="160" y="145" text-anchor="middle" font-size="12">🤗</text></g>
+      <g class="svg-breathe"><circle cx="360" cy="200" r="18" fill="#F5D9D3"/><path d="M344 197 Q347 182 360 180 Q373 182 376 197" fill="#7A7486" opacity="0.4"/><path d="M346 214 Q344 240 346 270 L374 270 Q376 240 374 214 Q360 208 346 214Z" fill="#C47860" opacity="0.35"/><path d="M346 226 Q330 240 335 265" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/></g>
+      <rect x="300" y="240" width="60" height="80" rx="4" fill="#F5F0E1" stroke="#D4D0C8" stroke-width="1"/>
+      <line x1="300" y1="320" x2="290" y2="370" stroke="#A08060" stroke-width="2"/><line x1="360" y1="320" x2="370" y2="370" stroke="#A08060" stroke-width="2"/>
+      <path d="M310 260 Q320 255 330 262" stroke="#4A7C59" stroke-width="3" fill="none" stroke-linecap="round" class="svg-draw"/>
+      <path d="M315 275 Q325 270 340 278" stroke="#C47860" stroke-width="3" fill="none" stroke-linecap="round" class="svg-draw"/>
+      <path d="M310 290 Q325 285 335 292" stroke="#C9A84C" stroke-width="3" fill="none" stroke-linecap="round" class="svg-draw"/>
+      <g class="svg-wave" opacity="0.2"><path d="M80 350 Q110 340 140 350 Q170 360 200 350" stroke="#6BA3BE" stroke-width="2" fill="none"/></g></svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge l1">2</div><span class="week-label">第一层 · 内在疗愈</span></div>
+      <h2 class="week-title">情绪释放</h2>
+      <div class="week-theme l1">画出困难，释放内心</div>
+      <p class="week-desc">通过"情绪树"绘画活动，让参与者画出生命中的困难与力量，配合团体呼吸练习和自然散步，实现情绪的外化与释放。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l1">🎨</div><span>"情绪树"绘画——画出困难与力量</span></div><div class="detail-item"><div class="detail-icon l1">🌬️</div><span>团体呼吸练习</span></div><div class="detail-item"><div class="detail-icon l1">🚶</div><span>自然散步</span></div></div>
+      <div class="week-goal l1"><span class="goal-label">🎯 目标</span>情绪外化与释放</div>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week3">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge l1">3</div><span class="week-label">第一层 · 内在疗愈</span></div>
+      <h2 class="week-title">自我价值重建</h2>
+      <div class="week-theme l1">回顾生命，发现力量</div>
+      <p class="week-desc">通过"生命线"绘制活动，回顾人生中的重要转折点与成就，配合"我值得"肯定语练习，挑战消极自我叙事，重建内在力量。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l1">📍</div><span>"生命线"绘制——回顾重要转折点与成就</span></div><div class="detail-item"><div class="detail-icon l1">✨</div><span>"我值得"肯定语练习</span></div></div>
+      <div class="week-goal l1"><span class="goal-label">🎯 目标</span>挑战消极自我叙事</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+      <path d="M60 380 Q80 340 120 320 Q160 300 180 260 Q200 220 220 200 Q240 180 260 160 Q280 140 320 120 Q360 100 400 80" stroke="#4A7C59" stroke-width="3" fill="none" stroke-linecap="round" class="svg-draw-slow" opacity="0.4"/>
+      <g class="svg-scale-in"><circle cx="120" cy="320" r="10" fill="#C47860" opacity="0.3"/><circle cx="120" cy="320" r="5" fill="#C47860" opacity="0.6"/><text x="145" y="335" font-size="10" fill="#C47860" font-weight="500">困难</text></g>
+      <g class="svg-scale-in" style="animation-delay:0.3s"><circle cx="180" cy="260" r="10" fill="#C9A84C" opacity="0.3"/><circle cx="180" cy="260" r="5" fill="#C9A84C" opacity="0.6"/><text x="205" y="268" font-size="10" fill="#C9A84C" font-weight="500">转折</text></g>
+      <g class="svg-scale-in" style="animation-delay:0.6s"><circle cx="260" cy="160" r="10" fill="#4A7C59" opacity="0.3"/><circle cx="260" cy="160" r="5" fill="#4A7C59" opacity="0.6"/><text x="285" y="158" font-size="10" fill="#4A7C59" font-weight="500">成长</text></g>
+      <g class="svg-scale-in" style="animation-delay:0.9s"><circle cx="400" cy="80" r="14" fill="#C9A84C" opacity="0.2"/><circle cx="400" cy="80" r="8" fill="#C9A84C" opacity="0.5"/><text x="400" y="84" text-anchor="middle" font-size="10" fill="#C9A84C" font-weight="600">🌟</text></g>
+      <g class="svg-breathe"><circle cx="80" cy="200" r="18" fill="#F5D9D3"/><path d="M64 197 Q67 182 80 180 Q93 182 96 197" fill="#7A7486" opacity="0.4"/><path d="M66 212 Q64 238 66 265 L94 265 Q96 238 94 212 Q80 206 66 212Z" fill="#6B9B6E" opacity="0.35"/><ellipse cx="130" cy="180" rx="30" ry="16" fill="#FBF4D6" opacity="0.5"/><text x="130" y="184" text-anchor="middle" font-size="9" fill="#B89840">我值得…</text></g>
+      <g class="svg-float-d" opacity="0.6"><rect x="280" y="220" width="100" height="36" rx="10" fill="#D4E8DA"/><text x="330" y="242" text-anchor="middle" font-size="11" fill="#4A7C59" font-weight="500">我值得被爱</text></g>
+      <g class="svg-float-d2" opacity="0.6"><rect x="300" y="270" width="100" height="36" rx="10" fill="#FBF4D6"/><text x="350" y="292" text-anchor="middle" font-size="11" fill="#B89840" font-weight="500">我有力量</text></g>
+      <g class="svg-float-d3" opacity="0.6"><rect x="260" y="320" width="100" height="36" rx="10" fill="#F5DDD3"/><text x="310" y="342" text-anchor="middle" font-size="11" fill="#C47860" font-weight="500">我能改变</text></g>
+      <circle cx="350" cy="100" r="2" fill="#C9A84C" opacity="0.4" class="svg-pulse"/></svg>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week4">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+      <circle cx="350" cy="60" r="30" fill="#C9A84C" opacity="0.12"/>
+      <g opacity="0.2"><path d="M40 280 Q120 270 200 275 Q280 280 400 270" stroke="#4A7C59" stroke-width="2" fill="none"/><path d="M40 300 Q120 290 200 295 Q280 300 400 290" stroke="#4A7C59" stroke-width="2" fill="none"/><path d="M40 320 Q120 310 200 315 Q280 320 400 310" stroke="#4A7C59" stroke-width="2" fill="none"/><path d="M40 340 Q120 330 200 335 Q280 340 400 330" stroke="#4A7C59" stroke-width="2" fill="none"/></g>
+      <g class="svg-sway"><line x1="100" y1="290" x2="100" y2="270" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/><line x1="150" y1="285" x2="150" y2="265" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/><line x1="200" y1="288" x2="200" y2="268" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/><line x1="250" y1="283" x2="250" y2="263" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/><line x1="300" y1="287" x2="300" y2="267" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/><line x1="350" y1="282" x2="350" y2="262" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/></g>
+      <g class="svg-breathe"><circle cx="220" cy="160" r="22" fill="#F5D9D3"/><path d="M198 156 Q202 136 220 133 Q238 136 242 156" fill="#7A7486" opacity="0.4"/><path d="M212 162 Q216 159 220 162" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M224 162 Q228 159 232 162" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M215 172 Q220 175 225 172" stroke="#C47860" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M202 178 Q198 210 200 250 L240 250 Q242 210 238 178 Q220 172 202 178Z" fill="#4A7C59" opacity="0.4"/><path d="M210 248 Q205 275 200 300" stroke="#7A7486" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M230 248 Q235 275 240 300" stroke="#7A7486" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M202 195 Q180 210 175 230" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M238 195 Q260 210 265 230" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/></g>
+      <g class="svg-ripple"><circle cx="200" cy="305" r="8" stroke="#4A7C59" stroke-width="1" fill="none" opacity="0.3"/></g>
+      <g class="svg-ripple" style="animation-delay:0.5s"><circle cx="240" cy="305" r="8" stroke="#4A7C59" stroke-width="1" fill="none" opacity="0.3"/></g>
+      <g class="svg-float-d2" opacity="0.3"><path d="M80 80 Q90 70 100 80" stroke="#7A7486" stroke-width="1.5" fill="none"/><path d="M110 70 Q120 60 130 70" stroke="#7A7486" stroke-width="1.5" fill="none"/></g>
+      <g class="svg-glow"><circle cx="360" cy="55" r="40" fill="#C9A84C" opacity="0.06"/></g></svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge l1">4</div><span class="week-label">第一层 · 内在疗愈</span></div>
+      <h2 class="week-title">身体与土地的联结</h2>
+      <div class="week-theme l1">脚踏大地，回归本源</div>
+      <p class="week-desc">通过农田正念行走，用正念方式体验脚下的土地，分享"我与土地的故事"，激活生态女性意识，重建人与自然的深层联结。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l1">🌾</div><span>农田正念行走——正念体验脚下土地</span></div><div class="detail-item"><div class="detail-icon l1">📖</div><span>"我与土地的故事"分享</span></div></div>
+      <div class="week-goal l1"><span class="goal-label">🎯 目标</span>激活生态女性意识</div>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week5">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge l2">5</div><span class="week-label">第二层 · 能力建设</span></div>
+      <h2 class="week-title">可持续农业入门</h2>
+      <div class="week-theme l2">绿色耕作，自然资本</div>
+      <p class="week-desc">生态农业知识培训，涵盖有机堆肥、生物防治、节水灌溉等实用技术，配合实地示范，帮助参与者建设自然资本。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l2">🧪</div><span>有机堆肥技术</span></div><div class="detail-item"><div class="detail-icon l2">🐛</div><span>生物防治方法</span></div><div class="detail-item"><div class="detail-icon l2">💧</div><span>节水灌溉系统</span></div><div class="detail-item"><div class="detail-icon l2">👨‍🌾</div><span>实地示范操作</span></div></div>
+      <div class="week-goal l2"><span class="goal-label">🎯 目标</span>自然资本建设</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+      <rect x="40" y="300" width="360" height="80" rx="12" fill="#A08060" opacity="0.15"/><rect x="40" y="310" width="360" height="70" rx="10" fill="#D4E8DA" opacity="0.2"/>
+      <g class="svg-sway"><line x1="100" y1="300" x2="100" y2="240" stroke="#4A7C59" stroke-width="3" stroke-linecap="round"/><path d="M100 260 Q80 245 75 230" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M100 250 Q120 235 125 220" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+      <g class="svg-sway" style="animation-delay:0.5s"><line x1="180" y1="300" x2="180" y2="220" stroke="#4A7C59" stroke-width="3" stroke-linecap="round"/><path d="M180 250 Q160 235 155 220" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M180 240 Q200 225 205 210" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M180 260 Q165 248 158 238" stroke="#8BC9A8" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+      <g class="svg-sway" style="animation-delay:1s"><line x1="260" y1="300" x2="260" y2="230" stroke="#4A7C59" stroke-width="3" stroke-linecap="round"/><path d="M260 260 Q240 245 235 230" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M260 250 Q280 235 285 220" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+      <g class="svg-sway" style="animation-delay:1.5s"><line x1="340" y1="300" x2="340" y2="250" stroke="#4A7C59" stroke-width="3" stroke-linecap="round"/><path d="M340 270 Q320 258 315 245" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M340 262 Q360 250 365 238" stroke="#6B9B6E" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+      <g class="svg-drop" opacity="0.5"><path d="M150 160 L150 150 Q153 168 150 168 Q147 168 150 160Z" fill="#6BA3BE"/></g>
+      <g class="svg-drop-d" opacity="0.5"><path d="M220 140 L220 130 Q223 148 220 148 Q217 148 220 140Z" fill="#6BA3BE"/></g>
+      <g class="svg-drop-d2" opacity="0.5"><path d="M300 155 L300 145 Q303 163 300 163 Q297 163 300 155Z" fill="#6BA3BE"/></g>
+      <g class="svg-float-d"><rect x="60" y="180" width="50" height="40" rx="6" fill="#A08060" opacity="0.2" stroke="#A08060" stroke-width="1"/><text x="85" y="205" text-anchor="middle" font-size="10" fill="#A08060">堆肥</text></g>
+      <g class="svg-float-d2"><circle cx="350" cy="190" r="8" fill="#C47860" opacity="0.5"/><circle cx="348" cy="188" r="1.5" fill="#4A4458" opacity="0.4"/><circle cx="353" cy="185" r="1.5" fill="#4A4458" opacity="0.4"/></g>
+      <g class="svg-glow"><circle cx="380" cy="60" r="25" fill="#C9A84C" opacity="0.15"/></g>
+      <circle cx="380" cy="60" r="15" fill="#C9A84C" opacity="0.2" class="svg-pulse"/></svg>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week6">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+      <rect x="60" y="260" width="320" height="12" rx="4" fill="#A08060" opacity="0.2"/>
+      <g class="svg-float"><rect x="140" y="140" width="80" height="120" rx="6" fill="#F5F0E1" stroke="#D4D0C8" stroke-width="1"/><line x1="155" y1="145" x2="155" y2="255" stroke="#C47860" stroke-width="1" opacity="0.3"/><line x1="165" y1="145" x2="165" y2="255" stroke="#C47860" stroke-width="1" opacity="0.3"/><line x1="175" y1="145" x2="175" y2="255" stroke="#C47860" stroke-width="1" opacity="0.3"/><line x1="185" y1="145" x2="185" y2="255" stroke="#C47860" stroke-width="1" opacity="0.3"/><line x1="195" y1="145" x2="195" y2="255" stroke="#C47860" stroke-width="1" opacity="0.3"/><line x1="205" y1="145" x2="205" y2="255" stroke="#C47860" stroke-width="1" opacity="0.3"/><path d="M150 170 Q180 165 210 170" stroke="#C9A84C" stroke-width="2" fill="none" opacity="0.4" class="svg-draw"/><path d="M150 190 Q180 185 210 190" stroke="#4A7C59" stroke-width="2" fill="none" opacity="0.4" class="svg-draw"/><path d="M150 210 Q180 205 210 210" stroke="#6BA3BE" stroke-width="2" fill="none" opacity="0.4" class="svg-draw"/><path d="M150 230 Q180 225 210 230" stroke="#C47860" stroke-width="2" fill="none" opacity="0.4" class="svg-draw"/></g>
+      <g class="svg-breathe"><circle cx="320" cy="180" r="20" fill="#F5D9D3"/><path d="M300 177 Q304 160 320 157 Q336 160 340 177" fill="#7A7486" opacity="0.4"/><path d="M302 194 Q298 220 300 255 L340 255 Q342 220 338 194 Q320 188 302 194Z" fill="#C9A84C" opacity="0.35"/><path d="M302 210 Q280 225 270 250" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M338 210 Q320 225 310 250" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/></g>
+      <g class="svg-float-d2"><rect x="60" y="100" width="40" height="50" rx="4" fill="#F5DDD3" opacity="0.5"/><text x="80" y="130" text-anchor="middle" font-size="16">🧶</text></g>
+      <g class="svg-float-d3"><circle cx="380" cy="120" r="18" fill="#D4E8DA" opacity="0.5"/><text x="380" y="126" text-anchor="middle" font-size="16">🏺</text></g>
+      <circle cx="260" cy="120" r="3" fill="#C47888" opacity="0.3" class="svg-pulse"/></svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge l2">6</div><span class="week-label">第二层 · 能力建设</span></div>
+      <h2 class="week-title">传统手工艺复兴</h2>
+      <div class="week-theme l2">编织记忆，疗愈双手</div>
+      <p class="week-desc">当地传统手工艺（如编织、染织、陶艺）工作坊，结合疗愈性创作，在传承文化的同时实现物质资本积累与心理疗愈的双重效果。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l2">🧵</div><span>编织、染织、陶艺等传统手工艺</span></div><div class="detail-item"><div class="detail-icon l2">🎨</div><span>疗愈性创作过程</span></div></div>
+      <div class="week-goal l2"><span class="goal-label">🎯 目标</span>物质资本 + 心理疗愈</div>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week7">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge l2">7</div><span class="week-label">第二层 · 能力建设</span></div>
+      <h2 class="week-title">环保创业基础</h2>
+      <div class="week-theme l2">绿色创业，经济独立</div>
+      <p class="week-desc">学习简易商业计划书撰写、产品定价与成本核算、市场渠道认知，为参与者打开经济独立的大门，建设金融资本。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l2">📋</div><span>简易商业计划书撰写</span></div><div class="detail-item"><div class="detail-icon l2">💰</div><span>产品定价与成本核算</span></div><div class="detail-item"><div class="detail-icon l2">🏪</div><span>市场渠道认知</span></div></div>
+      <div class="week-goal l2"><span class="goal-label">🎯 目标</span>金融资本建设</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+      <rect x="80" y="280" width="280" height="10" rx="3" fill="#A08060" opacity="0.15"/>
+      <g class="svg-float"><rect x="120" y="160" width="140" height="120" rx="8" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1"/><text x="190" y="185" text-anchor="middle" font-size="11" fill="#B89840" font-weight="600">商业计划书</text><line x1="140" y1="200" x2="240" y2="200" stroke="#E8D48A" stroke-width="1" opacity="0.5"/><line x1="140" y1="215" x2="240" y2="215" stroke="#E8D48A" stroke-width="1" opacity="0.5"/><line x1="140" y1="230" x2="240" y2="230" stroke="#E8D48A" stroke-width="1" opacity="0.5"/><line x1="140" y1="245" x2="220" y2="245" stroke="#E8D48A" stroke-width="1" opacity="0.5"/><path d="M145 198 Q160 195 175 198 Q190 201 205 198" stroke="#A08060" stroke-width="1" fill="none" opacity="0.3"/><path d="M145 213 Q165 210 185 213 Q200 216 215 213" stroke="#A08060" stroke-width="1" fill="none" opacity="0.3"/></g>
+      <g class="svg-float-d"><rect x="300" y="200" width="50" height="70" rx="8" fill="#D4E8DA" stroke="#4A7C59" stroke-width="1"/><rect x="310" y="210" width="30" height="15" rx="3" fill="#4A7C59" opacity="0.15"/><circle cx="315" cy="238" r="4" fill="#4A7C59" opacity="0.15"/><circle cx="330" cy="238" r="4" fill="#4A7C59" opacity="0.15"/><circle cx="315" cy="252" r="4" fill="#4A7C59" opacity="0.15"/><circle cx="330" cy="252" r="4" fill="#4A7C59" opacity="0.15"/></g>
+      <g class="svg-float-d2"><circle cx="80" cy="140" r="16" fill="#C9A84C" opacity="0.2"/><text x="80" y="146" text-anchor="middle" font-size="16">💰</text></g>
+      <g class="svg-float-d3"><circle cx="380" cy="130" r="14" fill="#D4E8DA" opacity="0.5"/><text x="380" y="136" text-anchor="middle" font-size="14">📈</text></g>
+      <g class="svg-breathe"><circle cx="340" cy="100" r="18" fill="#F5D9D3"/><path d="M324 97 Q327 82 340 80 Q353 82 356 97" fill="#7A7486" opacity="0.4"/><path d="M326 112 Q324 135 326 160 L354 160 Q356 135 354 112 Q340 106 326 112Z" fill="#C47860" opacity="0.35"/></g>
+      <g class="svg-pulse"><circle cx="370" cy="72" r="10" fill="#C9A84C" opacity="0.2"/><text x="370" y="77" text-anchor="middle" font-size="12">💡</text></g></svg>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week8">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+      <g class="svg-breathe"><path d="M220 100 L120 180 L320 180Z" fill="#4A7C59" opacity="0.15"/><rect x="140" y="180" width="160" height="140" rx="4" fill="#F5F0E1" stroke="#D4D0C8" stroke-width="1"/><rect x="190" y="240" width="60" height="80" rx="4" fill="#A08060" opacity="0.15"/><rect x="155" y="200" width="40" height="35" rx="3" fill="#D6EAF2" opacity="0.4"/><rect x="245" y="200" width="40" height="35" rx="3" fill="#D6EAF2" opacity="0.4"/></g>
+      <g class="svg-float"><path d="M100 140 Q100 120 100 140 Q105 155 100 155 Q95 155 100 140Z" fill="#6BA3BE" opacity="0.4"/><text x="100" y="175" text-anchor="middle" font-size="10" fill="#6BA3BE">清洁饮水</text></g>
+      <g class="svg-float-d"><circle cx="350" cy="130" r="18" fill="#F5DDD3" opacity="0.6"/><text x="350" y="136" text-anchor="middle" font-size="16">❤️</text><text x="350" y="165" text-anchor="middle" font-size="10" fill="#C47860">女性健康</text></g>
+      <g class="svg-float-d2"><circle cx="80" cy="280" r="14" fill="#D4E8DA" opacity="0.6"/><text x="80" y="286" text-anchor="middle" font-size="14">✨</text><text x="80" y="310" text-anchor="middle" font-size="10" fill="#4A7C59">环境卫生</text></g>
+      <g class="svg-float-d3"><circle cx="370" cy="280" r="14" fill="#FBF4D6" opacity="0.6"/><text x="370" y="286" text-anchor="middle" font-size="14">🍎</text><text x="370" y="310" text-anchor="middle" font-size="10" fill="#B89840">食品安全</text></g>
+      <g class="svg-float-d"><circle cx="220" cy="370" r="12" fill="#F5D9D3"/><path d="M210 378 Q208 395 210 410 L230 410 Q232 395 230 378 Q220 374 210 378Z" fill="#6B9B6E" opacity="0.3"/><circle cx="240" cy="385" r="8" fill="#F5D9D3" opacity="0.7"/></g></svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge l2">8</div><span class="week-label">第二层 · 能力建设</span></div>
+      <h2 class="week-title">健康与环境知识</h2>
+      <div class="week-theme l2">守护健康，改善环境</div>
+      <p class="week-desc">女性健康知识讲座、家庭环境卫生改善实践、清洁饮水与食品安全教育，全面提升参与者的人力资本与健康素养。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l2">👩‍⚕️</div><span>女性健康知识讲座</span></div><div class="detail-item"><div class="detail-icon l2">🏠</div><span>家庭环境卫生改善实践</span></div><div class="detail-item"><div class="detail-icon l2">💧</div><span>清洁饮水与食品安全</span></div></div>
+      <div class="week-goal l2"><span class="goal-label">🎯 目标</span>人力资本建设</div>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week9">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge l3">9</div><span class="week-label">第三层 · 行动转化</span></div>
+      <h2 class="week-title">社区项目设计</h2>
+      <div class="week-theme l3">从想法到蓝图</div>
+      <p class="week-desc">分组设计一个小型社区改善项目（如社区花园、垃圾分类站、妇女阅读角），培养社会资本与领导力。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l3">🌻</div><span>社区花园设计</span></div><div class="detail-item"><div class="detail-icon l3">♻️</div><span>垃圾分类站规划</span></div><div class="detail-item"><div class="detail-icon l3">📚</div><span>妇女阅读角创建</span></div></div>
+      <div class="week-goal l3"><span class="goal-label">🎯 目标</span>社会资本 + 领导力</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+      <g opacity="0.06"><line x1="40" y1="60" x2="400" y2="60" stroke="#4A7C59" stroke-width="1"/><line x1="40" y1="120" x2="400" y2="120" stroke="#4A7C59" stroke-width="1"/><line x1="40" y1="180" x2="400" y2="180" stroke="#4A7C59" stroke-width="1"/><line x1="40" y1="240" x2="400" y2="240" stroke="#4A7C59" stroke-width="1"/><line x1="40" y1="300" x2="400" y2="300" stroke="#4A7C59" stroke-width="1"/><line x1="100" y1="40" x2="100" y2="380" stroke="#4A7C59" stroke-width="1"/><line x1="180" y1="40" x2="180" y2="380" stroke="#4A7C59" stroke-width="1"/><line x1="260" y1="40" x2="260" y2="380" stroke="#4A7C59" stroke-width="1"/><line x1="340" y1="40" x2="340" y2="380" stroke="#4A7C59" stroke-width="1"/></g>
+      <g class="svg-float"><rect x="80" y="100" width="120" height="80" rx="8" fill="#D4E8DA" opacity="0.4" stroke="#4A7C59" stroke-width="1" stroke-dasharray="4,3"/><text x="140" y="130" text-anchor="middle" font-size="11" fill="#4A7C59">🌻 社区花园</text><circle cx="110" cy="155" r="6" fill="#C9A84C" opacity="0.3"/><circle cx="130" cy="150" r="8" fill="#4A7C59" opacity="0.2"/><circle cx="155" cy="155" r="5" fill="#C47860" opacity="0.3"/><circle cx="175" cy="148" r="7" fill="#6B9B6E" opacity="0.25"/></g>
+      <g class="svg-float-d"><rect x="240" y="100" width="120" height="80" rx="8" fill="#D6EAF2" opacity="0.4" stroke="#6BA3BE" stroke-width="1" stroke-dasharray="4,3"/><text x="300" y="130" text-anchor="middle" font-size="11" fill="#6BA3BE">♻️ 垃圾分类站</text><rect x="260" y="145" width="20" height="25" rx="3" fill="#4A7C59" opacity="0.2"/><rect x="290" y="145" width="20" height="25" rx="3" fill="#C9A84C" opacity="0.2"/><rect x="320" y="145" width="20" height="25" rx="3" fill="#6BA3BE" opacity="0.2"/></g>
+      <g class="svg-float-d2"><rect x="160" y="220" width="120" height="80" rx="8" fill="#FBF4D6" opacity="0.4" stroke="#C9A84C" stroke-width="1" stroke-dasharray="4,3"/><text x="220" y="250" text-anchor="middle" font-size="11" fill="#B89840">📚 妇女阅读角</text><rect x="180" y="265" width="12" height="20" rx="2" fill="#C47860" opacity="0.2"/><rect x="196" y="268" width="10" height="17" rx="2" fill="#4A7C59" opacity="0.2"/><rect x="210" y="263" width="14" height="22" rx="2" fill="#6BA3BE" opacity="0.2"/><rect x="228" y="266" width="11" height="19" rx="2" fill="#C9A84C" opacity="0.2"/></g>
+      <g class="svg-breathe"><circle cx="80" cy="320" r="14" fill="#F5D9D3"/><path d="M68 318 Q70 306 80 304 Q90 306 92 318" fill="#7A7486" opacity="0.4"/><path d="M70 330 Q68 348 70 365 L90 365 Q92 348 90 330 Q80 326 70 330Z" fill="#C47860" opacity="0.3"/></g>
+      <g class="svg-breathe" style="animation-delay:0.5s"><circle cx="120" cy="325" r="14" fill="#F5D9D3"/><path d="M108 323 Q110 311 120 309 Q130 311 132 323" fill="#7A7486" opacity="0.4"/><path d="M110 335 Q108 353 110 370 L130 370 Q132 353 130 335 Q120 331 110 335Z" fill="#4A7C59" opacity="0.3"/></g></svg>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week10">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+      <ellipse cx="220" cy="360" rx="180" ry="30" fill="#D4E8DA" opacity="0.2"/>
+      <g class="svg-grow"><rect x="100" y="280" width="100" height="40" rx="6" fill="#A08060" opacity="0.15"/><rect x="100" y="275" width="100" height="10" rx="4" fill="#4A7C59" opacity="0.15"/><line x1="120" y1="275" x2="120" y2="255" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/><line x1="140" y1="275" x2="140" y2="250" stroke="#4A7C59" stroke-width="2" stroke-linecap="round"/><line x1="160" y1="275" x2="160" y2="258" stroke="#8BC9A8" stroke-width="2" stroke-linecap="round"/><line x1="180" y1="275" x2="180" y2="252" stroke="#6B9B6E" stroke-width="2" stroke-linecap="round"/></g>
+      <g class="svg-breathe"><circle cx="160" cy="190" r="18" fill="#F5D9D3"/><path d="M144 187 Q147 172 160 170 Q173 172 176 187" fill="#7A7486" opacity="0.4"/><path d="M146 202 Q144 225 146 255 L174 255 Q176 225 174 202 Q160 196 146 202Z" fill="#C47860" opacity="0.35"/><path d="M146 215 Q130 230 135 255" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/><rect x="125" y="248" width="16" height="6" rx="2" fill="#A08060" opacity="0.4"/></g>
+      <g class="svg-breathe" style="animation-delay:0.5s"><circle cx="280" cy="190" r="18" fill="#F5D9D3"/><path d="M264 187 Q267 172 280 170 Q293 172 296 187" fill="#7A7486" opacity="0.4"/><path d="M266 202 Q264 225 266 255 L294 255 Q296 225 294 202 Q280 196 266 202Z" fill="#4A7C59" opacity="0.35"/><path d="M294 215 Q310 230 305 255" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/><rect x="302" y="245" width="18" height="14" rx="3" fill="#6BA3BE" opacity="0.3"/></g>
+      <g class="svg-float-d"><circle cx="360" cy="160" r="16" fill="#F5D9D3"/><path d="M346 157 Q349 144 360 142 Q371 144 374 157" fill="#7A7486" opacity="0.4"/><path d="M348 170 Q346 190 348 215 L372 215 Q374 190 372 170 Q360 164 348 170Z" fill="#C9A84C" opacity="0.3"/><text x="360" y="240" text-anchor="middle" font-size="10" fill="#B89840">导师</text></g>
+      <g class="svg-float-d2"><circle cx="80" cy="140" r="14" fill="#D4E8DA" opacity="0.6"/><text x="80" y="146" text-anchor="middle" font-size="14">✅</text></g>
+      <g class="svg-float-d3"><circle cx="380" cy="100" r="14" fill="#FBF4D6" opacity="0.6"/><text x="380" y="106" text-anchor="middle" font-size="14">⭐</text></g></svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge l3">10</div><span class="week-label">第三层 · 行动转化</span></div>
+      <h2 class="week-title">项目实施</h2>
+      <div class="week-theme l3">动手实践，创造改变</div>
+      <p class="week-desc">在导师指导下，将设计的社区项目付诸实施，从蓝图走向现实，体验胜任感与自主性。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l3">🔨</div><span>导师全程指导</span></div><div class="detail-item"><div class="detail-icon l3">🤝</div><span>团队协作实施</span></div></div>
+      <div class="week-goal l3"><span class="goal-label">🎯 目标</span>胜任感与自主性</div>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week11">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge l3">11</div><span class="week-label">第三层 · 行动转化</span></div>
+      <h2 class="week-title">产品/成果展示</h2>
+      <div class="week-theme l3">绿芽市集，绽放光芒</div>
+      <p class="week-desc">举办"绿芽市集"，展示手工艺产品、农产品和社区项目成果，获得公开认可，实现经济转化。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l3">🎪</div><span>举办"绿芽市集"</span></div><div class="detail-item"><div class="detail-icon l3">🧶</div><span>展示手工艺产品</span></div><div class="detail-item"><div class="detail-icon l3">🌾</div><span>展示农产品与社区项目成果</span></div></div>
+      <div class="week-goal l3"><span class="goal-label">🎯 目标</span>公开认可与经济转化</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+      <g class="svg-float"><rect x="80" y="60" width="280" height="40" rx="20" fill="#4A7C59" opacity="0.12"/><text x="220" y="85" text-anchor="middle" font-size="14" fill="#4A7C59" font-weight="600">🌿 绿芽市集 🌿</text></g>
+      <g class="svg-float-d"><rect x="50" y="140" width="110" height="80" rx="10" fill="#F5DDD3" opacity="0.4"/><text x="105" y="165" text-anchor="middle" font-size="11" fill="#C47860" font-weight="500">手工艺品</text><text x="80" y="195" text-anchor="middle" font-size="18">🧶</text><text x="120" y="195" text-anchor="middle" font-size="18">🏺</text></g>
+      <g class="svg-float-d2"><rect x="175" y="140" width="110" height="80" rx="10" fill="#D4E8DA" opacity="0.4"/><text x="230" y="165" text-anchor="middle" font-size="11" fill="#4A7C59" font-weight="500">农产品</text><text x="205" y="195" text-anchor="middle" font-size="18">🌾</text><text x="245" y="195" text-anchor="middle" font-size="18">🥬</text></g>
+      <g class="svg-float-d3"><rect x="300" y="140" width="110" height="80" rx="10" fill="#FBF4D6" opacity="0.4"/><text x="355" y="165" text-anchor="middle" font-size="11" fill="#B89840" font-weight="500">社区成果</text><text x="330" y="195" text-anchor="middle" font-size="18">📚</text><text x="370" y="195" text-anchor="middle" font-size="18">🌻</text></g>
+      <g class="svg-breathe"><circle cx="100" cy="300" r="14" fill="#F5D9D3"/><path d="M88 298 Q90 286 100 284 Q110 286 112 298" fill="#7A7486" opacity="0.4"/><path d="M90 310 Q88 328 90 348 L110 348 Q112 328 110 310 Q100 306 90 310Z" fill="#6BA3BE" opacity="0.3"/></g>
+      <g class="svg-breathe" style="animation-delay:0.3s"><circle cx="180" cy="310" r="14" fill="#F5D9D3"/><path d="M168 308 Q170 296 180 294 Q190 296 192 308" fill="#7A7486" opacity="0.4"/><path d="M170 320 Q168 338 170 358 L190 358 Q192 338 190 320 Q180 316 170 320Z" fill="#C9A84C" opacity="0.3"/></g>
+      <g class="svg-breathe" style="animation-delay:0.6s"><circle cx="260" cy="305" r="14" fill="#F5D9D3"/><path d="M248 303 Q250 291 260 289 Q270 291 272 303" fill="#7A7486" opacity="0.4"/><path d="M250 315 Q248 333 250 353 L270 353 Q272 333 270 315 Q260 311 250 315Z" fill="#C47860" opacity="0.3"/></g>
+      <g class="svg-breathe" style="animation-delay:0.9s"><circle cx="340" cy="310" r="14" fill="#F5D9D3"/><path d="M328 308 Q330 296 340 294 Q350 296 352 308" fill="#7A7486" opacity="0.4"/><path d="M330 320 Q328 338 330 358 L350 358 Q352 338 350 320 Q340 316 330 320Z" fill="#8BC9A8" opacity="0.3"/></g>
+      <g class="svg-pulse"><text x="220" y="260" text-anchor="middle" font-size="20">🎉</text></g></svg>
+    </div>
+  </div>
+</section>
+<section class="week-section" id="week12">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+      <g class="svg-glow"><circle cx="220" cy="180" r="100" fill="#C9A84C" opacity="0.06"/></g>
+      <g class="svg-float"><rect x="140" y="120" width="160" height="110" rx="10" fill="#FBF4D6" stroke="#C9A84C" stroke-width="1.5"/><text x="220" y="155" text-anchor="middle" font-size="12" fill="#B89840" font-weight="600">绿芽使者证书</text><line x1="170" y1="168" x2="270" y2="168" stroke="#E8D48A" stroke-width="1" opacity="0.5"/><text x="220" y="190" text-anchor="middle" font-size="10" fill="#A08060">颁发给优秀的你</text><text x="220" y="215" text-anchor="middle" font-size="16">🌱</text></g>
+      <g class="svg-breathe"><circle cx="220" cy="310" r="22" fill="#F5D9D3"/><path d="M198 307 Q202 288 220 285 Q238 288 242 307" fill="#7A7486" opacity="0.4"/><path d="M200 326 Q198 355 200 385 L240 385 Q242 355 240 326 Q220 320 200 326Z" fill="#4A7C59" opacity="0.4"/><circle cx="213" cy="310" r="2" fill="#4A4458"/><circle cx="227" cy="310" r="2" fill="#4A4458"/><path d="M214 320 Q220 325 226 320" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M200 340 Q185 320 190 295" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M240 340 Q255 320 250 295" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/></g>
+      <g class="svg-float-d" opacity="0.5"><circle cx="100" cy="100" r="4" fill="#C47860"/></g>
+      <g class="svg-float-d2" opacity="0.5"><circle cx="340" cy="80" r="3" fill="#4A7C59"/></g>
+      <g class="svg-float-d3" opacity="0.5"><circle cx="80" cy="200" r="3" fill="#C9A84C"/></g>
+      <g class="svg-float" opacity="0.5"><circle cx="370" cy="180" r="4" fill="#6BA3BE"/></g>
+      <text x="100" y="80" font-size="14" class="svg-pulse">⭐</text>
+      <text x="350" y="60" font-size="14" class="svg-pulse" style="animation-delay:0.5s">⭐</text>
+      <g class="svg-float-d"><path d="M220 395 L220 410" stroke="#4A7C59" stroke-width="2" stroke-linecap="round"/><path d="M215 405 L220 412 L225 405" stroke="#4A7C59" stroke-width="2" fill="none" stroke-linecap="round"/></g></svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge l3">12</div><span class="week-label">第三层 · 行动转化</span></div>
+      <h2 class="week-title">结业与未来规划</h2>
+      <div class="week-theme l3">绿芽使者，扬帆起航</div>
+      <p class="week-desc">个人成长回顾，制定6个月个人发展计划，颁发"绿芽使者"证书，完成身份转变，开启长期成长之路。</p>
+      <div class="week-details"><div class="detail-item"><div class="detail-icon l3">📜</div><span>个人成长回顾</span></div><div class="detail-item"><div class="detail-icon l3">📋</div><span>制定6个月个人发展计划</span></div><div class="detail-item"><div class="detail-icon l3">🏆</div><span>颁发"绿芽使者"证书</span></div></div>
+      <div class="week-goal l3"><span class="goal-label">🎯 目标</span>长期承诺与身份转变</div>
+    </div>
+  </div>
+</section>
+<!-- FOLLOW-UP SUPPORT -->
+<section class="info-section followup" id="followup">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag followup">跟进支持</div>
+      <h2 class="section-title">6个月持续跟进</h2>
+      <p class="section-subtitle">第13-36周：持续陪伴，确保改变生根发芽</p>
+    </div>
+    <div class="followup-list stagger">
+      <div class="followup-item reveal" style="--i:0">
+        <div class="followup-icon">🤝</div>
+        <div class="followup-text"><h4>每月"绿芽姐妹会"</h4><p>互助小组持续聚会，分享进展与挑战，维持团体支持网络</p></div>
+      </div>
+      <div class="followup-item reveal" style="--i:1">
+        <div class="followup-icon">📚</div>
+        <div class="followup-text"><h4>每季度技能进阶工作坊</h4><p>深化已学技能，引入新知识，持续提升能力水平</p></div>
+      </div>
+      <div class="followup-item reveal" style="--i:2">
+        <div class="followup-icon">🛒</div>
+        <div class="followup-text"><h4>持续产品销售支持</h4><p>对接电商平台和公平贸易渠道，帮助产品走向市场</p></div>
+      </div>
+      <div class="followup-item reveal" style="--i:3">
+        <div class="followup-icon">🎧</div>
+        <div class="followup-text"><h4>导师远程督导与个案支持</h4><p>专业团队持续提供远程指导，针对个人需求提供个案支持</p></div>
+      </div>
+    </div>
+    <div class="reveal-scale" style="max-width:600px;margin:0 auto">
+      <svg viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="180" rx="20" fill="#FAF8F2"/>
+        <circle cx="300" cy="90" r="60" stroke="#5A8FB5" stroke-width="2" fill="none" stroke-dasharray="8,4" class="svg-rotate"/>
+        <circle cx="300" cy="90" r="35" stroke="#5A8FB5" stroke-width="1.5" fill="none" stroke-dasharray="6,4" class="svg-rotate"/>
+        <g class="svg-breathe"><circle cx="300" cy="90" r="22" fill="#D6EAF2" opacity="0.5"/><text x="300" y="86" text-anchor="middle" font-size="16">🔄</text><text x="300" y="102" text-anchor="middle" font-size="8" fill="#5A8FB5" font-weight="500">持续支持</text></g>
+        <g class="svg-float"><circle cx="150" cy="50" r="14" fill="#D4E8DA" opacity="0.6"/><text x="150" y="55" text-anchor="middle" font-size="12">🤝</text></g>
+        <g class="svg-float-d"><circle cx="450" cy="50" r="14" fill="#FBF4D6" opacity="0.6"/><text x="450" y="55" text-anchor="middle" font-size="12">📚</text></g>
+        <g class="svg-float-d2"><circle cx="150" cy="140" r="14" fill="#F5DDD3" opacity="0.6"/><text x="150" y="145" text-anchor="middle" font-size="12">🛒</text></g>
+        <g class="svg-float-d3"><circle cx="450" cy="140" r="14" fill="#E8E3EE" opacity="0.6"/><text x="450" y="145" text-anchor="middle" font-size="12">🎧</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+<!-- IMPLEMENTATION -->
+<section class="info-section impl" id="impl">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag impl">实施适配</div>
+      <h2 class="section-title">以人为本的实施策略</h2>
+      <p class="section-subtitle">尊重文化差异，降低参与门槛，让每位女性都能安心参与</p>
+    </div>
+    <div class="impl-grid stagger">
+      <div class="impl-card reveal" style="--i:0"><div class="impl-card-icon c1">🎭</div><h3>文化适配</h3><p>活动时间安排避开农忙季节和传统节日；尊重当地性别互动规范（如初期可由女性引导者单独带领）；将当地传统知识和文化元素融入课程内容</p></div>
+      <div class="impl-card reveal" style="--i:1"><div class="impl-card-icon c2">🗣️</div><h3>语言适配</h3><p>使用当地方言或通俗语言开展活动；书面材料以图文并茂的"大字版"为主，降低阅读门槛</p></div>
+      <div class="impl-card reveal" style="--i:2"><div class="impl-card-icon c3">🏫</div><h3>场地适配</h3><p>利用村委会活动室、学校教室或农户院落作为活动场地，降低交通成本；户外活动利用当地自然环境</p></div>
+      <div class="impl-card reveal" style="--i:3"><div class="impl-card-icon c4">💰</div><h3>经济适配</h3><p>提供小额交通补贴和childcare支持，消除参与障碍；手工艺材料优先使用当地可获取的自然资源</p></div>
+      <div class="impl-card reveal" style="--i:4"><div class="impl-card-icon c5">👥</div><h3>人员适配</h3><p>核心引导团队由1名心理咨询师 + 1名农业/手工艺技术员 + 2名当地女性志愿者组成</p></div>
+    </div>
+  </div>
+</section>
+<!-- LONG-TERM MECHANISM -->
+<section class="info-section longterm" id="longterm">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">长效保障</div>
+      <h2 class="section-title">可持续的长效保障机制</h2>
+      <p class="section-subtitle">从互助网络到政策对接，构建自我运转的赋能生态</p>
+    </div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0"><div class="longterm-card-icon l1">🤲</div><div><h3>女性合作社</h3><p>项目结束后支持参与者注册成立"绿芽女性合作社"，实现经济活动的组织化和可持续化</p></div></div>
+      <div class="longterm-card reveal" style="--i:1"><div class="longterm-card-icon l2">🎓</div><div><h3>培训-培训模式（Train-the-Trainer）</h3><p>从参与者中选拔10-15名骨干进行进阶培训，使其具备独立带领后续批次活动的能力</p></div></div>
+      <div class="longterm-card reveal" style="--i:2"><div class="longterm-card-icon l3">📱</div><div><h3>数字赋能</h3><p>为合作社提供电商运营培训，帮助女性通过社交媒体和电商平台拓展市场</p></div></div>
+      <div class="longterm-card reveal" style="--i:3"><div class="longterm-card-icon l4">🏛️</div><div><h3>政策对接</h3><p>与当地妇联、农业局建立合作关系，争取政策支持和资源对接</p></div></div>
+      <div class="longterm-card reveal" style="--i:4"><div class="longterm-card-icon l5">📊</div><div><h3>研究评估</h3><p>与高校合作开展行动研究，积累循证数据，为模式推广提供学术支撑</p></div></div>
+    </div>
+    <div class="reveal-scale" style="max-width:600px;margin:0 auto">
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#F0ECE4"/>
+        <circle cx="300" cy="100" r="70" stroke="#D4E8DA" stroke-width="2" fill="none" stroke-dasharray="8,4" class="svg-rotate"/>
+        <g class="svg-breathe"><circle cx="300" cy="100" r="30" fill="#D4E8DA" opacity="0.5"/><text x="300" y="96" text-anchor="middle" font-size="18">♻️</text><text x="300" y="112" text-anchor="middle" font-size="8" fill="#4A7C59" font-weight="500">自我运转</text></g>
+        <g class="svg-float"><circle cx="300" cy="20" r="14" fill="#D4E8DA" opacity="0.7"/><text x="300" y="25" text-anchor="middle" font-size="12">🤲</text></g>
+        <g class="svg-float-d"><circle cx="380" cy="55" r="14" fill="#F5DDD3" opacity="0.7"/><text x="380" y="60" text-anchor="middle" font-size="12">🎓</text></g>
+        <g class="svg-float-d2"><circle cx="380" cy="145" r="14" fill="#D6EAF2" opacity="0.7"/><text x="380" y="150" text-anchor="middle" font-size="12">📱</text></g>
+        <g class="svg-float-d3"><circle cx="220" cy="145" r="14" fill="#FBF4D6" opacity="0.7"/><text x="220" y="150" text-anchor="middle" font-size="12">🏛️</text></g>
+        <g class="svg-float"><circle cx="220" cy="55" r="14" fill="#E8E3EE" opacity="0.7"/><text x="220" y="60" text-anchor="middle" font-size="12">📊</text></g>
+        <path d="M315 25 Q340 30 355 50" stroke="#4A7C59" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M390 70 Q395 100 390 130" stroke="#C47860" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M365 150 Q300 175 235 150" stroke="#5A8FB5" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M210 130 Q205 100 210 70" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M235 55 Q260 30 285 25" stroke="#9B8FA8" stroke-width="1.5" fill="none" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+<!-- SDGs & ESG -->
+<section class="info-section sdgs" id="sdgs">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">可持续发展</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将农村女性赋能与联合国可持续发展目标深度结合</p>
+    </div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0"><div class="sdg-num">1.1</div><div class="sdg-title">消除极端贫困</div><p class="sdg-desc">通过经济赋能帮助农村女性及其家庭脱贫</p></div>
+      <div class="sdg-card reveal" style="--i:1"><div class="sdg-num">1.2</div><div class="sdg-title">减少多维贫困</div><p class="sdg-desc">减少经济、心理、社会维度的多维贫困</p></div>
+      <div class="sdg-card reveal" style="--i:2"><div class="sdg-num">2.3</div><div class="sdg-title">可持续粮食生产</div><p class="sdg-desc">通过可持续农业培训提升小规模粮食生产者生产力</p></div>
+      <div class="sdg-card reveal" style="--i:3"><div class="sdg-num">3.4</div><div class="sdg-title">心理健康</div><p class="sdg-desc">通过疗愈干预促进农村女性心理健康</p></div>
+      <div class="sdg-card reveal" style="--i:4"><div class="sdg-num">3.7</div><div class="sdg-title">生殖健康</div><p class="sdg-desc">通过健康知识教育提升女性生殖健康水平</p></div>
+      <div class="sdg-card reveal" style="--i:5"><div class="sdg-num">4.3</div><div class="sdg-title">可及教育</div><p class="sdg-desc">为农村女性提供可及的技能培训和终身学习机会</p></div>
+      <div class="sdg-card reveal" style="--i:6"><div class="sdg-num">4.7</div><div class="sdg-title">可持续发展教育</div><p class="sdg-desc">融入可持续发展教育，培养环保意识和公民素养</p></div>
+      <div class="sdg-card reveal" style="--i:7"><div class="sdg-num">5.1</div><div class="sdg-title">性别平等</div><p class="sdg-desc">通过意识觉醒促进性别平等</p></div>
+      <div class="sdg-card reveal" style="--i:8"><div class="sdg-num">5.5</div><div class="sdg-title">女性领导力</div><p class="sdg-desc">培养女性领导力，提升女性在社区决策中的参与度</p></div>
+      <div class="sdg-card reveal" style="--i:9"><div class="sdg-num">5.a</div><div class="sdg-title">经济资源权利</div><p class="sdg-desc">赋予农村女性平等的经济资源获取权利</p></div>
+      <div class="sdg-card reveal" style="--i:10"><div class="sdg-num">12.2</div><div class="sdg-title">可持续消费</div><p class="sdg-desc">推动可持续消费和生产模式（生态农业、手工艺）</p></div>
+      <div class="sdg-card reveal" style="--i:11"><div class="sdg-num">13.3</div><div class="sdg-title">气候适应</div><p class="sdg-desc">提升气候变化意识与适应能力</p></div>
+      <div class="sdg-card reveal" style="--i:12"><div class="sdg-num">15.1</div><div class="sdg-title">土壤保护</div><p class="sdg-desc">通过可持续农业实践保护土壤生态系统</p></div>
+    </div>
+    <div class="esg-box reveal">
+      <h3>📊 ESG 三维融合</h3>
+      <div class="esg-items">
+        <div class="esg-item s"><h4>S · 社会维度</h4><p>关注农村女性这一最弱势群体之一，实现多维赋能</p></div>
+        <div class="esg-item e"><h4>E · 环境维度</h4><p>将生态保护与生计发展有机结合，推动绿色经济</p></div>
+        <div class="esg-item g"><h4>G · 治理维度</h4><p>建立透明、参与式的项目管理机制，培养女性参与社区治理的能力</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- SOCIAL BENEFITS -->
+<section class="info-section benefit" id="benefit">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag benefit">预期效益</div>
+      <h2 class="section-title">预期社会效益</h2>
+      <p class="section-subtitle">从个体到社区，层层递进的社会影响力</p>
+    </div>
+    <div class="benefit-grid stagger">
+      <div class="benefit-card b1 reveal" style="--i:0">
+        <div class="benefit-icon b1">🧘</div>
+        <h3>个体层面</h3>
+        <ul>
+          <li>抑郁症状减轻30-40%</li>
+          <li>自我效能感显著提升</li>
+          <li>掌握1-2项可持续生计技能</li>
+        </ul>
+      </div>
+      <div class="benefit-card b2 reveal" style="--i:1">
+        <div class="benefit-icon b2">👨‍👩‍👧</div>
+        <h3>家庭层面</h3>
+        <ul>
+          <li>改善家庭关系质量</li>
+          <li>家庭经济收入增加15-25%</li>
+          <li>增强儿童教育投入</li>
+        </ul>
+      </div>
+      <div class="benefit-card b3 reveal" style="--i:2">
+        <div class="benefit-icon b3">🏘️</div>
+        <h3>社区层面</h3>
+        <ul>
+          <li>建立稳定的女性互助网络</li>
+          <li>推动社区环境改善项目</li>
+          <li>提升女性在社区公共事务中的参与度</li>
+        </ul>
+      </div>
+    </div>
+    <div class="reveal-scale" style="max-width:600px;margin:40px auto 0">
+      <svg viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="180" rx="20" fill="#FAF8F2"/>
+        <!-- Three concentric circles representing impact levels -->
+        <circle cx="300" cy="90" r="70" stroke="#C47888" stroke-width="1.5" fill="none" opacity="0.15" stroke-dasharray="6,4"/>
+        <circle cx="300" cy="90" r="50" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.2" stroke-dasharray="5,4"/>
+        <circle cx="300" cy="90" r="30" stroke="#4A7C59" stroke-width="1.5" fill="none" opacity="0.25" stroke-dasharray="4,3"/>
+        <g class="svg-breathe"><circle cx="300" cy="90" r="16" fill="#D4E8DA" opacity="0.5"/><text x="300" y="95" text-anchor="middle" font-size="14">🌱</text></g>
+        <g class="svg-float"><text x="300" y="25" text-anchor="middle" font-size="10" fill="#4A7C59" font-weight="500">个体</text></g>
+        <g class="svg-float-d"><text x="380" y="50" text-anchor="middle" font-size="10" fill="#C9A84C" font-weight="500">家庭</text></g>
+        <g class="svg-float-d2"><text x="380" y="140" text-anchor="middle" font-size="10" fill="#C47888" font-weight="500">社区</text></g>
+        <path d="M310 30 Q340 35 370 45" stroke="#4A7C59" stroke-width="1" fill="none" opacity="0.2"/>
+        <path d="M375 55 Q380 90 375 130" stroke="#C9A84C" stroke-width="1" fill="none" opacity="0.2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">每一颗绿芽都值得被看见 🌱</h2>
+    <p class="footer-text">用疗愈点亮内心，用技能创造未来，用行动改变社区——绿芽计划，与农村女性一起成长</p>
+    <div class="footer-hearts">🌱 🌿 💚 🌱</div>
+  </div>
+</footer>
+<script>
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+});
+
+const dots = document.querySelectorAll('.nav-dot');
+const sectionIds = ['hero','overview','week1','week2','week3','week4','week5','week6','week7','week8','week9','week10','week11','week12','followup','impl','longterm','sdgs','benefit'];
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = dot.getAttribute('data-target');
+    document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+window.addEventListener('scroll', () => {
+  let current = 0;
+  sectionEls.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2) current = i;
+  });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === current);
+  });
+});
+
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const shapes = document.querySelectorAll('.hero-shape');
+  shapes.forEach((shape, i) => {
+    const speed = 0.03 + i * 0.02;
+    shape.style.transform = 'translateY(' + (scrollY * speed) + 'px)';
+  });
+});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

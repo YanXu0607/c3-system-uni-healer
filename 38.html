@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>驻外员工跨文化适应正念培训方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --warm:#C47860;--warm-light:#F5DDD3;--coral:#D97A6A;--coral-light:#F5D9D3;
+    --amber:#B89840;--amber-light:#F5EDCF;--gold:#C9A84C;--gold-light:#FBF4D6;
+    --peach:#F5E0D0;--cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --sage:#5A988C;--sage-light:#D4E8E2;--teal:#5BA89C;--teal-light:#D4EDE8;
+    --mint:#6BB898;--mint-light:#D9F0E4;--blue:#5A8FB5;--blue-light:#D6E6F2;
+    --rose:#C47888;--rose-light:#F2DDE2;--lavender:#967BA5;--lavender-light:#EDE0F3;
+    --plum:#8A6B9A;--plum-light:#E8D8F0;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+    --olive:#7B8A5B;--olive-light:#E2E8D6;--sky:#6AA5C6;--sky-light:#DCEEF8;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--teal),var(--warm),var(--amber),var(--lavender));width:0%;transition:width .1s linear}
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--teal);transform:scale(1.5);box-shadow:0 0 10px rgba(91,168,156,.5)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  /* ===== HERO ===== */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--teal-light) 0%,var(--cream) 30%,var(--warm-light) 60%,var(--gold-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--teal);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--warm);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--amber);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--lavender);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(91,168,156,.15);border-radius:20px;font-size:13px;color:var(--teal);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,4.5vw,48px);font-weight:700;line-height:1.35;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--teal)}.hero-title .accent2{color:var(--warm)}
+  .hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+  .hero-meta-icon.teal{background:rgba(91,168,156,.15)}.hero-meta-icon.warm{background:rgba(196,120,96,.15)}.hero-meta-icon.amber{background:rgba(184,152,64,.15)}.hero-meta-icon.lavender{background:rgba(150,123,165,.12)}
+  .hero-illustration{margin-top:36px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:680px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 48px rgba(0,0,0,.06))}
+  .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeUp .8s 1.4s forwards}
+  .scroll-hint span{font-size:11px;color:var(--soft);letter-spacing:1px}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(45deg);animation:scrollBounce 2s ease-in-out infinite}
+  @keyframes scrollBounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .hero-badge,.hero-title,.hero-subtitle,.hero-meta,.hero-illustration{transform:translateY(20px)}
+
+  /* ===== Phase Headers ===== */
+  .phase-header{padding:100px 24px 60px;text-align:center;position:relative}
+  .phase-header.ph1{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .phase-header.ph2{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .phase-header.ph3{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .phase-header-icon{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+  .phase-header-icon.ph1{background:linear-gradient(135deg,rgba(91,168,156,.15),rgba(91,168,156,.05))}
+  .phase-header-icon.ph2{background:linear-gradient(135deg,rgba(196,120,96,.15),rgba(196,120,96,.05))}
+  .phase-header-icon.ph3{background:linear-gradient(135deg,rgba(150,123,165,.15),rgba(150,123,165,.05))}
+  .phase-header-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .phase-header-tag.ph1{background:rgba(91,168,156,.12);color:var(--teal)}
+  .phase-header-tag.ph2{background:rgba(196,120,96,.12);color:var(--warm)}
+  .phase-header-tag.ph3{background:rgba(150,123,165,.12);color:var(--lavender)}
+  .phase-header-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .phase-header-sub{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto;line-height:1.8}
+
+  /* ===== Content Sections ===== */
+  .phase-section{padding:80px 24px;position:relative}
+  .phase-section:nth-child(odd){background:var(--cream-pale)}
+  .phase-section:nth-child(even){background:var(--surface)}
+  .phase-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .phase-section.reverse .phase-container{direction:rtl}
+  .phase-section.reverse .phase-container>*{direction:ltr}
+  .phase-text{display:flex;flex-direction:column;gap:6px}
+  .phase-week{font-size:11px;letter-spacing:2px;font-weight:500;text-transform:uppercase;margin-bottom:4px}
+  .phase-week.c1{color:var(--teal)}.phase-week.c2{color:var(--warm)}.phase-week.c3{color:var(--amber)}.phase-week.c4{color:var(--blue)}.phase-week.c5{color:var(--rose)}.phase-week.c6{color:var(--lavender)}.phase-week.c7{color:var(--olive)}.phase-week.c8{color:var(--sky)}
+  .phase-title{font-family:'Noto Serif SC',serif;font-size:clamp(20px,2.5vw,28px);font-weight:700;line-height:1.4;margin-bottom:6px}
+  .phase-theme{font-size:14px;font-weight:500;margin-bottom:8px}
+  .phase-theme.c1{color:var(--teal)}.phase-theme.c2{color:var(--warm)}.phase-theme.c3{color:var(--amber)}.phase-theme.c4{color:var(--blue)}.phase-theme.c5{color:var(--rose)}.phase-theme.c6{color:var(--lavender)}.phase-theme.c7{color:var(--olive)}.phase-theme.c8{color:var(--sky)}
+  .phase-desc{font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:12px}
+  .phase-items{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .phase-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .phase-item-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .phase-item-icon.c1{background:rgba(91,168,156,.15)}.phase-item-icon.c2{background:rgba(196,120,96,.15)}.phase-item-icon.c3{background:rgba(184,152,64,.15)}.phase-item-icon.c4{background:rgba(90,143,181,.15)}.phase-item-icon.c5{background:rgba(196,120,136,.15)}.phase-item-icon.c6{background:rgba(150,123,165,.15)}.phase-item-icon.c7{background:rgba(123,138,91,.15)}.phase-item-icon.c8{background:rgba(106,165,198,.15)}
+  .phase-goal{padding:12px 16px;border-radius:10px;font-size:12px;color:var(--soft);line-height:1.6}
+  .phase-goal.c1{background:rgba(91,168,156,.08);border-left:3px solid var(--teal)}.phase-goal.c2{background:rgba(196,120,96,.08);border-left:3px solid var(--warm)}.phase-goal.c3{background:rgba(184,152,64,.08);border-left:3px solid var(--amber)}.phase-goal.c4{background:rgba(90,143,181,.08);border-left:3px solid var(--blue)}.phase-goal.c5{background:rgba(196,120,136,.08);border-left:3px solid var(--rose)}.phase-goal.c6{background:rgba(150,123,165,.08);border-left:3px solid var(--lavender)}.phase-goal.c7{background:rgba(123,138,91,.08);border-left:3px solid var(--olive)}.phase-goal.c8{background:rgba(106,165,198,.08);border-left:3px solid var(--sky)}
+  .goal-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+  .phase-visual{position:relative}
+  .phase-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.06))}
+  .phase-decoration{position:absolute;width:80px;height:80px;border-radius:50%;opacity:.1;z-index:-1}
+  .phase-decoration.c1{background:var(--teal);top:-20px;right:-20px}.phase-decoration.c2{background:var(--warm);bottom:-20px;left:-20px}.phase-decoration.c3{background:var(--amber);top:-20px;left:-20px}.phase-decoration.c4{background:var(--blue);bottom:-20px;right:-20px}.phase-decoration.c5{background:var(--rose);top:-20px;right:-20px}.phase-decoration.c6{background:var(--lavender);bottom:-20px;left:-20px}.phase-decoration.c7{background:var(--olive);top:-20px;left:-20px}.phase-decoration.c8{background:var(--sky);bottom:-20px;right:-20px}
+
+  /* ===== Section Cards ===== */
+  .assess-section,.adapt-section,.longterm-section,.sdgs-section{padding:100px 24px;position:relative}
+  .assess-section{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .adapt-section{background:var(--cream-pale)}
+  .longterm-section{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .sdgs-section{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .assess-container,.adapt-container,.longterm-container,.sdgs-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.assess{background:rgba(184,152,64,.12);color:var(--amber)}.section-tag.adapt{background:rgba(91,168,156,.12);color:var(--teal)}.section-tag.longterm{background:rgba(150,123,165,.12);color:var(--lavender)}.section-tag.sdgs{background:rgba(196,120,96,.12);color:var(--warm)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+  .assess-grid,.adapt-grid,.longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:50px}
+  .assess-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s}
+  .assess-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .assess-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .assess-card-icon.a1{background:rgba(91,168,156,.1)}.assess-card-icon.a2{background:rgba(196,120,96,.1)}.assess-card-icon.a3{background:rgba(184,152,64,.1)}.assess-card-icon.a4{background:rgba(150,123,165,.1)}
+  .assess-card h3{font-size:16px;font-weight:600;margin-bottom:8px}.assess-card p{font-size:14px;color:var(--soft);line-height:1.7}
+  .adapt-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .adapt-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .adapt-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .adapt-card-icon.d1{background:rgba(91,168,156,.1)}.adapt-card-icon.d2{background:rgba(196,120,96,.1)}.adapt-card-icon.d3{background:rgba(150,123,165,.1)}.adapt-card-icon.d4{background:rgba(184,152,64,.15)}.adapt-card-icon.d5{background:rgba(90,143,181,.1)}
+  .adapt-card h3{font-size:15px;font-weight:600;margin-bottom:6px}.adapt-card p{font-size:13px;color:var(--soft);line-height:1.7}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;margin-bottom:14px}
+  .longterm-card-icon.l1{background:rgba(150,123,165,.1)}.longterm-card-icon.l2{background:rgba(196,120,96,.1)}.longterm-card-icon.l3{background:rgba(91,168,156,.1)}.longterm-card-icon.l4{background:rgba(184,152,64,.1)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}.longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:50px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(91,168,156,.08),rgba(91,168,156,.02));border:1px solid rgba(91,168,156,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(184,152,64,.1),rgba(184,152,64,.02));border:1px solid rgba(184,152,64,.12)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(196,120,136,.08),rgba(196,120,136,.02));border:1px solid rgba(196,120,136,.1)}
+  .sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(90,143,181,.08),rgba(90,143,181,.02));border:1px solid rgba(90,143,181,.1)}
+  .sdg-card:nth-child(5){background:linear-gradient(135deg,rgba(150,123,165,.08),rgba(150,123,165,.02));border:1px solid rgba(150,123,165,.1)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--teal)}.sdg-card:nth-child(2) .sdg-num{color:var(--amber)}.sdg-card:nth-child(3) .sdg-num{color:var(--rose)}.sdg-card:nth-child(4) .sdg-num{color:var(--blue)}.sdg-card:nth-child(5) .sdg-num{color:var(--lavender)}
+  .sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}.sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+
+  /* ===== SDG Illustration ===== */
+  .sdgs-illustration{max-width:600px;margin:0 auto;border-radius:20px;overflow:hidden}
+  .sdgs-illustration svg{width:100%;height:auto;display:block}
+
+  /* ===== Footer ===== */
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+
+  /* ===== Reveal Animations ===== */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+
+  /* ===== SVG Animations ===== */
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}.svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}.svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}.svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}.svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-rotate{animation:svgRotate 12s linear infinite}.svg-sway{animation:svgSway 6s ease-in-out infinite}.svg-sway-slow{animation:svgSway 8s ease-in-out infinite}
+  .svg-glow{animation:svgGlow 4s ease-in-out infinite}.svg-wave{animation:svgWave 3s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:600;stroke-dashoffset:600;animation:svgDraw 3s ease forwards}.svg-draw-slow{stroke-dasharray:800;stroke-dashoffset:800;animation:svgDraw 4s ease forwards}
+  .svg-fade-in{opacity:0;animation:svgFadeIn 1.2s ease forwards}.svg-fade-in-d{opacity:0;animation:svgFadeIn 1.2s .4s ease forwards}.svg-fade-in-d2{opacity:0;animation:svgFadeIn 1.2s .8s ease forwards}.svg-fade-in-d3{opacity:0;animation:svgFadeIn 1.2s 1.2s ease forwards}.svg-fade-in-d4{opacity:0;animation:svgFadeIn 1.2s 1.6s ease forwards}.svg-fade-in-d5{opacity:0;animation:svgFadeIn 1.2s 2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0;animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0;animation:svgRipple 2.5s ease-out forwards}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}.svg-ring-d{animation:svgRing 3s ease-out 1s infinite}.svg-ring-d2{animation:svgRing 3s ease-out 2s infinite}
+  .svg-shimmer{opacity:0;animation:svgShimmer 3s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px);animation:svgRise 1.5s ease forwards}
+  .svg-slide-l{opacity:0;transform:translateX(-30px);animation:svgSlideL 1s ease forwards}.svg-slide-r{opacity:0;transform:translateX(30px);animation:svgSlideR 1s ease forwards}
+  .svg-fall{opacity:0;transform:translateY(-15px);animation:svgFall 3s ease-in infinite}.svg-fall-d{animation:svgFall 3s ease-in 1s infinite}.svg-fall-d2{animation:svgFall 3s ease-in 2s infinite}
+  .svg-grow{transform:scaleY(0);transform-origin:bottom;animation:svgGrow 2s ease forwards}.svg-grow-d{animation:svgGrow 2s ease .3s forwards}.svg-grow-d2{animation:svgGrow 2s ease .6s forwards}
+  .svg-path-fly{stroke-dasharray:500;stroke-dashoffset:500;animation:svgDraw 4s ease forwards}
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.1}50%{opacity:.28}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.7}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgFall{0%{opacity:0;transform:translateY(-15px)}20%{opacity:.8}100%{opacity:0;transform:translateY(25px)}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes svgGrow{to{transform:scaleY(1)}}
+  @keyframes planeFly{0%{transform:translate(0,0) rotate(-5deg)}25%{transform:translate(80px,-30px) rotate(-3deg)}50%{transform:translate(160px,-10px) rotate(-5deg)}75%{transform:translate(240px,-25px) rotate(-3deg)}100%{transform:translate(320px,-15px) rotate(-5deg)}}
+  .svg-plane-fly{animation:planeFly 8s ease-in-out infinite}
+  @keyframes boatRock{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(2deg) translateY(-5px)}}
+  .svg-boat-rock{animation:boatRock 4s ease-in-out infinite;transform-origin:220px 280px}
+
+  @media(max-width:900px){.phase-container{grid-template-columns:1fr;gap:30px}.phase-section{padding:60px 20px}.phase-section.reverse .phase-container{direction:ltr}.assess-grid,.adapt-grid,.longterm-grid,.sdgs-grid{grid-template-columns:1fr}.nav-dots{right:12px;gap:8px}.nav-dot{width:7px;height:7px}.nav-dot .tooltip{display:none}.hero-meta{gap:14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="phase1"><span class="tooltip">出发前准备</span></div>
+  <div class="nav-dot" data-target="day1"><span class="tooltip">Day1·文化觉察</span></div>
+  <div class="nav-dot" data-target="day2"><span class="tooltip">Day2·技能整合</span></div>
+  <div class="nav-dot" data-target="phase2"><span class="tooltip">到任后适应</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周·着陆觉察</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周·沟通连接</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周·身份归属</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周·整合展望</span></div>
+  <div class="nav-dot" data-target="phase3"><span class="tooltip">持续支持</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs融合</span></div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">驻外员工跨文化适应正念培训方案</div>
+    <h1 class="hero-title">以<span class="accent">正念</span>为锚<br>以<span class="accent2">文化</span>为桥</h1>
+    <p class="hero-subtitle">融合跨文化心理学与正念减压技术，为驻外员工打造从出发前到长期驻外的全周期心理适应支持体系</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon teal">🌍</div><span>跨文化适应</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon warm">🧘</div><span>正念训练</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon amber">📋</div><span>三阶段方案</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon lavender">🎯</div><span>SDGs融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 680 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="380" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="hg1" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#5BA89C" stop-opacity="0.12"/><stop offset="100%" stop-color="#5BA89C" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="340" cy="190" r="160" fill="url(#hg1)" class="svg-glow"/>
+        <!-- Globe -->
+        <g class="svg-breathe">
+          <circle cx="340" cy="180" r="70" fill="#D4EDE8" opacity="0.25" stroke="#5BA89C" stroke-width="1.5"/>
+          <ellipse cx="340" cy="180" rx="70" ry="30" fill="none" stroke="#5BA89C" stroke-width="0.8" opacity="0.3"/>
+          <ellipse cx="340" cy="180" rx="30" ry="70" fill="none" stroke="#5BA89C" stroke-width="0.8" opacity="0.3"/>
+          <ellipse cx="340" cy="180" rx="55" ry="55" fill="none" stroke="#5BA89C" stroke-width="0.6" opacity="0.2" transform="rotate(30,340,180)"/>
+          <ellipse cx="340" cy="180" rx="55" ry="55" fill="none" stroke="#5BA89C" stroke-width="0.6" opacity="0.2" transform="rotate(-30,340,180)"/>
+          <!-- Continents simplified -->
+          <ellipse cx="320" cy="160" rx="18" ry="14" fill="#6BB898" opacity="0.3" transform="rotate(-15,320,160)"/>
+          <ellipse cx="365" cy="175" rx="12" ry="20" fill="#6BB898" opacity="0.25"/>
+          <ellipse cx="310" cy="200" rx="15" ry="10" fill="#6BB898" opacity="0.2" transform="rotate(10,310,200)"/>
+        </g>
+        <!-- Airplane path -->
+        <path d="M160 120 Q250 80 340 100 Q430 120 520 90" stroke="#C47860" stroke-width="1.5" fill="none" stroke-dasharray="6,4" opacity="0.3" class="svg-draw"/>
+        <g class="svg-plane-fly">
+          <path d="M515 88 L525 82 L530 88 L525 86 L525 92 L530 90 L525 88" fill="#C47860" opacity="0.6"/>
+          <text x="535" y="88" font-size="10" fill="#C47860" opacity="0.5">✈️</text>
+        </g>
+        <!-- Person figures around globe -->
+        <g class="svg-breathe" style="animation-delay:.3s">
+          <circle cx="180" cy="220" r="12" fill="#F5D9D3"/><path d="M168 216 Q172 204 180 201 Q188 204 192 216" fill="#5A5466" opacity="0.3"/>
+          <path d="M170 224 Q168 242 170 260 L190 260 Q192 242 190 224 Q180 218 170 224Z" fill="#5BA89C" opacity="0.3"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:.7s">
+          <circle cx="500" cy="210" r="12" fill="#F5D9D3"/><path d="M488 206 Q492 194 500 191 Q508 194 512 206" fill="#5A5466" opacity="0.3"/>
+          <path d="M490 214 Q488 232 490 250 L510 250 Q512 232 510 214 Q500 208 490 214Z" fill="#C47860" opacity="0.3"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:1.1s">
+          <circle cx="340" cy="300" r="11" fill="#F5D9D3"/><path d="M329 296 Q333 285 340 282 Q347 285 351 296" fill="#5A5466" opacity="0.3"/>
+          <path d="M331 304 Q329 320 331 335 L349 335 Q351 320 349 304 Q340 298 331 304Z" fill="#967BA5" opacity="0.3"/>
+        </g>
+        <!-- Connection lines between people -->
+        <path d="M195 230 Q270 260 335 295" stroke="#5BA89C" stroke-width="1" fill="none" opacity="0.2" stroke-dasharray="4,3" class="svg-draw"/>
+        <path d="M485 220 Q420 260 350 295" stroke="#C47860" stroke-width="1" fill="none" opacity="0.2" stroke-dasharray="4,3" class="svg-draw" style="animation-delay:.5s"/>
+        <path d="M195 220 Q340 180 485 210" stroke="#967BA5" stroke-width="1" fill="none" opacity="0.15" stroke-dasharray="4,3" class="svg-draw" style="animation-delay:1s"/>
+        <!-- Floating cultural elements -->
+        <g class="svg-float"><circle cx="100" cy="120" r="14" fill="#D4EDE8" opacity="0.5"/><text x="100" y="125" text-anchor="middle" font-size="13">🏯</text></g>
+        <g class="svg-float-d"><circle cx="580" cy="130" r="14" fill="#F5DDD3" opacity="0.5"/><text x="580" y="135" text-anchor="middle" font-size="13">🗽</text></g>
+        <g class="svg-float-d2"><circle cx="340" cy="60" r="14" fill="#F5EDCF" opacity="0.5"/><text x="340" y="65" text-anchor="middle" font-size="13">🌏</text></g>
+        <g class="svg-float-d3"><circle cx="130" cy="300" r="12" fill="#EDE0F3" opacity="0.5"/><text x="130" y="305" text-anchor="middle" font-size="11">🧘</text></g>
+        <g class="svg-float"><circle cx="550" cy="290" r="12" fill="#F5EDCF" opacity="0.5"/><text x="550" y="295" text-anchor="middle" font-size="11">🤝</text></g>
+        <!-- Pulse dots -->
+        <circle cx="270" cy="150" r="3" fill="#5BA89C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="410" cy="140" r="2.5" fill="#C47860" opacity="0.3" class="svg-pulse"/>
+        <circle cx="340" cy="260" r="2" fill="#967BA5" opacity="0.4" class="svg-pulse"/>
+        <!-- Phase timeline at bottom -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <line x1="120" y1="355" x2="560" y2="355" stroke="#E8D8C8" stroke-width="2"/>
+          <circle cx="180" cy="355" r="6" fill="#5BA89C" opacity="0.6"/><text x="180" y="370" text-anchor="middle" font-size="8" fill="#5A5466">出发前</text>
+          <circle cx="340" cy="355" r="6" fill="#C47860" opacity="0.6"/><text x="340" y="370" text-anchor="middle" font-size="8" fill="#5A5466">到任后</text>
+          <circle cx="500" cy="355" r="6" fill="#967BA5" opacity="0.6"/><text x="500" y="370" text-anchor="middle" font-size="8" fill="#5A5466">持续支持</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ==================== PHASE 1 HEADER ==================== -->
+<div class="phase-header ph1" id="phase1">
+  <div class="reveal">
+    <div class="phase-header-icon ph1">🎒</div>
+    <div class="phase-header-tag ph1">阶段一 · 出发前准备（2天）</div>
+    <h2 class="phase-header-title">文化觉察与正念基础</h2>
+    <p class="phase-header-sub">通过跨文化理论学习和正念训练，帮助驻外员工建立文化敏感性与心理弹性，为即将到来的跨文化挑战做好准备。</p>
+  </div>
+</div>
+
+<!-- ==================== DAY 1 ==================== -->
+<section class="phase-section" id="day1">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c1">Day 1</div>
+      <h2 class="phase-title">文化觉察与正念基础</h2>
+      <div class="phase-theme c1">Cultural Awareness & Mindfulness Foundation</div>
+      <p class="phase-desc">上午聚焦跨文化适应理论，从文化冲击阶段模型到Berry涵化模型自评，再到Hofstede文化维度理论，通过案例分析建立对文化差异的深度理解。下午转向内在觉察，通过正念呼吸、身体扫描和"文化滤镜"觉察练习，培养对自身文化偏见的元认知能力。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c1">📊</div><span>文化冲击四阶段模型及应对策略</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">🧭</div><span>Berry涵化模型自评：了解自身文化适应倾向</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">🌐</div><span>Hofstede文化维度理论（权力距离、个人/集体主义等）</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">🔍</div><span>案例分析：时间观念、沟通风格、面子文化差异</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">🧘</div><span>正念呼吸与身体扫描基础训练</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">🪞</div><span>"文化滤镜"觉察练习：觉察自动化假设与判断</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">👂</div><span>非评判性倾听练习：模拟跨文化对话</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">💗</div><span>正念自我关怀：面对文化适应困难的自我关怀</span></div>
+      </div>
+      <div class="phase-goal c1"><span class="goal-label">🎯 核心目标</span>建立跨文化理论认知框架，培养正念觉察基础能力，识别自身的文化自动化反应模式</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c1"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="d1glow" cx="50%" cy="45%" r="35%"><stop offset="0%" stop-color="#5BA89C" stop-opacity="0.1"/><stop offset="100%" stop-color="#5BA89C" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="220" cy="200" r="140" fill="url(#d1glow)" class="svg-glow"/>
+        <!-- Brain / Mind -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="160" r="45" fill="#D4EDE8" opacity="0.2" stroke="#5BA89C" stroke-width="1"/>
+          <circle cx="220" cy="160" r="30" fill="#D4EDE8" opacity="0.15"/>
+          <!-- Brain folds -->
+          <path d="M200 145 Q210 135 220 140 Q230 135 240 145" stroke="#5BA89C" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M195 160 Q210 150 220 155 Q230 150 245 160" stroke="#5BA89C" stroke-width="1.2" fill="none" opacity="0.3"/>
+          <path d="M200 175 Q210 168 220 172 Q230 168 240 175" stroke="#5BA89C" stroke-width="1" fill="none" opacity="0.25"/>
+          <!-- Cultural filter lens -->
+          <circle cx="220" cy="160" r="18" fill="none" stroke="#C47860" stroke-width="1.5" opacity="0.3" stroke-dasharray="3,2" class="svg-rotate"/>
+        </g>
+        <!-- Cultural shock 4 stages curve -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <path d="M80 340 Q120 280 160 310 Q200 340 240 300 Q280 260 320 290 Q360 320 400 280" stroke="#5BA89C" stroke-width="2" fill="none" opacity="0.4" class="svg-draw" stroke-dasharray="400" stroke-dashoffset="400"/>
+          <text x="120" y="275" font-size="9" fill="#5BA89C" opacity="0.6">蜜月期</text>
+          <text x="195" y="350" font-size="9" fill="#C47860" opacity="0.6">挫折期</text>
+          <text x="280" y="255" font-size="9" fill="#C9A84C" opacity="0.6">调整期</text>
+          <text x="370" y="275" font-size="9" fill="#6BB898" opacity="0.6">适应期</text>
+          <!-- Stage dots -->
+          <g class="svg-scale-in" style="animation-delay:1s"><circle cx="120" cy="290" r="5" fill="#5BA89C" opacity="0.5"/></g>
+          <g class="svg-scale-in" style="animation-delay:1.3s"><circle cx="200" cy="330" r="5" fill="#C47860" opacity="0.5"/></g>
+          <g class="svg-scale-in" style="animation-delay:1.6s"><circle cx="280" cy="270" r="5" fill="#C9A84C" opacity="0.5"/></g>
+          <g class="svg-scale-in" style="animation-delay:1.9s"><circle cx="370" cy="285" r="5" fill="#6BB898" opacity="0.5"/></g>
+        </g>
+        <!-- Mindful breathing circles -->
+        <circle cx="80" cy="140" r="30" fill="none" stroke="#5BA89C" stroke-width="1" opacity="0.15" class="svg-breathe"/>
+        <circle cx="80" cy="140" r="20" fill="none" stroke="#5BA89C" stroke-width="1" opacity="0.12" class="svg-breathe" style="animation-delay:.5s"/>
+        <circle cx="80" cy="140" r="10" fill="#D4EDE8" opacity="0.3" class="svg-pulse"/>
+        <text x="80" y="144" text-anchor="middle" font-size="10" fill="#5BA89C" opacity="0.5">🧘</text>
+        <!-- Body scan figure -->
+        <g class="svg-float" style="animation-delay:.5s">
+          <circle cx="370" cy="120" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+          <rect x="364" y="130" width="12" height="20" rx="4" fill="#D6E6F2" opacity="0.4"/>
+          <path d="M364 140 Q355 148 350 155" stroke="#D4899A" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <path d="M376 140 Q385 148 390 155" stroke="#D4899A" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <path d="M366 150 Q362 165 360 175" stroke="#D4899A" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <path d="M374 150 Q378 165 380 175" stroke="#D4899A" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <!-- Scan line -->
+          <line x1="355" y1="135" x2="395" y2="135" stroke="#5BA89C" stroke-width="1" opacity="0.3" class="svg-wave"/>
+        </g>
+        <!-- Cultural dimension icons -->
+        <g class="svg-float-d"><rect x="310" y="195" width="50" height="22" rx="6" fill="#F5EDCF" opacity="0.6"/><text x="335" y="210" text-anchor="middle" font-size="8" fill="#B89840">权力距离</text></g>
+        <g class="svg-float-d2"><rect x="310" y="225" width="50" height="22" rx="6" fill="#F2DDE2" opacity="0.6"/><text x="335" y="240" text-anchor="middle" font-size="8" fill="#C47888">个人主义</text></g>
+        <g class="svg-float-d3"><rect x="310" y="255" width="50" height="22" rx="6" fill="#D6E6F2" opacity="0.6"/><text x="335" y="270" text-anchor="middle" font-size="8" fill="#5A8FB5">不确定性</text></g>
+        <!-- Self-compassion heart -->
+        <g class="svg-pulse"><circle cx="140" cy="200" r="16" fill="#F2DDE2" opacity="0.4"/><text x="140" y="205" text-anchor="middle" font-size="14">💗</text></g>
+        <!-- Non-judgmental listening -->
+        <g class="svg-float-d"><circle cx="140" cy="260" r="14" fill="#D4EDE8" opacity="0.5"/><text x="140" y="265" text-anchor="middle" font-size="12">👂</text></g>
+        <!-- Shimmer dots -->
+        <circle cx="300" cy="100" r="2.5" fill="#5BA89C" opacity="0.3" class="svg-shimmer"/>
+        <circle cx="160" cy="100" r="2" fill="#C47860" opacity="0.3" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="400" cy="170" r="2" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== DAY 2 ==================== -->
+<section class="phase-section reverse" id="day2">
+  <div class="phase-container">
+    <div class="phase-visual reveal-left">
+      <div class="phase-decoration c2"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <defs>
+          <radialGradient id="d2glow" cx="50%" cy="45%" r="35%"><stop offset="0%" stop-color="#C47860" stop-opacity="0.1"/><stop offset="100%" stop-color="#C47860" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="220" cy="200" r="140" fill="url(#d2glow)" class="svg-glow"/>
+        <!-- Bridge connecting two sides -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <path d="M60 250 Q120 200 180 230 Q220 250 260 230 Q320 200 380 250" stroke="#C47860" stroke-width="2.5" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="400" stroke-dashoffset="400"/>
+          <!-- Bridge pillars -->
+          <rect x="120" y="230" width="8" height="50" rx="2" fill="#C47860" opacity="0.2" class="svg-grow"/>
+          <rect x="215" y="245" width="8" height="35" rx="2" fill="#C47860" opacity="0.2" class="svg-grow-d"/>
+          <rect x="310" y="230" width="8" height="50" rx="2" fill="#C47860" opacity="0.2" class="svg-grow-d2"/>
+        </g>
+        <!-- Two people shaking hands on bridge -->
+        <g class="svg-breathe">
+          <circle cx="160" cy="210" r="12" fill="#F5D9D3"/><path d="M148 206 Q152 194 160 191 Q168 194 172 206" fill="#5A5466" opacity="0.3"/>
+          <path d="M150 214 Q148 232 150 250 L170 250 Q172 232 170 214 Q160 208 150 214Z" fill="#5BA89C" opacity="0.3"/>
+          <path d="M172 220 Q185 215 195 210" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:.5s">
+          <circle cx="280" cy="210" r="12" fill="#F5D9D3"/><path d="M268 206 Q272 194 280 191 Q288 194 292 206" fill="#5A5466" opacity="0.3"/>
+          <path d="M270 214 Q268 232 270 250 L290 250 Q292 232 290 214 Q280 208 270 214Z" fill="#C47860" opacity="0.3"/>
+          <path d="M268 220 Q255 215 245 210" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </g>
+        <!-- Handshake glow -->
+        <circle cx="220" cy="210" r="15" fill="#F5EDCF" opacity="0.2" class="svg-pulse"/>
+        <!-- NVC Communication bubbles -->
+        <g class="svg-float"><rect x="60" y="130" width="80" height="40" rx="10" fill="#D4EDE8" opacity="0.4"/><text x="100" y="148" text-anchor="middle" font-size="9" fill="#5BA89C">高语境沟通</text><text x="100" y="162" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">含蓄·间接</text></g>
+        <g class="svg-float-d"><rect x="300" y="130" width="80" height="40" rx="10" fill="#F5DDD3" opacity="0.4"/><text x="340" y="148" text-anchor="middle" font-size="9" fill="#C47860">低语境沟通</text><text x="340" y="162" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">直接·明确</text></g>
+        <path d="M140 150 Q220 120 300 150" stroke="#C9A84C" stroke-width="1" fill="none" stroke-dasharray="4,3" opacity="0.3" class="svg-draw"/>
+        <!-- Cultural pause technique -->
+        <g class="svg-pulse" style="animation-delay:.5s">
+          <circle cx="220" cy="100" r="20" fill="#EDE0F3" opacity="0.3"/>
+          <text x="220" y="97" text-anchor="middle" font-size="10" fill="#967BA5" opacity="0.7">3秒</text>
+          <text x="220" y="110" text-anchor="middle" font-size="8" fill="#967BA5" opacity="0.5">文化暂停</text>
+        </g>
+        <!-- Toolbox -->
+        <g class="svg-float-d2">
+          <rect x="60" y="300" width="70" height="50" rx="8" fill="#F5EDCF" opacity="0.5" stroke="#C9A84C" stroke-width="1"/>
+          <rect x="65" y="295" width="60" height="10" rx="4" fill="#C9A84C" opacity="0.3"/>
+          <text x="95" y="325" text-anchor="middle" font-size="9" fill="#B89840">🧰 工具箱</text>
+          <text x="95" y="340" text-anchor="middle" font-size="7" fill="#5A5466" opacity="0.5">正念卡片</text>
+        </g>
+        <!-- Peer support group -->
+        <g class="svg-float-d3">
+          <circle cx="350" cy="310" r="10" fill="#D4EDE8" opacity="0.5"/>
+          <circle cx="370" cy="305" r="10" fill="#F5DDD3" opacity="0.5"/>
+          <circle cx="360" cy="325" r="10" fill="#EDE0F3" opacity="0.5"/>
+          <text x="360" y="350" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">互助小组</text>
+        </g>
+        <!-- 90-day plan -->
+        <g class="svg-scale-in" style="animation-delay:1.5s">
+          <rect x="170" y="310" width="100" height="40" rx="8" fill="#D6E6F2" opacity="0.4"/>
+          <text x="220" y="330" text-anchor="middle" font-size="9" fill="#5A8FB5">📅 90天计划</text>
+          <text x="220" y="343" text-anchor="middle" font-size="7" fill="#5A5466" opacity="0.5">个人适应路线图</text>
+        </g>
+        <!-- Role play masks -->
+        <g class="svg-float"><text x="60" y="80" font-size="16" opacity="0.3">🎭</text></g>
+        <g class="svg-float-d"><text x="380" y="80" font-size="16" opacity="0.3">💬</text></g>
+        <!-- Shimmer -->
+        <circle cx="130" cy="180" r="2" fill="#C47860" opacity="0.3" class="svg-shimmer"/>
+        <circle cx="310" cy="180" r="2" fill="#5BA89C" opacity="0.3" class="svg-shimmer" style="animation-delay:1s"/>
+      </svg>
+    </div>
+    <div class="phase-text reveal-right">
+      <div class="phase-week c2">Day 2</div>
+      <h2 class="phase-title">技能整合与情境演练</h2>
+      <div class="phase-theme c2">Skills Integration & Scenario Practice</div>
+      <p class="phase-desc">上午聚焦跨文化沟通技能，从高/低语境沟通风格到非暴力沟通（NVC），再到"文化暂停"技术，通过角色扮演将理论转化为实战能力。下午整合资源，制作个人化正念工具箱，建立同伴支持网络，制定90天适应计划。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c2">💬</div><span>高语境 vs 低语境沟通风格理解与应对</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">🕊️</div><span>非暴力沟通（NVC）在跨文化场景中的应用</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">⏸️</div><span>"文化暂停"技术：3秒呼吸再回应</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">🎭</div><span>角色扮演：商务谈判、反馈方式、社交礼仪差异</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">🧰</div><span>制作个人化"跨文化正念工具箱"卡片</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">👥</div><span>建立同伴支持小组，按目标国家分组</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">🧘</div><span>东道国资源介绍：心理服务、社区资源、紧急联系</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">📅</div><span>制定个人"跨文化适应90天计划"</span></div>
+      </div>
+      <div class="phase-goal c2"><span class="goal-label">🎯 核心目标</span>将跨文化沟通理论与正念技术整合为可操作的实用技能，建立个人化的适应资源体系</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PHASE 2 HEADER ==================== -->
+<div class="phase-header ph2" id="phase2">
+  <div class="reveal">
+    <div class="phase-header-icon ph2">🚢</div>
+    <div class="phase-header-tag ph2">阶段二 · 到任后适应（4周线上跟进）</div>
+    <h2 class="phase-header-title">着陆与融入</h2>
+    <p class="phase-header-sub">通过每周线上正念课程与小组会议，陪伴驻外员工度过最关键的文化适应期，从着陆觉察到整合展望。</p>
+  </div>
+</div>
+
+<!-- ==================== WEEK 1 ==================== -->
+<section class="phase-section" id="week1">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c3">第1周</div>
+      <h2 class="phase-title">着陆与觉察</h2>
+      <div class="phase-theme c3">Landing & Awareness</div>
+      <p class="phase-desc">以正念呼吸与"文化日记"方法为核心工具，帮助驻外员工在到达新环境的第一周建立每日觉察习惯。通过记录文化观察与自身反应，培养对文化冲击信号的敏锐识别能力。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c3">🧘</div><span>线上正念课程（30分钟）：正念呼吸与"文化日记"方法</span></div>
+        <div class="phase-item"><div class="phase-item-icon c3">📝</div><span>每日记录一个文化观察与自己的反应</span></div>
+        <div class="phase-item"><div class="phase-item-icon c3">👥</div><span>小组线上会议（60分钟）：分享第一周文化观察与感受</span></div>
+      </div>
+      <div class="phase-goal c3"><span class="goal-label">🎯 本周主题</span>识别"文化冲击信号"——何时需要主动寻求帮助</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c3"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Ocean waves -->
+        <path d="M0 320 Q55 310 110 320 Q165 330 220 315 Q275 300 330 320 Q385 340 440 320 L440 420 L0 420Z" fill="#D6E6F2" opacity="0.25"/>
+        <g class="svg-wave" opacity="0.2"><path d="M0 330 Q55 320 110 330 Q165 340 220 325 Q275 310 330 330 Q385 350 440 330" stroke="#5A8FB5" stroke-width="1.5" fill="none"/></g>
+        <g class="svg-wave" style="animation-delay:.5s" opacity="0.15"><path d="M0 345 Q55 335 110 345 Q165 355 220 340 Q275 325 330 345 Q385 365 440 345" stroke="#5A8FB5" stroke-width="1" fill="none"/></g>
+        <!-- Boat -->
+        <g class="svg-boat-rock">
+          <path d="M180 280 Q200 270 220 272 Q240 270 260 280 L250 295 L190 295Z" fill="#C9A84C" opacity="0.4"/>
+          <rect x="215" y="245" width="4" height="30" rx="2" fill="#A0937D" opacity="0.4"/>
+          <path d="M219 248 Q240 240 245 255 L219 260Z" fill="#F5DDD3" opacity="0.5"/>
+          <!-- Person on boat -->
+          <circle cx="220" cy="238" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+          <path d="M212 234 Q216 226 220 224 Q224 226 228 234" fill="#5A5466" opacity="0.3"/>
+        </g>
+        <!-- Landing shore -->
+        <path d="M0 300 Q30 290 60 300 Q80 310 100 305" fill="#D9F0E4" opacity="0.4"/>
+        <g class="svg-sway"><rect x="40" y="270" width="6" height="30" rx="2" fill="#7B8A5B" opacity="0.4"/><circle cx="43" cy="258" r="16" fill="#6BB898" opacity="0.35"/></g>
+        <g class="svg-sway-slow"><rect x="80" y="275" width="5" height="25" rx="2" fill="#7B8A5B" opacity="0.3"/><circle cx="82" cy="265" r="12" fill="#6BB898" opacity="0.3"/></g>
+        <!-- Cultural diary -->
+        <g class="svg-float-d">
+          <rect x="300" y="180" width="60" height="75" rx="4" fill="#fff" stroke="#E8D8C8" stroke-width="1.5"/>
+          <rect x="300" y="180" width="60" height="15" rx="4" fill="#F5EDCF" opacity="0.6"/>
+          <text x="330" y="192" text-anchor="middle" font-size="7" fill="#B89840">文化日记</text>
+          <line x1="310" y1="205" x2="350" y2="205" stroke="#E8D8C8" stroke-width="1"/>
+          <line x1="310" y1="215" x2="345" y2="215" stroke="#E8D8C8" stroke-width="1"/>
+          <line x1="310" y1="225" x2="348" y2="225" stroke="#E8D8C8" stroke-width="1"/>
+          <line x1="310" y1="235" x2="340" y2="235" stroke="#E8D8C8" stroke-width="1"/>
+          <circle cx="340" cy="242" r="3" fill="#C9A84C" opacity="0.3"/>
+        </g>
+        <!-- Signal icons -->
+        <g class="svg-pulse"><circle cx="340" cy="120" r="18" fill="#F5DDD3" opacity="0.3"/><text x="340" y="125" text-anchor="middle" font-size="14">⚠️</text></g>
+        <text x="340" y="150" text-anchor="middle" font-size="8" fill="#C47860" opacity="0.6">冲击信号</text>
+        <!-- Breathing circle -->
+        <circle cx="140" cy="160" r="25" fill="none" stroke="#5BA89C" stroke-width="1" opacity="0.15" class="svg-breathe"/>
+        <circle cx="140" cy="160" r="15" fill="none" stroke="#5BA89C" stroke-width="1" opacity="0.12" class="svg-breathe" style="animation-delay:.5s"/>
+        <circle cx="140" cy="160" r="6" fill="#D4EDE8" opacity="0.4" class="svg-pulse"/>
+        <text x="140" y="195" text-anchor="middle" font-size="8" fill="#5BA89C" opacity="0.5">正念呼吸</text>
+        <!-- Floating elements -->
+        <g class="svg-float"><circle cx="380" cy="90" r="12" fill="#D4EDE8" opacity="0.4"/><text x="380" y="95" text-anchor="middle" font-size="11">🌍</text></g>
+        <circle cx="100" cy="100" r="2.5" fill="#C9A84C" opacity="0.3" class="svg-shimmer"/>
+        <circle cx="260" cy="140" r="2" fill="#5BA89C" opacity="0.3" class="svg-shimmer" style="animation-delay:1s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 2 ==================== -->
+<section class="phase-section reverse" id="week2">
+  <div class="phase-container">
+    <div class="phase-visual reveal-left">
+      <div class="phase-decoration c4"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <defs>
+          <radialGradient id="w2glow" cx="50%" cy="45%" r="35%"><stop offset="0%" stop-color="#5A8FB5" stop-opacity="0.1"/><stop offset="100%" stop-color="#5A8FB5" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="220" cy="200" r="140" fill="url(#w2glow)" class="svg-glow"/>
+        <!-- Two people connecting through dialogue -->
+        <g class="svg-breathe">
+          <circle cx="140" cy="180" r="16" fill="#F5D9D3"/><path d="M126 175 Q130 162 140 158 Q150 162 154 175" fill="#5A5466" opacity="0.3"/>
+          <path d="M128 184 Q126 205 128 225 L152 225 Q154 205 152 184 Q140 177 128 184Z" fill="#5BA89C" opacity="0.3"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:.5s">
+          <circle cx="300" cy="180" r="16" fill="#F5D9D3"/><path d="M286 175 Q290 162 300 158 Q310 162 314 175" fill="#5A5466" opacity="0.3"/>
+          <path d="M288 184 Q286 205 288 225 L312 225 Q314 205 312 184 Q300 177 288 184Z" fill="#C47860" opacity="0.3"/>
+        </g>
+        <!-- Dialogue waves between them -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <path d="M160 175 Q190 155 220 165 Q250 175 280 160" stroke="#5A8FB5" stroke-width="2" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200"/>
+          <path d="M160 190 Q190 175 220 185 Q250 195 280 180" stroke="#5A8FB5" stroke-width="1.5" fill="none" opacity="0.2" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:.5s"/>
+        </g>
+        <!-- Trust bridge -->
+        <g class="svg-fade-in" style="animation-delay:1s">
+          <path d="M165 230 Q220 260 275 230" stroke="#5A8FB5" stroke-width="2" fill="none" opacity="0.25" stroke-dasharray="4,3"/>
+          <text x="220" y="265" text-anchor="middle" font-size="9" fill="#5A8FB5" opacity="0.6">信任建立</text>
+        </g>
+        <!-- Mindful listening ear -->
+        <g class="svg-pulse"><circle cx="100" cy="120" r="20" fill="#D6E6F2" opacity="0.3"/><text x="100" y="126" text-anchor="middle" font-size="16">👂</text></g>
+        <text x="100" y="152" text-anchor="middle" font-size="8" fill="#5A8FB5" opacity="0.5">正念倾听</text>
+        <!-- Mindful expression -->
+        <g class="svg-pulse" style="animation-delay:.8s"><circle cx="340" cy="120" r="20" fill="#F5DDD3" opacity="0.3"/><text x="340" y="126" text-anchor="middle" font-size="16">🗣️</text></g>
+        <text x="340" y="152" text-anchor="middle" font-size="8" fill="#C47860" opacity="0.5">正念表达</text>
+        <!-- Success/failure examples -->
+        <g class="svg-float"><rect x="60" y="280" width="70" height="35" rx="8" fill="#D9F0E4" opacity="0.5"/><text x="95" y="298" text-anchor="middle" font-size="8" fill="#5A988C">✅ 成功经验</text><text x="95" y="310" text-anchor="middle" font-size="7" fill="#5A5466" opacity="0.4">分享喜悦</text></g>
+        <g class="svg-float-d"><rect x="310" y="280" width="70" height="35" rx="8" fill="#F5DDD3" opacity="0.5"/><text x="345" y="298" text-anchor="middle" font-size="8" fill="#C47860">❓ 挑战困惑</text><text x="345" y="310" text-anchor="middle" font-size="7" fill="#5A5466" opacity="0.4">共同探讨</text></g>
+        <!-- Connection lines -->
+        <path d="M130 225 Q95 260 95 280" stroke="#5A988C" stroke-width="1" fill="none" opacity="0.2" stroke-dasharray="3,2"/>
+        <path d="M310 225 Q345 260 345 280" stroke="#C47860" stroke-width="1" fill="none" opacity="0.2" stroke-dasharray="3,2"/>
+        <!-- Decorative -->
+        <circle cx="220" cy="100" r="3" fill="#5A8FB5" opacity="0.3" class="svg-pulse"/>
+        <circle cx="180" cy="310" r="2" fill="#C9A84C" opacity="0.3" class="svg-shimmer"/>
+        <circle cx="260" cy="320" r="2" fill="#5BA89C" opacity="0.3" class="svg-shimmer" style="animation-delay:1s"/>
+      </svg>
+    </div>
+    <div class="phase-text reveal-right">
+      <div class="phase-week c4">第2周</div>
+      <h2 class="phase-title">沟通与连接</h2>
+      <div class="phase-theme c4">Communication & Connection</div>
+      <p class="phase-desc">聚焦正念倾听与正念表达两大核心技能，帮助驻外员工在跨文化沟通中保持觉察与开放。通过小组会议分享沟通中的挑战与成功经验，探索与当地同事建立信任关系的有效路径。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c4">🧘</div><span>线上正念课程（30分钟）：正念倾听与正念表达</span></div>
+        <div class="phase-item"><div class="phase-item-icon c4">👥</div><span>小组线上会议（60分钟）：分享跨文化沟通经验</span></div>
+      </div>
+      <div class="phase-goal c4"><span class="goal-label">🎯 本周主题</span>如何与当地同事建立信任关系</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 3 ==================== -->
+<section class="phase-section" id="week3">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c5">第3周</div>
+      <h2 class="phase-title">身份与归属</h2>
+      <div class="phase-theme c5">Identity & Belonging</div>
+      <p class="phase-desc">进入文化适应的深层阶段，通过自我关怀冥想与身份整合练习，帮助驻外员工处理"在两种文化之间"的身份张力。在小组中安全地讨论文化认同的困惑与发现，探索保持自身文化认同的同时融入新文化的平衡之道。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c5">💗</div><span>线上正念课程（30分钟）：自我关怀冥想与身份整合练习</span></div>
+        <div class="phase-item"><div class="phase-item-icon c5">🔄</div><span>小组线上会议（60分钟）：讨论"在两种文化之间的我"</span></div>
+      </div>
+      <div class="phase-goal c5"><span class="goal-label">🎯 本周主题</span>如何在保持自身文化认同的同时融入新文化</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c5"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="w3glow" cx="50%" cy="45%" r="35%"><stop offset="0%" stop-color="#C47888" stop-opacity="0.1"/><stop offset="100%" stop-color="#C47888" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="220" cy="200" r="140" fill="url(#w3glow)" class="svg-glow"/>
+        <!-- Two overlapping circles representing two cultures -->
+        <g class="svg-breathe">
+          <circle cx="160" cy="180" r="55" fill="#D4EDE8" opacity="0.25" stroke="#5BA89C" stroke-width="1.5"/>
+          <text x="160" y="185" text-anchor="middle" font-size="10" fill="#5BA89C" opacity="0.6">原生文化</text>
+        </g>
+        <g class="svg-breathe" style="animation-delay:.5s">
+          <circle cx="280" cy="180" r="55" fill="#F5DDD3" opacity="0.25" stroke="#C47860" stroke-width="1.5"/>
+          <text x="280" y="185" text-anchor="middle" font-size="10" fill="#C47860" opacity="0.6">新文化</text>
+        </g>
+        <!-- Overlap area - integrated identity -->
+        <g class="svg-pulse">
+          <circle cx="220" cy="180" r="25" fill="#F2DDE2" opacity="0.4"/>
+          <text x="220" y="175" text-anchor="middle" font-size="8" fill="#C47888" opacity="0.7">融合</text>
+          <text x="220" y="188" text-anchor="middle" font-size="7" fill="#C47888" opacity="0.5">新我</text>
+        </g>
+        <!-- Person in the middle -->
+        <g class="svg-float">
+          <circle cx="220" cy="260" r="14" fill="#F5D9D3"/><path d="M206 255 Q210 243 220 239 Q230 243 234 255" fill="#5A5466" opacity="0.3"/>
+          <path d="M208 264 Q206 282 208 300 L232 300 Q234 282 232 264 Q220 257 208 264Z" fill="#C47888" opacity="0.35"/>
+          <!-- Heart on chest -->
+          <circle cx="220" cy="275" r="6" fill="#F2DDE2" opacity="0.4" class="svg-pulse"/>
+        </g>
+        <!-- Self-compassion glow -->
+        <circle cx="220" cy="275" r="20" fill="none" stroke="#C47888" stroke-width="1" opacity="0.15" class="svg-ring"/>
+        <circle cx="220" cy="275" r="20" fill="none" stroke="#C47888" stroke-width="1" opacity="0.1" class="svg-ring-d"/>
+        <!-- Floating identity elements -->
+        <g class="svg-float-d"><rect x="80" y="120" width="60" height="30" rx="8" fill="#D4EDE8" opacity="0.4"/><text x="110" y="138" text-anchor="middle" font-size="8" fill="#5BA89C">价值观</text></g>
+        <g class="svg-float-d2"><rect x="300" y="120" width="60" height="30" rx="8" fill="#F5DDD3" opacity="0.4"/><text x="330" y="138" text-anchor="middle" font-size="8" fill="#C47860">传统</text></g>
+        <g class="svg-float-d3"><rect x="190" y="100" width="60" height="30" rx="8" fill="#F2DDE2" opacity="0.4"/><text x="220" y="118" text-anchor="middle" font-size="8" fill="#C47888">身份整合</text></g>
+        <!-- Connection lines -->
+        <path d="M110 150 Q160 170 195 175" stroke="#5BA89C" stroke-width="1" fill="none" opacity="0.2" stroke-dasharray="3,2" class="svg-draw"/>
+        <path d="M330 150 Q280 170 245 175" stroke="#C47860" stroke-width="1" fill="none" opacity="0.2" stroke-dasharray="3,2" class="svg-draw" style="animation-delay:.5s"/>
+        <!-- Shimmer dots -->
+        <circle cx="140" cy="140" r="2" fill="#5BA89C" opacity="0.3" class="svg-shimmer"/>
+        <circle cx="300" cy="140" r="2" fill="#C47860" opacity="0.3" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="220" cy="320" r="2" fill="#C47888" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 4 ==================== -->
+<section class="phase-section reverse" id="week4">
+  <div class="phase-container">
+    <div class="phase-visual reveal-left">
+      <div class="phase-decoration c6"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <defs>
+          <radialGradient id="w4glow" cx="50%" cy="45%" r="35%"><stop offset="0%" stop-color="#967BA5" stop-opacity="0.1"/><stop offset="100%" stop-color="#967BA5" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="220" cy="200" r="140" fill="url(#w4glow)" class="svg-glow"/>
+        <!-- Growth path from week 1 to week 4 -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <path d="M100 340 Q150 300 180 280 Q220 260 260 280 Q310 300 360 260" stroke="#967BA5" stroke-width="2" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="400" stroke-dashoffset="400"/>
+          <!-- Week markers -->
+          <g class="svg-scale-in" style="animation-delay:.8s"><circle cx="100" cy="340" r="6" fill="#C9A84C" opacity="0.5"/><text x="100" y="358" text-anchor="middle" font-size="7" fill="#C9A84C">W1</text></g>
+          <g class="svg-scale-in" style="animation-delay:1.1s"><circle cx="180" cy="280" r="6" fill="#5A8FB5" opacity="0.5"/><text x="180" y="298" text-anchor="middle" font-size="7" fill="#5A8FB5">W2</text></g>
+          <g class="svg-scale-in" style="animation-delay:1.4s"><circle cx="260" cy="280" r="6" fill="#C47888" opacity="0.5"/><text x="260" y="298" text-anchor="middle" font-size="7" fill="#C47888">W3</text></g>
+          <g class="svg-scale-in" style="animation-delay:1.7s"><circle cx="360" cy="260" r="6" fill="#967BA5" opacity="0.5"/><text x="360" y="278" text-anchor="middle" font-size="7" fill="#967BA5">W4</text></g>
+        </g>
+        <!-- Gratitude sun -->
+        <g class="svg-breathe">
+          <circle cx="340" cy="120" r="25" fill="#F5EDCF" opacity="0.5"/>
+          <circle cx="340" cy="120" r="18" fill="#C9A84C" opacity="0.3"/>
+          <!-- Sun rays -->
+          <line x1="340" y1="90" x2="340" y2="75" stroke="#C9A84C" stroke-width="2" opacity="0.3"/>
+          <line x1="370" y1="120" x2="385" y2="120" stroke="#C9A84C" stroke-width="2" opacity="0.3"/>
+          <line x1="310" y1="120" x2="295" y2="120" stroke="#C9A84C" stroke-width="2" opacity="0.3"/>
+          <line x1="358" y1="102" x2="370" y2="90" stroke="#C9A84C" stroke-width="2" opacity="0.3"/>
+          <line x1="322" y1="102" x2="310" y2="90" stroke="#C9A84C" stroke-width="2" opacity="0.3"/>
+        </g>
+        <text x="340" y="158" text-anchor="middle" font-size="8" fill="#C9A84C" opacity="0.6">感恩</text>
+        <!-- Future vision -->
+        <g class="svg-float-d">
+          <circle cx="100" cy="140" r="20" fill="#D6E6F2" opacity="0.3"/>
+          <text x="100" y="145" text-anchor="middle" font-size="14">🔮</text>
+        </g>
+        <text x="100" y="172" text-anchor="middle" font-size="8" fill="#5A8FB5" opacity="0.5">未来展望</text>
+        <!-- Growth tree -->
+        <g class="svg-sway" style="transform-origin:220px 340px">
+          <rect x="217" y="320" width="6" height="40" rx="2" fill="#7B8A5B" opacity="0.4"/>
+          <circle cx="220" cy="305" r="20" fill="#6BB898" opacity="0.3"/>
+          <circle cx="205" cy="312" r="12" fill="#5BA89C" opacity="0.25"/>
+          <circle cx="235" cy="310" r="14" fill="#5BA89C" opacity="0.25"/>
+        </g>
+        <!-- Long-term strategy -->
+        <g class="svg-float-d2">
+          <rect x="150" y="100" width="80" height="35" rx="8" fill="#EDE0F3" opacity="0.5"/>
+          <text x="190" y="118" text-anchor="middle" font-size="8" fill="#967BA5">📋 长期策略</text>
+          <text x="190" y="128" text-anchor="middle" font-size="6" fill="#5A5466" opacity="0.4">持续适应</text>
+        </g>
+        <!-- Review journey -->
+        <g class="svg-float-d3">
+          <rect x="280" y="100" width="80" height="35" rx="8" fill="#F2DDE2" opacity="0.5"/>
+          <text x="320" y="118" text-anchor="middle" font-size="8" fill="#C47888">🔄 回顾旅程</text>
+          <text x="320" y="128" text-anchor="middle" font-size="6" fill="#5A5466" opacity="0.4">成长收获</text>
+        </g>
+        <!-- Decorative -->
+        <circle cx="160" cy="200" r="2" fill="#967BA5" opacity="0.3" class="svg-pulse"/>
+        <circle cx="280" cy="200" r="2" fill="#C9A84C" opacity="0.3" class="svg-shimmer"/>
+      </svg>
+    </div>
+    <div class="phase-text reveal-right">
+      <div class="phase-week c6">第4周</div>
+      <h2 class="phase-title">整合与展望</h2>
+      <div class="phase-theme c6">Integration & Future Vision</div>
+      <p class="phase-desc">以感恩冥想与未来展望为核心，帮助驻外员工回顾4周适应旅程，整合所学技能与经验。通过小组分享成长与收获，建立长期的跨文化适应策略，为持续的驻外生活奠定心理基础。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c6">🧘</div><span>线上正念课程（30分钟）：感恩冥想与未来展望</span></div>
+        <div class="phase-item"><div class="phase-item-icon c6">👥</div><span>小组线上会议（60分钟）：回顾4周适应旅程，分享成长与收获</span></div>
+      </div>
+      <div class="phase-goal c6"><span class="goal-label">🎯 本周主题</span>建立长期的跨文化适应策略</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PHASE 3 HEADER ==================== -->
+<div class="phase-header ph3" id="phase3">
+  <div class="reveal">
+    <div class="phase-header-icon ph3">🔄</div>
+    <div class="phase-header-tag ph3">阶段三 · 持续支持（季度回顾）</div>
+    <h2 class="phase-header-title">长效陪伴</h2>
+    <p class="phase-header-sub">通过季度线上沙龙、24/7心理咨询服务和文化导师制度，为驻外员工提供持续的心理支持与成长陪伴。</p>
+  </div>
+</div>
+
+<!-- ==================== ADAPTATION ==================== -->
+<section class="adapt-section" id="adapt">
+  <div class="adapt-container">
+    <div class="section-header">
+      <div class="section-tag adapt">⚙ 实施适配</div>
+      <h2 class="section-title">灵活实施 · 全面支持</h2>
+      <p class="section-subtitle">根据不同场景需求，提供灵活的实施方式与全方位的支持保障</p>
+    </div>
+    <div class="adapt-grid">
+      <div class="adapt-card">
+        <div class="adapt-card-icon d1">🎯</div>
+        <h3>形式灵活</h3>
+        <p>出发前培训可采用线下集中或线上直播形式，到任后跟进以线上为主，适应不同工作场景与时间安排</p>
+      </div>
+      <div class="adapt-card">
+        <div class="adapt-card-icon d2">🌐</div>
+        <h3>语言支持</h3>
+        <p>培训材料提供中英双语版本，根据目标国家增加当地语言关键用语，降低语言障碍</p>
+      </div>
+      <div class="adapt-card">
+        <div class="adapt-card-icon d3">🕐</div>
+        <h3>时区适配</h3>
+        <p>线上课程安排在不同时区的友好时段，提供录播回放，确保全球员工均可参与</p>
+      </div>
+      <div class="adapt-card">
+        <div class="adapt-card-icon d4">👨‍👩‍👧</div>
+        <h3>家庭纳入</h3>
+        <p>鼓励驻外员工家属参与出发前培训的家庭专场，帮助家庭整体适应，减少家庭压力</p>
+      </div>
+      <div class="adapt-card">
+        <div class="adapt-card-icon d5">👨‍🏫</div>
+        <h3>文化顾问</h3>
+        <p>邀请目标国家的本地文化顾问参与培训，提供第一手文化信息与真实视角</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LONGTERM ==================== -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header">
+      <div class="section-tag longterm">📊 长效保障机制</div>
+      <h2 class="section-title">持续评估 · 知识沉淀</h2>
+      <p class="section-subtitle">建立科学的评估体系与知识库，确保培训效果的长期可持续</p>
+    </div>
+    <div class="longterm-grid">
+      <div class="longterm-card">
+        <div class="longterm-card-icon l1">📈</div>
+        <h3>效果评估</h3>
+        <p>出发前/到任后3个月分别测量：文化适应量表（SCAS）、正念量表（MAAS）、主观幸福感（SWB）。追踪跨文化冲突事件记录，评估解决满意度</p>
+      </div>
+      <div class="longterm-card">
+        <div class="longterm-card-icon l2">🏥</div>
+        <h3>EAP整合</h3>
+        <p>将跨文化心理支持纳入企业员工援助计划（EAP），提供持续的专业支持与危机干预</p>
+      </div>
+      <div class="longterm-card">
+        <div class="longterm-card-icon l3">📚</div>
+        <h3>知识库建设</h3>
+        <p>建立"跨文化适应知识库"，收集驻外员工的文化观察与经验分享，形成组织智慧沉淀</p>
+      </div>
+      <div class="longterm-card">
+        <div class="longterm-card-icon l4">🏠</div>
+        <h3>回国过渡支持</h3>
+        <p>为即将回国的驻外员工提供"逆向文化冲击"应对培训，平滑完成回国过渡</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SDGs ==================== -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header">
+      <div class="section-tag sdgs">🎯 SDGs & ESG 目标融合</div>
+      <h2 class="section-title">联合国可持续发展目标融合</h2>
+      <p class="section-subtitle">本方案深度契合联合国SDGs目标，体现企业ESG社会责任</p>
+    </div>
+    <div class="sdgs-grid">
+      <div class="sdg-card">
+        <div class="sdg-num">SDG 3</div>
+        <div class="sdg-title">良好健康与福祉</div>
+        <div class="sdg-desc">保障驻外员工心理健康，减少文化适应障碍，提升整体福祉水平</div>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num">SDG 8</div>
+        <div class="sdg-title">体面工作与经济增长</div>
+        <div class="sdg-desc">提升驻外员工工作效率与跨文化协作能力，促进全球化人才发展</div>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num">SDG 10</div>
+        <div class="sdg-title">减少不平等</div>
+        <div class="sdg-desc">促进不同文化背景员工之间的平等与尊重，消除文化偏见</div>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num">SDG 16</div>
+        <div class="sdg-title">和平、正义与强大机构</div>
+        <div class="sdg-desc">通过减少文化误解预防人际冲突，构建和谐多元的工作环境</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;padding:30px;background:linear-gradient(135deg,rgba(196,120,96,.08),rgba(196,120,96,.02));border-radius:16px;border:1px solid rgba(196,120,96,.1);">
+      <div style="font-size:15px;font-weight:600;margin-bottom:10px;color:var(--warm);">ESG-S（社会责任）</div>
+      <div style="font-size:14px;color:var(--soft);line-height:1.7;">企业对全球化人才心理健康的全面关怀，体现以人为本的可持续发展理念</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <h2 class="footer-title">以正念为锚 · 以文化为桥</h2>
+  <p class="footer-text">陪伴每一位驻外员工，在跨文化旅程中找到内心的稳定与归属</p>
+  <div class="footer-hearts">🌍 🧘 🤝 🌏</div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+  });
+
+  // Navigation dots
+  const sections = document.querySelectorAll('section, .phase-header');
+  const navDots = document.querySelectorAll('.nav-dot');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navDots.forEach(dot => {
+      dot.classList.remove('active');
+      if (dot.getAttribute('data-target') === current) {
+        dot.classList.add('active');
+      }
+    });
+  });
+
+  // Click navigation
+  navDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = dot.getAttribute('data-target');
+      const targetSection = document.getElementById(target);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Reveal animations
+  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+  
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

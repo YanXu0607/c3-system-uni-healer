@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>制造业员工EAP心理疗愈方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --lavender: #9B8FA8;
+    --lavender-light: #E8E3EE;
+    --teal: #6EC4B8;
+    --teal-light: #D4EDE8;
+    --coral: #E08B7A;
+    --coral-light: #F5D9D3;
+    --cream: #F5F0E1;
+    --cream-pale: #FAF8F2;
+    --yellow: #F4E4A6;
+    --yellow-light: #FBF4D6;
+    --peach: #F5E0D0;
+    --deep: #4A4458;
+    --soft: #7A7486;
+    --surface: #F0ECE4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--cream-pale);
+    color: var(--deep);
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  /* ===== Scroll Progress Bar ===== */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 1000;
+    background: linear-gradient(90deg, var(--coral), var(--teal), var(--lavender));
+    width: 0%; transition: width 0.1s linear;
+  }
+
+  /* ===== Navigation Dots ===== */
+  .nav-dots {
+    position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+    z-index: 999; display: flex; flex-direction: column; gap: 14px;
+  }
+  .nav-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(0,0,0,0.15); cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .nav-dot.active {
+    background: var(--coral); transform: scale(1.4);
+    box-shadow: 0 0 12px rgba(224,139,122,0.4);
+  }
+  .nav-dot:hover { transform: scale(1.3); }
+  .nav-dot .tooltip {
+    position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
+    background: var(--deep); color: #fff; padding: 4px 12px;
+    border-radius: 6px; font-size: 12px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .nav-dot:hover .tooltip { opacity: 1; }
+
+  /* ===== Hero Section ===== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--peach) 0%, var(--cream) 40%, var(--lavender-light) 100%);
+  }
+  .hero-bg-shapes {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .hero-shape {
+    position: absolute; border-radius: 50%; opacity: 0.15;
+  }
+  .hero-shape:nth-child(1) {
+    width: 400px; height: 400px; background: var(--teal);
+    top: -100px; right: -80px;
+    animation: floatShape 8s ease-in-out infinite;
+  }
+  .hero-shape:nth-child(2) {
+    width: 300px; height: 300px; background: var(--coral);
+    bottom: -60px; left: -60px;
+    animation: floatShape 10s ease-in-out infinite reverse;
+  }
+  .hero-shape:nth-child(3) {
+    width: 200px; height: 200px; background: var(--lavender);
+    top: 30%; left: 10%;
+    animation: floatShape 12s ease-in-out infinite;
+  }
+  @keyframes floatShape {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2; text-align: center;
+    max-width: 800px; padding: 40px 24px;
+  }
+  .hero-badge {
+    display: inline-block; padding: 6px 20px;
+    background: rgba(110,196,184,0.12); border-radius: 20px;
+    font-size: 13px; color: var(--teal); font-weight: 500;
+    letter-spacing: 2px; margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(36px, 6vw, 60px); font-weight: 700;
+    line-height: 1.3; margin-bottom: 16px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title .accent { color: var(--teal); }
+  .hero-title .accent2 { color: var(--coral); }
+  .hero-subtitle {
+    font-size: clamp(16px, 2.5vw, 20px); color: var(--soft);
+    font-weight: 300; margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-meta {
+    display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .hero-meta-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--soft);
+  }
+  .hero-meta-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .hero-meta-icon.pink { background: rgba(224,139,122,0.12); }
+  .hero-meta-icon.green { background: rgba(110,196,184,0.15); }
+  .hero-meta-icon.blue { background: rgba(155,143,168,0.12); }
+  .hero-meta-icon.gold { background: rgba(244,228,166,0.2); }
+
+  .hero-illustration {
+    margin-top: 40px;
+    opacity: 0; animation: fadeUp 1s 1s forwards;
+    max-width: 560px; margin-left: auto; margin-right: auto;
+  }
+  .hero-illustration svg {
+    width: 100%; height: auto; display: block;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--soft); font-size: 12px; letter-spacing: 1px;
+    opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .scroll-arrow {
+    width: 20px; height: 20px; border-right: 2px solid var(--soft);
+    border-bottom: 2px solid var(--soft); transform: rotate(45deg);
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Problem Section ===== */
+  .problem-section {
+    padding: 100px 24px;
+    background: var(--surface);
+    position: relative;
+  }
+  .problem-container {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .problem-visual {
+    position: relative;
+  }
+  .problem-visual svg {
+    width: 100%; height: auto; display: block;
+  }
+  .problem-text h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(24px, 3.5vw, 36px); font-weight: 700;
+    margin-bottom: 20px; line-height: 1.4;
+  }
+  .problem-text h2 .accent { color: var(--coral); }
+  .problem-list {
+    display: flex; flex-direction: column; gap: 16px;
+    margin-bottom: 28px;
+  }
+  .problem-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; border-radius: 14px;
+    background: var(--cream-pale);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .problem-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .problem-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .problem-icon.p1 { background: rgba(224,139,122,0.1); }
+  .problem-icon.p2 { background: rgba(110,196,184,0.1); }
+  .problem-icon.p3 { background: rgba(155,143,168,0.1); }
+  .problem-icon.p4 { background: rgba(244,228,166,0.15); }
+  .problem-item-text h4 {
+    font-size: 15px; font-weight: 600; margin-bottom: 2px;
+  }
+  .problem-item-text p {
+    font-size: 13px; color: var(--soft); line-height: 1.6;
+  }
+
+  /* ===== Tech Sections ===== */
+  .tech-section {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 80px 24px; position: relative;
+  }
+  .tech-section:nth-child(odd) { background: var(--cream-pale); }
+  .tech-section:nth-child(even) { background: var(--surface); }
+
+  .tech-container {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+
+  .tech-number {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .tech-num-badge {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 700; color: #fff;
+  }
+  .tech-num-badge.t1 { background: linear-gradient(135deg, #E08B7A, #F0B89A); }
+  .tech-num-badge.t2 { background: linear-gradient(135deg, #6EC4B8, #A3D8D0); }
+  .tech-num-badge.t3 { background: linear-gradient(135deg, #9B8FA8, #C4BBD0); }
+
+  .tech-label {
+    font-size: 13px; letter-spacing: 2px; color: var(--soft); font-weight: 500;
+  }
+
+  .tech-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(22px, 3.2vw, 34px); font-weight: 700;
+    margin-bottom: 4px; line-height: 1.4;
+  }
+  .tech-subtitle {
+    font-size: 14px; color: var(--coral); font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .tech-desc {
+    font-size: 15px; color: var(--soft); line-height: 1.9;
+    margin-bottom: 20px;
+  }
+
+  .tech-details {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .detail-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; color: var(--soft);
+  }
+  .detail-icon {
+    width: 24px; height: 24px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0; margin-top: 2px;
+  }
+  .detail-icon.t1 { background: rgba(224,139,122,0.12); }
+  .detail-icon.t2 { background: rgba(110,196,184,0.12); }
+  .detail-icon.t3 { background: rgba(155,143,168,0.12); }
+
+  .tech-params {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .param-tag {
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+  }
+  .param-tag.t1 { background: rgba(224,139,122,0.08); color: var(--coral); }
+  .param-tag.t2 { background: rgba(110,196,184,0.08); color: var(--teal); }
+  .param-tag.t3 { background: rgba(155,143,168,0.08); color: var(--lavender); }
+
+  .tech-target {
+    padding: 14px 18px; border-radius: 12px;
+    font-size: 13px; color: var(--soft); line-height: 1.7;
+  }
+  .tech-target.t1 { background: rgba(224,139,122,0.06); border-left: 3px solid var(--coral); }
+  .tech-target.t2 { background: rgba(110,196,184,0.06); border-left: 3px solid var(--teal); }
+  .tech-target.t3 { background: rgba(155,143,168,0.06); border-left: 3px solid var(--lavender); }
+  .target-label {
+    font-weight: 600; font-size: 12px; letter-spacing: 1px;
+    margin-bottom: 4px; display: block;
+  }
+
+  .tech-visual {
+    position: relative;
+    perspective: 800px;
+  }
+  .tech-visual svg {
+    width: 100%; height: auto; display: block;
+    border-radius: 20px;
+    filter: drop-shadow(0 12px 40px rgba(0,0,0,0.06));
+  }
+  .tech-decoration {
+    position: absolute; width: 80px; height: 80px;
+    border-radius: 50%; opacity: 0.1; z-index: -1;
+  }
+  .tech-decoration.t1 { background: var(--coral); top: -20px; right: -20px; }
+  .tech-decoration.t2 { background: var(--teal); bottom: -20px; left: -20px; }
+  .tech-decoration.t3 { background: var(--lavender); top: -20px; left: -20px; }
+
+  /* ===== Implementation Section ===== */
+  .impl-section {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--cream-pale) 100%);
+  }
+  .impl-container {
+    max-width: 1000px; margin: 0 auto;
+  }
+  .section-header {
+    text-align: center; margin-bottom: 60px;
+  }
+  .section-tag {
+    display: inline-block; padding: 5px 16px;
+    border-radius: 16px; font-size: 12px; letter-spacing: 2px;
+    font-weight: 500; margin-bottom: 16px;
+  }
+  .section-tag.impl { background: rgba(110,196,184,0.12); color: var(--teal); }
+  .section-tag.longterm { background: rgba(155,143,168,0.12); color: var(--lavender); }
+  .section-tag.sdgs { background: rgba(244,228,166,0.15); color: #B8A050; }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .section-subtitle {
+    font-size: 15px; color: var(--soft); max-width: 600px; margin: 0 auto;
+  }
+
+  .impl-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-bottom: 40px;
+  }
+  .impl-card {
+    padding: 28px; border-radius: 16px;
+    background: var(--cream-pale); border: 1px solid rgba(155,143,168,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .impl-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .impl-card-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 16px;
+  }
+  .impl-card-icon.c1 { background: rgba(224,139,122,0.1); }
+  .impl-card-icon.c2 { background: rgba(110,196,184,0.1); }
+  .impl-card-icon.c3 { background: rgba(155,143,168,0.1); }
+
+  .impl-card h3 {
+    font-size: 16px; font-weight: 600; margin-bottom: 8px;
+  }
+  .impl-card p {
+    font-size: 14px; color: var(--soft); line-height: 1.7;
+  }
+
+  .impl-illustration {
+    max-width: 600px; margin: 0 auto 40px;
+    border-radius: 20px; overflow: hidden;
+  }
+  .impl-illustration svg {
+    width: 100%; height: auto; display: block;
+  }
+
+  /* ===== Long-term Section ===== */
+  .longterm-section {
+    padding: 100px 24px;
+    background: var(--cream-pale);
+  }
+  .longterm-container {
+    max-width: 1000px; margin: 0 auto;
+  }
+  .longterm-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-bottom: 40px;
+  }
+  .longterm-card {
+    padding: 28px; border-radius: 16px;
+    background: var(--surface); border: 1px solid rgba(155,143,168,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .longterm-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .longterm-card-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .longterm-card-icon.l1 { background: rgba(110,196,184,0.1); }
+  .longterm-card-icon.l2 { background: rgba(224,139,122,0.1); }
+  .longterm-card-icon.l3 { background: rgba(155,143,168,0.1); }
+  .longterm-card-icon.l4 { background: rgba(244,228,166,0.15); }
+  .longterm-card h3 {
+    font-size: 15px; font-weight: 600; margin-bottom: 6px;
+  }
+  .longterm-card p {
+    font-size: 13px; color: var(--soft); line-height: 1.7;
+  }
+
+  .longterm-illustration {
+    max-width: 600px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+  }
+  .longterm-illustration svg {
+    width: 100%; height: auto; display: block;
+  }
+
+  /* ===== SDGs Section ===== */
+  .sdgs-section {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--cream-pale), var(--surface));
+  }
+  .sdgs-container {
+    max-width: 1000px; margin: 0 auto;
+  }
+  .sdgs-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-bottom: 50px;
+  }
+  .sdg-card {
+    padding: 28px; border-radius: 16px;
+    text-align: center; position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .sdg-card:hover { transform: translateY(-4px); }
+  .sdg-card:nth-child(1) {
+    background: linear-gradient(135deg, rgba(224,139,122,0.08), rgba(224,139,122,0.02));
+    border: 1px solid rgba(224,139,122,0.1);
+  }
+  .sdg-card:nth-child(2) {
+    background: linear-gradient(135deg, rgba(110,196,184,0.08), rgba(110,196,184,0.02));
+    border: 1px solid rgba(110,196,184,0.1);
+  }
+  .sdg-card:nth-child(3) {
+    background: linear-gradient(135deg, rgba(244,228,166,0.1), rgba(244,228,166,0.02));
+    border: 1px solid rgba(244,228,166,0.12);
+  }
+  .sdg-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 36px; font-weight: 700; margin-bottom: 8px;
+  }
+  .sdg-card:nth-child(1) .sdg-num { color: var(--coral); }
+  .sdg-card:nth-child(2) .sdg-num { color: var(--teal); }
+  .sdg-card:nth-child(3) .sdg-num { color: #B8A050; }
+
+  .sdg-title {
+    font-size: 15px; font-weight: 600; margin-bottom: 10px;
+  }
+  .sdg-desc {
+    font-size: 13px; color: var(--soft); line-height: 1.7;
+  }
+
+  .kpi-box {
+    padding: 28px 32px; border-radius: 16px;
+    background: var(--cream-pale);
+    border: 1px solid rgba(155,143,168,0.08);
+  }
+  .kpi-box h3 {
+    font-size: 16px; font-weight: 600; margin-bottom: 16px;
+    text-align: center;
+  }
+  .kpi-items {
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  }
+  .kpi-item {
+    padding: 8px 18px; border-radius: 24px;
+    font-size: 13px; font-weight: 500;
+    background: var(--surface); color: var(--soft);
+    transition: transform 0.3s, background 0.3s;
+  }
+  .kpi-item:hover {
+    transform: scale(1.05);
+    background: var(--yellow-light);
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    padding: 60px 24px; text-align: center;
+    background: linear-gradient(180deg, var(--surface), var(--cream-pale));
+  }
+  .footer-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px; font-weight: 700; margin-bottom: 12px;
+  }
+  .footer-text {
+    font-size: 14px; color: var(--soft); max-width: 500px; margin: 0 auto;
+  }
+  .footer-hearts {
+    margin-top: 24px; font-size: 24px; letter-spacing: 8px;
+    opacity: 0.3;
+  }
+
+  /* ===== Scroll Animations ===== */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale {
+    opacity: 0; transform: scale(0.9);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+  .stagger > * { transition-delay: calc(var(--i, 0) * 0.12s); }
+
+  /* ===== SVG Animation Classes ===== */
+  .svg-float { animation: svgFloat 4s ease-in-out infinite; }
+  .svg-float-delay { animation: svgFloat 4s ease-in-out 1s infinite; }
+  .svg-pulse { animation: svgPulse 3s ease-in-out infinite; }
+  .svg-breathe { animation: svgBreathe 5s ease-in-out infinite; }
+
+  @keyframes svgFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes svgPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+  @keyframes svgBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .tech-container, .problem-container { grid-template-columns: 1fr; gap: 32px; }
+    .tech-section, .problem-section { padding: 60px 20px; }
+    .impl-grid, .sdgs-grid, .longterm-grid { grid-template-columns: 1fr; }
+    .nav-dots { right: 12px; gap: 10px; }
+    .nav-dot { width: 8px; height: 8px; }
+    .nav-dot .tooltip { display: none; }
+    .hero-meta { gap: 16px; }
+  }
+</style>
+
+<style>
+.plan-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #5A5265;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.2s;
+}
+.plan-back-btn:hover {
+    background: rgba(255,255,255,0.98);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+.plan-back-btn .back-arrow { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="problem"><span class="tooltip">问题背景</span></div>
+  <div class="nav-dot" data-target="tech1"><span class="tooltip">技术一 · PMR</span></div>
+  <div class="nav-dot" data-target="tech2"><span class="tooltip">技术二 · MBSR</span></div>
+  <div class="nav-dot" data-target="tech3"><span class="tooltip">技术三 · 书写疗法</span></div>
+  <div class="nav-dot" data-target="implementation"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs 目标</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">制造业员工 EAP 心理疗愈方案</div>
+    <h1 class="hero-title">
+      用<span class="accent">科学</span>守护身心<br>用<span class="accent2">关怀</span>重建力量
+    </h1>
+    <p class="hero-subtitle">为制造业企业量身定制的员工心理援助计划，融合渐进式肌肉放松、正念减压与表达性书写三大核心疗愈技术</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon pink">🏭</div>
+        <span>制造业专属</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon green">🧘</div>
+        <span>三大疗愈技术</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon blue">🛡️</div>
+        <span>EAP 体系</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon gold">💚</div>
+        <span>SDGs 融合</span>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <!-- Hero SVG Illustration: Worker finding peace -->
+      <svg viewBox="0 0 560 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background elements -->
+        <rect x="0" y="0" width="560" height="320" rx="20" fill="#FAF8F2"/>
+        <!-- Factory silhouette (subtle) -->
+        <g opacity="0.08">
+          <rect x="20" y="200" width="60" height="100" rx="4" fill="#4A4458"/>
+          <rect x="90" y="180" width="50" height="120" rx="4" fill="#4A4458"/>
+          <rect x="150" y="220" width="70" height="80" rx="4" fill="#4A4458"/>
+          <polygon points="50,200 50,170 80,170 80,200" fill="#4A4458"/>
+          <rect x="60" y="155" width="10" height="20" fill="#4A4458"/>
+        </g>
+        <!-- Ground -->
+        <ellipse cx="280" cy="290" rx="240" ry="20" fill="#E8E3EE" opacity="0.3"/>
+        <!-- Person sitting peacefully -->
+        <g class="svg-breathe">
+          <!-- Body -->
+          <ellipse cx="320" cy="230" rx="35" ry="40" fill="#6EC4B8" opacity="0.3"/>
+          <circle cx="320" cy="175" r="24" fill="#F5D9D3"/>
+          <!-- Hair -->
+          <path d="M296 170 Q300 148 320 145 Q340 148 344 170" fill="#9B8FA8" opacity="0.6"/>
+          <!-- Face -->
+          <circle cx="312" cy="172" r="2" fill="#4A4458"/>
+          <circle cx="328" cy="172" r="2" fill="#4A4458"/>
+          <path d="M314 182 Q320 186 326 182" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body/clothes -->
+          <path d="M300 195 Q295 220 298 250 L342 250 Q345 220 340 195 Q320 188 300 195Z" fill="#6EC4B8" opacity="0.7"/>
+          <!-- Arms resting -->
+          <path d="M300 210 Q280 225 290 245" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M340 210 Q360 225 350 245" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <!-- Legs -->
+          <path d="M310 248 Q305 270 300 285" stroke="#7A7486" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <path d="M330 248 Q335 270 340 285" stroke="#7A7486" stroke-width="10" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Floating calming elements -->
+        <g class="svg-float">
+          <circle cx="400" cy="140" r="18" fill="#F4E4A6" opacity="0.5"/>
+          <text x="400" y="146" text-anchor="middle" font-size="18">✨</text>
+        </g>
+        <g class="svg-float-delay">
+          <circle cx="240" cy="130" r="16" fill="#D4EDE8" opacity="0.5"/>
+          <text x="240" y="136" text-anchor="middle" font-size="16">🌿</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="430" cy="190" r="14" fill="#F5D9D3" opacity="0.5"/>
+          <text x="430" y="196" text-anchor="middle" font-size="14">💛</text>
+        </g>
+        <g class="svg-float-delay">
+          <circle cx="210" cy="200" r="12" fill="#E8E3EE" opacity="0.5"/>
+          <text x="210" y="206" text-anchor="middle" font-size="12">🍃</text>
+        </g>
+        <!-- Sparkle dots -->
+        <circle cx="380" cy="100" r="3" fill="#E08B7A" opacity="0.3" class="svg-pulse"/>
+        <circle cx="260" cy="90" r="2" fill="#6EC4B8" opacity="0.3" class="svg-pulse"/>
+        <circle cx="450" cy="150" r="2.5" fill="#F4E4A6" opacity="0.4" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滚动探索</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== PROBLEM SECTION ===== -->
+<section class="problem-section" id="problem">
+  <div class="problem-container">
+    <div class="problem-visual reveal-left">
+      <!-- Problem SVG: Stressed worker -->
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#F5F0E1"/>
+        <!-- Conveyor belt -->
+        <rect x="40" y="280" width="360" height="16" rx="8" fill="#D4D0C8"/>
+        <line x1="60" y1="288" x2="80" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="100" y1="288" x2="120" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="140" y1="288" x2="160" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="180" y1="288" x2="200" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="220" y1="288" x2="240" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="260" y1="288" x2="280" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="300" y1="288" x2="320" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="340" y1="288" x2="360" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <line x1="380" y1="288" x2="400" y2="288" stroke="#C0BCB4" stroke-width="2"/>
+        <!-- Boxes on belt -->
+        <rect x="80" y="258" width="30" height="22" rx="3" fill="#E8E3EE" opacity="0.6"/>
+        <rect x="160" y="258" width="30" height="22" rx="3" fill="#E8E3EE" opacity="0.6"/>
+        <rect x="300" y="258" width="30" height="22" rx="3" fill="#E8E3EE" opacity="0.6"/>
+        <!-- Worker figure (stressed posture) -->
+        <g>
+          <circle cx="220" cy="180" r="26" fill="#F5D9D3"/>
+          <path d="M194 175 Q198 150 220 147 Q242 150 246 175" fill="#7A7486" opacity="0.5"/>
+          <!-- Tired eyes -->
+          <line x1="208" y1="178" x2="216" y2="178" stroke="#4A4458" stroke-width="2" stroke-linecap="round"/>
+          <line x1="224" y1="178" x2="232" y2="178" stroke="#4A4458" stroke-width="2" stroke-linecap="round"/>
+          <!-- Worried mouth -->
+          <path d="M212 192 Q220 188 228 192" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Sweat drop -->
+          <ellipse cx="248" cy="170" rx="3" ry="5" fill="#6EC4B8" opacity="0.5"/>
+          <!-- Body hunched -->
+          <path d="M198 202 Q194 230 196 260 L244 260 Q246 230 242 202 Q220 195 198 202Z" fill="#9B8FA8" opacity="0.5"/>
+          <!-- Arms working -->
+          <path d="M198 215 Q175 235 170 258" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M242 215 Q265 235 270 258" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Stress indicators -->
+        <g class="svg-float" opacity="0.6">
+          <path d="M140 120 L148 108 L156 120" stroke="#E08B7A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M148 120 L148 100" stroke="#E08B7A" stroke-width="2" stroke-linecap="round"/>
+        </g>
+        <g class="svg-float-delay" opacity="0.6">
+          <path d="M290 110 L298 98 L306 110" stroke="#E08B7A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M298 110 L298 90" stroke="#E08B7A" stroke-width="2" stroke-linecap="round"/>
+        </g>
+        <!-- Muscle tension lines -->
+        <path d="M190 220 Q185 225 190 230" stroke="#E08B7A" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M250 220 Q255 225 250 230" stroke="#E08B7A" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <!-- Clock (work pressure) -->
+        <circle cx="340" cy="100" r="22" fill="#FBF4D6" stroke="#F4E4A6" stroke-width="2"/>
+        <line x1="340" y1="100" x2="340" y2="85" stroke="#B8A050" stroke-width="2" stroke-linecap="round"/>
+        <line x1="340" y1="100" x2="352" y2="100" stroke="#B8A050" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="340" cy="100" r="2" fill="#B8A050"/>
+      </svg>
+    </div>
+    <div class="problem-text reveal-right">
+      <h2>制造业员工的<span class="accent">心理困境</span></h2>
+      <div class="problem-list">
+        <div class="problem-item">
+          <div class="problem-icon p1">💪</div>
+          <div class="problem-item-text">
+            <h4>肌肉紧张与躯体化焦虑</h4>
+            <p>长期从事重复性体力劳动，身体持续处于高负荷状态，肌肉紧张累积为躯体化焦虑症状</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon p2">😰</div>
+          <div class="problem-item-text">
+            <h4>情绪压抑与疏导匮乏</h4>
+            <p>工作负荷高、情绪疏导渠道匮乏，负面情绪无处释放，逐渐演变为情绪压抑</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon p3">🤝</div>
+          <div class="problem-item-text">
+            <h4>人际沟通不畅</h4>
+            <p>高压工作环境导致沟通意愿下降，同事间关系疏离，团队凝聚力减弱</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon p4">⏰</div>
+          <div class="problem-item-text">
+            <h4>工作负荷过重</h4>
+            <p>长时间高强度劳动，身心双重消耗，职业倦怠与身心内耗日益严重</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TECH 1: PMR ===== -->
+<section class="tech-section" id="tech1">
+  <div class="tech-container">
+    <div class="tech-text reveal-left">
+      <div class="tech-number">
+        <div class="tech-num-badge t1">1</div>
+        <span class="tech-label">核心技术一</span>
+      </div>
+      <h2 class="tech-title">渐进式肌肉放松训练</h2>
+      <div class="tech-subtitle">Progressive Muscle Relaxation (PMR)</div>
+      <p class="tech-desc">
+        引导员工按"头部→颈部→肩部→手臂→躯干→腿部"顺序，依次紧张-放松各肌肉群。通过有意识的紧张与放松对比，帮助员工重新建立对身体感受的觉察，释放深层肌肉紧张。
+      </p>
+      <div class="tech-details">
+        <div class="detail-item">
+          <div class="detail-icon t1">🔄</div>
+          <span>紧张-放松交替循环，建立身体觉察</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon t1">📍</div>
+          <span>头部→颈部→肩部→手臂→躯干→腿部</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon t1">👥</div>
+          <span>团体干预形式，互相支持鼓励</span>
+        </div>
+      </div>
+      <div class="tech-params">
+        <span class="param-tag t1">每次 45 分钟</span>
+        <span class="param-tag t1">每周 2 次</span>
+        <span class="param-tag t1">持续 6 周</span>
+      </div>
+      <div class="tech-target t1">
+        <span class="target-label">🎯 适用场景</span>
+        缓解制造业工人因重复性体力劳动导致的肌肉紧张与躯体化焦虑
+      </div>
+    </div>
+    <div class="tech-visual reveal-right">
+      <div class="tech-decoration t1"></div>
+      <!-- PMR SVG Illustration -->
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Soft background -->
+        <ellipse cx="220" cy="350" rx="180" ry="40" fill="#F5D9D3" opacity="0.2"/>
+        <!-- Person doing PMR (relaxed lying/sitting) -->
+        <g class="svg-breathe">
+          <!-- Head -->
+          <circle cx="220" cy="120" r="30" fill="#F5D9D3"/>
+          <path d="M190 115 Q195 88 220 84 Q245 88 250 115" fill="#7A7486" opacity="0.4"/>
+          <!-- Peaceful face -->
+          <path d="M210 118 Q214 115 218 118" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M222 118 Q226 115 230 118" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M213 130 Q220 134 227 130" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body -->
+          <path d="M195 146 Q190 190 194 250 L246 250 Q250 190 245 146 Q220 138 195 146Z" fill="#E08B7A" opacity="0.35"/>
+          <!-- Arms relaxed at sides -->
+          <path d="M195 165 Q170 200 165 240" stroke="#F5D9D3" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <path d="M245 165 Q270 200 275 240" stroke="#F5D9D3" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <!-- Legs -->
+          <path d="M208 248 Q200 290 195 330" stroke="#7A7486" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M232 248 Q240 290 245 330" stroke="#7A7486" stroke-width="12" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Muscle group indicators with arrows -->
+        <g opacity="0.7">
+          <!-- Head -->
+          <circle cx="280" cy="100" r="6" fill="#E08B7A" class="svg-pulse"/>
+          <line x1="252" y1="105" x2="274" y2="102" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="292" y="104" font-size="11" fill="#E08B7A" font-weight="500">头部</text>
+          <!-- Neck -->
+          <circle cx="280" cy="140" r="6" fill="#E08B7A" class="svg-pulse"/>
+          <line x1="250" y1="142" x2="274" y2="140" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="292" y="144" font-size="11" fill="#E08B7A" font-weight="500">颈部</text>
+          <!-- Shoulder -->
+          <circle cx="280" cy="170" r="6" fill="#E08B7A" class="svg-pulse"/>
+          <line x1="248" y1="168" x2="274" y2="170" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="292" y="174" font-size="11" fill="#E08B7A" font-weight="500">肩部</text>
+          <!-- Arms -->
+          <circle cx="145" cy="210" r="6" fill="#E08B7A" class="svg-pulse"/>
+          <line x1="168" y1="205" x2="151" y2="208" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="100" y="214" font-size="11" fill="#E08B7A" font-weight="500">手臂</text>
+          <!-- Torso -->
+          <circle cx="280" cy="210" r="6" fill="#E08B7A" class="svg-pulse"/>
+          <line x1="250" y1="210" x2="274" y2="210" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="292" y="214" font-size="11" fill="#E08B7A" font-weight="500">躯干</text>
+          <!-- Legs -->
+          <circle cx="280" cy="300" r="6" fill="#E08B7A" class="svg-pulse"/>
+          <line x1="248" y1="300" x2="274" y2="300" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="292" y="304" font-size="11" fill="#E08B7A" font-weight="500">腿部</text>
+        </g>
+        <!-- Relaxation waves -->
+        <g class="svg-float" opacity="0.3">
+          <path d="M100 280 Q120 270 140 280 Q160 290 180 280" stroke="#6EC4B8" stroke-width="2" fill="none"/>
+          <path d="M100 290 Q120 280 140 290 Q160 300 180 290" stroke="#6EC4B8" stroke-width="2" fill="none"/>
+        </g>
+        <g class="svg-float-delay" opacity="0.3">
+          <path d="M260 350 Q280 340 300 350 Q320 360 340 350" stroke="#6EC4B8" stroke-width="2" fill="none"/>
+          <path d="M260 360 Q280 350 300 360 Q320 370 340 360" stroke="#6EC4B8" stroke-width="2" fill="none"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TECH 2: MBSR ===== -->
+<section class="tech-section" id="tech2">
+  <div class="tech-container">
+    <div class="tech-visual reveal-left">
+      <div class="tech-decoration t2"></div>
+      <!-- MBSR SVG Illustration: Person meditating -->
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <!-- Nature background elements -->
+        <g opacity="0.15">
+          <circle cx="80" cy="80" r="40" fill="#6EC4B8"/>
+          <circle cx="360" cy="100" r="30" fill="#6EC4B8"/>
+        </g>
+        <!-- Ground/mat -->
+        <ellipse cx="220" cy="320" rx="120" ry="20" fill="#D4EDE8" opacity="0.4"/>
+        <!-- Person meditating (cross-legged) -->
+        <g class="svg-breathe">
+          <!-- Head -->
+          <circle cx="220" cy="160" r="28" fill="#F5D9D3"/>
+          <path d="M192 155 Q196 130 220 126 Q244 130 248 155" fill="#7A7486" opacity="0.4"/>
+          <!-- Closed peaceful eyes -->
+          <path d="M208 158 Q212 155 216 158" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M224 158 Q228 155 232 158" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M214 170 Q220 173 226 170" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body (meditation pose) -->
+          <path d="M196 184 Q192 220 196 270 L244 270 Q248 220 244 184 Q220 176 196 184Z" fill="#6EC4B8" opacity="0.4"/>
+          <!-- Crossed legs -->
+          <path d="M196 268 Q180 285 170 310 Q180 315 200 310 Q210 300 220 290" fill="#7A7486" opacity="0.3"/>
+          <path d="M244 268 Q260 285 270 310 Q260 315 240 310 Q230 300 220 290" fill="#7A7486" opacity="0.3"/>
+          <!-- Hands on knees -->
+          <path d="M196 220 Q175 240 168 265" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M244 220 Q265 240 272 265" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Three module indicators -->
+        <g class="svg-float">
+          <rect x="60" y="180" width="80" height="50" rx="12" fill="#D4EDE8" opacity="0.7"/>
+          <text x="100" y="200" text-anchor="middle" font-size="11" fill="#4A4458" font-weight="500">身体扫描</text>
+          <text x="100" y="218" text-anchor="middle" font-size="10" fill="#7A7486">Body Scan</text>
+        </g>
+        <g class="svg-float-delay">
+          <rect x="300" y="180" width="80" height="50" rx="12" fill="#D4EDE8" opacity="0.7"/>
+          <text x="340" y="200" text-anchor="middle" font-size="11" fill="#4A4458" font-weight="500">坐姿冥想</text>
+          <text x="340" y="218" text-anchor="middle" font-size="10" fill="#7A7486">Sitting</text>
+        </g>
+        <g class="svg-float">
+          <rect x="180" y="350" width="80" height="50" rx="12" fill="#D4EDE8" opacity="0.7"/>
+          <text x="220" y="370" text-anchor="middle" font-size="11" fill="#4A4458" font-weight="500">正念运动</text>
+          <text x="220" y="388" text-anchor="middle" font-size="10" fill="#7A7486">Movement</text>
+        </g>
+        <!-- Connecting lines -->
+        <line x1="140" y1="205" x2="192" y2="210" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+        <line x1="300" y1="205" x2="248" y2="210" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+        <line x1="220" y1="350" x2="220" y2="275" stroke="#6EC4B8" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+        <!-- Zen circle (enso) -->
+        <circle cx="220" cy="80" r="30" stroke="#6EC4B8" stroke-width="2" fill="none" opacity="0.2" stroke-dasharray="160 30" class="svg-pulse"/>
+      </svg>
+    </div>
+    <div class="tech-text reveal-right">
+      <div class="tech-number">
+        <div class="tech-num-badge t2">2</div>
+        <span class="tech-label">核心技术二</span>
+      </div>
+      <h2 class="tech-title">正念减压冥想</h2>
+      <div class="tech-subtitle">Mindfulness-Based Stress Reduction (MBSR)</div>
+      <p class="tech-desc">
+        采用标准化8周MBSR课程精简版，包含身体扫描、坐姿冥想、正念运动三大模块。帮助员工学会在当下觉察身心状态，提升情绪调节能力与压力耐受度。
+      </p>
+      <div class="tech-details">
+        <div class="detail-item">
+          <div class="detail-icon t2">🧘</div>
+          <span>身体扫描：从头到脚逐步觉察身体感受</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon t2">🧠</div>
+          <span>坐姿冥想：专注呼吸，观察念头不评判</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon t2">🚶</div>
+          <span>正念运动：将觉知融入日常动作</span>
+        </div>
+      </div>
+      <div class="tech-params">
+        <span class="param-tag t2">每周 1 次团体课</span>
+        <span class="param-tag t2">每次 60 分钟</span>
+        <span class="param-tag t2">每日 10 分钟自主练习</span>
+      </div>
+      <div class="tech-target t2">
+        <span class="target-label">🎯 适用场景</span>
+        帮助员工提升情绪调节能力与压力耐受度，缓解焦虑与身心内耗
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TECH 3: Expressive Writing ===== -->
+<section class="tech-section" id="tech3">
+  <div class="tech-container">
+    <div class="tech-text reveal-left">
+      <div class="tech-number">
+        <div class="tech-num-badge t3">3</div>
+        <span class="tech-label">核心技术三</span>
+      </div>
+      <h2 class="tech-title">表达性书写疗法</h2>
+      <div class="tech-subtitle">Expressive Writing / Art Therapy</div>
+      <p class="tech-desc">
+        围绕"工作压力源""情绪体验""应对策略"三大主题展开。指导员工进行结构化书写，将内心压抑的情绪通过文字安全释放，适用于情绪压抑与沟通障碍问题。
+      </p>
+      <div class="tech-details">
+        <div class="detail-item">
+          <div class="detail-icon t3">📝</div>
+          <span>围绕三大主题进行结构化书写</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon t3">💡</div>
+          <span>配套书写模板，降低参与门槛</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon t3">🎨</div>
+          <span>可结合艺术治疗形式，多元表达</span>
+        </div>
+      </div>
+      <div class="tech-params">
+        <span class="param-tag t3">每周 3 次</span>
+        <span class="param-tag t3">每次 15-20 分钟</span>
+        <span class="param-tag t3">持续 4 周</span>
+      </div>
+      <div class="tech-target t3">
+        <span class="target-label">🎯 适用场景</span>
+        适用于制造业员工中常见的情绪压抑与人际沟通障碍问题
+      </div>
+    </div>
+    <div class="tech-visual reveal-right">
+      <div class="tech-decoration t3"></div>
+      <!-- Writing Therapy SVG Illustration -->
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Desk -->
+        <rect x="60" y="280" width="320" height="12" rx="4" fill="#D4D0C8"/>
+        <rect x="80" y="292" width="8" height="80" rx="2" fill="#C0BCB4"/>
+        <rect x="352" y="292" width="8" height="80" rx="2" fill="#C0BCB4"/>
+        <!-- Notebook/Journal -->
+        <g class="svg-float">
+          <rect x="140" y="200" width="160" height="80" rx="6" fill="#FBF4D6" stroke="#F4E4A6" stroke-width="1.5"/>
+          <!-- Lines -->
+          <line x1="160" y1="220" x2="280" y2="220" stroke="#E8D48A" stroke-width="1" opacity="0.5"/>
+          <line x1="160" y1="234" x2="280" y2="234" stroke="#E8D48A" stroke-width="1" opacity="0.5"/>
+          <line x1="160" y1="248" x2="280" y2="248" stroke="#E8D48A" stroke-width="1" opacity="0.5"/>
+          <line x1="160" y1="262" x2="250" y2="262" stroke="#E8D48A" stroke-width="1" opacity="0.5"/>
+          <!-- Writing text (scribbles) -->
+          <path d="M165 218 Q175 215 185 218 Q195 221 205 218" stroke="#9B8FA8" stroke-width="1" fill="none" opacity="0.4"/>
+          <path d="M165 232 Q180 229 195 232 Q210 235 225 232" stroke="#9B8FA8" stroke-width="1" fill="none" opacity="0.4"/>
+          <path d="M165 246 Q178 243 190 246 Q200 249 210 246" stroke="#9B8FA8" stroke-width="1" fill="none" opacity="0.4"/>
+        </g>
+        <!-- Pen -->
+        <g transform="rotate(-25, 310, 240)">
+          <rect x="295" y="195" width="6" height="60" rx="2" fill="#9B8FA8" opacity="0.6"/>
+          <polygon points="298,255 295,268 301,268" fill="#4A4458" opacity="0.5"/>
+        </g>
+        <!-- Person writing -->
+        <g>
+          <circle cx="340" cy="160" r="24" fill="#F5D9D3"/>
+          <path d="M316 156 Q320 134 340 130 Q360 134 364 156" fill="#7A7486" opacity="0.4"/>
+          <!-- Focused eyes -->
+          <circle cx="332" cy="158" r="2" fill="#4A4458"/>
+          <circle cx="348" cy="158" r="2" fill="#4A4458"/>
+          <path d="M335 168 Q340 170 345 168" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body -->
+          <path d="M320 180 Q316 210 318 250 L362 250 Q364 210 360 180 Q340 174 320 180Z" fill="#9B8FA8" opacity="0.35"/>
+          <!-- Writing arm -->
+          <path d="M320 195 Q300 220 305 250" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Three theme bubbles -->
+        <g class="svg-float-delay">
+          <rect x="60" y="80" width="110" height="44" rx="22" fill="#E8E3EE" opacity="0.7"/>
+          <text x="115" y="100" text-anchor="middle" font-size="12" fill="#4A4458" font-weight="500">🔥 工作压力源</text>
+          <text x="115" y="115" text-anchor="middle" font-size="9" fill="#7A7486">Stress Sources</text>
+        </g>
+        <g class="svg-float">
+          <rect x="190" y="60" width="110" height="44" rx="22" fill="#F5D9D3" opacity="0.7"/>
+          <text x="245" y="80" text-anchor="middle" font-size="12" fill="#4A4458" font-weight="500">💭 情绪体验</text>
+          <text x="245" y="95" text-anchor="middle" font-size="9" fill="#7A7486">Emotions</text>
+        </g>
+        <g class="svg-float-delay">
+          <rect x="60" y="140" width="110" height="44" rx="22" fill="#D4EDE8" opacity="0.7"/>
+          <text x="115" y="160" text-anchor="middle" font-size="12" fill="#4A4458" font-weight="500">🛡️ 应对策略</text>
+          <text x="115" y="175" text-anchor="middle" font-size="9" fill="#7A7486">Coping</text>
+        </g>
+        <!-- Floating hearts/sparkles -->
+        <circle cx="380" cy="100" r="3" fill="#E08B7A" opacity="0.3" class="svg-pulse"/>
+        <circle cx="400" cy="140" r="2" fill="#9B8FA8" opacity="0.3" class="svg-pulse"/>
+        <circle cx="50" cy="220" r="2.5" fill="#6EC4B8" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPLEMENTATION ===== -->
+<section class="impl-section" id="implementation">
+  <div class="impl-container">
+    <div class="section-header reveal">
+      <div class="section-tag impl">实施适配</div>
+      <h2 class="section-title">以人为本的实施策略</h2>
+      <p class="section-subtitle">通俗语言、尊重差异、隐私保护，让每位员工安心参与</p>
+    </div>
+
+    <div class="impl-illustration reveal-scale">
+      <!-- Implementation SVG -->
+      <svg viewBox="0 0 600 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="240" rx="20" fill="#FAF8F2"/>
+        <!-- Three people icons -->
+        <g class="svg-float">
+          <circle cx="120" cy="90" r="20" fill="#F5D9D3"/>
+          <path d="M100 86 Q104 68 120 65 Q136 68 140 86" fill="#7A7486" opacity="0.4"/>
+          <path d="M104 108 Q100 130 102 155 L138 155 Q140 130 136 108 Q120 102 104 108Z" fill="#E08B7A" opacity="0.35"/>
+          <text x="120" y="185" text-anchor="middle" font-size="12" fill="#4A4458" font-weight="500">通俗语言</text>
+          <text x="120" y="200" text-anchor="middle" font-size="10" fill="#7A7486">模板支持</text>
+        </g>
+        <g class="svg-float-delay">
+          <circle cx="300" cy="90" r="20" fill="#F5D9D3"/>
+          <path d="M280 86 Q284 68 300 65 Q316 68 320 86" fill="#7A7486" opacity="0.4"/>
+          <path d="M284 108 Q280 130 282 155 L318 155 Q320 130 316 108 Q300 102 284 108Z" fill="#6EC4B8" opacity="0.35"/>
+          <text x="300" y="185" text-anchor="middle" font-size="12" fill="#4A4458" font-weight="500">尊重差异</text>
+          <text x="300" y="200" text-anchor="middle" font-size="10" fill="#7A7486">性别·时段·姿态</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="480" cy="90" r="20" fill="#F5D9D3"/>
+          <path d="M460 86 Q464 68 480 65 Q496 68 500 86" fill="#7A7486" opacity="0.4"/>
+          <path d="M464 108 Q460 130 462 155 L498 155 Q500 130 496 108 Q480 102 464 108Z" fill="#9B8FA8" opacity="0.35"/>
+          <text x="480" y="185" text-anchor="middle" font-size="12" fill="#4A4458" font-weight="500">隐私保护</text>
+          <text x="480" y="200" text-anchor="middle" font-size="10" fill="#7A7486">自愿·匿名</text>
+        </g>
+        <!-- Connecting dots -->
+        <circle cx="190" cy="120" r="3" fill="#E08B7A" opacity="0.3"/>
+        <circle cx="210" cy="120" r="3" fill="#E08B7A" opacity="0.2"/>
+        <circle cx="230" cy="120" r="3" fill="#E08B7A" opacity="0.15"/>
+        <circle cx="370" cy="120" r="3" fill="#6EC4B8" opacity="0.15"/>
+        <circle cx="390" cy="120" r="3" fill="#6EC4B8" opacity="0.2"/>
+        <circle cx="410" cy="120" r="3" fill="#6EC4B8" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <div class="impl-grid stagger">
+      <div class="impl-card reveal" style="--i:0">
+        <div class="impl-card-icon c1">🗣️</div>
+        <h3>通俗语言与模板支持</h3>
+        <p>适配制造业员工特征，采用通俗语言开展正念引导，配套书写模板降低参与门槛，让每位员工都能轻松上手</p>
+      </div>
+      <div class="impl-card reveal" style="--i:1">
+        <div class="impl-card-icon c2">🤝</div>
+        <h3>尊重个体与性别差异</h3>
+        <p>分区分时段练习，支持多种冥想姿态（坐、站、卧），按需分性别分组，营造安全舒适的心理空间</p>
+      </div>
+      <div class="impl-card reveal" style="--i:2">
+        <div class="impl-card-icon c3">🔒</div>
+        <h3>隐私保护</h3>
+        <p>坚持自愿参与原则，数据匿名处理，严格保护员工隐私，消除参与顾虑</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONG-TERM MECHANISM ===== -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">长效保障</div>
+      <h2 class="section-title">可持续的长效保障机制</h2>
+      <p class="section-subtitle">从互助打卡到内部培育，构建自我运转的疗愈生态</p>
+    </div>
+
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0">
+        <div class="longterm-card-icon l1">🤲</div>
+        <div>
+          <h3>自愿+随机互助打卡</h3>
+          <p>适配不同性格员工，通过随机匹配互助伙伴，互相监督练习，形成正向同伴支持</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:1">
+        <div class="longterm-card-icon l2">🎧</div>
+        <div>
+          <h3>内部正念音频库</h3>
+          <p>搭建企业专属正念音频资源库，支持员工利用耳机进行碎片化练习，随时随地减压</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:2">
+        <div class="longterm-card-icon l3">🎓</div>
+        <div>
+          <h3>TTT 内部引导员培育</h3>
+          <p>通过 Train-The-Trainer 模式培育企业内部引导员，实现项目长效落地与自主运营</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:3">
+        <div class="longterm-card-icon l4">📱</div>
+        <div>
+          <h3>疗愈功能 App</h3>
+          <p>依托企业自有系统搭建疗愈功能模块，减少额外运维负担，让心理健康服务触手可及</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="longterm-illustration reveal-scale">
+      <!-- Long-term mechanism SVG -->
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#F0ECE4"/>
+        <!-- Circular flow arrows -->
+        <circle cx="300" cy="100" r="70" stroke="#E8E3EE" stroke-width="2" fill="none" stroke-dasharray="8,4"/>
+        <!-- Center icon -->
+        <circle cx="300" cy="100" r="30" fill="#D4EDE8" opacity="0.5"/>
+        <text x="300" y="96" text-anchor="middle" font-size="20">♻️</text>
+        <text x="300" y="112" text-anchor="middle" font-size="9" fill="#4A4458" font-weight="500">自我运转</text>
+        <!-- Four nodes around circle -->
+        <g class="svg-float">
+          <circle cx="300" cy="20" r="16" fill="#F5D9D3" opacity="0.8"/>
+          <text x="300" y="25" text-anchor="middle" font-size="14">🤲</text>
+        </g>
+        <g class="svg-float-delay">
+          <circle cx="380" cy="70" r="16" fill="#D4EDE8" opacity="0.8"/>
+          <text x="380" y="75" text-anchor="middle" font-size="14">🎧</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="380" cy="140" r="16" fill="#E8E3EE" opacity="0.8"/>
+          <text x="380" y="145" text-anchor="middle" font-size="14">🎓</text>
+        </g>
+        <g class="svg-float-delay">
+          <circle cx="220" cy="140" r="16" fill="#FBF4D6" opacity="0.8"/>
+          <text x="220" y="145" text-anchor="middle" font-size="14">📱</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="220" cy="70" r="16" fill="#F5D9D3" opacity="0.6"/>
+          <text x="220" y="75" text-anchor="middle" font-size="14">📊</text>
+        </g>
+        <!-- Arrow indicators -->
+        <path d="M315 25 Q340 30 355 55" stroke="#6EC4B8" stroke-width="1.5" fill="none" marker-end="url(#arrowG)" opacity="0.4"/>
+        <path d="M390 85 Q395 110 390 130" stroke="#6EC4B8" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M365 150 Q300 175 235 150" stroke="#9B8FA8" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M210 130 Q205 110 210 85" stroke="#9B8FA8" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M235 60 Q260 35 285 25" stroke="#E08B7A" stroke-width="1.5" fill="none" opacity="0.4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs ===== -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">可持续发展</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将员工心理健康与联合国可持续发展目标深度结合</p>
+    </div>
+
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0">
+        <div class="sdg-num">03</div>
+        <div class="sdg-title">良好健康与福祉</div>
+        <p class="sdg-desc">改善员工失眠、焦虑与身心内耗，提升整体身心健康水平，让每位员工拥有更好的生活质量</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:1">
+        <div class="sdg-num">08</div>
+        <div class="sdg-title">体面工作与经济增长</div>
+        <p class="sdg-desc">缓解职业倦怠，减少心理问题引发的低效与缺勤，降低企业损耗，提升生产力</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:2">
+        <div class="sdg-num">10</div>
+        <div class="sdg-title">减少不平等</div>
+        <p class="sdg-desc">平等覆盖一线员工，普惠心理健康服务资源，消除职场心理健康服务的阶层差异</p>
+      </div>
+    </div>
+
+    <div class="kpi-box reveal">
+      <h3>📊 ESG 量化 KPI 指标</h3>
+      <div class="kpi-items">
+        <span class="kpi-item">心理健康筛查覆盖率</span>
+        <span class="kpi-item">干预参与率</span>
+        <span class="kpi-item">压力水平下降幅度</span>
+        <span class="kpi-item">工伤事故减少率</span>
+        <span class="kpi-item">标准化管理</span>
+        <span class="kpi-item">常态化运营</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用心守护每一位劳动者 🌿</h2>
+    <p class="footer-text">心理健康是企业最宝贵的资产，让科学疗愈走进车间，温暖每一位默默付出的双手</p>
+    <div class="footer-hearts">🌿 🧘 💛 🌿</div>
+  </div>
+</footer>
+
+<script>
+// ===== Scroll Progress Bar =====
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+});
+
+// ===== Navigation Dots =====
+const dots = document.querySelectorAll('.nav-dot');
+const sections = ['hero', 'problem', 'tech1', 'tech2', 'tech3', 'implementation', 'longterm', 'sdgs'];
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = dot.getAttribute('data-target');
+    document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+const sectionEls = sections.map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let current = 0;
+  sectionEls.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2) current = i;
+  });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === current);
+  });
+});
+
+// ===== Scroll Reveal Animations =====
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ===== Parallax effect for hero shapes =====
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const shapes = document.querySelectorAll('.hero-shape');
+  shapes.forEach((shape, i) => {
+    const speed = 0.03 + i * 0.02;
+    shape.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+});
+</script>
+
+
+<script>
+(function() {
+    var source = sessionStorage.getItem('plan_source') || 'home';
+    var mainPage = 'index.html';
+    var btn = document.createElement('a');
+    btn.className = 'plan-back-btn';
+    btn.href = mainPage;
+    var label = source === 'cap' ? '返回校园CAP' : source === 'eap' ? '返回企业EAP' : '返回首页';
+    btn.innerHTML = '<span class="back-arrow">←</span> ' + label;
+    // Add hash to indicate which page to switch to
+    if (source === 'cap') btn.href += '#page-cap';
+    else if (source === 'eap') btn.href += '#page-eap';
+    document.body.appendChild(btn);
+})();
+</script>
+</body>
+</html>

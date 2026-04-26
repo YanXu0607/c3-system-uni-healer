@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正念减压 · 考试焦虑干预方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --warm:#C47860;--warm-light:#F5DDD3;--coral:#D97A6A;--coral-light:#F5D9D3;
+    --amber:#B89840;--amber-light:#F5EDCF;--gold:#C9A84C;--gold-light:#FBF4D6;
+    --peach:#F5E0D0;--cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --sage:#5A988C;--sage-light:#D4E8E2;--teal:#5BA89C;--teal-light:#D4EDE8;
+    --mint:#6BB898;--mint-light:#D9F0E4;--blue:#5A8FB5;--blue-light:#D6E6F2;
+    --rose:#C47888;--rose-light:#F2DDE2;--lavender:#967BA5;--lavender-light:#EDE0F3;
+    --plum:#8A6B9A;--plum-light:#E8D8F0;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+    --olive:#7B8A5B;--olive-light:#E2E8D6;--sky:#6AA5C6;--sky-light:#DCEEF8;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--teal),var(--amber),var(--rose),var(--lavender));width:0%;transition:width .1s linear}
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--teal);transform:scale(1.5);box-shadow:0 0 10px rgba(90,168,156,.5)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--teal-light) 0%,var(--cream) 30%,var(--lavender-light) 65%,var(--peach) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--teal);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--amber);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--rose);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--lavender);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(90,168,156,.15);border-radius:20px;font-size:13px;color:var(--teal);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,4.5vw,50px);font-weight:700;line-height:1.35;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--teal)}.hero-title .accent2{color:var(--rose)}
+  .hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+  .hero-meta-icon.teal{background:rgba(90,168,156,.15)}.hero-meta-icon.amber{background:rgba(184,152,64,.15)}.hero-meta-icon.rose{background:rgba(196,120,136,.15)}.hero-meta-icon.lavender{background:rgba(150,123,165,.12)}
+  .hero-illustration{margin-top:36px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:680px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 48px rgba(0,0,0,.06))}
+  .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeUp .8s 1.4s forwards}
+  .scroll-hint span{font-size:11px;color:var(--soft);letter-spacing:1px}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(45deg);animation:scrollBounce 2s ease-in-out infinite}
+  @keyframes scrollBounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .hero-badge,.hero-title,.hero-subtitle,.hero-meta,.hero-illustration{transform:translateY(20px)}
+  .phase-header{padding:100px 24px 60px;text-align:center;position:relative}
+  .phase-header.ph1{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .phase-header.ph2{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .phase-header.ph3{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .phase-header.ph4{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .phase-header-icon{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+  .phase-header-icon.ph1{background:linear-gradient(135deg,rgba(90,168,156,.15),rgba(90,168,156,.05))}
+  .phase-header-icon.ph2{background:linear-gradient(135deg,rgba(184,152,64,.15),rgba(184,152,64,.05))}
+  .phase-header-icon.ph3{background:linear-gradient(135deg,rgba(196,120,136,.15),rgba(196,120,136,.05))}
+  .phase-header-icon.ph4{background:linear-gradient(135deg,rgba(150,123,165,.15),rgba(150,123,165,.05))}
+  .phase-header-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .phase-header-tag.ph1{background:rgba(90,168,156,.12);color:var(--teal)}
+  .phase-header-tag.ph2{background:rgba(184,152,64,.12);color:var(--amber)}
+  .phase-header-tag.ph3{background:rgba(196,120,136,.12);color:var(--rose)}
+  .phase-header-tag.ph4{background:rgba(150,123,165,.12);color:var(--lavender)}
+  .phase-header-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .phase-header-sub{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto;line-height:1.8}
+  .week-section{padding:80px 24px;position:relative}
+  .week-section:nth-child(odd){background:var(--cream-pale)}
+  .week-section:nth-child(even){background:var(--surface)}
+  .week-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .week-section.reverse .week-container{direction:rtl}
+  .week-section.reverse .week-container>*{direction:ltr}
+  .week-text{display:flex;flex-direction:column;gap:6px}
+  .week-label{font-size:11px;letter-spacing:2px;font-weight:500;text-transform:uppercase;margin-bottom:4px}
+  .week-label.c1{color:var(--teal)}.week-label.c2{color:var(--amber)}.week-label.c3{color:var(--rose)}.week-label.c4{color:var(--lavender)}
+  .week-title{font-family:'Noto Serif SC',serif;font-size:clamp(20px,2.5vw,28px);font-weight:700;line-height:1.4;margin-bottom:6px}
+  .week-theme{font-size:14px;font-weight:500;margin-bottom:8px}
+  .week-theme.c1{color:var(--teal)}.week-theme.c2{color:var(--amber)}.week-theme.c3{color:var(--rose)}.week-theme.c4{color:var(--lavender)}
+  .week-desc{font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:12px}
+  .week-items{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .week-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .week-item-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .week-item-icon.c1{background:rgba(90,168,156,.15)}.week-item-icon.c2{background:rgba(184,152,64,.15)}.week-item-icon.c3{background:rgba(196,120,136,.15)}.week-item-icon.c4{background:rgba(150,123,165,.15)}
+  .week-goal{padding:12px 16px;border-radius:10px;font-size:12px;color:var(--soft);line-height:1.6}
+  .week-goal.c1{background:rgba(90,168,156,.08);border-left:3px solid var(--teal)}
+  .week-goal.c2{background:rgba(184,152,64,.08);border-left:3px solid var(--amber)}
+  .week-goal.c3{background:rgba(196,120,136,.08);border-left:3px solid var(--rose)}
+  .week-goal.c4{background:rgba(150,123,165,.08);border-left:3px solid var(--lavender)}
+  .goal-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+  .week-visual{position:relative}
+  .week-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.06))}
+  .week-decoration{position:absolute;width:80px;height:80px;border-radius:50%;opacity:.1;z-index:-1}
+  .week-decoration.c1{background:var(--teal);top:-20px;right:-20px}
+  .week-decoration.c2{background:var(--amber);bottom:-20px;left:-20px}
+  .week-decoration.c3{background:var(--rose);top:-20px;left:-20px}
+  .week-decoration.c4{background:var(--lavender);bottom:-20px;right:-20px}
+  .info-section{padding:100px 24px;position:relative}
+  .info-section:nth-child(odd){background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .info-section:nth-child(even){background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .info-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.adapt{background:rgba(90,168,156,.12);color:var(--teal)}
+  .section-tag.longterm{background:rgba(150,123,165,.12);color:var(--lavender)}
+  .section-tag.sdgs{background:rgba(184,152,64,.12);color:var(--amber)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+  .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:50px}
+  .info-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s}
+  .info-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .info-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .info-card-icon.a1{background:rgba(90,168,156,.1)}.info-card-icon.a2{background:rgba(184,152,64,.1)}.info-card-icon.a3{background:rgba(196,120,136,.1)}.info-card-icon.a4{background:rgba(150,123,165,.1)}.info-card-icon.a5{background:rgba(90,143,181,.1)}
+  .info-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .info-card p{font-size:14px;color:var(--soft);line-height:1.7}
+  .longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:50px}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .longterm-card-icon.l1{background:rgba(150,123,165,.1)}.longterm-card-icon.l2{background:rgba(90,168,156,.1)}.longterm-card-icon.l3{background:rgba(196,120,136,.1)}.longterm-card-icon.l4{background:rgba(184,152,64,.15)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:50px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(90,168,156,.08),rgba(90,168,156,.02));border:1px solid rgba(90,168,156,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(184,152,64,.1),rgba(184,152,64,.02));border:1px solid rgba(184,152,64,.12)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(196,120,136,.08),rgba(196,120,136,.02));border:1px solid rgba(196,120,136,.1)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--teal)}.sdg-card:nth-child(2) .sdg-num{color:var(--amber)}.sdg-card:nth-child(3) .sdg-num{color:var(--rose)}
+  .sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}
+  .sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+  .illustration-box{max-width:700px;margin:0 auto 40px;border-radius:20px;overflow:hidden}
+  .illustration-box svg{width:100%;height:auto;display:block}
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-rotate{animation:svgRotate 12s linear infinite}
+  .svg-sway{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{animation:svgGlow 4s ease-in-out infinite}
+  .svg-wave{animation:svgWave 3s ease-in-out infinite}
+  .svg-drop{opacity:0;transform:translateY(-20px);animation:svgDrop 2.5s ease infinite}
+  .svg-drop-d{animation:svgDrop 2.5s ease .8s infinite}
+  .svg-drop-d2{animation:svgDrop 2.5s ease 1.6s infinite}
+  .svg-shimmer{opacity:0;animation:svgShimmer 3s ease-in-out infinite}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}
+  .svg-ring-d{animation:svgRing 3s ease-out 1s infinite}
+  .svg-fade-in{opacity:0;animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0;animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0;animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0;animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.1}50%{opacity:.28}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.8}60%{opacity:.5;transform:translateY(30px)}80%{opacity:0;transform:translateY(40px)}100%{opacity:0;transform:translateY(40px)}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.7}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes breatheCircle{0%,100%{r:28}50%{r:38}}
+  @media(max-width:900px){
+    .week-container{grid-template-columns:1fr;gap:30px}
+    .week-section{padding:60px 20px}
+    .week-section.reverse .week-container{direction:ltr}
+    .info-grid,.longterm-grid,.sdgs-grid{grid-template-columns:1fr}
+    .nav-dots{right:12px;gap:8px}
+    .nav-dot{width:7px;height:7px}
+    .nav-dot .tooltip{display:none}
+    .hero-meta{gap:14px}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="phase1"><span class="tooltip">第1周</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">认识焦虑</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">呼吸锚点</span></div>
+  <div class="nav-dot" data-target="phase2"><span class="tooltip">第2周</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">正念专注</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">注意力训练</span></div>
+  <div class="nav-dot" data-target="phase3"><span class="tooltip">第3周</span></div>
+  <div class="nav-dot" data-target="week5"><span class="tooltip">认知重构</span></div>
+  <div class="nav-dot" data-target="week6"><span class="tooltip">情绪管理</span></div>
+  <div class="nav-dot" data-target="phase4"><span class="tooltip">第4周</span></div>
+  <div class="nav-dot" data-target="week7"><span class="tooltip">整合应用</span></div>
+  <div class="nav-dot" data-target="week8"><span class="tooltip">考试准备</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">正念减压 · 考试焦虑干预方案</div>
+    <h1 class="hero-title">以<span class="accent">正念</span>化解焦虑<br>用<span class="accent2">呼吸</span>找回从容</h1>
+    <p class="hero-subtitle">面向中学生的4周正念减压干预方案，融合呼吸调节、正念专注、认知重构与整合应用四大核心模块</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon teal">🧘</div><span>正念减压</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon amber">📚</div><span>4周8次课程</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon rose">🧠</div><span>认知重构</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon lavender">💚</div><span>SDGs 融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 700 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="heroBg" x1="0" y1="0" x2="700" y2="400" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FAF8F2"/><stop offset="50%" stop-color="#F5F0E8"/><stop offset="100%" stop-color="#FAF8F2"/>
+          </linearGradient>
+          <linearGradient id="heroGlow" x1="350" y1="100" x2="350" y2="350" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#5BA89C" stop-opacity="0.08"/><stop offset="100%" stop-color="#5BA89C" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="heroSoft"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        <rect width="700" height="400" rx="20" fill="url(#heroBg)"/>
+        <!-- Central glow -->
+        <ellipse cx="350" cy="220" rx="180" ry="120" fill="url(#heroGlow)"/>
+        <!-- LEFT: Anxious student scene -->
+        <g transform="translate(160,195)">
+          <!-- Desk surface -->
+          <rect x="-90" y="50" width="180" height="12" rx="4" fill="#D4D0C8"/>
+          <rect x="-78" y="62" width="8" height="55" rx="3" fill="#C0BCB4"/>
+          <rect x="70" y="62" width="8" height="55" rx="3" fill="#C0BCB4"/>
+          <!-- Scattered exam papers with question marks -->
+          <g transform="rotate(-15,-50,32)">
+            <rect x="-68" y="18" width="42" height="30" rx="3" fill="#FBF4D6" stroke="#E8D48A" stroke-width="1"/>
+            <text x="-47" y="38" text-anchor="middle" font-size="8" fill="#C47888" font-weight="600">? ? ?</text>
+          </g>
+          <g transform="rotate(10,30,28)">
+            <rect x="12" y="18" width="38" height="26" rx="3" fill="#FBF4D6" stroke="#E8D48A" stroke-width="1"/>
+            <line x1="20" y1="28" x2="42" y2="28" stroke="#E8D48A" stroke-width="1" opacity="0.6"/>
+            <line x1="20" y1="34" x2="38" y2="34" stroke="#E8D48A" stroke-width="1" opacity="0.4"/>
+          </g>
+          <!-- Pencil rolling -->
+          <line x1="55" y1="40" x2="72" y2="48" stroke="#B89840" stroke-width="3" stroke-linecap="round" opacity="0.5" class="svg-sway"/>
+          <!-- Student body -->
+          <circle cx="0" cy="-18" r="24" fill="#F5D9D3"/>
+          <path d="M-20,-22 Q-16,-44 0,-46 Q16,-44 20,-22" fill="#5A5466" opacity="0.35"/>
+          <!-- Worried eyes -->
+          <circle cx="-8" cy="-20" r="2.5" fill="#3A3448"/>
+          <circle cx="8" cy="-20" r="2.5" fill="#3A3448"/>
+          <path d="M-11,-24 Q-8,-27 -5,-24" stroke="#3A3448" stroke-width="1" fill="none"/>
+          <path d="M5,-24 Q8,-27 11,-24" stroke="#3A3448" stroke-width="1" fill="none"/>
+          <!-- Worried mouth -->
+          <path d="M-6,-10 Q0,-14 6,-10" stroke="#C47888" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <!-- Sweat drop -->
+          <ellipse cx="22" cy="-24" rx="3" ry="5" fill="#5BA89C" opacity="0.45" class="svg-drop"/>
+          <!-- Body -->
+          <path d="M-16,0 Q-18,24 -16,46 L16,46 Q18,24 16,0 Q0,-6 -16,0Z" fill="#C47888" opacity="0.2"/>
+          <!-- Arms on desk -->
+          <path d="M-16,12 Q-28,26 -24,46" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M16,12 Q28,26 24,46" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <!-- Stress indicators: alarm waves -->
+          <path d="M-22,-58 Q-26,-66 -22,-74" stroke="#C47888" stroke-width="1.8" fill="none" opacity="0.45" class="svg-wave"/>
+          <path d="M-12,-62 Q-16,-72 -12,-80" stroke="#C47888" stroke-width="1.5" fill="none" opacity="0.35" class="svg-wave"/>
+          <path d="M12,-62 Q16,-72 12,-80" stroke="#C47888" stroke-width="1.5" fill="none" opacity="0.35" class="svg-wave"/>
+          <path d="M22,-58 Q26,-66 22,-74" stroke="#C47888" stroke-width="1.8" fill="none" opacity="0.45" class="svg-wave"/>
+          <!-- Lightning bolt stress -->
+          <path d="M0,-75 L-5,-88 L1,-85 L-3,-98" stroke="#C47888" stroke-width="2" fill="none" opacity="0.35" class="svg-pulse"/>
+          <!-- Thought bubble -->
+          <g transform="translate(-55,-70)" class="svg-float-d3">
+            <ellipse cx="0" cy="0" rx="28" ry="16" fill="white" stroke="#E8E3EE" stroke-width="1" opacity="0.8"/>
+            <text x="0" y="4" text-anchor="middle" font-size="7" fill="#C47888">考砸了怎么办</text>
+            <circle cx="18" cy="14" r="3" fill="white" stroke="#E8E3EE" stroke-width="0.8" opacity="0.6"/>
+            <circle cx="24" cy="22" r="2" fill="white" stroke="#E8E3EE" stroke-width="0.8" opacity="0.4"/>
+          </g>
+          <!-- Label -->
+          <text x="0" y="135" text-anchor="middle" font-size="11" fill="#C47888" font-weight="500" opacity="0.7">焦虑状态</text>
+        </g>
+        <!-- CENTER: Animated transformation bridge -->
+        <g transform="translate(350,195)">
+          <!-- Flowing curve bridge -->
+          <path d="M-55,0 C-30,-30 30,30 55,0" stroke="#D4EDE8" stroke-width="3" fill="none" opacity="0.5">
+            <animate attributeName="d" values="M-55,0 C-30,-30 30,30 55,0;M-55,0 C-30,30 30,-30 55,0;M-55,0 C-30,-30 30,30 55,0" dur="6s" repeatCount="indefinite"/>
+          </path>
+          <!-- Moving particles along the bridge -->
+          <circle r="4" fill="#5BA89C" opacity="0.6">
+            <animateMotion path="M-55,0 C-30,-30 30,30 55,0" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="3" fill="#967BA5" opacity="0.4">
+            <animateMotion path="M-55,0 C-30,30 30,-30 55,0" dur="3.5s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Arrow -->
+          <polygon points="58,0 48,-7 48,7" fill="#5BA89C" opacity="0.5"/>
+          <!-- Label -->
+          <text y="45" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="600">正念转化</text>
+          <!-- Small breathing icon -->
+          <g transform="translate(0,-35)" class="svg-breathe">
+            <circle r="10" fill="#D4EDE8" opacity="0.4"/>
+            <text y="4" text-anchor="middle" font-size="10">🌬️</text>
+          </g>
+        </g>
+        <!-- RIGHT: Calm student scene -->
+        <g transform="translate(540,195)">
+          <!-- Desk surface -->
+          <rect x="-90" y="50" width="180" height="12" rx="4" fill="#D4D0C8"/>
+          <rect x="-78" y="62" width="8" height="55" rx="3" fill="#C0BCB4"/>
+          <rect x="70" y="62" width="8" height="55" rx="3" fill="#C0BCB4"/>
+          <!-- Neat open book -->
+          <rect x="-35" y="22" width="70" height="28" rx="4" fill="#D4EDE8" stroke="#5BA89C" stroke-width="1"/>
+          <line x1="0" y1="24" x2="0" y2="48" stroke="#5BA89C" stroke-width="0.8" opacity="0.3"/>
+          <line x1="-28" y1="32" x2="-4" y2="32" stroke="#5BA89C" stroke-width="0.8" opacity="0.35"/>
+          <line x1="-28" y1="38" x2="-8" y2="38" stroke="#5BA89C" stroke-width="0.8" opacity="0.25"/>
+          <line x1="4" y1="32" x2="28" y2="32" stroke="#5BA89C" stroke-width="0.8" opacity="0.35"/>
+          <line x1="4" y1="38" x2="24" y2="38" stroke="#5BA89C" stroke-width="0.8" opacity="0.25"/>
+          <!-- Pencil neatly placed -->
+          <line x1="40" y1="42" x2="60" y2="48" stroke="#B89840" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+          <!-- Student body -->
+          <circle cx="0" cy="-18" r="24" fill="#F5D9D3"/>
+          <path d="M-20,-22 Q-16,-44 0,-46 Q16,-44 20,-22" fill="#5A5466" opacity="0.35"/>
+          <!-- Calm eyes (closed/smile) -->
+          <path d="M-10,-20 Q-7,-23 -4,-20" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M4,-20 Q7,-23 10,-20" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Gentle smile -->
+          <path d="M-5,-10 Q0,-6 5,-10" stroke="#5BA89C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <!-- Body -->
+          <path d="M-16,0 Q-18,24 -16,46 L16,46 Q18,24 16,0 Q0,-6 -16,0Z" fill="#5BA89C" opacity="0.2"/>
+          <!-- Relaxed arms -->
+          <path d="M-16,12 Q-30,28 -26,46" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M16,12 Q30,28 26,46" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <!-- Breathing ripples from body -->
+          <circle cx="0" cy="15" r="20" fill="none" stroke="#5BA89C" stroke-width="1.5" opacity="0.12">
+            <animate attributeName="r" values="20;45;20" dur="5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.12;0.02;0.12" dur="5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="0" cy="15" r="15" fill="none" stroke="#5BA89C" stroke-width="1.2" opacity="0.1">
+            <animate attributeName="r" values="15;35;15" dur="5s" repeatCount="indefinite" begin="0.5s"/>
+            <animate attributeName="opacity" values="0.1;0.02;0.1" dur="5s" repeatCount="indefinite" begin="0.5s"/>
+          </circle>
+          <circle cx="0" cy="15" r="10" fill="none" stroke="#5BA89C" stroke-width="1" opacity="0.08">
+            <animate attributeName="r" values="10;25;10" dur="5s" repeatCount="indefinite" begin="1s"/>
+            <animate attributeName="opacity" values="0.08;0.01;0.08" dur="5s" repeatCount="indefinite" begin="1s"/>
+          </circle>
+          <!-- Positive thought bubble -->
+          <g transform="translate(55,-70)" class="svg-float-d2">
+            <ellipse cx="0" cy="0" rx="30" ry="16" fill="white" stroke="#D4EDE8" stroke-width="1" opacity="0.8"/>
+            <text x="0" y="4" text-anchor="middle" font-size="7" fill="#5A988C">我可以做到</text>
+            <circle cx="-18" cy="14" r="3" fill="white" stroke="#D4EDE8" stroke-width="0.8" opacity="0.6"/>
+            <circle cx="-24" cy="22" r="2" fill="white" stroke="#D4EDE8" stroke-width="0.8" opacity="0.4"/>
+          </g>
+          <!-- Label -->
+          <text x="0" y="135" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="500" opacity="0.7">从容状态</text>
+        </g>
+        <!-- Bottom floating element icons -->
+        <g class="svg-float" transform="translate(90,360)">
+          <circle r="16" fill="#D4EDE8" opacity="0.45"/><text y="5" text-anchor="middle" font-size="13">🌬️</text>
+        </g>
+        <g class="svg-float-d" transform="translate(210,365)">
+          <circle r="16" fill="#F5EDCF" opacity="0.45"/><text y="5" text-anchor="middle" font-size="13">🧘</text>
+        </g>
+        <g class="svg-float-d2" transform="translate(350,360)">
+          <circle r="16" fill="#F2DDE2" opacity="0.45"/><text y="5" text-anchor="middle" font-size="13">📖</text>
+        </g>
+        <g class="svg-float-d3" transform="translate(490,365)">
+          <circle r="16" fill="#EDE0F3" opacity="0.45"/><text y="5" text-anchor="middle" font-size="13">💚</text>
+        </g>
+        <g class="svg-float" transform="translate(610,360)">
+          <circle r="16" fill="#D6E6F2" opacity="0.45"/><text y="5" text-anchor="middle" font-size="13">🧠</text>
+        </g>
+        <!-- Decorative sparkles -->
+        <circle cx="280" cy="80" r="2" fill="#5BA89C" opacity="0.2" class="svg-shimmer"/>
+        <circle cx="420" cy="100" r="2.5" fill="#B89840" opacity="0.2" class="svg-shimmer"/>
+        <circle cx="350" cy="320" r="2" fill="#967BA5" opacity="0.15" class="svg-shimmer"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ===== PHASE 1 ===== -->
+<section class="phase-header ph1" id="phase1">
+  <div class="phase-header-icon ph1">🌬️</div>
+  <div class="phase-header-tag ph1">第一周</div>
+  <h2 class="phase-header-title">认识焦虑与呼吸基础</h2>
+  <p class="phase-header-sub">帮助学生理解考试焦虑的机制，掌握基础呼吸调节技术</p>
+</section>
+
+<!-- ===== WEEK 1 COURSE 1 ===== -->
+<section class="week-section" id="week1">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-label c1">第1次课程 · 90分钟</div>
+      <h3 class="week-title">焦虑认知与呼吸调节入门</h3>
+      <div class="week-theme c1">从理解焦虑开始，学会用呼吸找回平静</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c1">📋</div><span><b>考试焦虑自评</b>：完成考试焦虑量表（TAI）</span></div>
+        <div class="week-item"><div class="week-item-icon c1">⚡</div><span><b>焦虑机制讲解</b>："战斗或逃跑"反应与灾难化思维</span></div>
+        <div class="week-item"><div class="week-item-icon c1">🌬️</div><span><b>腹式呼吸</b>：手放腹部，感受吸气隆起、呼气回缩</span></div>
+        <div class="week-item"><div class="week-item-icon c1">🔢</div><span><b>4-7-8呼吸法</b>：吸气4秒-屏息7秒-呼气8秒</span></div>
+        <div class="week-item"><div class="week-item-icon c1">⬜</div><span><b>方块呼吸法</b>：吸气4秒-屏息4秒-呼气4秒-屏息4秒</span></div>
+      </div>
+      <div class="week-goal c1"><span class="goal-label">📝 日常作业</span>每日练习腹式呼吸10分钟，使用呼吸练习APP辅助</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration c1"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#FAF8F2"/>
+        <!-- TOP HALF: Fight-or-flight body response diagram -->
+        <g transform="translate(230,120)">
+          <!-- Central body silhouette -->
+          <ellipse cx="0" cy="15" rx="40" ry="55" fill="#F2DDE2" opacity="0.2"/>
+          <circle cx="0" cy="-48" r="22" fill="#F5D9D3" opacity="0.5"/>
+          <!-- Brain with lightning -->
+          <g transform="translate(0,-48)">
+            <ellipse cx="0" cy="-4" rx="14" ry="12" fill="#F2DDE2" opacity="0.4"/>
+            <path d="M-3,-10 L-1,-16 L2,-13 L0,-20" stroke="#C47888" stroke-width="1.5" fill="none" opacity="0.5" class="svg-pulse"/>
+            <text x="24" y="-2" font-size="8" fill="#C47888" font-weight="500">灾难化思维</text>
+          </g>
+          <!-- Heart with ECG line -->
+          <g transform="translate(0,-5)">
+            <path d="M-8,-4 Q0,-12 8,-4 Q12,2 8,8 L0,16 L-8,8 Q-12,2 -8,-4Z" fill="#C47888" opacity="0.25" class="svg-pulse"/>
+            <text x="22" y="8" font-size="8" fill="#C47888" font-weight="500">心跳加速</text>
+          </g>
+          <!-- ECG line across body -->
+          <path d="M-30,-5 L-18,-5 L-14,-18 L-8,8 L-2,-18 L4,8 L10,-5 L18,-5 L30,-5" stroke="#C47888" stroke-width="1.8" fill="none" opacity="0.5">
+            <animate attributeName="opacity" values="0.3;0.7;0.3" dur="1.2s" repeatCount="indefinite"/>
+          </path>
+          <!-- Muscle tension marks on shoulders -->
+          <path d="M-34,-15 Q-38,-8 -34,0" stroke="#C47888" stroke-width="2" fill="none" opacity="0.35" class="svg-wave"/>
+          <path d="M34,-15 Q38,-8 34,0" stroke="#C47888" stroke-width="2" fill="none" opacity="0.35" class="svg-wave"/>
+          <text x="-68" y="-5" font-size="8" fill="#C47888" font-weight="500">肌肉紧张</text>
+          <!-- Stomach butterfly -->
+          <g transform="translate(0,30)">
+            <path d="M-6,-4 Q0,-8 6,-4 Q0,0 -6,-4Z" fill="#B89840" opacity="0.3" class="svg-float"/>
+            <path d="M-6,4 Q0,8 6,4 Q0,0 -6,4Z" fill="#B89840" opacity="0.3" class="svg-float"/>
+            <text x="18" y="4" font-size="8" fill="#B89840" font-weight="500">胃部不适</text>
+          </g>
+          <!-- Sweaty palms -->
+          <g transform="translate(-42,20)">
+            <ellipse rx="6" ry="8" fill="#5BA89C" opacity="0.15"/>
+            <text x="0" y="16" text-anchor="middle" font-size="7" fill="#5A8FB5">手心出汗</text>
+          </g>
+          <!-- Label -->
+          <text x="0" y="72" text-anchor="middle" font-size="10" fill="#C47888" font-weight="600">⚡ "战斗或逃跑"反应</text>
+        </g>
+        <!-- Decorative divider -->
+        <line x1="50" y1="230" x2="410" y2="230" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="6,4"/>
+        <text x="230" y="248" text-anchor="middle" font-size="9" fill="#5A988C" font-weight="500">↓ 三种呼吸调节技术 ↓</text>
+        <!-- BOTTOM HALF: Three breathing method cards -->
+        <!-- Card 1: Abdominal Breathing -->
+        <g transform="translate(85,345)">
+          <rect x="-58" y="-68" width="116" height="136" rx="14" fill="#D4EDE8" opacity="0.3" stroke="#5BA89C" stroke-width="0.8" stroke-opacity="0.2"/>
+          <text y="-50" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="700">腹式呼吸</text>
+          <!-- Torso outline -->
+          <ellipse cx="0" cy="-10" rx="20" ry="28" fill="none" stroke="#5BA89C" stroke-width="1" opacity="0.25"/>
+          <!-- Belly expanding animation -->
+          <ellipse cx="0" cy="5" rx="16" ry="10" fill="#D4EDE8" opacity="0.4">
+            <animate attributeName="ry" values="8;18;8" dur="5s" repeatCount="indefinite"/>
+          </ellipse>
+          <!-- Hand on belly -->
+          <path d="M-10,0 Q0,-4 10,0" stroke="#F5D9D3" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+          <!-- Air flow arrows -->
+          <g opacity="0.3">
+            <path d="M0,-38 L0,-28" stroke="#5BA89C" stroke-width="1.5" marker-end="url(#aTealSm)"/>
+            <path d="M0,22 L0,32" stroke="#5BA89C" stroke-width="1.5" marker-end="url(#aTealSm)"/>
+          </g>
+          <text y="42" text-anchor="middle" font-size="8" fill="#5A5466">手放腹部</text>
+          <text y="53" text-anchor="middle" font-size="8" fill="#5A5466">感受隆起回缩</text>
+        </g>
+        <!-- Card 2: 4-7-8 Breathing -->
+        <g transform="translate(230,345)">
+          <rect x="-58" y="-68" width="116" height="136" rx="14" fill="#F5EDCF" opacity="0.3" stroke="#B89840" stroke-width="0.8" stroke-opacity="0.2"/>
+          <text y="-50" text-anchor="middle" font-size="10" fill="#B89840" font-weight="700">4-7-8 呼吸法</text>
+          <!-- Three phase circles with timing -->
+          <g class="svg-float" transform="translate(-26,-14)">
+            <circle r="18" fill="#F5EDCF" stroke="#B89840" stroke-width="1.5"/>
+            <text y="-4" text-anchor="middle" font-size="14" fill="#B89840" font-weight="800">4</text>
+            <text y="8" text-anchor="middle" font-size="7" fill="#5A5466">吸气</text>
+          </g>
+          <g class="svg-float-d" transform="translate(0,-14)">
+            <circle r="18" fill="#F5EDCF" stroke="#B89840" stroke-width="1.5"/>
+            <text y="-4" text-anchor="middle" font-size="14" fill="#B89840" font-weight="800">7</text>
+            <text y="8" text-anchor="middle" font-size="7" fill="#5A5466">屏息</text>
+          </g>
+          <g class="svg-float-d2" transform="translate(26,-14)">
+            <circle r="18" fill="#F5EDCF" stroke="#B89840" stroke-width="1.5"/>
+            <text y="-4" text-anchor="middle" font-size="14" fill="#B89840" font-weight="800">8</text>
+            <text y="8" text-anchor="middle" font-size="7" fill="#5A5466">呼气</text>
+          </g>
+          <!-- Animated progress ring -->
+          <circle cx="0" cy="-14" r="42" fill="none" stroke="#B89840" stroke-width="2" stroke-dasharray="80 184" stroke-linecap="round" opacity="0.2">
+            <animateTransform attributeName="transform" type="rotate" from="0 0 -14" to="360 0 -14" dur="19s" repeatCount="indefinite"/>
+          </circle>
+          <text y="42" text-anchor="middle" font-size="8" fill="#5A5466">秒</text>
+          <text y="53" text-anchor="middle" font-size="8" fill="#5A5466">吸-屏-呼</text>
+        </g>
+        <!-- Card 3: Box Breathing -->
+        <g transform="translate(375,345)">
+          <rect x="-58" y="-68" width="116" height="136" rx="14" fill="#D6E6F2" opacity="0.25" stroke="#5A8FB5" stroke-width="0.8" stroke-opacity="0.2"/>
+          <text y="-50" text-anchor="middle" font-size="10" fill="#5A8FB5" font-weight="700">方块呼吸法</text>
+          <!-- Animated square with traveling dot -->
+          <g transform="translate(0,-8)">
+            <rect x="-26" y="-26" width="52" height="52" rx="5" fill="none" stroke="#5A8FB5" stroke-width="2" opacity="0.3"/>
+            <!-- Corner labels -->
+            <text x="-26" y="-30" text-anchor="middle" font-size="7" fill="#5A8FB5">吸4s</text>
+            <text x="26" y="-30" text-anchor="middle" font-size="7" fill="#5A8FB5">屏4s</text>
+            <text x="26" y="38" text-anchor="middle" font-size="7" fill="#5A8FB5">呼4s</text>
+            <text x="-26" y="38" text-anchor="middle" font-size="7" fill="#5A8FB5">屏4s</text>
+            <!-- Traveling dot around the square -->
+            <circle r="4" fill="#5A8FB5" opacity="0.6">
+              <animateMotion path="M-26,-26 L26,-26 L26,26 L-26,26 Z" dur="16s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <text y="42" text-anchor="middle" font-size="8" fill="#5A5466">四步等长</text>
+          <text y="53" text-anchor="middle" font-size="8" fill="#5A5466">各4秒循环</text>
+        </g>
+        <defs>
+          <marker id="aTealSm" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><path d="M0,0 L6,2 L0,4" fill="#5BA89C" opacity="0.4"/></marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEEK 1 COURSE 2 ===== -->
+<section class="week-section reverse" id="week2" style="background:var(--surface)">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration c1"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#F0ECE4"/>
+        <!-- TOP HALF: Anchor metaphor with breathing -->
+        <g transform="translate(230,115)">
+          <!-- Water surface waves -->
+          <path d="M-180,30 Q-140,20 -100,30 Q-60,40 -20,30 Q20,20 60,30 Q100,40 140,30 Q180,20 200,30" stroke="#5BA89C" stroke-width="1.2" fill="none" opacity="0.15">
+            <animate attributeName="d" values="M-180,30 Q-140,20 -100,30 Q-60,40 -20,30 Q20,20 60,30 Q100,40 140,30 Q180,20 200,30;M-180,30 Q-140,40 -100,30 Q-60,20 -20,30 Q20,40 60,30 Q100,20 140,30 Q180,40 200,30;M-180,30 Q-140,20 -100,30 Q-60,40 -20,30 Q20,20 60,30 Q100,40 140,30 Q180,20 200,30" dur="4s" repeatCount="indefinite"/>
+          </path>
+          <!-- Anchor chain from top -->
+          <line x1="0" y1="-70" x2="0" y2="-30" stroke="#5A988C" stroke-width="2.5" stroke-dasharray="5,3" opacity="0.45"/>
+          <!-- Anchor ring at top -->
+          <circle cx="0" cy="-76" r="14" fill="none" stroke="#5A988C" stroke-width="3" opacity="0.5" class="svg-pulse"/>
+          <text x="0" y="-72" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="600">锚</text>
+          <!-- Anchor body -->
+          <line x1="0" y1="-30" x2="0" y2="28" stroke="#5A988C" stroke-width="4" opacity="0.45"/>
+          <path d="M-32,28 Q-32,62 0,72 Q32,62 32,28" stroke="#5A988C" stroke-width="3" fill="none" opacity="0.45"/>
+          <line x1="-22" y1="10" x2="22" y2="10" stroke="#5A988C" stroke-width="2.5" opacity="0.35"/>
+          <!-- 3 breath circles floating upward from anchor -->
+          <g class="svg-float" transform="translate(55,-45)">
+            <circle r="16" fill="#D4EDE8" opacity="0.6" stroke="#5BA89C" stroke-width="1"/>
+            <text y="-3" text-anchor="middle" font-size="13" fill="#5A988C" font-weight="800">1</text>
+            <text y="9" text-anchor="middle" font-size="7" fill="#5A5466">吸气</text>
+          </g>
+          <g class="svg-float-d" transform="translate(75,-20)">
+            <circle r="16" fill="#D4EDE8" opacity="0.6" stroke="#5BA89C" stroke-width="1"/>
+            <text y="-3" text-anchor="middle" font-size="13" fill="#5A988C" font-weight="800">2</text>
+            <text y="9" text-anchor="middle" font-size="7" fill="#5A5466">吸气</text>
+          </g>
+          <g class="svg-float-d2" transform="translate(55,5)">
+            <circle r="16" fill="#D4EDE8" opacity="0.6" stroke="#5BA89C" stroke-width="1"/>
+            <text y="-3" text-anchor="middle" font-size="13" fill="#5A988C" font-weight="800">3</text>
+            <text y="9" text-anchor="middle" font-size="7" fill="#5A5466">呼气</text>
+          </g>
+          <!-- Label -->
+          <text x="0" y="95" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="600">⚓ 呼吸锚点 = 回到当下的信号</text>
+        </g>
+        <!-- Divider -->
+        <line x1="50" y1="225" x2="410" y2="225" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="6,4"/>
+        <!-- MIDDLE: Reset signal pill -->
+        <g transform="translate(230,258)">
+          <rect x="-70" y="-16" width="140" height="32" rx="16" fill="#D4EDE8" opacity="0.4" stroke="#5BA89C" stroke-width="1"/>
+          <text y="5" text-anchor="middle" font-size="12" fill="#5A988C" font-weight="600">🔄 3次深呼吸 = 重新开始</text>
+        </g>
+        <!-- BOTTOM HALF: Anxiety journal with animated scale -->
+        <g transform="translate(230,370)">
+          <!-- Journal book -->
+          <rect x="-80" y="-65" width="160" height="110" rx="12" fill="#FBF4D6" stroke="#E8D48A" stroke-width="1.5"/>
+          <!-- Book spine -->
+          <line x1="-80" y1="-65" x2="-80" y2="45" stroke="#D4C46A" stroke-width="3" stroke-linecap="round"/>
+          <text y="-46" text-anchor="middle" font-size="12" fill="#B89840" font-weight="700">📓 焦虑日记</text>
+          <!-- Journal lines with writing animation -->
+          <line x1="-60" y1="-28" x2="60" y2="-28" stroke="#E8D48A" stroke-width="1" opacity="0.5"/>
+          <line x1="-60" y1="-14" x2="60" y2="-14" stroke="#E8D48A" stroke-width="1" opacity="0.5"/>
+          <line x1="-60" y1="0" x2="60" y2="0" stroke="#E8D48A" stroke-width="1" opacity="0.5"/>
+          <!-- Animated writing marks -->
+          <g opacity="0.4">
+            <rect x="-55" y="-32" width="30" height="3" rx="1.5" fill="#B89840" class="svg-fade-in"/>
+            <rect x="-55" y="-18" width="45" height="3" rx="1.5" fill="#B89840" class="svg-fade-in-d"/>
+            <rect x="-55" y="-4" width="20" height="3" rx="1.5" fill="#B89840" class="svg-fade-in-d2"/>
+          </g>
+          <!-- 0-10 anxiety scale -->
+          <g transform="translate(0,28)">
+            <text x="-60" y="4" font-size="8" fill="#5A5466">0</text>
+            <rect x="-50" y="-4" width="100" height="12" rx="6" fill="#F5E0D0"/>
+            <!-- Animated fill bar showing decreasing anxiety -->
+            <rect x="-50" y="-4" width="70" height="12" rx="6" fill="#C47888" opacity="0.5">
+              <animate attributeName="width" values="70;30;70" dur="8s" repeatCount="indefinite"/>
+              <animate attributeName="fill" values="#C47888;#5BA89C;#C47888" dur="8s" repeatCount="indefinite"/>
+            </rect>
+            <text x="55" y="4" font-size="8" fill="#5A5466">10</text>
+            <!-- Scale labels -->
+            <text x="-50" y="18" font-size="7" fill="#5A988C">平静</text>
+            <text x="40" y="18" font-size="7" fill="#C47888">焦虑</text>
+          </g>
+        </g>
+        <!-- Decorative sparkles -->
+        <circle cx="55" cy="75" r="2.5" fill="#5BA89C" opacity="0.25" class="svg-pulse"/>
+        <circle cx="405" cy="95" r="2" fill="#B89840" opacity="0.25" class="svg-pulse"/>
+        <circle cx="385" cy="410" r="2.5" fill="#967BA5" opacity="0.2" class="svg-pulse"/>
+        <circle cx="75" cy="430" r="2" fill="#5A8FB5" opacity="0.2" class="svg-pulse"/>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-label c1">第2次课程 · 60分钟</div>
+      <h3 class="week-title">呼吸锚点与焦虑觉察</h3>
+      <div class="week-theme c1">将呼吸变成"重新开始"的信号</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c1">🔄</div><span><b>呼吸练习回顾与答疑</b></span></div>
+        <div class="week-item"><div class="week-item-icon c1">⚓</div><span><b>"呼吸锚点"练习</b>：3次深呼吸作为"重新开始"的信号</span></div>
+        <div class="week-item"><div class="week-item-icon c1">📓</div><span><b>焦虑日记</b>：记录焦虑水平（0-10分）及触发情境</span></div>
+      </div>
+      <div class="week-goal c1"><span class="goal-label">🎯 核心理念</span>呼吸是连接身心的桥梁——3次深呼吸就是回到当下的"锚点"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PHASE 2 ===== -->
+<section class="phase-header ph2" id="phase2">
+  <div class="phase-header-icon ph2">🎯</div>
+  <div class="phase-header-tag ph2">第二周</div>
+  <h2 class="phase-header-title">正念专注与注意力训练</h2>
+  <p class="phase-header-sub">通过正念训练提升注意力稳定性，减少学习时的走神</p>
+</section>
+
+<!-- ===== WEEK 2 COURSE 3 ===== -->
+<section class="week-section" id="week3">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-label c2">第3次课程 · 90分钟</div>
+      <h3 class="week-title">正念呼吸进阶与学习法</h3>
+      <div class="week-theme c2">温柔地带回注意力，将正念融入学习</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c2">🧘</div><span><b>正念呼吸进阶</b>：15分钟正念呼吸</span></div>
+        <div class="week-item"><div class="week-item-icon c2">🔄</div><span><b>"走神-觉察-回归"循环</b></span></div>
+        <div class="week-item"><div class="week-item-icon c2">📌</div><span><b>"单任务学习"</b>：一次只做一件事</span></div>
+        <div class="week-item"><div class="week-item-icon c2">🍅</div><span><b>"番茄正念法"</b>：25分钟专注+5分钟正念休息</span></div>
+        <div class="week-item"><div class="week-item-icon c2">🔔</div><span><b>"学习前仪式"</b>：1分钟正念呼吸进入状态</span></div>
+      </div>
+      <div class="week-goal c2"><span class="goal-label">📝 日常作业</span>使用"番茄正念法"进行每日学习，记录走神次数变化</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration c2"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#FAF8F2"/>
+        <!-- TOP HALF: Wandering-Awareness-Return triangle loop -->
+        <g transform="translate(230,145)">
+          <!-- Triangle background glow -->
+          <polygon points="0,-85 -95,58 95,58" fill="#F5EDCF" opacity="0.12"/>
+          <!-- Triangle path -->
+          <polygon points="0,-85 -95,58 95,58" fill="none" stroke="#F5EDCF" stroke-width="2.5" stroke-dasharray="10,5"/>
+          <!-- Animated traveling dot along triangle -->
+          <circle r="5" fill="#B89840" opacity="0.5">
+            <animateMotion path="M0,-85 L-95,58 L95,58 Z" dur="6s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Node 1: 走神 (top) -->
+          <g transform="translate(0,-85)">
+            <circle r="28" fill="#F5EDCF" stroke="#B89840" stroke-width="1.8"/>
+            <text y="-5" text-anchor="middle" font-size="16">💭</text>
+            <text y="12" text-anchor="middle" font-size="10" fill="#B89840" font-weight="700">走神</text>
+          </g>
+          <!-- Node 2: 觉察 (bottom-left) -->
+          <g transform="translate(-95,58)">
+            <circle r="28" fill="#F5EDCF" stroke="#B89840" stroke-width="1.8"/>
+            <text y="-5" text-anchor="middle" font-size="16">👁️</text>
+            <text y="12" text-anchor="middle" font-size="10" fill="#B89840" font-weight="700">觉察</text>
+          </g>
+          <!-- Node 3: 回归 (bottom-right) -->
+          <g transform="translate(95,58)">
+            <circle r="28" fill="#D4EDE8" stroke="#5A988C" stroke-width="1.8"/>
+            <text y="-5" text-anchor="middle" font-size="16">🌬️</text>
+            <text y="12" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="700">回归</text>
+          </g>
+          <!-- Curved arrows between nodes -->
+          <path d="M-22,-68 Q-65,-30 -78,32" stroke="#B89840" stroke-width="1.8" fill="none" opacity="0.35" marker-end="url(#aAmber2)"/>
+          <path d="M78,32 Q65,-30 22,-68" stroke="#5A988C" stroke-width="1.8" fill="none" opacity="0.35" marker-end="url(#aTeal2)"/>
+          <path d="M-68,58 L68,58" stroke="#B89840" stroke-width="1.8" fill="none" opacity="0.25" marker-end="url(#aAmber2)"/>
+          <!-- Center message -->
+          <text y="-8" text-anchor="middle" font-size="10" fill="#5A5466" font-weight="500">温柔地</text>
+          <text y="8" text-anchor="middle" font-size="10" fill="#5A5466" font-weight="500">带回注意力</text>
+        </g>
+        <!-- Divider -->
+        <line x1="50" y1="240" x2="410" y2="240" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="6,4"/>
+        <!-- BOTTOM HALF: Pomodoro mindfulness method -->
+        <g transform="translate(230,355)">
+          <!-- Focus timer (left) -->
+          <g transform="translate(-80,0)">
+            <circle r="44" fill="#FBF4D6" stroke="#E8D48A" stroke-width="2"/>
+            <!-- Animated progress arc -->
+            <circle r="38" fill="none" stroke="#B89840" stroke-width="3.5" stroke-dasharray="0 239" stroke-linecap="round" opacity="0.5">
+              <animate attributeName="stroke-dasharray" values="0 239;179 60;239 0" dur="10s" repeatCount="indefinite"/>
+            </circle>
+            <text y="-8" text-anchor="middle" font-size="22" fill="#B89840" font-weight="800">25</text>
+            <text y="10" text-anchor="middle" font-size="9" fill="#5A5466">分钟</text>
+            <text y="22" text-anchor="middle" font-size="8" fill="#B89840" font-weight="500">专注学习</text>
+          </g>
+          <!-- Plus sign -->
+          <text x="0" y="5" text-anchor="middle" font-size="22" fill="#B89840" opacity="0.5">+</text>
+          <!-- Rest timer (right) -->
+          <g transform="translate(80,0)">
+            <circle r="44" fill="#D4EDE8" stroke="#5BA89C" stroke-width="2"/>
+            <!-- Animated progress arc -->
+            <circle r="38" fill="none" stroke="#5A988C" stroke-width="3.5" stroke-dasharray="0 239" stroke-linecap="round" opacity="0.5">
+              <animate attributeName="stroke-dasharray" values="0 239;48 191;239 0" dur="10s" repeatCount="indefinite"/>
+            </circle>
+            <text y="-8" text-anchor="middle" font-size="22" fill="#5A988C" font-weight="800">5</text>
+            <text y="10" text-anchor="middle" font-size="9" fill="#5A5466">分钟</text>
+            <text y="22" text-anchor="middle" font-size="8" fill="#5A988C" font-weight="500">正念休息</text>
+          </g>
+          <!-- Label below -->
+          <text y="62" text-anchor="middle" font-size="11" fill="#B89840" font-weight="600">🍅 番茄正念法</text>
+          <text y="78" text-anchor="middle" font-size="8" fill="#5A5466">一次只做一件事</text>
+        </g>
+        <defs>
+          <marker id="aAmber2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#B89840" opacity="0.5"/></marker>
+          <marker id="aTeal2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#5A988C" opacity="0.5"/></marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEEK 2 COURSE 4 ===== -->
+<section class="week-section reverse" id="week4" style="background:var(--surface)">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration c2"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#F0ECE4"/>
+        <!-- TOP HALF: Mindful walking scene -->
+        <g transform="translate(0,20)">
+          <!-- Sky gradient area -->
+          <rect x="30" y="20" width="400" height="180" rx="14" fill="#F5F0E8" opacity="0.5"/>
+          <!-- Winding path with animated dash -->
+          <path d="M50,170 Q110,110 190,140 Q270,170 340,120 Q380,100 420,115" stroke="#F5EDCF" stroke-width="40" fill="none" stroke-linecap="round" opacity="0.3"/>
+          <path d="M50,170 Q110,110 190,140 Q270,170 340,120 Q380,100 420,115" stroke="#E8D48A" stroke-width="1.5" fill="none" stroke-dasharray="8,6" opacity="0.4">
+            <animate attributeName="stroke-dashoffset" values="0;-28" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <!-- Trees along path -->
+          <g opacity="0.2">
+            <circle cx="80" cy="95" r="20" fill="#5A988C"/><rect x="77" y="112" width="6" height="16" fill="#7B8A5B"/>
+            <circle cx="290" cy="85" r="16" fill="#5A988C"/><rect x="287" y="98" width="6" height="14" fill="#7B8A5B"/>
+            <circle cx="395" cy="78" r="13" fill="#5A988C"/><rect x="393" y="88" width="5" height="11" fill="#7B8A5B"/>
+          </g>
+          <!-- Footprints along path (animated appearance) -->
+          <g opacity="0.25">
+            <ellipse cx="90" cy="155" rx="5" ry="8" fill="#B89840" transform="rotate(-8,90,155)"/>
+            <ellipse cx="130" cy="138" rx="5" ry="8" fill="#B89840" transform="rotate(5,130,138)"/>
+            <ellipse cx="230" cy="152" rx="5" ry="8" fill="#B89840" transform="rotate(-5,230,152)"/>
+            <ellipse cx="290" cy="138" rx="5" ry="8" fill="#B89840" transform="rotate(8,290,138)"/>
+            <ellipse cx="340" cy="122" rx="5" ry="8" fill="#B89840" transform="rotate(-6,340,122)"/>
+          </g>
+          <!-- Walking student with gentle bounce -->
+          <g class="svg-float" transform="translate(190,120)">
+            <circle cx="0" cy="-30" r="15" fill="#F5D9D3"/>
+            <path d="M-11,-32 Q-9,-44 0,-46 Q9,-44 11,-32" fill="#5A5466" opacity="0.35"/>
+            <path d="M-5,-32 Q-2,-34 1,-32" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M5,-32 Q8,-34 11,-32" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M-3,-24 Q0,-21 3,-24" stroke="#5BA89C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M-9,-14 Q-11,2 -9,14 L9,14 Q11,2 9,-14 Q0,-18 -9,-14Z" fill="#B89840" opacity="0.25"/>
+            <path d="M-4,14 Q-7,24 -11,32" stroke="#5A5466" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M4,14 Q7,24 11,32" stroke="#5A5466" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <!-- Awareness ripple -->
+            <circle cx="0" cy="-5" r="20" fill="none" stroke="#5BA89C" stroke-width="1" opacity="0.1" class="svg-pulse"/>
+          </g>
+          <!-- Label -->
+          <text x="230" y="205" text-anchor="middle" font-size="10" fill="#B89840" font-weight="500">🚶 每一步都带着觉察</text>
+        </g>
+        <!-- Divider -->
+        <line x1="50" y1="240" x2="410" y2="240" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="6,4"/>
+        <!-- BOTTOM HALF: Sound awareness exercise -->
+        <g transform="translate(230,355)">
+          <!-- Student sitting with closed eyes (meditation pose) -->
+          <circle cx="0" cy="-45" r="20" fill="#F5D9D3" opacity="0.7"/>
+          <path d="M-16,-48 Q-14,-62 0,-64 Q14,-62 16,-48" fill="#5A5466" opacity="0.3"/>
+          <!-- Closed eyes -->
+          <path d="M-8,-46 Q-5,-49 -2,-46" stroke="#3A3448" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M4,-46 Q7,-49 10,-46" stroke="#3A3448" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M-6,-38 Q0,-34 6,-38" stroke="#3A3448" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M-14,-28 Q-16,-10 -14,8 L14,8 Q16,-10 14,-28 Q0,-32 -14,-28Z" fill="#B89840" opacity="0.2"/>
+          <!-- Sound sources from 4 directions with animated waves -->
+          <!-- Top-left: bird -->
+          <g class="svg-float" transform="translate(-80,-60)">
+            <text x="-8" y="4" font-size="12">🐦</text>
+            <path d="M8,0 Q16,-6 8,-12" stroke="#B89840" stroke-width="1.5" fill="none" opacity="0.45">
+              <animate attributeName="opacity" values="0.45;0.15;0.45" dur="2s" repeatCount="indefinite"/>
+            </path>
+            <path d="M12,2 Q22,-6 12,-16" stroke="#B89840" stroke-width="1" fill="none" opacity="0.25">
+              <animate attributeName="opacity" values="0.25;0.08;0.25" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+            </path>
+          </g>
+          <!-- Top-right: wind/leaves -->
+          <g class="svg-float-d" transform="translate(80,-60)">
+            <text x="-4" y="4" font-size="12">🍃</text>
+            <path d="M-8,0 Q-16,-6 -8,-12" stroke="#5A988C" stroke-width="1.5" fill="none" opacity="0.45">
+              <animate attributeName="opacity" values="0.45;0.15;0.45" dur="2.5s" repeatCount="indefinite"/>
+            </path>
+            <path d="M-12,2 Q-22,-6 -12,-16" stroke="#5A988C" stroke-width="1" fill="none" opacity="0.25">
+              <animate attributeName="opacity" values="0.25;0.08;0.25" dur="2.5s" repeatCount="indefinite" begin="0.4s"/>
+            </path>
+          </g>
+          <!-- Bottom-left: water -->
+          <g class="svg-float-d2" transform="translate(-75,25)">
+            <text x="-8" y="4" font-size="12">💧</text>
+            <path d="M8,0 Q14,-4 8,-8" stroke="#5A8FB5" stroke-width="1.5" fill="none" opacity="0.4">
+              <animate attributeName="opacity" values="0.4;0.12;0.4" dur="3s" repeatCount="indefinite"/>
+            </path>
+          </g>
+          <!-- Bottom-right: bell/chime -->
+          <g class="svg-float-d3" transform="translate(75,25)">
+            <text x="-4" y="4" font-size="12">🔔</text>
+            <path d="M-8,0 Q-14,-4 -8,-8" stroke="#967BA5" stroke-width="1.5" fill="none" opacity="0.4">
+              <animate attributeName="opacity" values="0.4;0.12;0.4" dur="2.8s" repeatCount="indefinite"/>
+            </path>
+          </g>
+          <!-- Central awareness circle -->
+          <circle cx="0" cy="-20" r="50" fill="none" stroke="#B89840" stroke-width="1" opacity="0.08" stroke-dasharray="4,4">
+            <animateTransform attributeName="transform" type="rotate" from="0 0 -20" to="360 0 -20" dur="20s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Label -->
+          <text x="0" y="50" text-anchor="middle" font-size="10" fill="#B89840" font-weight="500">👂 闭眼聆听 · 觉察每一种声音</text>
+        </g>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-label c2">第4次课程 · 60分钟</div>
+      <h3 class="week-title">正念行走与注意力游戏</h3>
+      <div class="week-theme c2">在运动中觉察，在聆听中专注</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c2">🚶</div><span><b>正念行走</b>：校园中15分钟正念行走</span></div>
+        <div class="week-item"><div class="week-item-icon c2">👂</div><span><b>声音觉察</b>：闭眼聆听周围所有声音</span></div>
+        <div class="week-item"><div class="week-item-icon c2">💬</div><span><b>分享讨论</b>：正念学习法的体验与挑战</span></div>
+      </div>
+      <div class="week-goal c2"><span class="goal-label">🎯 核心理念</span>正念不是"不走神"，而是"走神后温柔地回来"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PHASE 3 ===== -->
+<section class="phase-header ph3" id="phase3">
+  <div class="phase-header-icon ph3">🧠</div>
+  <div class="phase-header-tag ph3">第三周</div>
+  <h2 class="phase-header-title">认知重构与情绪管理</h2>
+  <p class="phase-header-sub">改变灾难化认知，学习情绪调节策略</p>
+</section>
+
+<!-- ===== WEEK 3 COURSE 5 ===== -->
+<section class="week-section" id="week5">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-label c3">第5次课程 · 90分钟</div>
+      <h3 class="week-title">认知重构与RAIN情绪调节</h3>
+      <div class="week-theme c3">识别消极思维，学会与情绪共处</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c3">🔍</div><span><b>识别自动化消极思维</b></span></div>
+        <div class="week-item"><div class="week-item-icon c3">📝</div><span><b>思维记录表</b>：情境→思维→情绪→替代→新情绪</span></div>
+        <div class="week-item"><div class="week-item-icon c3">🤝</div><span><b>"最好的朋友"视角</b></span></div>
+        <div class="week-item"><div class="week-item-icon c3">🌧️</div><span><b>RAIN技术</b>：识别-允许-探索-不认同</span></div>
+        <div class="week-item"><div class="week-item-icon c3">🌊</div><span><b>"情绪波浪"隐喻</b></span></div>
+      </div>
+      <div class="week-goal c3"><span class="goal-label">📝 日常作业</span>每日完成1份思维记录表，练习RAIN技术</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration c3"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#FAF8F2"/>
+        <!-- TOP: Thought transformation scene -->
+        <g transform="translate(230,65)">
+          <!-- Negative thought cloud (left) -->
+          <g class="svg-float">
+            <ellipse cx="-110" cy="0" rx="65" ry="32" fill="#F2DDE2" stroke="#C47888" stroke-width="1.5"/>
+            <text x="-110" y="-5" text-anchor="middle" font-size="10" fill="#C47888" font-weight="600">"我肯定考不好"</text>
+            <text x="-110" y="10" text-anchor="middle" font-size="8" fill="#C47888" opacity="0.6">自动化消极思维</text>
+          </g>
+          <!-- Transformation arrow with sparkle -->
+          <g transform="translate(-38,0)">
+            <path d="M0,0 L20,0" stroke="#C47888" stroke-width="2.5" opacity="0.4"/>
+            <polygon points="22,0 14,-5 14,5" fill="#5A988C" opacity="0.5"/>
+            <!-- Sparkle at midpoint -->
+            <circle cx="10" cy="-8" r="3" fill="#B89840" opacity="0.4" class="svg-pulse"/>
+          </g>
+          <!-- Positive thought cloud (right) -->
+          <g class="svg-float-d">
+            <ellipse cx="65" cy="0" rx="65" ry="32" fill="#D4EDE8" stroke="#5A988C" stroke-width="1.5"/>
+            <text x="65" y="-5" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="600">"我已尽力准备了"</text>
+            <text x="65" y="10" text-anchor="middle" font-size="8" fill="#5A988C" opacity="0.6">替代性积极思维</text>
+          </g>
+          <!-- Best friend perspective badge -->
+          <g class="svg-float-d2" transform="translate(165,0)">
+            <circle r="20" fill="#F5EDCF" stroke="#B89840" stroke-width="1.2"/>
+            <text y="-2" text-anchor="middle" font-size="14">💛</text>
+            <text x="0" y="32" text-anchor="middle" font-size="8" fill="#B89840" font-weight="500">好朋友视角</text>
+          </g>
+        </g>
+        <!-- MIDDLE: RAIN technique with animated drops -->
+        <g transform="translate(230,185)">
+          <text x="0" y="-20" text-anchor="middle" font-size="11" fill="#5A8FB5" font-weight="600">🌧️ RAIN 情绪调节技术</text>
+          <!-- R - Recognize -->
+          <g class="svg-drop" transform="translate(-130,10)">
+            <path d="M0,-16 Q10,0 0,14 Q-10,0 0,-16Z" fill="#5A8FB5" opacity="0.55"/>
+            <text x="0" y="30" text-anchor="middle" font-size="11" fill="#5A8FB5" font-weight="700">R</text>
+            <text x="0" y="42" text-anchor="middle" font-size="8" fill="#5A5466">识别</text>
+          </g>
+          <!-- A - Allow -->
+          <g class="svg-drop-d" transform="translate(-43,10)">
+            <path d="M0,-16 Q10,0 0,14 Q-10,0 0,-16Z" fill="#5BA89C" opacity="0.55"/>
+            <text x="0" y="30" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="700">A</text>
+            <text x="0" y="42" text-anchor="middle" font-size="8" fill="#5A5466">允许</text>
+          </g>
+          <!-- I - Investigate -->
+          <g class="svg-drop-d2" transform="translate(43,10)">
+            <path d="M0,-16 Q10,0 0,14 Q-10,0 0,-16Z" fill="#967BA5" opacity="0.55"/>
+            <text x="0" y="30" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="700">I</text>
+            <text x="0" y="42" text-anchor="middle" font-size="8" fill="#5A5466">探索</text>
+          </g>
+          <!-- N - Non-identification -->
+          <g class="svg-drop" transform="translate(130,10)" style="animation-delay:2.4s">
+            <path d="M0,-16 Q10,0 0,14 Q-10,0 0,-16Z" fill="#C47888" opacity="0.55"/>
+            <text x="0" y="30" text-anchor="middle" font-size="11" fill="#C47888" font-weight="700">N</text>
+            <text x="0" y="42" text-anchor="middle" font-size="8" fill="#5A5466">不认同</text>
+          </g>
+          <!-- Connecting dashes between drops -->
+          <line x1="-110" y1="10" x2="-63" y2="10" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <line x1="-23" y1="10" x2="23" y2="10" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <line x1="63" y1="10" x2="110" y2="10" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+        </g>
+        <!-- BOTTOM: Emotion waves metaphor -->
+        <g transform="translate(0,290)">
+          <!-- Ocean-like wave layers -->
+          <path d="M0,70 Q55,40 110,70 Q165,100 220,70 Q275,40 330,70 Q385,100 440,70 Q465,55 460,70" stroke="#C47888" stroke-width="2.5" fill="none" opacity="0.2">
+            <animate attributeName="d" values="M0,70 Q55,40 110,70 Q165,100 220,70 Q275,40 330,70 Q385,100 440,70 Q465,55 460,70;M0,70 Q55,100 110,70 Q165,40 220,70 Q275,100 330,70 Q385,40 440,70 Q465,85 460,70;M0,70 Q55,40 110,70 Q165,100 220,70 Q275,40 330,70 Q385,100 440,70 Q465,55 460,70" dur="4s" repeatCount="indefinite"/>
+          </path>
+          <path d="M0,90 Q65,65 130,90 Q195,115 260,90 Q325,65 390,90 Q430,105 460,90" stroke="#5A8FB5" stroke-width="1.8" fill="none" opacity="0.12">
+            <animate attributeName="d" values="M0,90 Q65,65 130,90 Q195,115 260,90 Q325,65 390,90 Q430,105 460,90;M0,90 Q65,115 130,90 Q195,65 260,90 Q325,115 390,90 Q430,75 460,90;M0,90 Q65,65 130,90 Q195,115 260,90 Q325,65 390,90 Q430,105 460,90" dur="5s" repeatCount="indefinite"/>
+          </path>
+          <path d="M0,108 Q80,90 160,108 Q240,126 320,108 Q400,90 460,108" stroke="#967BA5" stroke-width="1.2" fill="none" opacity="0.08">
+            <animate attributeName="d" values="M0,108 Q80,90 160,108 Q240,126 320,108 Q400,90 460,108;M0,108 Q80,126 160,108 Q240,90 320,108 Q400,126 460,108;M0,108 Q80,90 160,108 Q240,126 320,108 Q400,90 460,108" dur="6s" repeatCount="indefinite"/>
+          </path>
+          <!-- Small boat on wave (metaphor for riding emotions) -->
+          <g class="svg-float">
+            <path d="M220,62 L210,72 L230,72 Z" fill="#B89840" opacity="0.3"/>
+            <line x1="220" y1="52" x2="220" y2="62" stroke="#B89840" stroke-width="1.5" opacity="0.3"/>
+          </g>
+          <!-- Label -->
+          <text x="230" y="140" text-anchor="middle" font-size="11" fill="#C47888" font-weight="500">🌊 情绪如波浪，自然升起与消退</text>
+          <text x="230" y="155" text-anchor="middle" font-size="8" fill="#5A5466">你不需要对抗它，只需观察它流过</text>
+        </g>
+        <defs><marker id="aRose" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#C47888" opacity="0.5"/></marker></defs>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEEK 3 COURSE 6 ===== -->
+<section class="week-section reverse" id="week6" style="background:var(--surface)">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration c3"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#F0ECE4"/>
+        <!-- TOP HALF: Body scan with animated scanning line -->
+        <g transform="translate(230,110)">
+          <!-- Person lying down (horizontal) -->
+          <g class="svg-breathe">
+            <!-- Head -->
+            <circle cx="-80" cy="0" r="18" fill="#F5D9D3" opacity="0.65"/>
+            <path d="M-94,-3 Q-92,-16 -80,-18 Q-68,-16 -66,-3" fill="#5A5466" opacity="0.25"/>
+            <path d="M-86,-1 Q-84,-3 -82,-1" stroke="#3A3448" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <path d="M-78,-1 Q-76,-3 -74,-1" stroke="#3A3448" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <!-- Body -->
+            <path d="M-64,6 Q-36,2 0,6 Q30,10 50,6 Q62,4 72,6" stroke="#C47888" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.2"/>
+            <!-- Legs -->
+            <path d="M72,6 Q82,4 92,8" stroke="#5A5466" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.2"/>
+            <path d="M72,6 Q82,10 92,14" stroke="#5A5466" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.2"/>
+          </g>
+          <!-- Animated scanning line (head to toe) -->
+          <line x1="-100" y1="-22" x2="100" y2="-22" stroke="#C47888" stroke-width="2.5" opacity="0.45" stroke-linecap="round">
+            <animate attributeName="y1" values="-22;28;-22" dur="6s" repeatCount="indefinite"/>
+            <animate attributeName="y2" values="-22;28;-22" dur="6s" repeatCount="indefinite"/>
+          </line>
+          <!-- Glow effect on scan line -->
+          <line x1="-100" y1="-22" x2="100" y2="-22" stroke="#C47888" stroke-width="10" opacity="0.08" stroke-linecap="round">
+            <animate attributeName="y1" values="-22;28;-22" dur="6s" repeatCount="indefinite"/>
+            <animate attributeName="y2" values="-22;28;-22" dur="6s" repeatCount="indefinite"/>
+          </line>
+          <!-- Scan direction labels -->
+          <text x="-115" y="-16" font-size="8" fill="#C47888" opacity="0.5">头部</text>
+          <text x="105" y="32" font-size="8" fill="#C47888" opacity="0.5">脚部</text>
+          <!-- Animated dots showing scan points -->
+          <circle cx="-60" cy="-22" r="3" fill="#C47888" opacity="0.3">
+            <animate attributeName="cy" values="-22;28;-22" dur="6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.3;0.1;0.3" dur="6s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Label -->
+          <text x="0" y="55" text-anchor="middle" font-size="11" fill="#C47888" font-weight="600">🔍 正念身体扫描</text>
+          <text x="0" y="70" text-anchor="middle" font-size="8" fill="#5A5466">从头到脚，逐步觉察每一处感受</text>
+        </g>
+        <!-- Divider -->
+        <line x1="50" y1="205" x2="410" y2="205" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="6,4"/>
+        <!-- MIDDLE: Tension → Relaxation transition -->
+        <g transform="translate(230,240)">
+          <rect x="-85" y="-20" width="75" height="40" rx="12" fill="#F2DDE2" opacity="0.45" stroke="#C47888" stroke-width="1"/>
+          <text x="-48" y="5" text-anchor="middle" font-size="12" fill="#C47888" font-weight="600">💪 紧张</text>
+          <!-- Arrow -->
+          <path d="M-2,0 L8,0" stroke="#5A5466" stroke-width="2" opacity="0.25"/>
+          <polygon points="10,0 4,-4 4,4" fill="#5A988C" opacity="0.4"/>
+          <rect x="14" y="-20" width="75" height="40" rx="12" fill="#D4EDE8" opacity="0.45" stroke="#5A988C" stroke-width="1"/>
+          <text x="52" y="5" text-anchor="middle" font-size="12" fill="#5A988C" font-weight="600">😌 放松</text>
+        </g>
+        <!-- BOTTOM HALF: Sleep mindfulness scene -->
+        <g transform="translate(230,370)">
+          <!-- Night sky background -->
+          <rect x="-110" y="-65" width="220" height="90" rx="14" fill="#2A2440" opacity="0.06"/>
+          <!-- Moon with glow -->
+          <circle cx="-50" cy="-35" r="30" fill="#F5EDCF" opacity="0.3"/>
+          <circle cx="-42" cy="-40" r="24" fill="#F0ECE4" opacity="0.8"/>
+          <!-- Moon glow -->
+          <circle cx="-50" cy="-35" r="38" fill="#F5EDCF" opacity="0.06" class="svg-glow"/>
+          <!-- Stars with twinkle -->
+          <circle cx="-90" cy="-55" r="2.5" fill="#B89840" opacity="0.35" class="svg-shimmer"/>
+          <circle cx="-10" cy="-60" r="2" fill="#B89840" opacity="0.3" class="svg-shimmer"/>
+          <circle cx="-65" cy="-65" r="1.8" fill="#B89840" opacity="0.3" class="svg-shimmer"/>
+          <circle cx="20" cy="-50" r="1.5" fill="#B89840" opacity="0.25" class="svg-shimmer"/>
+          <circle cx="60" cy="-58" r="2" fill="#B89840" opacity="0.28" class="svg-shimmer"/>
+          <!-- Sleeping student -->
+          <g transform="translate(40,-25)">
+            <circle cx="0" cy="0" r="15" fill="#F5D9D3" opacity="0.6"/>
+            <path d="M-10,-2 Q-8,-12 0,-14 Q8,-12 10,-2" fill="#5A5466" opacity="0.25"/>
+            <!-- Closed eyes -->
+            <path d="M-6,-1 Q-3,-4 0,-1" stroke="#3A3448" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <path d="M3,-1 Q6,-4 9,-1" stroke="#3A3448" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <path d="M-4,5 Q0,8 4,5" stroke="#3A3448" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.3"/>
+            <!-- ZZZ floating up -->
+            <text x="22" y="-8" font-size="11" fill="#967BA5" opacity="0.25" class="svg-float">Z</text>
+            <text x="32" y="-18" font-size="13" fill="#967BA5" opacity="0.2" class="svg-float-d">Z</text>
+            <text x="40" y="-30" font-size="15" fill="#967BA5" opacity="0.15" class="svg-float-d2">Z</text>
+          </g>
+          <!-- Label -->
+          <text x="0" y="38" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="500">😴 睡眠正念</text>
+          <text x="0" y="52" text-anchor="middle" font-size="8" fill="#5A5466">睡前身体扫描 + 呼吸放松</text>
+        </g>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-label c3">第6次课程 · 60分钟</div>
+      <h3 class="week-title">身体扫描与睡眠正念</h3>
+      <div class="week-theme c3">释放身体紧张，改善睡眠质量</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c3">🔍</div><span><b>正念身体扫描</b>：20分钟从头到脚觉察</span></div>
+        <div class="week-item"><div class="week-item-icon c3">💪</div><span><b>渐进式肌肉放松</b>：紧张-放松练习</span></div>
+        <div class="week-item"><div class="week-item-icon c3">😴</div><span><b>睡眠正念</b>：睡前身体扫描+呼吸放松</span></div>
+      </div>
+      <div class="week-goal c3"><span class="goal-label">🎯 核心理念</span>身体是情绪的容器——释放紧张，让身心真正休息</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PHASE 4 ===== -->
+<section class="phase-header ph4" id="phase4">
+  <div class="phase-header-icon ph4">🛠️</div>
+  <div class="phase-header-tag ph4">第四周</div>
+  <h2 class="phase-header-title">整合应用与考试准备</h2>
+  <p class="phase-header-sub">整合所学技术，制定个人化考试应对方案</p>
+</section>
+
+<!-- ===== WEEK 4 COURSE 7 ===== -->
+<section class="week-section" id="week7">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-label c4">第7次课程 · 90分钟</div>
+      <h3 class="week-title">考试应对工具箱整合</h3>
+      <div class="week-theme c4">考前-考中-考后全流程正念支持</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c4">📋</div><span><b>考前</b>：正念呼吸+积极自我对话+身体放松</span></div>
+        <div class="week-item"><div class="week-item-icon c4">⏸️</div><span><b>考中</b>："3秒呼吸暂停"+认知解离</span></div>
+        <div class="week-item"><div class="week-item-icon c4">💚</div><span><b>考后</b>：正念自我关怀，不反刍</span></div>
+        <div class="week-item"><div class="week-item-icon c4">📝</div><span><b>模拟考试正念练习</b></span></div>
+        <div class="week-item"><div class="week-item-icon c4">🎯</div><span><b>个人化方案制定</b></span></div>
+      </div>
+      <div class="week-goal c4"><span class="goal-label">🎯 核心理念</span>带着觉察走进考场，正念是终身的内在资源</div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration c4"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#FAF8F2"/>
+        <!-- TOP: Timeline with 3 phases -->
+        <g transform="translate(0,0)">
+          <!-- Timeline bar -->
+          <line x1="60" y1="95" x2="400" y2="95" stroke="#EDE0F3" stroke-width="3" stroke-linecap="round"/>
+          <!-- Animated progress dot on timeline -->
+          <circle r="5" fill="#967BA5" opacity="0.4">
+            <animateMotion path="M60,95 L400,95 L60,95" dur="8s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Node 1: Before exam -->
+          <g transform="translate(100,95)">
+            <circle r="34" fill="#EDE0F3" opacity="0.4"/>
+            <circle r="24" fill="#EDE0F3" opacity="0.25"/>
+            <text y="-5" text-anchor="middle" font-size="16">📋</text>
+            <text y="13" text-anchor="middle" font-size="10" fill="#967BA5" font-weight="700">考前</text>
+          </g>
+          <!-- Node 2: During exam -->
+          <g transform="translate(230,95)">
+            <circle r="34" fill="#D6E6F2" opacity="0.4"/>
+            <circle r="24" fill="#D6E6F2" opacity="0.25"/>
+            <text y="-5" text-anchor="middle" font-size="16">✏️</text>
+            <text y="13" text-anchor="middle" font-size="10" fill="#5A8FB5" font-weight="700">考中</text>
+          </g>
+          <!-- Node 3: After exam -->
+          <g transform="translate(360,95)">
+            <circle r="34" fill="#D4EDE8" opacity="0.4"/>
+            <circle r="24" fill="#D4EDE8" opacity="0.25"/>
+            <text y="-5" text-anchor="middle" font-size="16">💚</text>
+            <text y="13" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="700">考后</text>
+          </g>
+          <!-- Connecting dashed lines to tool cards -->
+          <line x1="100" y1="130" x2="100" y2="160" stroke="#967BA5" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.2"/>
+          <line x1="230" y1="130" x2="230" y2="160" stroke="#5A8FB5" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.2"/>
+          <line x1="360" y1="130" x2="360" y2="160" stroke="#5A988C" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.2"/>
+        </g>
+        <!-- MIDDLE: Tool cards for each phase -->
+        <!-- Before exam tools -->
+        <g transform="translate(100,200)">
+          <g class="svg-float"><rect x="-52" y="-10" width="104" height="28" rx="14" fill="#EDE0F3" opacity="0.55" stroke="#967BA5" stroke-width="0.8" stroke-opacity="0.2"/><text y="9" text-anchor="middle" font-size="9" fill="#967BA5">🌬️ 正念呼吸</text></g>
+          <g class="svg-float-d"><rect x="-52" y="24" width="104" height="28" rx="14" fill="#EDE0F3" opacity="0.55" stroke="#967BA5" stroke-width="0.8" stroke-opacity="0.2"/><text y="43" text-anchor="middle" font-size="9" fill="#967BA5">💬 积极自我对话</text></g>
+          <g class="svg-float-d2"><rect x="-52" y="58" width="104" height="28" rx="14" fill="#EDE0F3" opacity="0.55" stroke="#967BA5" stroke-width="0.8" stroke-opacity="0.2"/><text y="77" text-anchor="middle" font-size="9" fill="#967BA5">💆 身体放松</text></g>
+        </g>
+        <!-- During exam tools -->
+        <g transform="translate(230,200)">
+          <g class="svg-float-d"><rect x="-58" y="-10" width="116" height="28" rx="14" fill="#D6E6F2" opacity="0.55" stroke="#5A8FB5" stroke-width="0.8" stroke-opacity="0.2"/><text y="9" text-anchor="middle" font-size="9" fill="#5A8FB5">⏸️ 3秒呼吸暂停</text></g>
+          <g class="svg-float-d2"><rect x="-58" y="24" width="116" height="28" rx="14" fill="#D6E6F2" opacity="0.55" stroke="#5A8FB5" stroke-width="0.8" stroke-opacity="0.2"/><text y="43" text-anchor="middle" font-size="9" fill="#5A8FB5">🧠 认知解离</text></g>
+          <g class="svg-float"><rect x="-58" y="58" width="116" height="28" rx="14" fill="#D6E6F2" opacity="0.55" stroke="#5A8FB5" stroke-width="0.8" stroke-opacity="0.2"/><text y="77" text-anchor="middle" font-size="9" fill="#5A8FB5">📝 模拟练习</text></g>
+        </g>
+        <!-- After exam tools -->
+        <g transform="translate(360,200)">
+          <g class="svg-float-d2"><rect x="-52" y="-10" width="104" height="28" rx="14" fill="#D4EDE8" opacity="0.55" stroke="#5A988C" stroke-width="0.8" stroke-opacity="0.2"/><text y="9" text-anchor="middle" font-size="9" fill="#5A988C">🤗 自我关怀</text></g>
+          <g class="svg-float"><rect x="-52" y="24" width="104" height="28" rx="14" fill="#D4EDE8" opacity="0.55" stroke="#5A988C" stroke-width="0.8" stroke-opacity="0.2"/><text y="43" text-anchor="middle" font-size="9" fill="#5A988C">🚫 停止反刍</text></g>
+        </g>
+        <!-- Divider -->
+        <line x1="50" y1="310" x2="410" y2="310" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="6,4"/>
+        <!-- BOTTOM: Personal plan card -->
+        <g transform="translate(230,380)">
+          <rect x="-110" y="-45" width="220" height="90" rx="16" fill="#EDE0F3" opacity="0.2" stroke="#967BA5" stroke-width="1.5"/>
+          <!-- Inner content -->
+          <text y="-22" text-anchor="middle" font-size="14" fill="#967BA5" font-weight="700">🎯 我的考试正念方案</text>
+          <!-- 3 mini icons -->
+          <g transform="translate(-60,8)">
+            <circle r="12" fill="#EDE0F3" opacity="0.5"/><text y="4" text-anchor="middle" font-size="10">📋</text>
+          </g>
+          <g transform="translate(0,8)">
+            <circle r="12" fill="#D6E6F2" opacity="0.5"/><text y="4" text-anchor="middle" font-size="10">✏️</text>
+          </g>
+          <g transform="translate(60,8)">
+            <circle r="12" fill="#D4EDE8" opacity="0.5"/><text y="4" text-anchor="middle" font-size="10">💚</text>
+          </g>
+          <text y="32" text-anchor="middle" font-size="9" fill="#5A5466">个人化 · 可操作 · 持续练习</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEEK 4 COURSE 8 ===== -->
+<section class="week-section reverse" id="week8" style="background:var(--surface)">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration c4"></div>
+      <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="460" height="460" rx="20" fill="#F0ECE4"/>
+        <!-- TOP: Graduation scene with cap -->
+        <g transform="translate(230,75)">
+          <!-- Confetti sparkles -->
+          <circle cx="-120" cy="-20" r="3" fill="#967BA5" opacity="0.2" class="svg-shimmer"/>
+          <circle cx="100" cy="-30" r="2.5" fill="#B89840" opacity="0.2" class="svg-shimmer"/>
+          <circle cx="-80" cy="10" r="2" fill="#5A988C" opacity="0.2" class="svg-shimmer"/>
+          <circle cx="130" cy="5" r="2.5" fill="#C47888" opacity="0.18" class="svg-shimmer"/>
+          <!-- Graduation cap -->
+          <g class="svg-float">
+            <polygon points="0,-38 -60,-14 0,12 60,-14" fill="#967BA5" opacity="0.25"/>
+            <polygon points="0,-38 -60,-14 0,12 60,-14" fill="none" stroke="#967BA5" stroke-width="1.2" opacity="0.3"/>
+            <rect x="-5" y="-14" width="10" height="30" fill="#967BA5" opacity="0.18"/>
+            <!-- Tassel -->
+            <line x1="60" y1="-14" x2="60" y2="20" stroke="#967BA5" stroke-width="2" opacity="0.25"/>
+            <circle cx="60" cy="24" r="5" fill="#B89840" opacity="0.35" class="svg-sway"/>
+          </g>
+          <text y="38" text-anchor="middle" font-size="12" fill="#967BA5" font-weight="600">🎓 结业仪式</text>
+        </g>
+        <!-- MIDDLE: Three students holding hands (peer support) -->
+        <g transform="translate(230,210)">
+          <!-- Connection arc behind students -->
+          <path d="M-90,0 Q-90,-40 0,-40 Q90,-40 90,0" stroke="#5A988C" stroke-width="1.5" fill="none" opacity="0.12" stroke-dasharray="4,4">
+            <animate attributeName="opacity" values="0.12;0.25;0.12" dur="4s" repeatCount="indefinite"/>
+          </path>
+          <!-- Student 1 (left) -->
+          <g class="svg-float">
+            <circle cx="-85" cy="-22" r="18" fill="#F5D9D3" opacity="0.7"/>
+            <path d="M-98,-24 Q-96,-36 -85,-38 Q-74,-36 -72,-24" fill="#5A5466" opacity="0.28"/>
+            <path d="M-92,-22 Q-89,-24 -86,-22" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.45"/>
+            <path d="M-84,-22 Q-81,-24 -78,-22" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.45"/>
+            <path d="M-86,-14 Q-84,-12 -82,-14" stroke="#5BA89C" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <path d="M-98,-8 Q-100,10 -98,28 L-72,28 Q-70,10 -72,-8 Q-85,-12 -98,-8Z" fill="#5BA89C" opacity="0.2"/>
+            <!-- Arm reaching right -->
+            <path d="M-72,4 Q-58,10 -52,4" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- Student 2 (center) -->
+          <g class="svg-float-d">
+            <circle cx="0" cy="-22" r="18" fill="#F5D9D3" opacity="0.7"/>
+            <path d="M-13,-24 Q-11,-36 0,-38 Q11,-36 13,-24" fill="#5A5466" opacity="0.28"/>
+            <path d="M-7,-22 Q-4,-24 -1,-22" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.45"/>
+            <path d="M3,-22 Q6,-24 9,-22" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.45"/>
+            <path d="M-4,-14 Q0,-11 4,-14" stroke="#B89840" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <path d="M-13,-8 Q-15,10 -13,28 L13,28 Q15,10 13,-8 Q0,-12 -13,-8Z" fill="#B89840" opacity="0.2"/>
+            <!-- Arms reaching both sides -->
+            <path d="M-13,4 Q-26,10 -32,4" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M13,4 Q26,10 32,4" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- Student 3 (right) -->
+          <g class="svg-float-d2">
+            <circle cx="85" cy="-22" r="18" fill="#F5D9D3" opacity="0.7"/>
+            <path d="M72,-24 Q74,-36 85,-38 Q96,-36 98,-24" fill="#5A5466" opacity="0.28"/>
+            <path d="M78,-22 Q81,-24 84,-22" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.45"/>
+            <path d="M90,-22 Q93,-24 96,-22" stroke="#3A3448" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.45"/>
+            <path d="M82,-14 Q85,-11 88,-14" stroke="#C47888" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+            <path d="M72,-8 Q70,10 72,28 L98,28 Q100,10 98,-8 Q85,-12 72,-8Z" fill="#C47888" opacity="0.2"/>
+            <path d="M72,4 Q58,10 52,4" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- Heart between students -->
+          <g transform="translate(0,-45)" class="svg-pulse">
+            <path d="M0,-4 Q-4,-10 -8,-6 Q-12,-2 -8,3 L0,10 L8,3 Q12,-2 8,-6 Q4,-10 0,-4Z" fill="#C47888" opacity="0.2"/>
+          </g>
+          <text y="52" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="600">🤝 同伴互助 · 携手前行</text>
+        </g>
+        <!-- Divider -->
+        <line x1="50" y1="285" x2="410" y2="285" stroke="#E8E3EE" stroke-width="1" stroke-dasharray="6,4"/>
+        <!-- BOTTOM: Toolkit card -->
+        <g transform="translate(230,375)">
+          <rect x="-120" y="-48" width="240" height="96" rx="18" fill="#FBF4D6" stroke="#E8D48A" stroke-width="1.5"/>
+          <text y="-28" text-anchor="middle" font-size="13" fill="#B89840" font-weight="700">🧘 正念学习工具卡</text>
+          <!-- 5 tool icons in a row -->
+          <g transform="translate(-88,6)">
+            <circle r="14" fill="#D4EDE8" opacity="0.45" stroke="#5BA89C" stroke-width="0.8" stroke-opacity="0.3"/>
+            <text y="4" text-anchor="middle" font-size="12">🌬️</text>
+            <text y="22" text-anchor="middle" font-size="7" fill="#5A5466">呼吸</text>
+          </g>
+          <g transform="translate(-44,6)">
+            <circle r="14" fill="#F5EDCF" opacity="0.45" stroke="#B89840" stroke-width="0.8" stroke-opacity="0.3"/>
+            <text y="4" text-anchor="middle" font-size="12">🧠</text>
+            <text y="22" text-anchor="middle" font-size="7" fill="#5A5466">认知</text>
+          </g>
+          <g transform="translate(0,6)">
+            <circle r="14" fill="#F2DDE2" opacity="0.45" stroke="#C47888" stroke-width="0.8" stroke-opacity="0.3"/>
+            <text y="4" text-anchor="middle" font-size="12">🌊</text>
+            <text y="22" text-anchor="middle" font-size="7" fill="#5A5466">情绪</text>
+          </g>
+          <g transform="translate(44,6)">
+            <circle r="14" fill="#EDE0F3" opacity="0.45" stroke="#967BA5" stroke-width="0.8" stroke-opacity="0.3"/>
+            <text y="4" text-anchor="middle" font-size="12">💪</text>
+            <text y="22" text-anchor="middle" font-size="7" fill="#5A5466">放松</text>
+          </g>
+          <g transform="translate(88,6)">
+            <circle r="14" fill="#D6E6F2" opacity="0.45" stroke="#5A8FB5" stroke-width="0.8" stroke-opacity="0.3"/>
+            <text y="4" text-anchor="middle" font-size="12">💚</text>
+            <text y="22" text-anchor="middle" font-size="7" fill="#5A5466">关怀</text>
+          </g>
+        </g>
+        <!-- Decorative sparkles -->
+        <circle cx="55" cy="45" r="2.5" fill="#967BA5" opacity="0.22" class="svg-pulse"/>
+        <circle cx="405" cy="55" r="2" fill="#B89840" opacity="0.22" class="svg-pulse"/>
+        <circle cx="385" cy="430" r="2.5" fill="#5A988C" opacity="0.18" class="svg-pulse"/>
+        <circle cx="75" cy="445" r="2" fill="#C47888" opacity="0.18" class="svg-pulse"/>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-label c4">第8次课程 · 60分钟</div>
+      <h3 class="week-title">终期评估与结业</h3>
+      <div class="week-theme c4">回顾成长，建立长效支持网络</div>
+      <div class="week-items">
+        <div class="week-item"><div class="week-item-icon c4">📊</div><span><b>终期评估</b>：复测TAI、注意力测验</span></div>
+        <div class="week-item"><div class="week-item-icon c4">📝</div><span><b>4周回顾与分享</b></span></div>
+        <div class="week-item"><div class="week-item-icon c4">🤝</div><span><b>同伴支持小组建立</b></span></div>
+        <div class="week-item"><div class="week-item-icon c4">🎓</div><span><b>结业仪式</b>：发放"正念学习工具卡"</span></div>
+      </div>
+      <div class="week-goal c4"><span class="goal-label">🎯 核心理念</span>4周不是结束，而是开始——带着正念工具，从容面对每一次考试</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPLEMENTATION ===== -->
+<section class="info-section" id="adapt">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag adapt">⚙ 实施适配</div>
+      <h2 class="section-title">科学落地的实施策略</h2>
+      <p class="section-subtitle">从时间安排到人员配置，确保干预方案有效执行</p>
+    </div>
+    <div class="info-grid stagger">
+      <div class="info-card reveal" style="--i:0"><div class="info-card-icon a1">⏰</div><h3>时间安排</h3><p>每周2次课程，利用课外活动或晚自习前时段，每次60-90分钟</p></div>
+      <div class="info-card reveal" style="--i:1"><div class="info-card-icon a2">🏫</div><h3>场地要求</h3><p>学校心理辅导室或安静多功能教室，配备瑜伽垫</p></div>
+      <div class="info-card reveal" style="--i:2"><div class="info-card-icon a3">👥</div><h3>人员配置</h3><p>1名心理咨询师（主带领）、2名朋辈辅导员（协助小组练习）</p></div>
+      <div class="info-card reveal" style="--i:3"><div class="info-card-icon a4">📚</div><h3>班级适配</h3><p>以班级为单位开展，确保覆盖面；高焦虑学生小组强化辅导</p></div>
+      <div class="info-card reveal" style="--i:4"><div class="info-card-icon a5">🏠</div><h3>家长沟通</h3><p>向家长介绍干预内容，鼓励家庭支持，形成家校协同网络</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONG-TERM ===== -->
+<section class="info-section" id="longterm">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">🔄 长效保障机制</div>
+      <h2 class="section-title">可持续的正念生态</h2>
+      <p class="section-subtitle">从测评工具到朋辈支持，构建自我运转的正念学习生态</p>
+    </div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0"><div class="longterm-card-icon l1">📊</div><div><h3>效果测评工具</h3><p>TAI量表、注意力测验、正念量表（MAAS）、学业自我效能感量表、过程性评估</p></div></div>
+      <div class="longterm-card reveal" style="--i:1"><div class="longterm-card-icon l2">🏫</div><div><h3>持续练习支持</h3><p>建立"正念学习角"（校园安静空间），提供每日正念练习指导</p></div></div>
+      <div class="longterm-card reveal" style="--i:2"><div class="longterm-card-icon l3">🤝</div><div><h3>朋辈支持</h3><p>培训"正念学习大使"，在考试季带领同学进行正念练习</p></div></div>
+      <div class="longterm-card reveal" style="--i:3"><div class="longterm-card-icon l4">👩‍🏫</div><div><h3>教师培训</h3><p>为班主任提供基础正念知识培训，在日常教学中融入正念元素</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs ===== -->
+<section class="info-section" id="sdgs">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">🌍 SDGs & ESG</div>
+      <h2 class="section-title">可持续发展目标融合</h2>
+      <p class="section-subtitle">将学生心理健康与联合国可持续发展目标深度结合</p>
+    </div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0"><div class="sdg-num">03</div><div class="sdg-title">良好健康与福祉</div><p class="sdg-desc">促进青少年心理健康，减少考试焦虑相关的心理问题</p></div>
+      <div class="sdg-card reveal" style="--i:1"><div class="sdg-num">04</div><div class="sdg-title">优质教育</div><p class="sdg-desc">通过正念学习法提升学习质量与教育公平</p></div>
+      <div class="sdg-card reveal" style="--i:2"><div class="sdg-num">S</div><div class="sdg-title">ESG-S 社会责任</div><p class="sdg-desc">教育机构对学生全面发展的责任体现</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">以正念为帆，从容远航 🌿</h2>
+    <p class="footer-text">每一位学生都值得拥有平静的内心和自信的力量</p>
+    <div class="footer-hearts">🧘 🌬️ 💚 🎓</div>
+  </div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d)*100+'%'});
+const dots=document.querySelectorAll('.nav-dot');
+const sections=['hero','phase1','week1','week2','phase2','week3','week4','phase3','week5','week6','phase4','week7','week8','adapt','longterm','sdgs'];
+dots.forEach(d=>{d.addEventListener('click',()=>{document.getElementById(d.getAttribute('data-target')).scrollIntoView({behavior:'smooth'})})});
+const els=sections.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;els.forEach((e,i)=>{if(e.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((d,i)=>d.classList.toggle('active',i===c))});
+const ro=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el=>ro.observe(el));
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(0.03+i*0.02)}px)`})});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

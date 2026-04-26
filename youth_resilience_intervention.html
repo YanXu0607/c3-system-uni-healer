@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青少年韧性发展干预项目</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --lavender: #9B8FA8; --lavender-light: #E8E3EE;
+    --teal: #6EC4B8; --teal-light: #D4EDE8;
+    --coral: #E08B7A; --coral-light: #F5D9D3;
+    --cream: #F5F0E1; --cream-pale: #FAF8F2;
+    --yellow: #F4E4A6; --yellow-light: #FBF4D6;
+    --peach: #F5E0D0;
+    --deep: #4A4458; --soft: #7A7486; --surface: #F0ECE4;
+    --blue: #7BA7CC; --blue-light: #D6E6F2;
+    --mint: #8BC9A8; --mint-light: #D9F0E4;
+    --rose: #D4899A; --rose-light: #F2DDE2;
+    --amber: #C9A84C; --amber-light: #F5EDCF;
+    --sky: #7EB5D6; --sky-light: #DCEEF8;
+    --plum: #A68BB5; --plum-light: #EDE0F3;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Noto Sans SC', sans-serif; background: var(--cream-pale); color: var(--deep); overflow-x: hidden; line-height: 1.8; }
+
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 1000; background: linear-gradient(90deg, var(--teal), var(--lavender), var(--coral), var(--blue)); width: 0%; transition: width 0.1s linear; }
+
+  .nav-dots { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column; gap: 10px; }
+  .nav-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(0,0,0,0.12); cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+  .nav-dot.active { background: var(--teal); transform: scale(1.5); box-shadow: 0 0 10px rgba(110,196,184,0.4); }
+  .nav-dot:hover { transform: scale(1.3); }
+  .nav-dot .tooltip { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: var(--deep); color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .nav-dot:hover .tooltip { opacity: 1; }
+
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(160deg, var(--teal-light) 0%, var(--cream) 35%, var(--lavender-light) 70%, var(--peach) 100%); }
+  .hero-bg-shapes { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .hero-shape { position: absolute; border-radius: 50%; opacity: 0.12; }
+  .hero-shape:nth-child(1) { width: 420px; height: 420px; background: var(--teal); top: -120px; right: -100px; animation: floatShape 9s ease-in-out infinite; }
+  .hero-shape:nth-child(2) { width: 320px; height: 320px; background: var(--lavender); bottom: -80px; left: -80px; animation: floatShape 11s ease-in-out infinite reverse; }
+  .hero-shape:nth-child(3) { width: 220px; height: 220px; background: var(--blue); top: 25%; left: 8%; animation: floatShape 13s ease-in-out infinite; }
+  .hero-shape:nth-child(4) { width: 160px; height: 160px; background: var(--yellow); bottom: 20%; right: 15%; animation: floatShape 10s ease-in-out infinite reverse; }
+  @keyframes floatShape { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(20px, -20px) scale(1.05); } }
+
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; padding: 40px 24px; }
+  .hero-badge { display: inline-block; padding: 6px 20px; background: rgba(110,196,184,0.12); border-radius: 20px; font-size: 13px; color: var(--teal); font-weight: 500; letter-spacing: 2px; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+  .hero-title { font-family: 'Noto Serif SC', serif; font-size: clamp(30px, 5vw, 52px); font-weight: 700; line-height: 1.3; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+  .hero-title .accent { color: var(--teal); }
+  .hero-title .accent2 { color: var(--lavender); }
+  .hero-subtitle { font-size: clamp(14px, 2vw, 17px); color: var(--soft); font-weight: 300; margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-meta { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+  .hero-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--soft); }
+  .hero-meta-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .hero-meta-icon.green { background: rgba(110,196,184,0.15); }
+  .hero-meta-icon.blue { background: rgba(123,167,204,0.12); }
+  .hero-meta-icon.purple { background: rgba(155,143,168,0.12); }
+  .hero-meta-icon.gold { background: rgba(244,228,166,0.2); }
+  .hero-illustration { margin-top: 36px; opacity: 0; animation: fadeUp 1s 1s forwards; max-width: 620px; margin-left: auto; margin-right: auto; }
+  .hero-illustration svg { width: 100%; height: auto; display: block; }
+
+  .scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--soft); font-size: 12px; letter-spacing: 1px; opacity: 0; animation: fadeUp 0.8s 1.2s forwards; }
+  .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid var(--soft); border-bottom: 2px solid var(--soft); transform: rotate(45deg); animation: bounce 2s infinite; }
+  @keyframes bounce { 0%, 100% { transform: rotate(45deg) translateY(0); } 50% { transform: rotate(45deg) translateY(6px); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  .week-section { min-height: 100vh; display: flex; align-items: center; padding: 80px 24px; position: relative; }
+  .week-section:nth-child(odd) { background: var(--cream-pale); }
+  .week-section:nth-child(even) { background: var(--surface); }
+  .week-container { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+
+  .week-number { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .week-num-badge { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: #fff; }
+  .week-num-badge.w1 { background: linear-gradient(135deg, #6EC4B8, #A3D8D0); }
+  .week-num-badge.w2 { background: linear-gradient(135deg, #7BA7CC, #A8C8E0); }
+  .week-num-badge.w3 { background: linear-gradient(135deg, #D4899A, #E5B0BB); }
+  .week-label { font-size: 13px; letter-spacing: 2px; color: var(--soft); font-weight: 500; }
+
+  .week-title { font-family: 'Noto Serif SC', serif; font-size: clamp(22px, 3.2vw, 34px); font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+  .week-theme { font-size: 14px; font-weight: 500; margin-bottom: 14px; }
+  .week-theme.w1 { color: var(--teal); }
+  .week-theme.w2 { color: var(--rose); }
+  .week-theme.w3 { color: var(--blue); }
+
+  .week-desc { font-size: 15px; color: var(--soft); line-height: 1.9; margin-bottom: 18px; }
+  .week-details { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+  .detail-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--soft); }
+  .detail-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+  .detail-icon.w1 { background: rgba(110,196,184,0.12); }
+  .detail-icon.w2 { background: rgba(212,137,154,0.12); }
+  .detail-icon.w3 { background: rgba(123,167,204,0.12); }
+
+  .week-assess { padding: 14px 18px; border-radius: 12px; font-size: 13px; color: var(--soft); line-height: 1.7; }
+  .week-assess.w1 { background: rgba(110,196,184,0.06); border-left: 3px solid var(--teal); }
+  .week-assess.w2 { background: rgba(212,137,154,0.06); border-left: 3px solid var(--rose); }
+  .week-assess.w3 { background: rgba(123,167,204,0.06); border-left: 3px solid var(--blue); }
+  .assess-label { font-weight: 600; font-size: 12px; letter-spacing: 1px; margin-bottom: 4px; display: block; }
+
+  .week-visual { position: relative; perspective: 800px; }
+  .week-visual svg { width: 100%; height: auto; display: block; border-radius: 20px; filter: drop-shadow(0 12px 40px rgba(0,0,0,0.05)); }
+  .week-decoration { position: absolute; width: 80px; height: 80px; border-radius: 50%; opacity: 0.1; z-index: -1; }
+  .week-decoration.w1 { background: var(--teal); top: -20px; right: -20px; }
+  .week-decoration.w2 { background: var(--rose); bottom: -20px; left: -20px; }
+  .week-decoration.w3 { background: var(--blue); top: -20px; right: -20px; }
+
+  .adapt-section { padding: 100px 24px; background: linear-gradient(180deg, var(--surface) 0%, var(--cream-pale) 100%); }
+  .adapt-container { max-width: 1100px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 56px; }
+  .section-tag { display: inline-block; padding: 5px 16px; border-radius: 16px; font-size: 12px; letter-spacing: 2px; font-weight: 500; margin-bottom: 16px; }
+  .section-tag.adapt { background: rgba(110,196,184,0.12); color: var(--teal); }
+  .section-tag.sdgs { background: rgba(123,167,204,0.12); color: var(--blue); }
+  .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(26px, 4vw, 40px); font-weight: 700; margin-bottom: 12px; }
+  .section-subtitle { font-size: 15px; color: var(--soft); max-width: 600px; margin: 0 auto; }
+
+  .sdg-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 900px; margin: 40px auto 0; }
+  .sdg-card { padding: 32px; border-radius: 20px; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+  .sdg-card-badge { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  .sdg-card-badge.teal { background: linear-gradient(135deg, #6EC4B8, #A3D8D0); }
+  .sdg-card-badge.blue { background: linear-gradient(135deg, #7BA7CC, #A8C8E0); }
+  .sdg-card-title { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .sdg-card-text { font-size: 14px; color: var(--soft); line-height: 1.8; }
+
+  .footer { padding: 60px 24px; text-align: center; background: linear-gradient(180deg, var(--surface), var(--cream-pale)); }
+  .footer-title { font-family: 'Noto Serif SC', serif; font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+  .footer-text { font-size: 14px; color: var(--soft); max-width: 500px; margin: 0 auto; }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale { opacity: 0; transform: scale(0.9); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+  .svg-float { animation: svgFloat 4s ease-in-out infinite; }
+  .svg-float-d { animation: svgFloat 4s ease-in-out 1s infinite; }
+  .svg-float-d2 { animation: svgFloat 4s ease-in-out 2s infinite; }
+  .svg-pulse { animation: svgPulse 3s ease-in-out infinite; }
+  .svg-breathe { animation: svgBreathe 5s ease-in-out infinite; }
+  .svg-rotate { animation: svgRotate 12s linear infinite; }
+  .svg-sway { animation: svgSway 6s ease-in-out infinite; }
+  .svg-glow { animation: svgGlow 4s ease-in-out infinite; }
+  .svg-draw { stroke-dasharray: 600; stroke-dashoffset: 600; animation: svgDraw 3s ease forwards; }
+  .svg-draw-slow { stroke-dasharray: 800; stroke-dashoffset: 800; animation: svgDraw 4s ease forwards; }
+  .svg-fade-in { opacity: 0; animation: svgFadeIn 1.2s ease forwards; }
+  .svg-fade-in-d { opacity: 0; animation: svgFadeIn 1.2s 0.4s ease forwards; }
+  .svg-fade-in-d2 { opacity: 0; animation: svgFadeIn 1.2s 0.8s ease forwards; }
+  .svg-fade-in-d3 { opacity: 0; animation: svgFadeIn 1.2s 1.2s ease forwards; }
+  .svg-fade-in-d4 { opacity: 0; animation: svgFadeIn 1.2s 1.6s ease forwards; }
+  .svg-scale-in { transform: scale(0); opacity: 0; animation: svgScaleIn 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .svg-ripple { transform: scale(0); opacity: 0; animation: svgRipple 2.5s ease-out forwards; }
+  .svg-ring { transform: scale(0); opacity: 0; animation: svgRing 3s ease-out infinite; }
+  .svg-ring-d { animation: svgRing 3s ease-out 1s infinite; }
+  .svg-shimmer { opacity: 0; animation: svgShimmer 3s ease-in-out infinite; }
+  .svg-rise { opacity: 0; transform: translateY(20px); animation: svgRise 1.5s ease forwards; }
+  .svg-slide-l { opacity: 0; transform: translateX(-30px); animation: svgSlideL 1s ease forwards; }
+  .svg-slide-r { opacity: 0; transform: translateX(30px); animation: svgSlideR 1s ease forwards; }
+  .svg-drop { opacity: 0; transform: translateY(-20px); animation: svgDrop 2.5s ease infinite; }
+  .svg-drop-d { animation: svgDrop 2.5s ease 0.8s infinite; }
+
+  @keyframes svgFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes svgPulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.12); opacity: 1; } }
+  @keyframes svgBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+  @keyframes svgRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes svgSway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+  @keyframes svgGlow { 0%, 100% { opacity: 0.08; } 50% { opacity: 0.22; } }
+  @keyframes svgDraw { to { stroke-dashoffset: 0; } }
+  @keyframes svgFadeIn { to { opacity: 1; } }
+  @keyframes svgScaleIn { to { transform: scale(1); opacity: 1; } }
+  @keyframes svgRipple { 0% { transform: scale(0); opacity: 0.5; } 100% { transform: scale(2.5); opacity: 0; } }
+  @keyframes svgRing { 0% { transform: scale(0.3); opacity: 0.6; } 100% { transform: scale(2); opacity: 0; } }
+  @keyframes svgShimmer { 0%, 100% { opacity: 0; } 50% { opacity: 0.6; } }
+  @keyframes svgRise { to { opacity: 1; transform: translateY(0); } }
+  @keyframes svgSlideL { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgSlideR { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgDrop { 0% { opacity: 0; transform: translateY(-20px); } 15% { opacity: 0.7; } 60% { opacity: 0.4; transform: translateY(30px); } 80% { opacity: 0; transform: translateY(40px); } 100% { opacity: 0; transform: translateY(40px); } }
+
+  @media (max-width: 768px) {
+    .week-container { grid-template-columns: 1fr; gap: 32px; }
+    .week-section { padding: 60px 20px; }
+    .nav-dots { right: 12px; gap: 8px; }
+    .nav-dot { width: 7px; height: 7px; }
+    .nav-dot .tooltip { display: none; }
+    .hero-meta { gap: 14px; }
+    .sdg-cards { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="module1"><span class="tooltip">正念运动</span></div>
+  <div class="nav-dot" data-target="module2"><span class="tooltip">艺术治疗</span></div>
+  <div class="nav-dot" data-target="module3"><span class="tooltip">团体训练</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs融合</span></div>
+  <div class="nav-dot" data-target="footer"><span class="tooltip">结语</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">UNIHEAL · 青少年韧性发展</div>
+    <h1 class="hero-title">三项标准化<br><span class="accent">干预模块</span></h1>
+    <p class="hero-subtitle">基于韧性发展与青少年身心发展特点 · 每项方法配套专属评估工具与监测方式</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon green">12</div><span>12周周期</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon blue">3</div><span>3项模块</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon purple">A</div><span>标准化评估</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 620 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="620" height="320" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="hg1" cx="50%" cy="45%" r="35%"><stop offset="0%" stop-color="#6EC4B8" stop-opacity="0.15"/><stop offset="100%" stop-color="#6EC4B8" stop-opacity="0"/></radialGradient>
+          <radialGradient id="hg2" cx="50%" cy="45%" r="30%"><stop offset="0%" stop-color="#9B8FA8" stop-opacity="0.12"/><stop offset="100%" stop-color="#9B8FA8" stop-opacity="0"/></radialGradient>
+          <radialGradient id="hg3" cx="50%" cy="45%" r="28%"><stop offset="0%" stop-color="#7BA7CC" stop-opacity="0.12"/><stop offset="100%" stop-color="#7BA7CC" stop-opacity="0"/></radialGradient>
+        </defs>
+        <!-- Warm glow -->
+        <circle cx="310" cy="155" r="140" fill="url(#hg1)" class="svg-glow"/>
+        <circle cx="310" cy="155" r="100" fill="url(#hg2)" class="svg-glow" style="animation-delay:1s"/>
+        <circle cx="310" cy="155" r="70" fill="url(#hg3)" class="svg-glow" style="animation-delay:2s"/>
+        <!-- Three interconnected module circles -->
+        <g class="svg-fade-in" style="animation-delay:0.5s">
+          <!-- Module 1 circle (top) -->
+          <circle cx="310" cy="90" r="38" fill="#D4EDE8" opacity="0.25" stroke="#6EC4B8" stroke-width="1.5" class="svg-breathe"/>
+          <circle cx="310" cy="90" r="24" fill="#fff" opacity="0.7" stroke="#D4EDE8" stroke-width="1"/>
+          <!-- Yoga pose icon -->
+          <circle cx="310" cy="84" r="6" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+          <path d="M304 88 Q310 82 316 88" fill="#9B8FA8" opacity="0.4"/>
+          <rect x="304" y="92" width="12" height="16" rx="4" fill="#D6E6F2" opacity="0.6"/>
+          <text x="310" y="118" text-anchor="middle" font-size="9" fill="#6EC4B8" opacity="0.7" font-weight="500">正念运动</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:0.8s">
+          <!-- Module 2 circle (bottom-left) -->
+          <circle cx="230" cy="195" r="38" fill="#F2DDE2" opacity="0.25" stroke="#D4899A" stroke-width="1.5" class="svg-breathe" style="animation-delay:0.5s"/>
+          <circle cx="230" cy="195" r="24" fill="#fff" opacity="0.7" stroke="#F2DDE2" stroke-width="1"/>
+          <!-- Art icon -->
+          <circle cx="230" cy="189" r="6" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+          <path d="M224 193 Q230 187 236 193" fill="#9B8FA8" opacity="0.4"/>
+          <rect x="224" y="197" width="12" height="16" rx="4" fill="#E8E3EE" opacity="0.6"/>
+          <text x="230" y="223" text-anchor="middle" font-size="9" fill="#D4899A" opacity="0.7" font-weight="500">艺术治疗</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.1s">
+          <!-- Module 3 circle (bottom-right) -->
+          <circle cx="390" cy="195" r="38" fill="#D6E6F2" opacity="0.25" stroke="#7BA7CC" stroke-width="1.5" class="svg-breathe" style="animation-delay:1s"/>
+          <circle cx="390" cy="195" r="24" fill="#fff" opacity="0.7" stroke="#D6E6F2" stroke-width="1"/>
+          <!-- Group icon -->
+          <circle cx="384" cy="189" r="5" fill="#F5D9D3" stroke="#D4899A" stroke-width="0.8"/>
+          <circle cx="396" cy="189" r="5" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="0.8"/>
+          <rect x="380" y="196" width="10" height="12" rx="3" fill="#D6E6F2" opacity="0.6"/>
+          <rect x="392" y="196" width="10" height="12" rx="3" fill="#D4EDE8" opacity="0.6"/>
+          <text x="390" y="223" text-anchor="middle" font-size="9" fill="#7BA7CC" opacity="0.7" font-weight="500">团体训练</text>
+        </g>
+        <!-- Connecting flowing paths between modules -->
+        <g class="svg-fade-in" style="animation-delay:1.4s">
+          <path d="M290 120 Q260 155 245 170" stroke="#6EC4B8" stroke-width="2" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay:1.6s"/>
+          <path d="M330 120 Q360 155 375 170" stroke="#7BA7CC" stroke-width="2" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay:1.8s"/>
+          <path d="M260 200 Q310 215 360 200" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="110" stroke-dashoffset="110" style="animation-delay:2s"/>
+        </g>
+        <!-- Youth figures around the modules -->
+        <g class="svg-breathe" style="animation-delay:0.3s">
+          <circle cx="160" cy="130" r="11" fill="#D4EDE8" opacity="0.6"/>
+          <path d="M151 128 Q154 119 160 117 Q166 119 169 128" fill="#7A7486" opacity="0.35"/>
+          <path d="M153 134 Q151 148 152 162 L168 162 Q169 148 167 134 Q160 130 153 134Z" fill="#6EC4B8" opacity="0.35"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:0.7s">
+          <circle cx="460" cy="130" r="11" fill="#D6E6F2" opacity="0.6"/>
+          <path d="M451 128 Q454 119 460 117 Q466 119 469 128" fill="#7A7486" opacity="0.35"/>
+          <path d="M453 134 Q451 148 452 162 L468 162 Q469 148 467 134 Q460 130 453 134Z" fill="#7BA7CC" opacity="0.35"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:1.1s">
+          <circle cx="140" cy="230" r="10" fill="#F2DDE2" opacity="0.55"/>
+          <path d="M132 228 Q135 220 140 218 Q145 220 148 228" fill="#7A7486" opacity="0.3"/>
+          <path d="M134 233 Q132 245 133 257 L147 257 Q148 245 146 233 Q140 230 134 233Z" fill="#D4899A" opacity="0.3"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:1.5s">
+          <circle cx="480" cy="230" r="10" fill="#E8E3EE" opacity="0.55"/>
+          <path d="M472 228 Q475 220 480 218 Q485 220 488 228" fill="#7A7486" opacity="0.3"/>
+          <path d="M474 233 Q472 245 473 257 L487 257 Q488 245 486 233 Q480 230 474 233Z" fill="#9B8FA8" opacity="0.3"/>
+        </g>
+        <!-- Floating decorative circles -->
+        <circle cx="80" cy="80" r="18" fill="#D4EDE8" opacity="0.3" class="svg-float"/>
+        <circle cx="540" cy="70" r="16" fill="#E8E3EE" opacity="0.3" class="svg-float-d"/>
+        <circle cx="530" cy="200" r="14" fill="#FBF4D6" opacity="0.3" class="svg-float-d2"/>
+        <circle cx="90" cy="220" r="12" fill="#F5D9D3" opacity="0.3" class="svg-float"/>
+        <!-- Breathing rings -->
+        <circle cx="310" cy="155" r="60" fill="none" stroke="#6EC4B8" stroke-width="1" opacity="0.12" class="svg-ring"/>
+        <circle cx="310" cy="155" r="60" fill="none" stroke="#D4899A" stroke-width="1" opacity="0.1" class="svg-ring-d"/>
+        <!-- Shimmer dots -->
+        <circle cx="500" cy="120" r="3" fill="#7BA7CC" opacity="0.3" class="svg-pulse"/>
+        <circle cx="120" cy="150" r="2.5" fill="#6EC4B8" opacity="0.3" class="svg-pulse"/>
+        <circle cx="490" cy="260" r="2" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="130" cy="280" r="2.5" fill="#D4899A" opacity="0.25" class="svg-shimmer"/>
+        <circle cx="510" cy="160" r="2" fill="#8BC9A8" opacity="0.3" class="svg-shimmer" style="animation-delay:1s"/>
+        <!-- Module pills at bottom -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <rect x="100" y="280" width="120" height="24" rx="12" fill="#D4EDE8" opacity="0.5"/>
+          <text x="160" y="296" text-anchor="middle" font-size="9" fill="#6EC4B8" font-weight="500">正念运动 · Mindful</text>
+          <rect x="250" y="280" width="120" height="24" rx="12" fill="#F2DDE2" opacity="0.5"/>
+          <text x="310" y="296" text-anchor="middle" font-size="9" fill="#D4899A" font-weight="500">艺术治疗 · Art</text>
+          <rect x="400" y="280" width="120" height="24" rx="12" fill="#D6E6F2" opacity="0.5"/>
+          <text x="460" y="296" text-anchor="middle" font-size="9" fill="#7BA7CC" font-weight="500">团体训练 · Group</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ===== MODULE 1: 正念运动 ===== -->
+<section class="week-section" id="module1">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w1">1</div><span class="week-label">模块一</span></div>
+      <h2 class="week-title">正念运动</h2>
+      <div class="week-theme w1">Mindful Movement</div>
+      <p class="week-desc">结合身体活动与正念觉察，改善青少年久坐学习带来的身心紧张，培养当下觉察能力。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w1">T</div><span>12周 · 每周2次 · 30分钟</span></div>
+        <div class="detail-item"><div class="detail-icon w1">Y</div><span>正念瑜伽 · 正念拉伸 · 正念行走</span></div>
+        <div class="detail-item"><div class="detail-icon w1">C</div><span>教室适配型团体训练</span></div>
+      </div>
+      <div class="week-assess w1">
+        <span class="assess-label">评估工具</span>CD-RISC 青少年心理韧性量表<br>
+        <span class="assess-label">监测方法</span>项目前后测，对比心理韧性水平变化
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w1"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="m1glow" cx="50%" cy="45%" r="38%"><stop offset="0%" stop-color="#6EC4B8" stop-opacity="0.12"/><stop offset="100%" stop-color="#6EC4B8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <!-- Background glow -->
+        <circle cx="220" cy="190" r="150" fill="url(#m1glow)" class="svg-glow"/>
+        <!-- 3 concentric breathing circles -->
+        <circle cx="220" cy="180" r="100" fill="none" stroke="#D4EDE8" stroke-width="1.5" opacity="0.25" class="svg-breathe"/>
+        <circle cx="220" cy="180" r="75" fill="none" stroke="#D4EDE8" stroke-width="1.2" opacity="0.2" class="svg-pulse"/>
+        <circle cx="220" cy="180" r="50" fill="none" stroke="#D4EDE8" stroke-width="1" opacity="0.18" class="svg-breathe" style="animation-delay:1s"/>
+        <!-- Person doing yoga/stretching pose -->
+        <g class="svg-breathe">
+          <!-- Head -->
+          <circle cx="220" cy="120" r="16" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5"/>
+          <path d="M212 116 Q220 108 228 116" fill="#7A7486" opacity="0.35"/>
+          <!-- Body in stretch pose -->
+          <path d="M210 136 Q208 160 212 185 L228 185 Q232 160 230 136 Q220 130 210 136Z" fill="#D6E6F2" opacity="0.5" stroke="#7BA7CC" stroke-width="0.8"/>
+          <!-- Arms stretched up -->
+          <path d="M210 142 Q195 125 185 110" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round"/>
+          <path d="M230 142 Q245 125 255 110" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round"/>
+          <!-- Hands -->
+          <circle cx="185" cy="110" r="4" fill="#F5D9D3" opacity="0.6"/>
+          <circle cx="255" cy="110" r="4" fill="#F5D9D3" opacity="0.6"/>
+          <!-- Legs crossed -->
+          <path d="M212 185 Q200 200 190 215" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.35" stroke-linecap="round"/>
+          <path d="M228 185 Q240 200 250 215" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.35" stroke-linecap="round"/>
+        </g>
+        <!-- Flowing energy curves -->
+        <g class="svg-fade-in" style="animation-delay:0.5s">
+          <path d="M170 100 Q190 80 210 95 Q230 110 250 90 Q270 70 290 85" stroke="#6EC4B8" stroke-width="2" fill="none" opacity="0.35" class="svg-draw" stroke-dasharray="250" stroke-dashoffset="250" style="animation-delay:0.8s"/>
+          <path d="M160 140 Q185 125 210 140 Q235 155 260 135 Q285 115 300 130" stroke="#6EC4B8" stroke-width="1.5" fill="none" opacity="0.25" class="svg-draw" stroke-dasharray="250" stroke-dashoffset="250" style="animation-delay:1.2s"/>
+          <path d="M175 170 Q200 155 220 170 Q240 185 265 165" stroke="#8BC9A8" stroke-width="1.5" fill="none" opacity="0.2" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:1.6s"/>
+        </g>
+        <!-- Floating awareness dots -->
+        <circle cx="140" cy="90" r="4" fill="#6EC4B8" opacity="0.35" class="svg-float"/>
+        <circle cx="300" cy="80" r="3" fill="#8BC9A8" opacity="0.3" class="svg-float-d"/>
+        <circle cx="160" cy="160" r="3.5" fill="#6EC4B8" opacity="0.3" class="svg-float-d2"/>
+        <circle cx="280" cy="150" r="3" fill="#D4EDE8" opacity="0.4" class="svg-shimmer"/>
+        <circle cx="120" cy="200" r="2.5" fill="#6EC4B8" opacity="0.25" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="320" cy="190" r="2.5" fill="#8BC9A8" opacity="0.25" class="svg-shimmer" style="animation-delay:1.5s"/>
+        <circle cx="190" cy="70" r="2" fill="#F4E4A6" opacity="0.4" class="svg-pulse"/>
+        <circle cx="260" cy="65" r="2" fill="#F4E4A6" opacity="0.35" class="svg-pulse" style="animation-delay:0.5s"/>
+        <!-- Gentle wave pattern at bottom (breath) -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <path d="M60 320 Q100 300 140 320 Q180 340 220 320 Q260 300 300 320 Q340 340 380 320" stroke="#6EC4B8" stroke-width="2.5" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="400" stroke-dashoffset="400" style="animation-delay:1.8s"/>
+          <path d="M80 340 Q120 325 160 340 Q200 355 240 340 Q280 325 320 340 Q360 355 390 340" stroke="#6EC4B8" stroke-width="1.5" fill="none" opacity="0.18" class="svg-draw" stroke-dasharray="350" stroke-dashoffset="350" style="animation-delay:2.2s"/>
+        </g>
+        <!-- Tree/nature elements on the side -->
+        <g class="svg-sway" style="transform-origin:60px 280px">
+          <rect x="57" y="280" width="6" height="30" rx="3" fill="#A0937D" opacity="0.35"/>
+          <circle cx="60" cy="268" r="16" fill="#8BC9A8" opacity="0.3"/>
+          <circle cx="52" cy="275" r="10" fill="#6EC4B8" opacity="0.25"/>
+          <circle cx="68" cy="273" r="11" fill="#8BC9A8" opacity="0.22"/>
+        </g>
+        <g class="svg-sway" style="transform-origin:390px 290px;animation-delay:1s">
+          <rect x="387" y="290" width="5" height="24" rx="2.5" fill="#A0937D" opacity="0.3"/>
+          <circle cx="390" cy="280" r="13" fill="#8BC9A8" opacity="0.28"/>
+          <circle cx="383" cy="286" r="8" fill="#6EC4B8" opacity="0.22"/>
+        </g>
+        <!-- Small grass -->
+        <g class="svg-sway" style="transform-origin:100px 340px;animation-delay:0.5s">
+          <line x1="97" y1="340" x2="93" y2="328" stroke="#8BC9A8" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+          <line x1="100" y1="340" x2="100" y2="325" stroke="#8BC9A8" stroke-width="1.5" opacity="0.25" stroke-linecap="round"/>
+          <line x1="103" y1="340" x2="107" y2="328" stroke="#8BC9A8" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+        </g>
+        <!-- Text label -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <text x="220" y="365" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity="0.6" font-weight="500">身体 · 呼吸 · 觉察</text>
+        </g>
+        <!-- Scale-in decorative elements -->
+        <g class="svg-scale-in" style="animation-delay:1s"><circle cx="150" cy="130" r="5" fill="#D4EDE8" opacity="0.4"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.3s"><circle cx="290" cy="120" r="4" fill="#D4EDE8" opacity="0.35"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.6s"><circle cx="340" cy="240" r="5" fill="#D9F0E4" opacity="0.3"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.9s"><circle cx="100" cy="250" r="4" fill="#D4EDE8" opacity="0.3"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 2: 表达性艺术治疗 ===== -->
+<section class="week-section" id="module2">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w2"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="m2glow" cx="50%" cy="45%" r="38%"><stop offset="0%" stop-color="#D4899A" stop-opacity="0.1"/><stop offset="100%" stop-color="#D4899A" stop-opacity="0"/></radialGradient>
+          <radialGradient id="m2glow2" cx="50%" cy="45%" r="30%"><stop offset="0%" stop-color="#9B8FA8" stop-opacity="0.08"/><stop offset="100%" stop-color="#9B8FA8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <!-- Background glow -->
+        <circle cx="220" cy="190" r="150" fill="url(#m2glow)" class="svg-glow"/>
+        <circle cx="220" cy="190" r="100" fill="url(#m2glow2)" class="svg-glow" style="animation-delay:1s"/>
+        <!-- Large mandala-like circular pattern -->
+        <g class="svg-rotate" style="transform-origin:220px 180px">
+          <circle cx="220" cy="180" r="90" fill="none" stroke="#F2DDE2" stroke-width="1" opacity="0.3" stroke-dasharray="8,6"/>
+        </g>
+        <g class="svg-rotate" style="transform-origin:220px 180px;animation-direction:reverse;animation-duration:18s">
+          <circle cx="220" cy="180" r="70" fill="none" stroke="#E8E3EE" stroke-width="1" opacity="0.25" stroke-dasharray="5,8"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="220" cy="180" r="50" fill="none" stroke="#F2DDE2" stroke-width="1.2" opacity="0.2"/>
+        </g>
+        <g class="svg-pulse">
+          <circle cx="220" cy="180" r="30" fill="none" stroke="#D4899A" stroke-width="0.8" opacity="0.15"/>
+        </g>
+        <!-- Mandala petals -->
+        <g class="svg-rotate" style="transform-origin:220px 180px;animation-duration:20s">
+          <ellipse cx="220" cy="140" rx="8" ry="18" fill="#F2DDE2" opacity="0.2"/>
+          <ellipse cx="220" cy="220" rx="8" ry="18" fill="#F2DDE2" opacity="0.2"/>
+          <ellipse cx="180" cy="180" rx="18" ry="8" fill="#E8E3EE" opacity="0.18"/>
+          <ellipse cx="260" cy="180" rx="18" ry="8" fill="#E8E3EE" opacity="0.18"/>
+        </g>
+        <!-- Person sitting at easel -->
+        <g class="svg-breathe">
+          <!-- Head -->
+          <circle cx="180" cy="200" r="14" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5"/>
+          <path d="M173 196 Q180 189 187 196" fill="#7A7486" opacity="0.35"/>
+          <!-- Body sitting -->
+          <path d="M170 214 Q168 235 170 255 L190 255 Q192 235 190 214 Q180 208 170 214Z" fill="#E8E3EE" opacity="0.5"/>
+          <!-- Arm reaching to canvas -->
+          <path d="M190 220 Q210 210 225 195" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.35" stroke-linecap="round"/>
+          <circle cx="225" cy="195" r="3" fill="#F5D9D3" opacity="0.6"/>
+          <!-- Legs -->
+          <path d="M172 255 Q168 270 165 280" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <path d="M188 255 Q192 270 195 280" stroke="#D4899A" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+        </g>
+        <!-- Canvas/easel -->
+        <g class="svg-fade-in" style="animation-delay:0.5s">
+          <rect x="240" y="130" width="70" height="90" rx="4" fill="#fff" opacity="0.7" stroke="#E8E3EE" stroke-width="1.5"/>
+          <!-- Easel legs -->
+          <line x1="242" y1="220" x2="235" y2="260" stroke="#A0937D" stroke-width="2" opacity="0.3"/>
+          <line x1="308" y1="220" x2="315" y2="260" stroke="#A0937D" stroke-width="2" opacity="0.3"/>
+          <line x1="275" y1="220" x2="275" y2="265" stroke="#A0937D" stroke-width="2" opacity="0.25"/>
+          <!-- Paint on canvas -->
+          <circle cx="260" cy="160" r="8" fill="#D4899A" opacity="0.2"/>
+          <circle cx="285" cy="170" r="6" fill="#6EC4B8" opacity="0.2"/>
+          <circle cx="270" cy="185" r="7" fill="#C9A84C" opacity="0.2"/>
+          <circle cx="295" cy="155" r="5" fill="#9B8FA8" opacity="0.18"/>
+        </g>
+        <!-- Colorful paint dots splashing around -->
+        <g class="svg-scale-in" style="animation-delay:0.8s"><circle cx="320" cy="140" r="6" fill="#D4899A" opacity="0.4"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.1s"><circle cx="340" cy="165" r="5" fill="#9B8FA8" opacity="0.35"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.4s"><circle cx="330" cy="195" r="4" fill="#C9A84C" opacity="0.4"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.7s"><circle cx="310" cy="120" r="5" fill="#6EC4B8" opacity="0.35"/></g>
+        <g class="svg-scale-in" style="animation-delay:2s"><circle cx="350" cy="145" r="3.5" fill="#D4899A" opacity="0.3"/></g>
+        <g class="svg-scale-in" style="animation-delay:2.3s"><circle cx="325" cy="210" r="4.5" fill="#E8E3EE" opacity="0.35"/></g>
+        <g class="svg-scale-in" style="animation-delay:0.6s"><circle cx="130" cy="150" r="4" fill="#D4899A" opacity="0.25"/></g>
+        <g class="svg-scale-in" style="animation-delay:0.9s"><circle cx="110" cy="180" r="3.5" fill="#C9A84C" opacity="0.25"/></g>
+        <!-- Musical notes floating (geometric shapes) -->
+        <g class="svg-float">
+          <circle cx="100" cy="100" r="5" fill="#F2DDE2" opacity="0.4"/>
+          <line x1="105" y1="100" x2="105" y2="82" stroke="#D4899A" stroke-width="1.5" opacity="0.3"/>
+          <path d="M105 82 Q112 80 108 86" fill="#D4899A" opacity="0.25"/>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="350" cy="90" r="4.5" fill="#E8E3EE" opacity="0.35"/>
+          <line x1="354.5" y1="90" x2="354.5" y2="74" stroke="#9B8FA8" stroke-width="1.5" opacity="0.25"/>
+          <path d="M354.5 74 Q361 72 357 78" fill="#9B8FA8" opacity="0.2"/>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="80" cy="250" r="4" fill="#F5EDCF" opacity="0.35"/>
+          <line x1="84" y1="250" x2="84" y2="236" stroke="#C9A84C" stroke-width="1.2" opacity="0.25"/>
+          <path d="M84 236 Q90 234 86 240" fill="#C9A84C" opacity="0.2"/>
+        </g>
+        <!-- Shimmer dots -->
+        <circle cx="150" cy="120" r="2" fill="#D4899A" opacity="0.3" class="svg-shimmer"/>
+        <circle cx="300" cy="100" r="2.5" fill="#9B8FA8" opacity="0.25" class="svg-shimmer" style="animation-delay:0.8s"/>
+        <circle cx="370" cy="230" r="2" fill="#C9A84C" opacity="0.3" class="svg-shimmer" style="animation-delay:1.5s"/>
+        <circle cx="120" cy="280" r="2" fill="#6EC4B8" opacity="0.25" class="svg-pulse"/>
+        <circle cx="380" cy="270" r="2.5" fill="#D4899A" opacity="0.2" class="svg-pulse" style="animation-delay:0.5s"/>
+        <!-- Ripple effects -->
+        <circle cx="275" cy="175" r="15" fill="none" stroke="#D4899A" stroke-width="0.8" opacity="0.12" class="svg-ring"/>
+        <circle cx="275" cy="175" r="15" fill="none" stroke="#9B8FA8" stroke-width="0.8" opacity="0.1" class="svg-ring-d"/>
+        <!-- Text label -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <text x="220" y="365" text-anchor="middle" font-size="11" fill="#D4899A" opacity="0.6" font-weight="500">色彩 · 表达 · 释放</text>
+        </g>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w2">2</div><span class="week-label">模块二</span></div>
+      <h2 class="week-title">表达性艺术治疗</h2>
+      <div class="week-theme w2">Expressive Art Therapy</div>
+      <p class="week-desc">依托艺术媒介为青春期学生提供安全情绪出口，助力自我认同发展。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w2">T</div><span>12周 · 每周1次 · 45分钟</span></div>
+        <div class="detail-item"><div class="detail-icon w2">A</div><span>情绪绘画 · 曼陀罗 · 音乐即兴 · 戏剧角色扮演</span></div>
+        <div class="detail-item"><div class="detail-icon w2">U</div><span>每四周更新艺术形式</span></div>
+      </div>
+      <div class="week-assess w2">
+        <span class="assess-label">评估工具</span>五级情绪打卡量表<br>
+        <span class="assess-label">监测方法</span>每日情绪打分，教师观察，一对一沟通，每周复盘趋势
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 3: 团体韧性训练 ===== -->
+<section class="week-section" id="module3">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w3">3</div><span class="week-label">模块三</span></div>
+      <h2 class="week-title">团体韧性训练</h2>
+      <div class="week-theme w3">Group Resilience Training</div>
+      <p class="week-desc">基于CBT与积极心理学，矫正负性思维、提升问题解决与同伴支持能力。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w3">T</div><span>12周 · 每周1次 · 40分钟</span></div>
+        <div class="detail-item"><div class="detail-icon w3">C</div><span>思维陷阱识别 · 优势探索 · 感恩练习</span></div>
+        <div class="detail-item"><div class="detail-icon w3">G</div><span>问题解决 · 社交技能训练</span></div>
+      </div>
+      <div class="week-assess w3">
+        <span class="assess-label">评估工具</span>SDQ 优势与困难问卷<br>
+        <span class="assess-label">监测方法</span>班主任、家长双向填写，家庭校园双场景监测
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w3"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="m3glow" cx="50%" cy="45%" r="38%"><stop offset="0%" stop-color="#7BA7CC" stop-opacity="0.12"/><stop offset="100%" stop-color="#7BA7CC" stop-opacity="0"/></radialGradient>
+        </defs>
+        <!-- Background glow -->
+        <circle cx="220" cy="190" r="150" fill="url(#m3glow)" class="svg-glow"/>
+        <!-- 3 people sitting in a circle -->
+        <!-- Person 1 (top) -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="100" r="14" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.5"/>
+          <path d="M212 96 Q220 88 228 96" fill="#7A7486" opacity="0.35"/>
+          <path d="M210 114 Q208 135 210 155 L230 155 Q232 135 230 114 Q220 108 210 114Z" fill="#D6E6F2" opacity="0.5"/>
+        </g>
+        <!-- Person 2 (bottom-left) -->
+        <g class="svg-breathe" style="animation-delay:0.4s">
+          <circle cx="150" cy="240" r="13" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.5"/>
+          <path d="M143 236 Q150 229 157 236" fill="#7A7486" opacity="0.3"/>
+          <path d="M140 253 Q138 272 140 290 L160 290 Q162 272 160 253 Q150 248 140 253Z" fill="#D4EDE8" opacity="0.45"/>
+        </g>
+        <!-- Person 3 (bottom-right) -->
+        <g class="svg-breathe" style="animation-delay:0.8s">
+          <circle cx="290" cy="240" r="13" fill="#E8E3EE" stroke="#9B8FA8" stroke-width="1.5"/>
+          <path d="M283 236 Q290 229 297 236" fill="#7A7486" opacity="0.3"/>
+          <path d="M280 253 Q278 272 280 290 L300 290 Q302 272 300 253 Q290 248 280 253Z" fill="#E8E3EE" opacity="0.45"/>
+        </g>
+        <!-- Connected by flowing lines/curves -->
+        <g class="svg-fade-in" style="animation-delay:0.5s">
+          <path d="M215 114 Q190 170 160 235" stroke="#7BA7CC" stroke-width="2" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="150" stroke-dashoffset="150" style="animation-delay:0.8s"/>
+          <path d="M225 114 Q250 170 280 235" stroke="#7BA7CC" stroke-width="2" fill="none" opacity="0.3" class="svg-draw" stroke-dasharray="150" stroke-dashoffset="150" style="animation-delay:1s"/>
+          <path d="M163 245 Q220 270 277 245" stroke="#7BA7CC" stroke-width="2" fill="none" opacity="0.25" class="svg-draw" stroke-dasharray="130" stroke-dashoffset="130" style="animation-delay:1.2s"/>
+        </g>
+        <!-- Central glowing node -->
+        <g class="svg-scale-in" style="animation-delay:1s">
+          <circle cx="220" cy="195" r="28" fill="#D6E6F2" opacity="0.2"/>
+          <circle cx="220" cy="195" r="18" fill="#fff" opacity="0.65" stroke="#D6E6F2" stroke-width="1.5"/>
+          <circle cx="220" cy="195" r="6" fill="#7BA7CC" opacity="0.3"/>
+        </g>
+        <circle cx="220" cy="195" r="12" fill="none" stroke="#7BA7CC" stroke-width="1" opacity="0.15" class="svg-pulse"/>
+        <circle cx="220" cy="195" r="22" fill="none" stroke="#7BA7CC" stroke-width="0.8" opacity="0.1" class="svg-glow"/>
+        <!-- Thought bubbles above heads -->
+        <g class="svg-float">
+          <circle cx="220" cy="70" r="10" fill="#D6E6F2" opacity="0.3"/>
+          <circle cx="228" cy="80" r="4" fill="#D6E6F2" opacity="0.2"/>
+          <circle cx="232" cy="88" r="2" fill="#D6E6F2" opacity="0.15"/>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="130" cy="210" r="9" fill="#D4EDE8" opacity="0.28"/>
+          <circle cx="137" cy="218" r="3.5" fill="#D4EDE8" opacity="0.18"/>
+          <circle cx="140" cy="225" r="1.5" fill="#D4EDE8" opacity="0.12"/>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="310" cy="210" r="9" fill="#E8E3EE" opacity="0.28"/>
+          <circle cx="303" cy="218" r="3.5" fill="#E8E3EE" opacity="0.18"/>
+          <circle cx="300" cy="225" r="1.5" fill="#E8E3EE" opacity="0.12"/>
+        </g>
+        <!-- Upward arrows representing growth -->
+        <g class="svg-rise" style="animation-delay:1.5s">
+          <line x1="100" y1="320" x2="100" y2="290" stroke="#7BA7CC" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="95,295 100,285 105,295" fill="#7BA7CC" opacity="0.3"/>
+        </g>
+        <g class="svg-rise" style="animation-delay:1.8s">
+          <line x1="220" y1="330" x2="220" y2="295" stroke="#7BA7CC" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="215,300 220,290 225,300" fill="#7BA7CC" opacity="0.3"/>
+        </g>
+        <g class="svg-rise" style="animation-delay:2.1s">
+          <line x1="340" y1="320" x2="340" y2="290" stroke="#7BA7CC" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="335,295 340,285 345,295" fill="#7BA7CC" opacity="0.3"/>
+        </g>
+        <!-- Shimmer dots -->
+        <circle cx="80" cy="140" r="2.5" fill="#7BA7CC" opacity="0.25" class="svg-shimmer"/>
+        <circle cx="360" cy="140" r="2.5" fill="#7BA7CC" opacity="0.25" class="svg-shimmer" style="animation-delay:0.8s"/>
+        <circle cx="170" cy="310" r="2" fill="#6EC4B8" opacity="0.25" class="svg-shimmer" style="animation-delay:1.5s"/>
+        <circle cx="270" cy="310" r="2" fill="#9B8FA8" opacity="0.25" class="svg-shimmer" style="animation-delay:2s"/>
+        <circle cx="60" cy="200" r="2" fill="#D6E6F2" opacity="0.3" class="svg-pulse"/>
+        <circle cx="380" cy="200" r="2" fill="#D6E6F2" opacity="0.3" class="svg-pulse" style="animation-delay:0.5s"/>
+        <!-- Ripple from center -->
+        <circle cx="220" cy="195" r="18" fill="none" stroke="#7BA7CC" stroke-width="0.8" opacity="0.12" class="svg-ring"/>
+        <circle cx="220" cy="195" r="18" fill="none" stroke="#7BA7CC" stroke-width="0.8" opacity="0.1" class="svg-ring-d"/>
+        <!-- Text label -->
+        <g class="svg-fade-in" style="animation-delay:2.2s">
+          <text x="220" y="365" text-anchor="middle" font-size="11" fill="#7BA7CC" opacity="0.6" font-weight="500">连接 · 成长 · 韧性</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 实施适配 ===== -->
+<section class="adapt-section" id="adapt">
+  <div class="adapt-container">
+    <div class="section-header reveal">
+      <div class="section-tag adapt">实施适配</div>
+      <h2 class="section-title">融入日常教学节奏</h2>
+      <p class="section-subtitle">活动适配日常教学节奏，去说教化，以非语言表达、轻运动、互动游戏为主</p>
+    </div>
+    <div class="reveal-scale" style="max-width:900px;margin:0 auto;">
+      <svg viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="400" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="aglow" cx="50%" cy="50%" r="40%"><stop offset="0%" stop-color="#6EC4B8" stop-opacity="0.08"/><stop offset="100%" stop-color="#6EC4B8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="400" cy="200" r="180" fill="url(#aglow)" class="svg-glow"/>
+        <!-- School/classroom silhouette at center -->
+        <g class="svg-fade-in" style="animation-delay:0.3s">
+          <!-- Building -->
+          <rect x="340" y="120" width="120" height="100" rx="6" fill="#E8E3EE" opacity="0.3" stroke="#9B8FA8" stroke-width="1" opacity="0.2"/>
+          <!-- Roof -->
+          <path d="M330 120 L400 80 L470 120Z" fill="#D4EDE8" opacity="0.25" stroke="#6EC4B8" stroke-width="1"/>
+          <!-- Windows -->
+          <rect x="355" y="140" width="25" height="25" rx="3" fill="#D6E6F2" opacity="0.3"/>
+          <rect x="420" y="140" width="25" height="25" rx="3" fill="#D6E6F2" opacity="0.3"/>
+          <!-- Door -->
+          <rect x="385" y="175" width="30" height="45" rx="4" fill="#D4EDE8" opacity="0.25"/>
+          <!-- Flag -->
+          <line x1="400" y1="80" x2="400" y2="55" stroke="#A0937D" stroke-width="1.5" opacity="0.3"/>
+          <rect x="400" y="55" width="20" height="12" rx="2" fill="#D4899A" opacity="0.2"/>
+        </g>
+        <!-- Flowing timeline arrow from left to right -->
+        <g class="svg-fade-in" style="animation-delay:0.5s">
+          <path d="M60 300 Q150 280 250 300 Q350 320 450 300 Q550 280 650 300 Q700 310 740 300" stroke="#6EC4B8" stroke-width="3" fill="none" opacity="0.25" class="svg-draw-slow" stroke-dasharray="800" stroke-dashoffset="800" style="animation-delay:0.8s"/>
+          <!-- Arrow head -->
+          <polygon points="738,294 750,300 738,306" fill="#6EC4B8" opacity="0.25"/>
+        </g>
+        <!-- 5 icon nodes along the timeline -->
+        <!-- Node 1: 体验 -->
+        <g class="svg-fade-in" style="animation-delay:1s">
+          <circle cx="120" cy="280" r="28" fill="#D4EDE8" opacity="0.3" stroke="#6EC4B8" stroke-width="1.2"/>
+          <circle cx="120" cy="280" r="18" fill="#fff" opacity="0.7" stroke="#D4EDE8" stroke-width="1"/>
+          <!-- Experience icon: hand/heart -->
+          <path d="M114 278 Q120 272 126 278 Q126 284 120 288 Q114 284 114 278Z" fill="#6EC4B8" opacity="0.35"/>
+          <text x="120" y="325" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity="0.6" font-weight="500">体验</text>
+        </g>
+        <circle cx="120" cy="280" r="12" fill="none" stroke="#6EC4B8" stroke-width="0.8" opacity="0.1" class="svg-ring"/>
+        <!-- Node 2: 低压力 -->
+        <g class="svg-fade-in" style="animation-delay:1.2s">
+          <circle cx="270" cy="260" r="28" fill="#D6E6F2" opacity="0.3" stroke="#7BA7CC" stroke-width="1.2"/>
+          <circle cx="270" cy="260" r="18" fill="#fff" opacity="0.7" stroke="#D6E6F2" stroke-width="1"/>
+          <!-- Low pressure icon: feather -->
+          <path d="M264 258 Q270 250 276 258 Q270 266 264 258Z" fill="#7BA7CC" opacity="0.3"/>
+          <line x1="270" y1="252" x2="270" y2="268" stroke="#7BA7CC" stroke-width="1" opacity="0.25"/>
+          <text x="270" y="305" text-anchor="middle" font-size="11" fill="#7BA7CC" opacity="0.6" font-weight="500">低压力</text>
+        </g>
+        <circle cx="270" cy="260" r="12" fill="none" stroke="#7BA7CC" stroke-width="0.8" opacity="0.1" class="svg-ring" style="animation-delay:0.5s"/>
+        <!-- Node 3: 包容 -->
+        <g class="svg-fade-in" style="animation-delay:1.4s">
+          <circle cx="420" cy="280" r="28" fill="#F2DDE2" opacity="0.3" stroke="#D4899A" stroke-width="1.2"/>
+          <circle cx="420" cy="280" r="18" fill="#fff" opacity="0.7" stroke="#F2DDE2" stroke-width="1"/>
+          <!-- Inclusive icon: circle of dots -->
+          <circle cx="414" cy="276" r="3" fill="#D4899A" opacity="0.25"/>
+          <circle cx="426" cy="276" r="3" fill="#6EC4B8" opacity="0.25"/>
+          <circle cx="420" cy="284" r="3" fill="#7BA7CC" opacity="0.25"/>
+          <text x="420" y="325" text-anchor="middle" font-size="11" fill="#D4899A" opacity="0.6" font-weight="500">包容</text>
+        </g>
+        <circle cx="420" cy="280" r="12" fill="none" stroke="#D4899A" stroke-width="0.8" opacity="0.1" class="svg-ring" style="animation-delay:1s"/>
+        <!-- Node 4: 隐私 -->
+        <g class="svg-fade-in" style="animation-delay:1.6s">
+          <circle cx="570" cy="260" r="28" fill="#E8E3EE" opacity="0.3" stroke="#9B8FA8" stroke-width="1.2"/>
+          <circle cx="570" cy="260" r="18" fill="#fff" opacity="0.7" stroke="#E8E3EE" stroke-width="1"/>
+          <!-- Privacy icon: shield -->
+          <path d="M570 250 L578 254 L578 262 Q578 268 570 272 Q562 268 562 262 L562 254Z" fill="none" stroke="#9B8FA8" stroke-width="1.2" opacity="0.3"/>
+          <text x="570" y="305" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity="0.6" font-weight="500">隐私</text>
+        </g>
+        <circle cx="570" cy="260" r="12" fill="none" stroke="#9B8FA8" stroke-width="0.8" opacity="0.1" class="svg-ring" style="animation-delay:1.5s"/>
+        <!-- Node 5: 校园 -->
+        <g class="svg-fade-in" style="animation-delay:1.8s">
+          <circle cx="700" cy="280" r="28" fill="#D9F0E4" opacity="0.3" stroke="#8BC9A8" stroke-width="1.2"/>
+          <circle cx="700" cy="280" r="18" fill="#fff" opacity="0.7" stroke="#D9F0E4" stroke-width="1"/>
+          <!-- Campus icon: building small -->
+          <rect x="693" y="272" width="14" height="12" rx="2" fill="#8BC9A8" opacity="0.25"/>
+          <path d="M690 272 L700 266 L710 272Z" fill="#8BC9A8" opacity="0.2"/>
+          <text x="700" y="325" text-anchor="middle" font-size="11" fill="#8BC9A8" opacity="0.6" font-weight="500">校园</text>
+        </g>
+        <circle cx="700" cy="280" r="12" fill="none" stroke="#8BC9A8" stroke-width="0.8" opacity="0.1" class="svg-ring" style="animation-delay:2s"/>
+        <!-- Connection lines between nodes and school -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <path d="M135 268 Q200 220 340 200" stroke="#6EC4B8" stroke-width="1" fill="none" opacity="0.15" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:2.2s"/>
+          <path d="M285 248 Q330 220 360 210" stroke="#7BA7CC" stroke-width="1" fill="none" opacity="0.15" class="svg-draw" stroke-dasharray="100" stroke-dashoffset="100" style="animation-delay:2.4s"/>
+          <path d="M435 268 Q430 240 430 220" stroke="#D4899A" stroke-width="1" fill="none" opacity="0.15" class="svg-draw" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay:2.6s"/>
+          <path d="M555 248 Q520 220 470 210" stroke="#9B8FA8" stroke-width="1" fill="none" opacity="0.15" class="svg-draw" stroke-dasharray="100" stroke-dashoffset="100" style="animation-delay:2.8s"/>
+          <path d="M685 268 Q600 220 470 200" stroke="#8BC9A8" stroke-width="1" fill="none" opacity="0.15" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:3s"/>
+        </g>
+        <!-- Floating decorative elements -->
+        <circle cx="60" cy="100" r="12" fill="#D4EDE8" opacity="0.25" class="svg-float"/>
+        <circle cx="740" cy="100" r="10" fill="#E8E3EE" opacity="0.25" class="svg-float-d"/>
+        <circle cx="200" cy="80" r="8" fill="#FBF4D6" opacity="0.3" class="svg-float-d2"/>
+        <circle cx="600" cy="80" r="8" fill="#F2DDE2" opacity="0.25" class="svg-float"/>
+        <circle cx="400" cy="50" r="6" fill="#D6E6F2" opacity="0.2" class="svg-pulse"/>
+        <circle cx="150" cy="160" r="3" fill="#6EC4B8" opacity="0.2" class="svg-shimmer"/>
+        <circle cx="650" cy="160" r="3" fill="#8BC9A8" opacity="0.2" class="svg-shimmer" style="animation-delay:1s"/>
+        <!-- Youth figures near school -->
+        <g class="svg-breathe" style="animation-delay:0.5s">
+          <circle cx="320" cy="240" r="8" fill="#F5D9D3" stroke="#D4899A" stroke-width="1"/>
+          <path d="M314 244 Q320 238 326 244" fill="#7A7486" opacity="0.3"/>
+          <rect x="314" y="248" width="12" height="18" rx="4" fill="#D6E6F2" opacity="0.35"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:0.9s">
+          <circle cx="480" cy="240" r="8" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1"/>
+          <path d="M474 244 Q480 238 486 244" fill="#7A7486" opacity="0.3"/>
+          <rect x="474" y="248" width="12" height="18" rx="4" fill="#D4EDE8" opacity="0.35"/>
+        </g>
+        <!-- Text label -->
+        <g class="svg-fade-in" style="animation-delay:2.5s">
+          <text x="400" y="380" text-anchor="middle" font-size="12" fill="#6EC4B8" opacity="0.55" font-weight="500">体验式 · 低压力 · 团体活动</text>
+        </g>
+        <!-- Scale-in elements -->
+        <g class="svg-scale-in" style="animation-delay:1.5s"><circle cx="50" cy="200" r="5" fill="#D4EDE8" opacity="0.3"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.8s"><circle cx="750" cy="200" r="5" fill="#E8E3EE" opacity="0.3"/></g>
+        <g class="svg-scale-in" style="animation-delay:2.1s"><circle cx="300" cy="360" r="4" fill="#D6E6F2" opacity="0.25"/></g>
+        <g class="svg-scale-in" style="animation-delay:2.4s"><circle cx="500" cy="360" r="4" fill="#F2DDE2" opacity="0.25"/></g>
+      </svg>
+    </div>
+    <div style="max-width:700px;margin:40px auto 0;text-align:center;" class="reveal">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:14px;color:var(--soft);line-height:1.8;">活动适配日常教学节奏，去说教化</div>
+        <div style="font-size:14px;color:var(--soft);line-height:1.8;">以非语言表达、轻运动、互动游戏为主</div>
+        <div style="font-size:14px;color:var(--soft);line-height:1.8;">兼顾不同性格与情绪特质，尊重隐私与个体差异</div>
+        <div style="font-size:14px;color:var(--soft);line-height:1.8;">适配校园常态化心理服务场景</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs 目标融合 ===== -->
+<section class="adapt-section" id="sdgs" style="background:linear-gradient(180deg, var(--cream-pale) 0%, var(--surface) 100%);">
+  <div class="adapt-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">SDGs 目标融合</div>
+      <h2 class="section-title">可持续发展目标</h2>
+      <p class="section-subtitle">项目与联合国可持续发展目标深度对接，推动青少年身心健康与教育公平</p>
+    </div>
+    <div class="reveal-scale" style="max-width:900px;margin:0 auto;">
+      <svg viewBox="0 0 800 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="350" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="sg1" cx="35%" cy="50%" r="30%"><stop offset="0%" stop-color="#6EC4B8" stop-opacity="0.12"/><stop offset="100%" stop-color="#6EC4B8" stop-opacity="0"/></radialGradient>
+          <radialGradient id="sg2" cx="65%" cy="50%" r="30%"><stop offset="0%" stop-color="#7BA7CC" stop-opacity="0.12"/><stop offset="100%" stop-color="#7BA7CC" stop-opacity="0"/></radialGradient>
+          <linearGradient id="sgline" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6EC4B8" stop-opacity="0.3"/><stop offset="50%" stop-color="#9B8FA8" stop-opacity="0.2"/><stop offset="100%" stop-color="#7BA7CC" stop-opacity="0.3"/></linearGradient>
+        </defs>
+        <!-- Background glows -->
+        <circle cx="280" cy="175" r="140" fill="url(#sg1)" class="svg-glow"/>
+        <circle cx="520" cy="175" r="140" fill="url(#sg2)" class="svg-glow" style="animation-delay:1s"/>
+        <!-- Two large interconnected circles (SDG3 and SDG4) -->
+        <g class="svg-fade-in" style="animation-delay:0.5s">
+          <!-- SDG 3 circle -->
+          <circle cx="280" cy="175" r="80" fill="#D4EDE8" opacity="0.15" stroke="#6EC4B8" stroke-width="1.5"/>
+          <circle cx="280" cy="175" r="55" fill="#fff" opacity="0.5" stroke="#D4EDE8" stroke-width="1"/>
+          <!-- SDG 3 label -->
+          <text x="280" y="165" text-anchor="middle" font-size="22" fill="#6EC4B8" opacity="0.6" font-weight="700">3</text>
+          <text x="280" y="185" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity="0.5">良好健康</text>
+          <text x="280" y="198" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity="0.5">与福祉</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:0.8s">
+          <!-- SDG 4 circle -->
+          <circle cx="520" cy="175" r="80" fill="#D6E6F2" opacity="0.15" stroke="#7BA7CC" stroke-width="1.5"/>
+          <circle cx="520" cy="175" r="55" fill="#fff" opacity="0.5" stroke="#D6E6F2" stroke-width="1"/>
+          <!-- SDG 4 label -->
+          <text x="520" y="165" text-anchor="middle" font-size="22" fill="#7BA7CC" opacity="0.6" font-weight="700">4</text>
+          <text x="520" y="185" text-anchor="middle" font-size="10" fill="#7BA7CC" opacity="0.5">优质教育</text>
+        </g>
+        <!-- Connection between SDGs -->
+        <g class="svg-fade-in" style="animation-delay:1.2s">
+          <path d="M355 160 Q400 140 445 160" stroke="url(#sgline)" stroke-width="2.5" fill="none" class="svg-draw" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:1.5s"/>
+          <path d="M355 190 Q400 210 445 190" stroke="url(#sgline)" stroke-width="2.5" fill="none" class="svg-draw" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:1.8s"/>
+        </g>
+        <!-- Youth figures between/around SDGs -->
+        <g class="svg-breathe">
+          <circle cx="400" cy="120" r="10" fill="#F5D9D3" stroke="#D4899A" stroke-width="1.2"/>
+          <path d="M394 116 Q400 110 406 116" fill="#7A7486" opacity="0.3"/>
+          <path d="M392 130 Q390 148 392 162 L408 162 Q410 148 408 130 Q400 125 392 130Z" fill="#E8E3EE" opacity="0.4"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:0.4s">
+          <circle cx="400" cy="230" r="10" fill="#D4EDE8" stroke="#6EC4B8" stroke-width="1.2"/>
+          <path d="M394 226 Q400 220 406 226" fill="#7A7486" opacity="0.3"/>
+          <path d="M392 240 Q390 258 392 272 L408 272 Q410 258 408 240 Q400 235 392 240Z" fill="#D4EDE8" opacity="0.4"/>
+        </g>
+        <!-- Connection lines from SDGs to youth -->
+        <path d="M310 145 Q360 130 395 125" stroke="#6EC4B8" stroke-width="1" fill="none" opacity="0.2" class="svg-draw" stroke-dasharray="90" stroke-dashoffset="90" style="animation-delay:2s"/>
+        <path d="M490 145 Q440 130 405 125" stroke="#7BA7CC" stroke-width="1" fill="none" opacity="0.2" class="svg-draw" stroke-dasharray="90" stroke-dashoffset="90" style="animation-delay:2.2s"/>
+        <path d="M310 205 Q360 220 395 225" stroke="#6EC4B8" stroke-width="1" fill="none" opacity="0.2" class="svg-draw" stroke-dasharray="90" stroke-dashoffset="90" style="animation-delay:2.4s"/>
+        <path d="M490 205 Q440 220 405 225" stroke="#7BA7CC" stroke-width="1" fill="none" opacity="0.2" class="svg-draw" stroke-dasharray="90" stroke-dashoffset="90" style="animation-delay:2.6s"/>
+        <!-- Upward growth arrows and leaf/nature elements -->
+        <g class="svg-rise" style="animation-delay:2s">
+          <line x1="180" y1="80" x2="180" y2="55" stroke="#6EC4B8" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="175,60 180,48 185,60" fill="#6EC4B8" opacity="0.3"/>
+          <!-- Leaf -->
+          <ellipse cx="172" cy="52" rx="6" ry="3" fill="#8BC9A8" opacity="0.3" transform="rotate(-30,172,52)"/>
+        </g>
+        <g class="svg-rise" style="animation-delay:2.3s">
+          <line x1="620" y1="80" x2="620" y2="55" stroke="#7BA7CC" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="615,60 620,48 625,60" fill="#7BA7CC" opacity="0.3"/>
+          <ellipse cx="628" cy="52" rx="6" ry="3" fill="#8BC9A8" opacity="0.3" transform="rotate(30,628,52)"/>
+        </g>
+        <g class="svg-rise" style="animation-delay:2.6s">
+          <line x1="400" y1="290" x2="400" y2="265" stroke="#9B8FA8" stroke-width="2" opacity="0.25" stroke-linecap="round"/>
+          <polygon points="395,270 400,258 405,270" fill="#9B8FA8" opacity="0.25"/>
+        </g>
+        <!-- Decorative: shimmer dots, floating circles -->
+        <circle cx="100" cy="100" r="10" fill="#D4EDE8" opacity="0.2" class="svg-float"/>
+        <circle cx="700" cy="100" r="10" fill="#D6E6F2" opacity="0.2" class="svg-float-d"/>
+        <circle cx="150" cy="280" r="8" fill="#F2DDE2" opacity="0.2" class="svg-float-d2"/>
+        <circle cx="650" cy="280" r="8" fill="#E8E3EE" opacity="0.2" class="svg-float"/>
+        <circle cx="200" cy="60" r="3" fill="#6EC4B8" opacity="0.25" class="svg-shimmer"/>
+        <circle cx="600" cy="60" r="3" fill="#7BA7CC" opacity="0.25" class="svg-shimmer" style="animation-delay:0.8s"/>
+        <circle cx="340" cy="300" r="2.5" fill="#C9A84C" opacity="0.25" class="svg-shimmer" style="animation-delay:1.5s"/>
+        <circle cx="460" cy="300" r="2.5" fill="#D4899A" opacity="0.25" class="svg-shimmer" style="animation-delay:2s"/>
+        <circle cx="80" cy="200" r="2" fill="#6EC4B8" opacity="0.2" class="svg-pulse"/>
+        <circle cx="720" cy="200" r="2" fill="#7BA7CC" opacity="0.2" class="svg-pulse" style="animation-delay:0.5s"/>
+        <!-- Ripple from center -->
+        <circle cx="400" cy="175" r="20" fill="none" stroke="#9B8FA8" stroke-width="0.8" opacity="0.1" class="svg-ring"/>
+        <circle cx="400" cy="175" r="20" fill="none" stroke="#9B8FA8" stroke-width="0.8" opacity="0.08" class="svg-ring-d"/>
+        <!-- Scale-in elements -->
+        <g class="svg-scale-in" style="animation-delay:1.5s"><circle cx="140" cy="160" r="5" fill="#D4EDE8" opacity="0.3"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.8s"><circle cx="660" cy="160" r="5" fill="#D6E6F2" opacity="0.3"/></g>
+        <g class="svg-scale-in" style="animation-delay:2.1s"><circle cx="240" cy="300" r="4" fill="#D9F0E4" opacity="0.25"/></g>
+        <g class="svg-scale-in" style="animation-delay:2.4s"><circle cx="560" cy="300" r="4" fill="#DCEEF8" opacity="0.25"/></g>
+        <!-- Text label -->
+        <g class="svg-fade-in" style="animation-delay:2.5s">
+          <text x="400" y="335" text-anchor="middle" font-size="12" fill="#9B8FA8" opacity="0.55" font-weight="500">健康 · 教育 · 可持续</text>
+        </g>
+      </svg>
+    </div>
+    <div class="sdg-cards reveal">
+      <div class="sdg-card">
+        <div class="sdg-card-badge teal">3</div>
+        <div class="sdg-card-title">SDG 3 良好健康与福祉</div>
+        <div class="sdg-card-text">依托正念运动、艺术疗愈与团体训练，缓解学业压力，增强青少年情绪调节能力与心理韧性</div>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-card-badge blue">4</div>
+        <div class="sdg-card-title">SDG 4 优质教育</div>
+        <div class="sdg-card-text">创新心理健康教育模式，以多元化干预形式完善校园育人体系，助力学生全面发展</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="footer">
+  <div class="reveal">
+    <h2 class="footer-title">青少年韧性发展干预项目</h2>
+    <p class="footer-text">三项标准化模块 · 科学评估 · 持续改善</p>
+  </div>
+</footer>
+
+<script>
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const s = window.scrollY;
+  const d = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (s / d) * 100 + '%';
+});
+
+const dots = document.querySelectorAll('.nav-dot');
+const sections = ['hero', 'module1', 'module2', 'module3', 'adapt', 'sdgs', 'footer'];
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    document.getElementById(dot.getAttribute('data-target')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+const sectionEls = sections.map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let c = 0;
+  sectionEls.forEach((el, i) => {
+    if (el.getBoundingClientRect().top <= window.innerHeight / 2) c = i;
+  });
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === c));
+});
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12, rootMargin: '-40px 0px 0px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+
+// SVG scroll-triggered animations
+const svgAnimGroups = document.querySelectorAll('.week-visual, .hero-illustration');
+const svgAnimObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const els = entry.target.querySelectorAll('.svg-float,.svg-float-d,.svg-float-d2,.svg-pulse,.svg-breathe,.svg-sway,.svg-glow,.svg-draw,.svg-draw-slow,.svg-fade-in,.svg-fade-in-d,.svg-fade-in-d2,.svg-fade-in-d3,.svg-fade-in-d4,.svg-scale-in,.svg-ripple,.svg-ring,.svg-ring-d,.svg-shimmer,.svg-rise,.svg-slide-l,.svg-slide-r,.svg-drop,.svg-drop-d');
+      els.forEach(el => {
+        if (el.classList.contains('svg-draw') || el.classList.contains('svg-draw-slow')) {
+          // Already has animation defined, just ensure it plays
+        }
+      });
+      svgAnimObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '-40px 0px 0px 0px' });
+svgAnimGroups.forEach(group => svgAnimObserver.observe(group));
+
+// Hero parallax
+window.addEventListener('scroll', () => {
+  const s = window.scrollY;
+  document.querySelectorAll('.hero-shape').forEach((shape, i) => {
+    shape.style.transform = `translateY(${s * (0.03 + i * 0.015)}px)`;
+  });
+});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

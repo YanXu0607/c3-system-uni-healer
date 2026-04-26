@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>呼叫中心嗓音康复4周方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --teal:#5AA89C;--teal-light:#D4EDE8;
+    --coral:#D97A6A;--coral-light:#F5D9D3;
+    --lavender:#967BA5;--lavender-light:#E8E0F3;
+    --amber:#B89840;--amber-light:#F5EDCF;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --peach:#F5E0D0;--yellow:#F4E4A6;--yellow-light:#FBF4D6;
+    --sky:#6AA5C6;--sky-light:#DCEEF8;
+    --mint:#6BB898;--mint-light:#D9F0E4;
+    --rose:#C47888;--rose-light:#F2DDE2;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+    --blue:#5A8FB5;--blue-light:#D6E6F2;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--teal),var(--coral),var(--lavender),var(--amber));width:0%;transition:width .1s linear}
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--teal);transform:scale(1.5);box-shadow:0 0 10px rgba(90,168,156,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--teal-light) 0%,var(--cream) 30%,var(--peach) 65%,var(--lavender-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--teal);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--coral);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--lavender);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--amber);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(90,168,156,.15);border-radius:20px;font-size:13px;color:var(--teal);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards;transform:translateY(20px)}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(30px,5vw,52px);font-weight:700;line-height:1.35;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards;transform:translateY(20px)}
+  .hero-title .accent{color:var(--teal)}.hero-title .accent2{color:var(--coral)}
+  .hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards;transform:translateY(20px)}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards;transform:translateY(20px)}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .hero-meta-icon.green{background:rgba(90,168,156,.15)}.hero-meta-icon.coral{background:rgba(217,122,106,.12)}
+  .hero-meta-icon.purple{background:rgba(150,123,165,.12)}.hero-meta-icon.gold{background:rgba(184,152,64,.15)}
+  .hero-illustration{margin-top:36px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:700px;margin-left:auto;margin-right:auto;transform:translateY(20px)}
+  .hero-illustration svg{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 48px rgba(0,0,0,.06))}
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards;transform:translateY(20px)}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+  .split-section{padding:80px 24px;position:relative}
+  .split-section:nth-child(odd){background:var(--cream-pale)}
+  .split-section:nth-child(even){background:var(--surface)}
+  .split-container{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:380px 1fr;gap:50px;align-items:center}
+  .split-section.reverse .split-container{direction:rtl}
+  .split-section.reverse .split-container>*{direction:ltr}
+  .split-text{display:flex;flex-direction:column;gap:6px}
+  .split-text .s-week{font-size:11px;letter-spacing:2px;font-weight:500;text-transform:uppercase;margin-bottom:4px}
+  .split-text .s-week.c1{color:var(--teal)}.split-text .s-week.c2{color:var(--sky)}
+  .split-text .s-week.c3{color:var(--rose)}.split-text .s-week.c4{color:var(--amber)}
+  .split-text .s-title{font-family:'Noto Serif SC',serif;font-size:clamp(20px,2.5vw,28px);font-weight:700;line-height:1.4;margin-bottom:6px}
+  .split-text .s-theme{font-size:14px;font-weight:500;margin-bottom:8px}
+  .split-text .s-theme.c1{color:var(--teal)}.split-text .s-theme.c2{color:var(--sky)}
+  .split-text .s-theme.c3{color:var(--rose)}.split-text .s-theme.c4{color:var(--amber)}
+  .split-text .s-desc{font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:12px}
+  .split-text .s-items{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .split-text .s-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .split-text .s-item-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .split-text .s-item-icon.c1{background:rgba(90,168,156,.15)}.split-text .s-item-icon.c2{background:rgba(106,165,198,.15)}
+  .split-text .s-item-icon.c3{background:rgba(196,120,136,.15)}.split-text .s-item-icon.c4{background:rgba(184,152,64,.15)}
+  .split-text .s-goal{padding:12px 16px;border-radius:10px;font-size:12px;color:var(--soft);line-height:1.6}
+  .split-text .s-goal.c1{background:rgba(90,168,156,.08);border-left:3px solid var(--teal)}
+  .split-text .s-goal.c2{background:rgba(106,165,198,.08);border-left:3px solid var(--sky)}
+  .split-text .s-goal.c3{background:rgba(196,120,136,.08);border-left:3px solid var(--rose)}
+  .split-text .s-goal.c4{background:rgba(184,152,64,.08);border-left:3px solid var(--amber)}
+  .split-text .s-params{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .split-text .s-param{padding:4px 12px;border-radius:16px;font-size:11px;font-weight:500}
+  .split-text .s-param.c1{background:rgba(90,168,156,.08);color:var(--teal)}
+  .split-text .s-param.c2{background:rgba(106,165,198,.08);color:var(--sky)}
+  .split-text .s-param.c3{background:rgba(196,120,136,.08);color:var(--rose)}
+  .split-text .s-param.c4{background:rgba(184,152,64,.08);color:var(--amber)}
+  .split-visual{position:relative}
+  .split-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.06))}
+
+  .impl-section{padding:100px 24px;background:linear-gradient(180deg,var(--surface) 0%,var(--cream-pale) 100%)}
+  .impl-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.impl{background:rgba(90,168,156,.12);color:var(--teal)}
+  .section-tag.longterm{background:rgba(150,123,165,.12);color:var(--lavender)}
+  .section-tag.sdgs{background:rgba(184,152,64,.15);color:var(--amber)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+  .impl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .impl-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(150,123,165,.06);transition:transform .3s,box-shadow .3s}
+  .impl-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .impl-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .impl-card-icon.c1{background:rgba(90,168,156,.1)}.impl-card-icon.c2{background:rgba(106,165,198,.1)}
+  .impl-card-icon.c3{background:rgba(150,123,165,.1)}.impl-card-icon.c4{background:rgba(184,152,64,.1)}
+  .impl-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .impl-card p{font-size:14px;color:var(--soft);line-height:1.7}
+  .impl-illustration{max-width:750px;margin:0 auto 40px;border-radius:20px;overflow:hidden}
+  .impl-illustration svg{width:100%;height:auto;display:block}
+
+  .longterm-section{padding:100px 24px;background:var(--cream-pale)}
+  .longterm-container{max-width:1100px;margin:0 auto}
+  .longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(150,123,165,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .longterm-card-icon.l1{background:rgba(90,168,156,.1)}.longterm-card-icon.l2{background:rgba(217,122,106,.1)}
+  .longterm-card-icon.l3{background:rgba(150,123,165,.1)}.longterm-card-icon.l4{background:rgba(184,152,64,.15)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+  .longterm-illustration{max-width:750px;margin:0 auto;border-radius:20px;overflow:hidden}
+  .longterm-illustration svg{width:100%;height:auto;display:block}
+
+  .sdgs-section{padding:100px 24px;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .sdgs-container{max-width:1100px;margin:0 auto}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:50px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(90,168,156,.08),rgba(90,168,156,.02));border:1px solid rgba(90,168,156,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(217,122,106,.08),rgba(217,122,106,.02));border:1px solid rgba(217,122,106,.1)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(150,123,165,.08),rgba(150,123,165,.02));border:1px solid rgba(150,123,165,.1)}
+  .sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(184,152,64,.1),rgba(184,152,64,.02));border:1px solid rgba(184,152,64,.12)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--teal)}.sdg-card:nth-child(2) .sdg-num{color:var(--coral)}
+  .sdg-card:nth-child(3) .sdg-num{color:var(--lavender)}.sdg-card:nth-child(4) .sdg-num{color:var(--amber)}
+  .sdg-title{font-size:14px;font-weight:600;margin-bottom:10px}
+  .sdg-desc{font-size:12px;color:var(--soft);line-height:1.7}
+  .kpi-box{padding:28px 32px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(150,123,165,.08)}
+  .kpi-box h3{font-size:16px;font-weight:600;margin-bottom:16px;text-align:center}
+  .kpi-items{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .kpi-item{padding:8px 18px;border-radius:24px;font-size:13px;font-weight:500;background:var(--surface);color:var(--soft);transition:transform .3s,background .3s}
+  .kpi-item:hover{transform:scale(1.05);background:var(--yellow-light)}
+
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-rotate{animation:svgRotate 12s linear infinite}
+  .svg-sway{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:600;stroke-dashoffset:600;animation:svgDraw 3s ease forwards}
+  .svg-draw-slow{stroke-dasharray:800;stroke-dashoffset:800;animation:svgDraw 4s ease forwards}
+  .svg-fade-in{opacity:0;animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0;animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0;animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0;animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-fade-in-d4{opacity:0;animation:svgFadeIn 1.2s 1.6s ease forwards}
+  .svg-fade-in-d5{opacity:0;animation:svgFadeIn 1.2s 2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0;animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0;animation:svgRipple 2.5s ease-out forwards}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}
+  .svg-ring-d{animation:svgRing 3s ease-out 1s infinite}
+  .svg-ring-d2{animation:svgRing 3s ease-out 2s infinite}
+  .svg-shimmer{opacity:0;animation:svgShimmer 3s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px);animation:svgRise 1.5s ease forwards}
+  .svg-slide-l{opacity:0;transform:translateX(-30px);animation:svgSlideL 1s ease forwards}
+  .svg-slide-r{opacity:0;transform:translateX(30px);animation:svgSlideR 1s ease forwards}
+  .svg-drop{opacity:0;transform:translateY(-20px);animation:svgDrop 2.5s ease infinite}
+  .svg-drop-d{animation:svgDrop 2.5s ease .8s infinite}
+  .svg-drop-d2{animation:svgDrop 2.5s ease 1.6s infinite}
+  .svg-wave{animation:svgWave 3s ease-in-out infinite}
+  .svg-wave-d{animation:svgWave 3s ease-in-out 1s infinite}
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.12);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.08}50%{opacity:.22}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2);opacity:0}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.6}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.7}60%{opacity:.4;transform:translateY(30px)}80%{opacity:0;transform:translateY(40px)}100%{opacity:0;transform:translateY(40px)}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes musicNote{0%{opacity:0;transform:translateY(0) rotate(0deg)}20%{opacity:.7}80%{opacity:.3}100%{opacity:0;transform:translateY(-40px) rotate(15deg)}}
+
+  @media(max-width:900px){
+    .split-container{grid-template-columns:1fr;gap:30px}
+    .split-section{padding:60px 20px}
+    .split-section.reverse .split-container{direction:ltr}
+    .nav-dots{right:12px;gap:8px}
+    .nav-dot{width:7px;height:7px}
+    .nav-dot .tooltip{display:none}
+    .hero-meta{gap:14px}
+    .impl-grid,.sdgs-grid,.longterm-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周 · 评估与呼吸</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周 · 喉部放松</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周 · 共鸣技巧</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周 · 职场应用</span></div>
+  <div class="nav-dot" data-target="impl"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">🎤 呼叫中心嗓音康复 · 4周系统方案</div>
+    <h1 class="hero-title">用<span class="accent">科学</span>守护嗓音<br>用<span class="accent2">疗愈</span>重建声音</h1>
+    <p class="hero-subtitle">专为呼叫中心员工设计的嗓音康复与声音疗愈方案，融合呼吸训练、喉部放松、共鸣优化与声音疗愈四大核心模块</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon green">🎤</div><span>4周系统训练</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon coral">🫁</div><span>呼吸·放松·共鸣</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon purple">🔔</div><span>声音疗愈</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon gold">💚</div><span>SDGs 融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 700 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="380" rx="24" fill="#FAF8F2" opacity=".6"/>
+        <defs>
+          <radialGradient id="hg1" cx="50%" cy="48%" r="32%"><stop offset="0%" stop-color="#5AA89C" stop-opacity=".12"/><stop offset="100%" stop-color="#5AA89C" stop-opacity="0"/></radialGradient>
+          <radialGradient id="hg2" cx="50%" cy="48%" r="26%"><stop offset="0%" stop-color="#D97A6A" stop-opacity=".08"/><stop offset="100%" stop-color="#D97A6A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="350" cy="190" r="160" fill="url(#hg1)" class="svg-glow"/>
+        <circle cx="350" cy="190" r="110" fill="url(#hg2)" class="svg-glow" style="animation-delay:1s"/>
+        <!-- Sound wave rings -->
+        <circle cx="350" cy="190" r="80" fill="none" stroke="#D4EDE8" stroke-width="1.5" opacity=".15" class="svg-ring"/>
+        <circle cx="350" cy="190" r="80" fill="none" stroke="#F5D9D3" stroke-width="1" opacity=".1" class="svg-ring-d"/>
+        <!-- Central person with headset -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <circle cx="350" cy="175" r="50" fill="#D4EDE8" opacity=".2" class="svg-pulse"/>
+          <circle cx="350" cy="160" r="24" fill="#F5D9D3"/>
+          <path d="M326 155 Q330 132 350 128 Q370 132 374 155" fill="#7A7486" opacity=".4"/>
+          <path d="M340 164 Q344 161 348 164" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M352 164 Q356 161 360 164" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M342 176 Q350 181 358 176" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Headset -->
+          <path d="M326 152 Q324 126 350 122 Q376 126 374 152" stroke="#5A5466" stroke-width="2.5" fill="none"/>
+          <rect x="320" y="148" width="10" height="16" rx="4" fill="#5A5466" opacity=".6"/>
+          <rect x="370" y="148" width="10" height="16" rx="4" fill="#5A5466" opacity=".6"/>
+          <path d="M320 164 Q310 170 308 182" stroke="#5A5466" stroke-width="2" fill="none"/>
+          <circle cx="306" cy="186" r="6" fill="#5A5466" opacity=".4"/>
+          <rect x="334" y="182" width="32" height="40" rx="12" fill="#5AA89C" opacity=".3"/>
+        </g>
+        <!-- Sound waves emanating -->
+        <g class="svg-fade-in" style="animation-delay:1s">
+          <path d="M380 155 Q392 145 388 165" stroke="#5AA89C" stroke-width="2" fill="none" opacity=".35" class="svg-wave"/>
+          <path d="M392 148 Q408 135 402 162" stroke="#5AA89C" stroke-width="1.5" fill="none" opacity=".25" class="svg-wave" style="animation-delay:.4s"/>
+          <path d="M318 155 Q306 145 310 165" stroke="#D97A6A" stroke-width="2" fill="none" opacity=".3" class="svg-wave" style="animation-delay:.2s"/>
+          <path d="M306 148 Q290 135 296 162" stroke="#D97A6A" stroke-width="1.5" fill="none" opacity=".2" class="svg-wave" style="animation-delay:.6s"/>
+        </g>
+        <!-- Four module icons around -->
+        <g class="svg-fade-in" style="animation-delay:1.2s">
+          <circle cx="130" cy="120" r="32" fill="#D4EDE8" opacity=".35" stroke="#5AA89C" stroke-width="1.5"/>
+          <text x="130" y="116" text-anchor="middle" font-size="18">🫁</text>
+          <text x="130" y="134" text-anchor="middle" font-size="9" fill="#5AA89C" font-weight="600">呼吸训练</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <circle cx="570" cy="120" r="32" fill="#DCEEF8" opacity=".35" stroke="#6AA5C6" stroke-width="1.5"/>
+          <text x="570" y="116" text-anchor="middle" font-size="18">💆</text>
+          <text x="570" y="134" text-anchor="middle" font-size="9" fill="#6AA5C6" font-weight="600">喉部放松</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.8s">
+          <circle cx="130" cy="270" r="32" fill="#F2DDE2" opacity=".35" stroke="#C47888" stroke-width="1.5"/>
+          <text x="130" y="266" text-anchor="middle" font-size="18">🎵</text>
+          <text x="130" y="284" text-anchor="middle" font-size="9" fill="#C47888" font-weight="600">共鸣训练</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:2.1s">
+          <circle cx="570" cy="270" r="32" fill="#F5EDCF" opacity=".35" stroke="#B89840" stroke-width="1.5"/>
+          <text x="570" y="266" text-anchor="middle" font-size="18">🔔</text>
+          <text x="570" y="284" text-anchor="middle" font-size="9" fill="#B89840" font-weight="600">声音疗愈</text>
+        </g>
+        <!-- Connection paths -->
+        <g class="svg-fade-in" style="animation-delay:2.4s">
+          <path d="M162 130 Q260 110 320 155" stroke="#5AA89C" stroke-width="1.2" fill="none" opacity=".2" class="svg-draw" stroke-dasharray="180" stroke-dashoffset="180" style="animation-delay:2.6s"/>
+          <path d="M538 130 Q440 110 380 155" stroke="#6AA5C6" stroke-width="1.2" fill="none" opacity=".2" class="svg-draw" stroke-dasharray="180" stroke-dashoffset="180" style="animation-delay:2.8s"/>
+          <path d="M162 260 Q260 280 320 200" stroke="#C47888" stroke-width="1.2" fill="none" opacity=".2" class="svg-draw" stroke-dasharray="180" stroke-dashoffset="180" style="animation-delay:3s"/>
+          <path d="M538 260 Q440 280 380 200" stroke="#B89840" stroke-width="1.2" fill="none" opacity=".2" class="svg-draw" stroke-dasharray="180" stroke-dashoffset="180" style="animation-delay:3.2s"/>
+        </g>
+        <!-- Music notes -->
+        <text x="240" y="80" font-size="18" fill="#5AA89C" opacity=".2" class="svg-float" style="animation:musicNote 4s ease-in-out infinite">♪</text>
+        <text x="460" y="70" font-size="16" fill="#D97A6A" opacity=".18" class="svg-float-d" style="animation:musicNote 4s ease .5s infinite">♫</text>
+        <text x="200" y="320" font-size="14" fill="#967BA5" opacity=".15" class="svg-float-d2" style="animation:musicNote 4s ease 1s infinite">♬</text>
+        <text x="500" y="330" font-size="16" fill="#B89840" opacity=".15" class="svg-float-d3" style="animation:musicNote 4s ease 1.5s infinite">♪</text>
+        <!-- Bottom tagline -->
+        <g class="svg-fade-in" style="animation-delay:3s">
+          <rect x="180" y="345" width="340" height="24" rx="10" fill="#5AA89C" opacity=".08"/>
+          <text x="350" y="362" text-anchor="middle" font-size="10" fill="#5AA89C" font-weight="600">MPT · VHI-30 · VAS · 4-7-8呼吸 · 颂钵 · 音叉疗愈</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ===== WEEK 1 ===== -->
+<section class="split-section" id="week1">
+  <div class="split-container">
+    <div class="split-text reveal-left">
+      <div class="s-week c1">WEEK 01 · 初始评估与呼吸重建</div>
+      <h2 class="s-title">评估基线 · 建立呼吸</h2>
+      <div class="s-theme c1">📊 嗓音功能评估 → 🫁 呼吸训练 → 🔔 声音疗愈</div>
+      <p class="s-desc">通过全面的嗓音功能评估了解每位员工的嗓音状况，建立基线数据。以腹式呼吸和4-7-8呼吸法重建正确的呼吸模式，配合颂钵放松体验，开启嗓音康复之旅。</p>
+      <div class="s-items">
+        <div class="s-item"><span class="s-item-icon c1">📊</span>嗓音功能评估：MPT、F0 range、VHI-30量表、VAS评分</div>
+        <div class="s-item"><span class="s-item-icon c1">🫁</span>腹式呼吸基础训练：仰卧位/坐位，每次15分钟，每日2次</div>
+        <div class="s-item"><span class="s-item-icon c1">⏱️</span>4-7-8呼吸法：吸气4秒-屏息7秒-呼气8秒，每日3组</div>
+        <div class="s-item"><span class="s-item-icon c1">💨</span>呼吸与发声连接：呼气时发出轻柔"嘘"声，感受气流支撑</div>
+        <div class="s-item"><span class="s-item-icon c1">🔔</span>颂钵放松体验（20分钟）：C调颂钵喉部近场共振</div>
+        <div class="s-item"><span class="s-item-icon c1">🌊</span>引导意象放松：想象温暖水流经喉部，带走紧张</div>
+      </div>
+      <div class="s-params">
+        <span class="s-param c1">每日2次呼吸训练</span>
+        <span class="s-param c1">4-7-8呼吸法</span>
+        <span class="s-param c1">颂钵疗愈20分钟</span>
+      </div>
+      <div class="s-goal c1">🎯 建立嗓音基线数据，掌握腹式呼吸基础，体验声音疗愈的放松效果</div>
+    </div>
+    <div class="split-visual reveal-right">
+      <svg viewBox="0 0 600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="520" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="w1g" cx="50%" cy="40%" r="35%"><stop offset="0%" stop-color="#5AA89C" stop-opacity=".1"/><stop offset="100%" stop-color="#5AA89C" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="300" cy="210" r="160" fill="url(#w1g)" class="svg-glow"/>
+        <!-- Breathing circle pattern -->
+        <circle cx="300" cy="210" r="110" fill="none" stroke="#D4EDE8" stroke-width="1.5" opacity=".2" class="svg-breathe"/>
+        <circle cx="300" cy="210" r="85" fill="none" stroke="#D4EDE8" stroke-width="1.2" opacity=".15" class="svg-pulse"/>
+        <circle cx="300" cy="210" r="60" fill="none" stroke="#D4EDE8" stroke-width="1" opacity=".12" class="svg-breathe" style="animation-delay:1s"/>
+        <!-- Person doing breathing -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <g class="svg-breathe">
+            <circle cx="300" cy="165" r="22" fill="#F5D9D3"/>
+            <path d="M278 160 Q282 138 300 134 Q318 138 322 160" fill="#7A7486" opacity=".35"/>
+            <path d="M292 168 Q296 165 300 168" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M300 168 Q304 165 308 168" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M294 180 Q300 184 306 180" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M280 184 Q276 210 278 248 L322 248 Q324 210 320 184 Q300 176 280 184Z" fill="#5AA89C" opacity=".25"/>
+            <!-- Hands on belly -->
+            <path d="M280 200 Q264 218 268 242" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <path d="M320 200 Q336 218 332 242" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+        <!-- 4-7-8 breathing visualization -->
+        <g class="svg-fade-in" style="animation-delay:.8s">
+          <rect x="60" y="100" width="120" height="100" rx="14" fill="#fff" opacity=".85" stroke="#D4EDE8" stroke-width="1.2"/>
+          <text x="120" y="120" text-anchor="middle" font-size="11" fill="#5AA89C" font-weight="700">4-7-8 呼吸法</text>
+          <circle cx="88" cy="155" r="16" fill="#D4EDE8" opacity=".4" class="svg-breathe"/>
+          <text x="88" y="159" text-anchor="middle" font-size="10" fill="#5AA89C" font-weight="600">4</text>
+          <text x="88" y="178" text-anchor="middle" font-size="7" fill="#5A5466" opacity=".5">吸气</text>
+          <circle cx="120" cy="155" r="16" fill="#F5EDCF" opacity=".4" class="svg-pulse"/>
+          <text x="120" y="159" text-anchor="middle" font-size="10" fill="#B89840" font-weight="600">7</text>
+          <text x="120" y="178" text-anchor="middle" font-size="7" fill="#5A5466" opacity=".5">屏息</text>
+          <circle cx="152" cy="155" r="16" fill="#F5D9D3" opacity=".4" class="svg-breathe" style="animation-delay:2s"/>
+          <text x="152" y="159" text-anchor="middle" font-size="10" fill="#D97A6A" font-weight="600">8</text>
+          <text x="152" y="178" text-anchor="middle" font-size="7" fill="#5A5466" opacity=".5">呼气</text>
+          <path d="M104 155 L104 155" stroke="#B89840" stroke-width="1" opacity=".3"/>
+          <path d="M136 155 L136 155" stroke="#B89840" stroke-width="1" opacity=".3"/>
+        </g>
+        <!-- Assessment clipboard -->
+        <g class="svg-slide-r" style="animation-delay:1s">
+          <rect x="420" y="100" width="110" height="100" rx="12" fill="#fff" opacity=".85" stroke="#D4EDE8" stroke-width="1.2"/>
+          <rect x="440" y="94" width="70" height="12" rx="4" fill="#5AA89C" opacity=".5"/>
+          <text x="475" y="104" text-anchor="middle" font-size="8" fill="#fff" font-weight="600">嗓音评估</text>
+          <line x1="435" y1="122" x2="515" y2="122" stroke="#D4EDE8" stroke-width="1.5"/>
+          <text x="440" y="138" font-size="9" fill="#5A5466" opacity=".6">MPT</text>
+          <text x="440" y="152" font-size="9" fill="#5A5466" opacity=".6">F0 range</text>
+          <text x="440" y="166" font-size="9" fill="#5A5466" opacity=".6">VHI-30</text>
+          <text x="440" y="180" font-size="9" fill="#5A5466" opacity=".6">VAS 0-10</text>
+          <circle cx="510" cy="135" r="3" fill="#5AA89C" opacity=".4" class="svg-pulse"/>
+          <circle cx="510" cy="149" r="3" fill="#5AA89C" opacity=".4" class="svg-pulse" style="animation-delay:.3s"/>
+          <circle cx="510" cy="163" r="3" fill="#5AA89C" opacity=".4" class="svg-pulse" style="animation-delay:.6s"/>
+          <circle cx="510" cy="177" r="3" fill="#D97A6A" opacity=".4" class="svg-pulse" style="animation-delay:.9s"/>
+        </g>
+        <!-- Singing bowl -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <ellipse cx="300" cy="420" rx="45" ry="14" fill="#F5EDCF" stroke="#B89840" stroke-width="1.5"/>
+          <path d="M255 420 Q255 450 300 456 Q345 450 345 420" fill="#F5EDCF" stroke="#B89840" stroke-width="1.5"/>
+          <text x="300" y="442" text-anchor="middle" font-size="10" fill="#B89840" font-weight="500">C调颂钵</text>
+          <!-- Sound waves from bowl -->
+          <path d="M350 415 Q362 406 356 424" stroke="#B89840" stroke-width="1.5" fill="none" opacity=".35" class="svg-wave"/>
+          <path d="M362 408 Q378 396 370 420" stroke="#B89840" stroke-width="1" fill="none" opacity=".25" class="svg-wave" style="animation-delay:.5s"/>
+          <path d="M250 415 Q238 406 244 424" stroke="#B89840" stroke-width="1.5" fill="none" opacity=".35" class="svg-wave" style="animation-delay:.3s"/>
+        </g>
+        <!-- Water flow imagery -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <path d="M80 370 Q110 355 140 370 Q170 385 200 370" stroke="#6AA5C6" stroke-width="2.5" fill="none" opacity=".25" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:2.2s"/>
+          <path d="M100 385 Q130 372 160 385 Q190 398 220 385" stroke="#6AA5C6" stroke-width="1.5" fill="none" opacity=".18" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:2.6s"/>
+          <path d="M380 370 Q410 355 440 370 Q470 385 500 370" stroke="#6AA5C6" stroke-width="2.5" fill="none" opacity=".25" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:2.4s"/>
+          <path d="M400 385 Q430 372 460 385 Q490 398 520 385" stroke="#6AA5C6" stroke-width="1.5" fill="none" opacity=".18" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:2.8s"/>
+          <text x="300" y="395" text-anchor="middle" font-size="10" fill="#6AA5C6" opacity=".5" font-weight="500">引导意象 · 温暖水流经喉部</text>
+        </g>
+        <!-- "Shh" sound -->
+        <g class="svg-scale-in" style="animation-delay:1.2s">
+          <circle cx="300" cy="280" r="14" fill="#E8E0F3" opacity=".5"/>
+          <text x="300" y="285" text-anchor="middle" font-size="12" fill="#967BA5" font-weight="600">嘘</text>
+        </g>
+        <g class="svg-float" opacity=".3">
+          <path d="M318 275 Q328 268 324 282" stroke="#967BA5" stroke-width="1.5" fill="none"/>
+          <path d="M326 270 Q338 260 334 278" stroke="#967BA5" stroke-width="1" fill="none"/>
+        </g>
+        <!-- Shimmer dots -->
+        <circle cx="180" cy="80" r="2.5" fill="#5AA89C" opacity=".3" class="svg-shimmer"/>
+        <circle cx="420" cy="80" r="2" fill="#D97A6A" opacity=".3" class="svg-shimmer" style="animation-delay:.5s"/>
+        <circle cx="540" cy="300" r="2.5" fill="#B89840" opacity=".3" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="60" cy="300" r="2" fill="#967BA5" opacity=".25" class="svg-shimmer" style="animation-delay:1.5s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEEK 2 ===== -->
+<section class="split-section reverse" id="week2">
+  <div class="split-container">
+    <div class="split-text reveal-right">
+      <div class="s-week c2">WEEK 02 · 呼吸深化与喉部放松</div>
+      <h2 class="s-title">深化呼吸 · 放松喉部</h2>
+      <div class="s-theme c2">🚶 进阶呼吸 → 💆 喉部放松 → 🔔 音叉疗愈</div>
+      <p class="s-desc">在第一周基础上深化呼吸训练，将呼吸模式融入日常行走活动中。重点进行喉部按摩、甲状软骨周围肌肉放松，配合音叉振动疗愈与自然声音冥想。</p>
+      <div class="s-items">
+        <div class="s-item"><span class="s-item-icon c2">🚶</span>行走中的腹式呼吸练习，将呼吸模式融入日常活动</div>
+        <div class="s-item"><span class="s-item-icon c2">👄</span>"唇颤音"练习（lip trill）：在腹式呼吸基础上放松喉部肌肉</div>
+        <div class="s-item"><span class="s-item-icon c2">💆</span>喉部按摩：轻柔按摩甲状软骨周围肌肉群，每次5分钟</div>
+        <div class="s-item"><span class="s-item-icon c2">😮‍💨</span>"叹气式"发声：自然叹气后顺势发出声音，体验喉部放松</div>
+        <div class="s-item"><span class="s-item-icon c2">🔄</span>头部旋转与肩颈拉伸：缓解因代偿导致的颈肩紧张</div>
+        <div class="s-item"><span class="s-item-icon c2">音</span>音叉疗愈（C5频率，528Hz）：在喉部与胸部进行振动疗愈</div>
+        <div class="s-item"><span class="s-item-icon c2">🌿</span>自然声音冥想：聆听流水声、风声等自然音景，引导喉部放松</div>
+      </div>
+      <div class="s-params">
+        <span class="s-param c2">唇颤音练习</span>
+        <span class="s-param c2">喉部按摩5分钟</span>
+        <span class="s-param c2">528Hz音叉</span>
+      </div>
+      <div class="s-goal c2">🎯 深化呼吸模式，实现喉部肌肉的有效放松，体验音叉振动疗愈效果</div>
+    </div>
+    <div class="split-visual reveal-left">
+      <svg viewBox="0 0 600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="520" rx="20" fill="#F0ECE4"/>
+        <defs>
+          <radialGradient id="w2g" cx="50%" cy="38%" r="35%"><stop offset="0%" stop-color="#6AA5C6" stop-opacity=".1"/><stop offset="100%" stop-color="#6AA5C6" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="300" cy="200" r="160" fill="url(#w2g)" class="svg-glow"/>
+        <!-- Throat/larynx visualization -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <!-- Neck area -->
+          <ellipse cx="300" cy="200" rx="55" ry="80" fill="#F5D9D3" opacity=".15"/>
+          <!-- Head -->
+          <circle cx="300" cy="120" r="38" fill="#F5D9D3" opacity=".4"/>
+          <path d="M262 115 Q268 80 300 76 Q332 80 338 115" fill="#7A7486" opacity=".25"/>
+          <!-- Closed peaceful eyes -->
+          <path d="M284 122 Q288 118 292 122" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M308 122 Q312 118 316 122" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M290 136 Q300 141 310 136" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Thyroid cartilage -->
+          <g class="svg-breathe">
+            <path d="M278 175 L288 155 L312 155 L322 175" stroke="#6AA5C6" stroke-width="2.5" fill="none" opacity=".5"/>
+            <path d="M283 175 Q300 192 317 175" stroke="#6AA5C6" stroke-width="2" fill="none" opacity=".35"/>
+          </g>
+          <!-- Vocal cords -->
+          <g class="svg-pulse">
+            <line x1="286" y1="170" x2="300" y2="164" stroke="#D97A6A" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="314" y1="170" x2="300" y2="164" stroke="#D97A6A" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+        </g>
+        <!-- Massage hands -->
+        <g class="svg-float" style="animation-delay:.5s">
+          <path d="M235 155 Q222 170 228 190" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <circle cx="226" cy="194" r="6" fill="#F5D9D3" opacity=".7"/>
+          <text x="210" y="215" text-anchor="middle" font-size="9" fill="#6AA5C6" opacity=".6">按摩</text>
+        </g>
+        <g class="svg-float-d" style="animation-delay:.8s">
+          <path d="M365 155 Q378 170 372 190" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <circle cx="374" cy="194" r="6" fill="#F5D9D3" opacity=".7"/>
+        </g>
+        <!-- Lip trill visualization -->
+        <g class="svg-fade-in" style="animation-delay:1s">
+          <circle cx="300" cy="148" r="10" fill="#DCEEF8" opacity=".5"/>
+          <text x="300" y="152" text-anchor="middle" font-size="9" fill="#6AA5C6" font-weight="600">唇</text>
+          <path d="M314 143 Q322 136 318 150" stroke="#6AA5C6" stroke-width="1.5" fill="none" opacity=".4" class="svg-wave"/>
+          <path d="M286 143 Q278 136 282 150" stroke="#6AA5C6" stroke-width="1.5" fill="none" opacity=".4" class="svg-wave" style="animation-delay:.3s"/>
+          <text x="300" y="135" text-anchor="middle" font-size="8" fill="#6AA5C6" opacity=".5">lip trill</text>
+        </g>
+        <!-- Head rotation arc -->
+        <g class="svg-rotate" style="transform-origin:300px 120px;animation-duration:18s" opacity=".12">
+          <path d="M240 80 A70 70 0 0 1 360 80" stroke="#6AA5C6" stroke-width="1.5" fill="none" stroke-dasharray="5,5"/>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.3s">
+          <text x="300" y="65" text-anchor="middle" font-size="10" fill="#6AA5C6" opacity=".5" font-weight="500">头部旋转 · 肩颈拉伸</text>
+        </g>
+        <!-- Sigh exercise wave -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <path d="M220 240 Q250 228 280 240 Q310 252 340 240 Q370 228 400 240" stroke="#6AA5C6" stroke-width="2" fill="none" opacity=".3" class="svg-draw" stroke-dasharray="250" stroke-dashoffset="250" style="animation-delay:1.7s"/>
+          <text x="310" y="262" text-anchor="middle" font-size="9" fill="#6AA5C6" opacity=".5">叹气式发声</text>
+        </g>
+        <!-- Walking person -->
+        <g class="svg-fade-in" style="animation-delay:1.8s">
+          <circle cx="100" cy="340" r="14" fill="#F5D9D3" opacity=".6"/>
+          <path d="M88 338 Q90 326 100 324 Q110 326 112 338" fill="#7A7486" opacity=".3"/>
+          <path d="M90 350 Q88 370 90 390 L110 390 Q112 370 110 350 Q100 346 90 350Z" fill="#6AA5C6" opacity=".25"/>
+          <path d="M94 388 Q90 405 85 420" stroke="#5A5466" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M106 388 Q110 405 115 420" stroke="#5A5466" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <text x="100" y="445" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">行走呼吸</text>
+          <!-- Footstep dots -->
+          <circle cx="80" cy="425" r="2" fill="#6AA5C6" opacity=".3" class="svg-shimmer"/>
+          <circle cx="120" cy="425" r="2" fill="#6AA5C6" opacity=".3" class="svg-shimmer" style="animation-delay:.5s"/>
+        </g>
+        <!-- Tuning fork -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <g class="svg-sway" style="transform-origin:460px 310px">
+            <rect x="458" y="310" width="4" height="55" rx="2" fill="#B89840" opacity=".6"/>
+            <path d="M448 310 Q460 292 472 310" stroke="#B89840" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="460" cy="300" r="18" stroke="#B89840" stroke-width="1" fill="none" opacity=".15" class="svg-ring"/>
+            <circle cx="460" cy="300" r="18" stroke="#B89840" stroke-width="1" fill="none" opacity=".15" class="svg-ring-d"/>
+          </g>
+          <text x="460" y="385" text-anchor="middle" font-size="10" fill="#B89840" font-weight="600">528Hz</text>
+          <text x="460" y="400" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">音叉疗愈</text>
+        </g>
+        <!-- Nature sounds -->
+        <g class="svg-float-d2" opacity=".4">
+          <text x="200" y="460" font-size="20">🌊</text>
+          <text x="240" y="465" font-size="16">🍃</text>
+          <text x="280" y="458" font-size="18">💨</text>
+        </g>
+        <g class="svg-float-d3" opacity=".35">
+          <text x="360" y="460" font-size="18">🌿</text>
+          <text x="400" y="465" font-size="16">🐦</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:2.5s">
+          <text x="300" y="490" text-anchor="middle" font-size="10" fill="#6AA5C6" opacity=".4" font-weight="500">自然声音冥想 · 流水声 · 风声</text>
+        </g>
+        <!-- Shimmer dots -->
+        <circle cx="150" cy="100" r="2.5" fill="#6AA5C6" opacity=".3" class="svg-shimmer"/>
+        <circle cx="450" cy="100" r="2" fill="#B89840" opacity=".3" class="svg-shimmer" style="animation-delay:.5s"/>
+        <circle cx="520" cy="200" r="2.5" fill="#6AA5C6" opacity=".25" class="svg-shimmer" style="animation-delay:1s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEEK 3 ===== -->
+<section class="split-section" id="week3">
+  <div class="split-container">
+    <div class="split-text reveal-left">
+      <div class="s-week c3">WEEK 03 · 共鸣训练与用嗓技巧</div>
+      <h2 class="s-title">优化共鸣 · 矫正技巧</h2>
+      <div class="s-theme c3">🎵 共鸣优化 → 🎯 技巧矫正 → 🎶 和声疗愈</div>
+      <p class="s-desc">进入核心训练阶段，通过哼鸣、胸腔共鸣和头腔共鸣练习优化声音品质。矫正起音方式、音量控制和语速，结合自身声音疗愈与和声练习，体验声音的共振与连接。</p>
+      <div class="s-items">
+        <div class="s-item"><span class="s-item-icon c3">🎵</span>"哼鸣"练习：闭口哼鸣，感受面部与鼻腔的振动感</div>
+        <div class="s-item"><span class="s-item-icon c3">🫁</span>胸腔共鸣练习：低音区发声，感受胸腔振动</div>
+        <div class="s-item"><span class="s-item-icon c3">🧠</span>头腔共鸣练习：高音区发声，感受头面部振动</div>
+        <div class="s-item"><span class="s-item-icon c3">🎯</span>"起音"训练：练习软起音（气流先于声带振动），避免硬起音冲击</div>
+        <div class="s-item"><span class="s-item-icon c3">🔊</span>音量控制训练：在腹式呼吸支撑下，用最小力气达到清晰可听音量</div>
+        <div class="s-item"><span class="s-item-icon c3">⏸️</span>语速调节训练：放慢语速，增加句间停顿</div>
+        <div class="s-item"><span class="s-item-icon c3">🎶</span>和声练习：小组内进行简单的和声发声，体验声音的共振与连接</div>
+      </div>
+      <div class="s-params">
+        <span class="s-param c3">哼鸣练习</span>
+        <span class="s-param c3">软起音训练</span>
+        <span class="s-param c3">和声练习</span>
+      </div>
+      <div class="s-goal c3">🎯 掌握三种共鸣方式，矫正用嗓技巧，建立健康的发声习惯</div>
+    </div>
+    <div class="split-visual reveal-right">
+      <svg viewBox="0 0 600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="520" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="w3g" cx="50%" cy="38%" r="35%"><stop offset="0%" stop-color="#C47888" stop-opacity=".1"/><stop offset="100%" stop-color="#C47888" stop-opacity="0"/></radialGradient>
+          <radialGradient id="w3g2" cx="50%" cy="55%" r="25%"><stop offset="0%" stop-color="#967BA5" stop-opacity=".06"/><stop offset="100%" stop-color="#967BA5" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="300" cy="200" r="160" fill="url(#w3g)" class="svg-glow"/>
+        <circle cx="300" cy="300" r="120" fill="url(#w3g2)" class="svg-glow" style="animation-delay:1s"/>
+        <!-- Resonance body outline -->
+        <g class="svg-fade-in" style="animation-delay:.3s" opacity=".12">
+          <circle cx="300" cy="100" r="45" stroke="#C47888" stroke-width="1.5" fill="none"/>
+          <ellipse cx="300" cy="260" rx="75" ry="65" stroke="#C47888" stroke-width="1.5" fill="none"/>
+          <line x1="300" y1="145" x2="300" y2="195" stroke="#C47888" stroke-width="1.5"/>
+        </g>
+        <!-- Head resonance -->
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <g class="svg-pulse">
+            <circle cx="300" cy="100" r="30" fill="#F2DDE2" opacity=".4"/>
+            <text x="300" y="96" text-anchor="middle" font-size="10" fill="#C47888" font-weight="600">头腔</text>
+            <text x="300" y="110" text-anchor="middle" font-size="9" fill="#C47888">共鸣</text>
+          </g>
+          <!-- Nasal vibration -->
+          <g class="svg-float" opacity=".4">
+            <path d="M272 90 Q265 84 272 78" stroke="#C47888" stroke-width="1.5" fill="none"/>
+            <path d="M328 90 Q335 84 328 78" stroke="#C47888" stroke-width="1.5" fill="none"/>
+            <path d="M266 100 Q258 94 266 88" stroke="#C47888" stroke-width="1" fill="none"/>
+            <path d="M334 100 Q342 94 334 88" stroke="#C47888" stroke-width="1" fill="none"/>
+          </g>
+        </g>
+        <!-- Chest resonance -->
+        <g class="svg-fade-in" style="animation-delay:.9s">
+          <g class="svg-pulse" style="animation-delay:.5s">
+            <ellipse cx="300" cy="260" rx="50" ry="40" fill="#F5D9D3" opacity=".3"/>
+            <text x="300" y="256" text-anchor="middle" font-size="10" fill="#D97A6A" font-weight="600">胸腔</text>
+            <text x="300" y="270" text-anchor="middle" font-size="9" fill="#D97A6A">共鸣</text>
+          </g>
+          <g class="svg-float-d" opacity=".3">
+            <path d="M250 250 Q242 244 250 238" stroke="#D97A6A" stroke-width="1.5" fill="none"/>
+            <path d="M350 250 Q358 244 350 238" stroke="#D97A6A" stroke-width="1.5" fill="none"/>
+            <path d="M244 265 Q236 258 244 252" stroke="#D97A6A" stroke-width="1" fill="none"/>
+            <path d="M356 265 Q364 258 356 252" stroke="#D97A6A" stroke-width="1" fill="none"/>
+          </g>
+        </g>
+        <!-- Humming -->
+        <g class="svg-scale-in" style="animation-delay:1.2s">
+          <circle cx="300" cy="170" r="14" fill="#E8E0F3" opacity=".6"/>
+          <text x="300" y="175" text-anchor="middle" font-size="12" fill="#967BA5" font-weight="600">哼</text>
+        </g>
+        <g class="svg-float" opacity=".3">
+          <path d="M318 165 Q328 158 324 172" stroke="#C47888" stroke-width="1.5" fill="none"/>
+          <path d="M328 160 Q340 150 336 168" stroke="#C47888" stroke-width="1" fill="none"/>
+        </g>
+        <!-- Soft onset -->
+        <g class="svg-slide-r" style="animation-delay:1.4s">
+          <rect x="420" y="140" width="110" height="55" rx="12" fill="#fff" opacity=".85" stroke="#F2DDE2" stroke-width="1.2"/>
+          <text x="475" y="160" text-anchor="middle" font-size="10" fill="#C47888" font-weight="600">软起音</text>
+          <text x="475" y="176" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">气流 → 声带</text>
+          <path d="M435 170 L460 170" stroke="#C47888" stroke-width="1" fill="none" opacity=".4"/>
+          <path d="M457 167 L463 170 L457 173" stroke="#C47888" stroke-width="1" fill="none" opacity=".4"/>
+        </g>
+        <!-- Volume control -->
+        <g class="svg-slide-l" style="animation-delay:1.6s">
+          <rect x="70" y="140" width="110" height="55" rx="12" fill="#fff" opacity=".85" stroke="#D4EDE8" stroke-width="1.2"/>
+          <text x="125" y="160" text-anchor="middle" font-size="10" fill="#5AA89C" font-weight="600">音量控制</text>
+          <text x="125" y="176" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">最小力气发声</text>
+        </g>
+        <!-- Group harmony -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <!-- Three people -->
+          <circle cx="150" cy="390" r="16" fill="#F5D9D3" opacity=".5"/>
+          <path d="M138 388 Q140 376 150 374 Q160 376 162 388" fill="#7A7486" opacity=".25"/>
+          <path d="M138 402 Q136 418 138 432 L162 432 Q164 418 162 402 Q150 398 138 402Z" fill="#C47888" opacity=".2"/>
+          <circle cx="300" cy="390" r="16" fill="#F5D9D3" opacity=".5"/>
+          <path d="M288 388 Q290 376 300 374 Q310 376 312 388" fill="#7A7486" opacity=".25"/>
+          <path d="M288 402 Q286 418 288 432 L312 432 Q314 418 312 402 Q300 398 288 402Z" fill="#967BA5" opacity=".2"/>
+          <circle cx="450" cy="390" r="16" fill="#F5D9D3" opacity=".5"/>
+          <path d="M438 388 Q440 376 450 374 Q460 376 462 388" fill="#7A7486" opacity=".25"/>
+          <path d="M438 402 Q436 418 438 432 L462 432 Q464 418 462 402 Q450 398 438 402Z" fill="#5AA89C" opacity=".2"/>
+          <!-- Harmony waves -->
+          <path d="M170 385 Q220 368 270 385 Q320 402 370 385 Q420 368 430 385" stroke="#C47888" stroke-width="1.5" fill="none" opacity=".25" class="svg-wave"/>
+          <path d="M170 395 Q220 378 270 395 Q320 412 370 395 Q420 378 430 395" stroke="#967BA5" stroke-width="1" fill="none" opacity=".18" class="svg-wave" style="animation-delay:.5s"/>
+          <text x="300" y="460" text-anchor="middle" font-size="10" fill="#C47888" opacity=".5" font-weight="500">和声练习 · 声音共振与连接</text>
+        </g>
+        <!-- Shimmer dots -->
+        <circle cx="180" cy="80" r="2.5" fill="#C47888" opacity=".3" class="svg-shimmer"/>
+        <circle cx="420" cy="80" r="2" fill="#967BA5" opacity=".3" class="svg-shimmer" style="animation-delay:.5s"/>
+        <circle cx="540" cy="300" r="2.5" fill="#D97A6A" opacity=".25" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="60" cy="300" r="2" fill="#5AA89C" opacity=".25" class="svg-shimmer" style="animation-delay:1.5s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WEEK 4 ===== -->
+<section class="split-section reverse" id="week4">
+  <div class="split-container">
+    <div class="split-text reveal-right">
+      <div class="s-week c4">WEEK 04 · 职场应用与巩固</div>
+      <h2 class="s-title">职场实战 · 巩固成果</h2>
+      <div class="s-theme c4">📞 场景模拟 → 💧 日常保健 → 🎧 方案定制</div>
+      <p class="s-desc">将前三周所学技巧应用到真实职场场景中。通过模拟通话练习巩固用嗓技巧，设计科学的"微休息"方案，制定个性化嗓音保健计划。</p>
+      <div class="s-items">
+        <div class="s-item"><span class="s-item-icon c4">📞</span>模拟通话练习：在模拟呼叫场景中应用新的用嗓技巧</div>
+        <div class="s-item"><span class="s-item-icon c4">⏰</span>"微休息"设计：每通话45分钟后进行3分钟嗓音放松练习</div>
+        <div class="s-item"><span class="s-item-icon c4">💧</span>充分饮水（每日≥2000ml，温水为主），避免清嗓动作</div>
+        <div class="s-item"><span class="s-item-icon c4">🧘</span>工作间隙嗓音放松操（5分钟版本）：呼吸+轻柔哼鸣</div>
+        <div class="s-item"><span class="s-item-icon c4">🎧</span>个人化声音疗愈方案：选择适合自己的疗愈声音</div>
+        <div class="s-item"><span class="s-item-icon c4">📝</span>制作个人嗓音保健音频，供日常练习使用</div>
+      </div>
+      <div class="s-params">
+        <span class="s-param c4">模拟通话</span>
+        <span class="s-param c4">45+3微休息</span>
+        <span class="s-param c4">个人化方案</span>
+      </div>
+      <div class="s-goal c4">🎯 将所有训练成果转化为职场实际应用能力，建立个人嗓音保健体系</div>
+    </div>
+    <div class="split-visual reveal-left">
+      <svg viewBox="0 0 600 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="520" rx="20" fill="#F0ECE4"/>
+        <defs>
+          <radialGradient id="w4g" cx="45%" cy="35%" r="30%"><stop offset="0%" stop-color="#B89840" stop-opacity=".08"/><stop offset="100%" stop-color="#B89840" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="260" cy="180" r="140" fill="url(#w4g)" class="svg-glow"/>
+        <!-- Office desk -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="100" y="300" width="320" height="12" rx="4" fill="#D4D0C8"/>
+          <rect x="120" y="312" width="8" height="70" rx="2" fill="#C0BCB4"/>
+          <rect x="392" y="312" width="8" height="70" rx="2" fill="#C0BCB4"/>
+          <!-- Monitor -->
+          <rect x="190" y="200" width="120" height="80" rx="6" fill="#3A3448" opacity=".08"/>
+          <rect x="198" y="208" width="104" height="64" rx="3" fill="#D4EDE8" opacity=".2"/>
+          <rect x="240" y="280" width="20" height="20" rx="2" fill="#C0BCB4"/>
+        </g>
+        <!-- Call center worker -->
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <g class="svg-breathe">
+            <circle cx="250" cy="140" r="26" fill="#F5D9D3"/>
+            <path d="M224 135 Q228 112 250 108 Q272 112 276 135" fill="#7A7486" opacity=".35"/>
+            <circle cx="242" cy="138" r="2" fill="#3A3448"/>
+            <circle cx="258" cy="138" r="2" fill="#3A3448"/>
+            <path d="M244 150 Q250 155 256 150" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- Headset -->
+            <path d="M224 132 Q222 108 250 104 Q278 108 276 132" stroke="#5A5466" stroke-width="2.5" fill="none"/>
+            <rect x="218" y="128" width="10" height="16" rx="4" fill="#5A5466" opacity=".55"/>
+            <rect x="272" y="128" width="10" height="16" rx="4" fill="#5A5466" opacity=".55"/>
+            <path d="M218 144 Q208 150 206 162" stroke="#5A5466" stroke-width="2" fill="none"/>
+            <circle cx="204" cy="166" r="5" fill="#5A5466" opacity=".4"/>
+            <!-- Body -->
+            <path d="M230 162 Q226 190 228 220 L272 220 Q274 190 270 162 Q250 156 230 162Z" fill="#B89840" opacity=".25"/>
+          </g>
+        </g>
+        <!-- Good sound waves -->
+        <g class="svg-float" opacity=".35">
+          <path d="M282 135 Q294 126 290 144" stroke="#5AA89C" stroke-width="2" fill="none"/>
+          <path d="M294 128 Q310 116 304 140" stroke="#5AA89C" stroke-width="1.5" fill="none"/>
+        </g>
+        <!-- Timer: 45+3 -->
+        <g class="svg-fade-in" style="animation-delay:1s">
+          <g class="svg-float-d">
+            <circle cx="480" cy="120" r="30" fill="#F5EDCF" stroke="#B89840" stroke-width="2"/>
+            <text x="480" y="116" text-anchor="middle" font-size="15" fill="#B89840" font-weight="700">45</text>
+            <text x="480" y="132" text-anchor="middle" font-size="8" fill="#5A5466">分钟</text>
+            <text x="480" y="162" text-anchor="middle" font-size="9" fill="#B89840" opacity=".7">📞 通话</text>
+          </g>
+          <g class="svg-float-d2">
+            <circle cx="480" cy="210" r="24" fill="#D4EDE8" stroke="#5AA89C" stroke-width="1.5"/>
+            <text x="480" y="206" text-anchor="middle" font-size="13" fill="#5AA89C" font-weight="700">3</text>
+            <text x="480" y="220" text-anchor="middle" font-size="8" fill="#5A5466">分钟</text>
+            <text x="480" y="245" text-anchor="middle" font-size="9" fill="#5AA89C" opacity=".7">🧘 微休息</text>
+          </g>
+          <!-- Arrow between -->
+          <path d="M480 152 L480 184" stroke="#B89840" stroke-width="1.5" fill="none" opacity=".3" stroke-dasharray="4,3"/>
+        </g>
+        <!-- Water bottle -->
+        <g class="svg-float-d3" opacity=".6">
+          <rect x="90" y="260" width="22" height="38" rx="6" fill="#DCEEF8" stroke="#6AA5C6" stroke-width="1.5"/>
+          <rect x="95" y="252" width="12" height="10" rx="3" fill="#6AA5C6" opacity=".35"/>
+          <text x="101" y="284" text-anchor="middle" font-size="7" fill="#6AA5C6">💧</text>
+          <text x="101" y="310" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">≥2000ml</text>
+        </g>
+        <!-- Headset on desk -->
+        <g class="svg-float" opacity=".5">
+          <path d="M380 270 Q376 254 392 250 Q408 254 404 270" stroke="#5A5466" stroke-width="2.5" fill="none"/>
+          <rect x="374" y="266" width="9" height="13" rx="3" fill="#5A5466" opacity=".5"/>
+          <rect x="401" y="266" width="9" height="13" rx="3" fill="#5A5466" opacity=".5"/>
+        </g>
+        <!-- Personal audio plan -->
+        <g class="svg-slide-l" style="animation-delay:1.5s">
+          <rect x="70" y="400" width="150" height="55" rx="12" fill="#fff" opacity=".85" stroke="#F5EDCF" stroke-width="1.2"/>
+          <text x="145" y="422" text-anchor="middle" font-size="10" fill="#B89840" font-weight="600">🎧 个人化音频</text>
+          <text x="145" y="440" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">嗓音保健方案</text>
+        </g>
+        <!-- Health manual -->
+        <g class="svg-slide-r" style="animation-delay:1.7s">
+          <rect x="380" y="400" width="150" height="55" rx="12" fill="#fff" opacity=".85" stroke="#E8E0F3" stroke-width="1.2"/>
+          <text x="455" y="422" text-anchor="middle" font-size="10" fill="#967BA5" font-weight="600">📖 保健手册</text>
+          <text x="455" y="440" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">入职培训纳入</text>
+        </g>
+        <!-- Micro rest icon -->
+        <g class="svg-scale-in" style="animation-delay:1.3s">
+          <circle cx="340" cy="170" r="16" fill="#D4EDE8" opacity=".5"/>
+          <text x="340" y="175" text-anchor="middle" font-size="14">🧘</text>
+        </g>
+        <!-- Shimmer dots -->
+        <circle cx="150" cy="80" r="2.5" fill="#B89840" opacity=".3" class="svg-shimmer"/>
+        <circle cx="400" cy="80" r="2" fill="#5AA89C" opacity=".3" class="svg-shimmer" style="animation-delay:.5s"/>
+        <circle cx="540" cy="350" r="2.5" fill="#967BA5" opacity=".25" class="svg-shimmer" style="animation-delay:1s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPLEMENTATION ===== -->
+<section class="impl-section" id="impl">
+  <div class="impl-container">
+    <div class="section-header reveal">
+      <div class="section-tag impl">⚙ 实施适配</div>
+      <h2 class="section-title">灵活高效的实施策略</h2>
+      <p class="section-subtitle">科学排班、专属场地、个性化方案、班组推广，确保方案顺利落地</p>
+    </div>
+    <div class="impl-illustration reveal-scale">
+      <svg viewBox="0 0 750 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="750" height="240" rx="20" fill="#FAF8F2"/>
+        <g class="svg-float"><circle cx="120" cy="90" r="26" fill="#D4EDE8" opacity=".6"/><text x="120" y="86" text-anchor="middle" font-size="18">⏰</text><text x="120" y="100" text-anchor="middle" font-size="7" fill="#5A5466">时间</text><text x="120" y="140" text-anchor="middle" font-size="11" fill="#3A3448" font-weight="500">午休/班前后</text><text x="120" y="158" text-anchor="middle" font-size="10" fill="#5A5466" opacity=".6">30分钟集体训练</text></g>
+        <g class="svg-float-d"><circle cx="310" cy="90" r="26" fill="#F5D9D3" opacity=".6"/><text x="310" y="86" text-anchor="middle" font-size="18">🏠</text><text x="310" y="100" text-anchor="middle" font-size="7" fill="#5A5466">场地</text><text x="310" y="140" text-anchor="middle" font-size="11" fill="#3A3448" font-weight="500">嗓音康复角</text><text x="310" y="158" text-anchor="middle" font-size="10" fill="#5A5466" opacity=".6">瑜伽垫·颂钵·音叉</text></g>
+        <g class="svg-float-d2"><circle cx="500" cy="90" r="26" fill="#E8E0F3" opacity=".6"/><text x="500" y="86" text-anchor="middle" font-size="18">👤</text><text x="500" y="100" text-anchor="middle" font-size="7" fill="#5A5466">个性化</text><text x="500" y="140" text-anchor="middle" font-size="11" fill="#3A3448" font-weight="500">定制方案</text><text x="500" y="158" text-anchor="middle" font-size="10" fill="#5A5466" opacity=".6">基于评估结果</text></g>
+        <g class="svg-float-d3"><circle cx="660" cy="90" r="26" fill="#F5EDCF" opacity=".6"/><text x="660" y="86" text-anchor="middle" font-size="18">🤝</text><text x="660" y="100" text-anchor="middle" font-size="7" fill="#5A5466">推广</text><text x="660" y="140" text-anchor="middle" font-size="11" fill="#3A3448" font-weight="500">嗓音健康大使</text><text x="660" y="158" text-anchor="middle" font-size="10" fill="#5A5466" opacity=".6">班组骨干带动</text></g>
+        <line x1="150" y1="90" x2="280" y2="90" stroke="#D4EDE8" stroke-width="2" stroke-dasharray="6,4"/>
+        <line x1="340" y1="90" x2="470" y2="90" stroke="#F5D9D3" stroke-width="2" stroke-dasharray="6,4"/>
+        <line x1="530" y1="90" x2="630" y2="90" stroke="#E8E0F3" stroke-width="2" stroke-dasharray="6,4"/>
+        <path d="M120 185 Q310 215 500 185 Q580 170 660 185" stroke="#B89840" stroke-width="1.5" fill="none" opacity=".25" stroke-dasharray="4,4"/>
+        <text x="390" y="225" text-anchor="middle" font-size="11" fill="#B89840" opacity=".5">持续优化循环</text>
+      </svg>
+    </div>
+    <div class="impl-grid stagger">
+      <div class="impl-card reveal" style="--i:0"><div class="impl-card-icon c1">⏰</div><h3>时间安排</h3><p>利用员工午休时间（30分钟）或班前/班后时间进行集体训练，避免影响正常工作排班</p></div>
+      <div class="impl-card reveal" style="--i:1"><div class="impl-card-icon c2">🏠</div><h3>场地配置</h3><p>在公司内设置专门的"嗓音康复角"，配备瑜伽垫、颂钵、音叉等器材</p></div>
+      <div class="impl-card reveal" style="--i:2"><div class="impl-card-icon c3">👤</div><h3>个性化调整</h3><p>根据每位员工的嗓音评估结果制定个性化练习计划</p></div>
+      <div class="impl-card reveal" style="--i:3"><div class="impl-card-icon c4">🤝</div><h3>班组推广</h3><p>培训班组骨干作为"嗓音健康大使"，带动日常练习</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONG-TERM ===== -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">长效保障机制</div>
+      <h2 class="section-title">可持续的长效保障体系</h2>
+      <p class="section-subtitle">效果追踪、预防复发、环境优化、定期复训，构建嗓音健康管理闭环</p>
+    </div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0"><div class="longterm-card-icon l1">📊</div><div><h3>效果追踪体系</h3><p>客观指标：每月复测MPT、VHI-30量表评分；主观指标：每周VAS评分记录；工作指标：通话质量评分、客户满意度变化</p></div></div>
+      <div class="longterm-card reveal" style="--i:1"><div class="longterm-card-icon l2">📖</div><div><h3>预防复发机制</h3><p>制定《呼叫中心嗓音保健手册》，纳入新员工入职培训，从源头建立嗓音健康意识</p></div></div>
+      <div class="longterm-card reveal" style="--i:2"><div class="longterm-card-icon l3">🏢</div><div><h3>环境优化</h3><p>调整耳机音量标准、优化工位湿度、减少环境噪音，从物理环境层面保护嗓音健康</p></div></div>
+      <div class="longterm-card reveal" style="--i:3"><div class="longterm-card-icon l4">🔄</div><div><h3>定期复训</h3><p>每季度开展一次嗓音健康回顾与进阶训练，持续巩固和提升嗓音健康水平</p></div></div>
+    </div>
+    <div class="longterm-illustration reveal-scale">
+      <svg viewBox="0 0 750 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="750" height="220" rx="20" fill="#F0ECE4"/>
+        <circle cx="375" cy="110" r="75" stroke="#E8E0F3" stroke-width="2" fill="none" stroke-dasharray="8,4" class="svg-rotate"/>
+        <circle cx="375" cy="110" r="35" fill="#D4EDE8" opacity=".35"/>
+        <text x="375" y="106" text-anchor="middle" font-size="18">♻️</text>
+        <text x="375" y="122" text-anchor="middle" font-size="9" fill="#3A3448" font-weight="500">嗓音健康</text>
+        <g class="svg-float"><circle cx="375" cy="25" r="18" fill="#D4EDE8" opacity=".7"/><text x="375" y="30" text-anchor="middle" font-size="14">📊</text></g>
+        <g class="svg-float-d"><circle cx="470" cy="60" r="18" fill="#F5D9D3" opacity=".7"/><text x="470" y="65" text-anchor="middle" font-size="14">📖</text></g>
+        <g class="svg-float-d2"><circle cx="470" cy="165" r="18" fill="#E8E0F3" opacity=".7"/><text x="470" y="170" text-anchor="middle" font-size="14">🏢</text></g>
+        <g class="svg-float-d3"><circle cx="280" cy="165" r="18" fill="#F5EDCF" opacity=".7"/><text x="280" y="170" text-anchor="middle" font-size="14">🔄</text></g>
+        <g class="svg-float"><circle cx="280" cy="60" r="18" fill="#DCEEF8" opacity=".7"/><text x="280" y="65" text-anchor="middle" font-size="14">📈</text></g>
+        <text x="375" y="8" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">效果追踪</text>
+        <text x="505" y="60" font-size="9" fill="#5A5466" opacity=".5">预防复发</text>
+        <text x="505" y="165" font-size="9" fill="#5A5466" opacity=".5">环境优化</text>
+        <text x="245" y="165" text-anchor="end" font-size="9" fill="#5A5466" opacity=".5">定期复训</text>
+        <text x="245" y="60" text-anchor="end" font-size="9" fill="#5A5466" opacity=".5">持续改善</text>
+        <path d="M393 32 Q420 38 448 55" stroke="#5AA89C" stroke-width="1.5" fill="none" opacity=".25"/>
+        <path d="M482 78 Q488 120 482 148" stroke="#D97A6A" stroke-width="1.5" fill="none" opacity=".25"/>
+        <path d="M455 172 Q375 198 295 172" stroke="#967BA5" stroke-width="1.5" fill="none" opacity=".25"/>
+        <path d="M268 148 Q262 120 268 78" stroke="#B89840" stroke-width="1.5" fill="none" opacity=".25"/>
+        <path d="M295 55 Q320 38 360 28" stroke="#6AA5C6" stroke-width="1.5" fill="none" opacity=".25"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs ===== -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">可持续发展</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将嗓音健康与联合国可持续发展目标及ESG治理框架深度结合</p>
+    </div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0"><div class="sdg-num">03</div><div class="sdg-title">良好健康与福祉</div><p class="sdg-desc">直接改善员工嗓音健康，预防职业性嗓音疾病</p></div>
+      <div class="sdg-card reveal" style="--i:1"><div class="sdg-num">08</div><div class="sdg-title">体面工作与经济增长</div><p class="sdg-desc">保障劳动者职业健康权益，提升工作质量与效率</p></div>
+      <div class="sdg-card reveal" style="--i:2"><div class="sdg-num">S</div><div class="sdg-title">ESG-社会责任</div><p class="sdg-desc">企业关注员工职业健康的责任体现</p></div>
+      <div class="sdg-card reveal" style="--i:3"><div class="sdg-num">G</div><div class="sdg-title">ESG-公司治理</div><p class="sdg-desc">建立系统化的员工健康管理体系</p></div>
+    </div>
+    <div class="kpi-box reveal">
+      <h3>📊 关键量化指标</h3>
+      <div class="kpi-items">
+        <span class="kpi-item">MPT最大发音时间</span>
+        <span class="kpi-item">VHI-30量表评分</span>
+        <span class="kpi-item">VAS喉部不适评分</span>
+        <span class="kpi-item">通话质量评分</span>
+        <span class="kpi-item">客户满意度</span>
+        <span class="kpi-item">嗓音保健手册覆盖率</span>
+        <span class="kpi-item">季度复训参与率</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用心守护每一个声音 🎤</h2>
+    <p class="footer-text">嗓音是呼叫中心员工最宝贵的职业工具，让科学康复走进职场，温暖每一位用声音传递关怀的人</p>
+    <div class="footer-hearts">🎵 🫁 💛 🎵</div>
+  </div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d)*100+'%'});
+const dots=document.querySelectorAll('.nav-dot');
+const secs=['hero','week1','week2','week3','week4','impl','longterm','sdgs'];
+dots.forEach(d=>{d.addEventListener('click',()=>{document.getElementById(d.dataset.target).scrollIntoView({behavior:'smooth'})})});
+const sels=secs.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sels.forEach((e,i)=>{if(e.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((d,i)=>{d.classList.toggle('active',i===c)})});
+const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el=>obs.observe(el));
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

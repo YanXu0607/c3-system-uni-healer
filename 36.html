@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正念领导力与金融决策 · 8周高管培训方案</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#3A5A7C;--navy-light:#D0DEF0;--navy-pale:#E8F0FA;
+  --teal:#4A9B8E;--teal-light:#D0ECE6;--teal-pale:#E8F6F2;
+  --gold:#B8963C;--gold-light:#F0E8CC;--gold-pale:#FAF6E8;
+  --coral:#C47058;--coral-light:#F2DDD4;--coral-pale:#FAF0EC;
+  --lavender:#8A7BA8;--lavender-light:#E4DCF0;--lavender-pale:#F2EEF8;
+  --sky:#5A98C0;--sky-light:#D4E8F6;--sky-pale:#EBF4FA;
+  --mint:#5AAA8A;--mint-light:#D0F0E2;
+  --amber:#C4A050;--amber-light:#F0E8CC;
+  --rose:#B86878;--rose-light:#F0D8E0;
+  --plum:#7A68A0;--plum-light:#E0D8F0;
+  --slate:#4A5468;--slate-light:#D8DCE4;
+  --cream:#F5F0E1;--cream-pale:#FAF8F2;
+  --deep:#2C3444;--soft:#5A6478;--surface:#F0ECE4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+
+/* Progress Bar */
+.progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--navy),var(--teal),var(--gold),var(--coral));width:0%;transition:width .1s linear}
+
+/* Nav Dots */
+.nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+.nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+.nav-dot.active{background:var(--navy);transform:scale(1.5);box-shadow:0 0 10px rgba(58,90,124,.4)}
+.nav-dot:hover{transform:scale(1.3)}
+.nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+.nav-dot:hover .tooltip{opacity:1}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy-pale) 0%,var(--cream) 30%,var(--teal-pale) 60%,var(--gold-pale) 100%)}
+.hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-shape{position:absolute;border-radius:50%;opacity:.12}
+.hero-shape:nth-child(1){width:420px;height:420px;background:var(--navy);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+.hero-shape:nth-child(2){width:320px;height:320px;background:var(--teal);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+.hero-shape:nth-child(3){width:220px;height:220px;background:var(--gold);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+.hero-shape:nth-child(4){width:160px;height:160px;background:var(--coral);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+@keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+.hero-badge{display:inline-block;padding:6px 20px;background:rgba(58,90,124,.12);border-radius:20px;font-size:13px;color:var(--navy);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,4.5vw,48px);font-weight:700;line-height:1.35;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+.hero-title .accent{color:var(--navy)}
+.hero-title .accent2{color:var(--teal)}
+.hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+.hero-meta-item .dot{width:6px;height:6px;border-radius:50%;background:var(--navy)}
+.hero-illustration{margin-top:40px;opacity:0;animation:fadeUp 1s 1s forwards}
+.hero-illustration svg{width:100%;max-width:720px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 16px 48px rgba(0,0,0,.06))}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.hero-badge,.hero-title,.hero-subtitle,.hero-meta,.hero-illustration{transform:translateY(20px)}
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeUp .8s 1.4s forwards}
+.scroll-hint span{font-size:11px;color:var(--soft);letter-spacing:1px}
+.scroll-arrow{width:20px;height:20px;border-right:2px solid var(--navy);border-bottom:2px solid var(--navy);transform:rotate(45deg);animation:scrollBounce 2s ease-in-out infinite}
+@keyframes scrollBounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+
+/* Week Sections */
+.week-section{min-height:100vh;display:flex;align-items:center;padding:80px 24px;position:relative}
+.week-section:nth-child(odd){background:var(--cream-pale)}
+.week-section:nth-child(even){background:var(--surface)}
+.week-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.week-section.reverse .week-container{direction:rtl}
+.week-section.reverse .week-container>*{direction:ltr}
+.week-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.week-num-badge{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:#fff}
+.week-num-badge.w1{background:linear-gradient(135deg,#3A5A7C,#5A8AB0)}
+.week-num-badge.w2{background:linear-gradient(135deg,#4A9B8E,#6ABBAE)}
+.week-num-badge.w3{background:linear-gradient(135deg,#5A98C0,#7AB8E0)}
+.week-num-badge.w4{background:linear-gradient(135deg,#C47058,#E09078)}
+.week-num-badge.w5{background:linear-gradient(135deg,#8A7BA8,#AAA0C8)}
+.week-num-badge.w6{background:linear-gradient(135deg,#B8963C,#D8B85C)}
+.week-num-badge.w7{background:linear-gradient(135deg,#5AAA8A,#7ACAAA)}
+.week-num-badge.w8{background:linear-gradient(135deg,#B86878,#D88898)}
+.week-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+.week-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.2vw,34px);font-weight:700;margin-bottom:4px;line-height:1.4}
+.week-theme{font-size:14px;font-weight:500;margin-bottom:14px}
+.week-theme.w1{color:var(--navy)}.week-theme.w2{color:var(--teal)}
+.week-theme.w3{color:var(--sky)}.week-theme.w4{color:var(--coral)}
+.week-theme.w5{color:var(--lavender)}.week-theme.w6{color:var(--gold)}
+.week-theme.w7{color:var(--mint)}.week-theme.w8{color:var(--rose)}
+.week-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:18px}
+.week-details{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.detail-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--soft)}
+.detail-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+.detail-icon.w1{background:rgba(58,90,124,.1)}.detail-icon.w2{background:rgba(74,155,142,.1)}
+.detail-icon.w3{background:rgba(90,152,192,.1)}.detail-icon.w4{background:rgba(196,112,88,.1)}
+.detail-icon.w5{background:rgba(138,123,168,.1)}.detail-icon.w6{background:rgba(184,150,60,.1)}
+.detail-icon.w7{background:rgba(90,170,138,.1)}.detail-icon.w8{background:rgba(184,104,120,.1)}
+.week-assess{padding:14px 18px;border-radius:12px;font-size:13px;color:var(--soft);line-height:1.7}
+.week-assess.w1{background:rgba(58,90,124,.06);border-left:3px solid var(--navy)}
+.week-assess.w2{background:rgba(74,155,142,.06);border-left:3px solid var(--teal)}
+.week-assess.w3{background:rgba(90,152,192,.06);border-left:3px solid var(--sky)}
+.week-assess.w4{background:rgba(196,112,88,.06);border-left:3px solid var(--coral)}
+.week-assess.w5{background:rgba(138,123,168,.06);border-left:3px solid var(--lavender)}
+.week-assess.w6{background:rgba(184,150,60,.06);border-left:3px solid var(--gold)}
+.week-assess.w7{background:rgba(90,170,138,.06);border-left:3px solid var(--mint)}
+.week-assess.w8{background:rgba(184,104,120,.06);border-left:3px solid var(--rose)}
+.assess-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+.week-visual{position:relative}
+.week-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+.week-decoration{position:absolute;width:80px;height:80px;border-radius:50%;opacity:.1;z-index:-1}
+.week-decoration.w1{background:var(--navy);top:-20px;right:-20px}
+.week-decoration.w2{background:var(--teal);bottom:-20px;left:-20px}
+.week-decoration.w3{background:var(--sky);top:-20px;left:-20px}
+.week-decoration.w4{background:var(--coral);bottom:-20px;right:-20px}
+.week-decoration.w5{background:var(--lavender);top:-20px;right:-20px}
+.week-decoration.w6{background:var(--gold);bottom:-20px;left:-20px}
+.week-decoration.w7{background:var(--mint);top:-20px;left:-20px}
+.week-decoration.w8{background:var(--rose);bottom:-20px;right:-20px}
+
+/* Info Sections */
+.info-section{padding:100px 24px;position:relative}
+.info-section.impl{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+.info-section.longterm{background:var(--cream-pale)}
+.info-section.sdgs{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+.info-container{max-width:1100px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:60px}
+.section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+.section-tag.impl{background:rgba(58,90,124,.1);color:var(--navy)}
+.section-tag.longterm{background:rgba(138,123,168,.1);color:var(--lavender)}
+.section-tag.sdgs{background:rgba(184,150,60,.12);color:var(--gold)}
+.section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+.section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+
+/* Implementation Grid */
+.impl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+.impl-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(58,90,124,.06);transition:transform .3s,box-shadow .3s}
+.impl-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+.impl-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.impl-card-icon.c1{background:rgba(58,90,124,.08)}.impl-card-icon.c2{background:rgba(74,155,142,.08)}
+.impl-card-icon.c3{background:rgba(138,123,168,.08)}.impl-card-icon.c4{background:rgba(184,150,60,.08)}
+.impl-card-icon.c5{background:rgba(196,112,88,.08)}
+.impl-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.impl-card p{font-size:14px;color:var(--soft);line-height:1.7}
+
+/* Long-term Grid */
+.longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+.longterm-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(138,123,168,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+.longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+.longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.longterm-card-icon.l1{background:rgba(58,90,124,.08)}.longterm-card-icon.l2{background:rgba(74,155,142,.08)}
+.longterm-card-icon.l3{background:rgba(138,123,168,.08)}.longterm-card-icon.l4{background:rgba(184,150,60,.1)}
+.longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+
+/* SDGs Grid */
+.sdgs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:50px}
+.sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+.sdg-card:hover{transform:translateY(-4px)}
+.sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(74,155,142,.08),rgba(74,155,142,.02));border:1px solid rgba(74,155,142,.1)}
+.sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(90,152,192,.08),rgba(90,152,192,.02));border:1px solid rgba(90,152,192,.1)}
+.sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(58,90,124,.08),rgba(58,90,124,.02));border:1px solid rgba(58,90,124,.1)}
+.sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(196,112,88,.08),rgba(196,112,88,.02));border:1px solid rgba(196,112,88,.1)}
+.sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+.sdg-card:nth-child(1) .sdg-num{color:var(--teal)}.sdg-card:nth-child(2) .sdg-num{color:var(--sky)}
+.sdg-card:nth-child(3) .sdg-num{color:var(--navy)}.sdg-card:nth-child(4) .sdg-num{color:var(--coral)}
+.sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}
+.sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+
+.esg-tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:32px}
+.esg-tag{padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;background:var(--navy-light);color:var(--navy);border:1px solid rgba(58,90,124,.15);transition:transform .3s}
+.esg-tag:hover{transform:scale(1.05)}
+
+/* Footer */
+.footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+.footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+.footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+
+/* Scroll Reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+
+/* SVG Animations */
+.svg-float{animation:svgFloat 4s ease-in-out infinite}
+.svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}
+.svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}
+.svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+.svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+.svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+.svg-rotate{animation:svgRotate 12s linear infinite}
+.svg-sway{animation:svgSway 6s ease-in-out infinite}
+.svg-glow{animation:svgGlow 4s ease-in-out infinite}
+.svg-draw{stroke-dasharray:600;stroke-dashoffset:600;animation:svgDraw 3s ease forwards}
+.svg-draw-slow{stroke-dasharray:800;stroke-dashoffset:800;animation:svgDraw 4s ease forwards}
+.svg-fade-in{opacity:0;animation:svgFadeIn 1.2s ease forwards}
+.svg-fade-in-d{opacity:0;animation:svgFadeIn 1.2s .4s ease forwards}
+.svg-fade-in-d2{opacity:0;animation:svgFadeIn 1.2s .8s ease forwards}
+.svg-fade-in-d3{opacity:0;animation:svgFadeIn 1.2s 1.2s ease forwards}
+.svg-fade-in-d4{opacity:0;animation:svgFadeIn 1.2s 1.6s ease forwards}
+.svg-fade-in-d5{opacity:0;animation:svgFadeIn 1.2s 2s ease forwards}
+.svg-scale-in{transform:scale(0);opacity:0;animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+.svg-ripple{transform:scale(0);opacity:0;animation:svgRipple 2.5s ease-out forwards}
+.svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}
+.svg-ring-d{animation:svgRing 3s ease-out 1s infinite}
+.svg-ring-d2{animation:svgRing 3s ease-out 2s infinite}
+.svg-shimmer{opacity:0;animation:svgShimmer 3s ease-in-out infinite}
+.svg-rise{opacity:0;transform:translateY(20px);animation:svgRise 1.5s ease forwards}
+.svg-slide-l{opacity:0;transform:translateX(-30px);animation:svgSlideL 1s ease forwards}
+.svg-slide-r{opacity:0;transform:translateX(30px);animation:svgSlideR 1s ease forwards}
+.svg-drop{opacity:0;transform:translateY(-20px);animation:svgDrop 2.5s ease infinite}
+.svg-drop-d{animation:svgDrop 2.5s ease .8s infinite}
+.svg-drop-d2{animation:svgDrop 2.5s ease 1.6s infinite}
+.svg-spin-slow{animation:svgRotate 20s linear infinite}
+.svg-wave{animation:svgWave 3s ease-in-out infinite}
+@keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes svgPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.15);opacity:1}}
+@keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes svgGlow{0%,100%{opacity:.1}50%{opacity:.28}}
+@keyframes svgDraw{to{stroke-dashoffset:0}}
+@keyframes svgFadeIn{to{opacity:1}}
+@keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+@keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+@keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+@keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.7}}
+@keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+@keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+@keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+@keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.8}60%{opacity:.5;transform:translateY(30px)}80%{opacity:0;transform:translateY(40px)}100%{opacity:0;transform:translateY(40px)}}
+@keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+@keyframes breathCycle{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.3);opacity:1}}
+@keyframes dataFlow{0%{stroke-dashoffset:20}100%{stroke-dashoffset:0}}
+@keyframes clockTick{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes marketPulse{0%,100%{d:path("M0,50 L50,50 L100,50 L150,50 L200,50")}25%{d:path("M0,50 L50,30 L100,60 L150,20 L200,50")}50%{d:path("M0,50 L50,70 L100,40 L150,65 L200,50")}75%{d:path("M0,50 L50,25 L100,55 L150,35 L200,50")}}
+@keyframes cloudDrift{0%{transform:translateX(0)}50%{transform:translateX(15px)}100%{transform:translateX(0)}}
+@keyframes shieldGlow{0%,100%{opacity:.15}50%{opacity:.35}}
+@keyframes bridgeBuild{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+@keyframes compassSpin{0%{transform:rotate(0deg)}25%{transform:rotate(90deg)}50%{transform:rotate(180deg)}75%{transform:rotate(270deg)}100%{transform:rotate(360deg)}}
+@keyframes gearSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes gearSpinR{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+
+@media(max-width:900px){
+  .week-container{grid-template-columns:1fr;gap:30px}
+  .week-section.reverse .week-container{direction:ltr}
+  .impl-grid,.longterm-grid,.sdgs-grid{grid-template-columns:1fr}
+  .nav-dots{right:12px;gap:8px}
+  .nav-dot{width:7px;height:7px}
+  .nav-dot .tooltip{display:none}
+  .week-section{padding:60px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周</span></div>
+  <div class="nav-dot" data-target="week5"><span class="tooltip">第5周</span></div>
+  <div class="nav-dot" data-target="week6"><span class="tooltip">第6周</span></div>
+  <div class="nav-dot" data-target="week7"><span class="tooltip">第7周</span></div>
+  <div class="nav-dot" data-target="week8"><span class="tooltip">第8周</span></div>
+  <div class="nav-dot" data-target="impl"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🧘 MINDFUL LEADERSHIP × FINANCIAL DECISION</div>
+    <h1 class="hero-title"><span class="accent">正念领导力</span>与<span class="accent2">金融决策</span><br>8周高管培训方案</h1>
+    <p class="hero-subtitle">融合正念训练与决策模拟，为金融高管打造系统性的觉察力提升方案<br>在正念中觉醒领导力，在觉察中优化决策</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="dot"></span>8周系统课程</div>
+      <div class="hero-meta-item"><span class="dot"></span>正念×决策双轨</div>
+      <div class="hero-meta-item"><span class="dot"></span>科学评估体系</div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 720 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="420" rx="24" fill="#FAF8F2" opacity="0.6"/>
+        <!-- Background circles -->
+        <circle cx="360" cy="210" r="140" fill="var(--navy)" opacity="0.04" class="svg-breathe"/>
+        <circle cx="360" cy="210" r="100" fill="var(--teal)" opacity="0.05" class="svg-pulse"/>
+        <!-- Central meditating leader figure -->
+        <g class="svg-fade-in" style="animation-delay:0.3s">
+          <circle cx="360" cy="160" r="28" fill="var(--navy)" opacity="0.15"/>
+          <circle cx="360" cy="155" r="18" fill="var(--navy)" opacity="0.25"/>
+          <rect x="348" y="175" width="24" height="32" rx="10" fill="var(--navy)" opacity="0.18"/>
+          <!-- Lotus seat -->
+          <ellipse cx="360" cy="215" rx="30" ry="8" fill="var(--teal)" opacity="0.2"/>
+        </g>
+        <!-- Breath rings -->
+        <g class="svg-fade-in" style="animation-delay:0.6s">
+          <circle cx="360" cy="190" r="45" fill="none" stroke="var(--teal)" stroke-width="1" opacity="0.2" class="svg-ring"/>
+          <circle cx="360" cy="190" r="45" fill="none" stroke="var(--teal)" stroke-width="1" opacity="0.2" class="svg-ring-d"/>
+          <circle cx="360" cy="190" r="45" fill="none" stroke="var(--teal)" stroke-width="1" opacity="0.2" class="svg-ring-d2"/>
+        </g>
+        <!-- Left: Brain/awareness -->
+        <g class="svg-fade-in" style="animation-delay:0.8s">
+          <circle cx="140" cy="180" r="50" fill="var(--navy-light)" opacity="0.4"/>
+          <path d="M125,170 Q130,155 140,155 Q150,155 150,165 Q155,158 160,165 Q165,158 160,175 Q158,188 145,190 Q130,192 125,180Z" fill="var(--navy)" opacity="0.3"/>
+          <circle cx="138" cy="170" r="3" fill="var(--navy)" opacity="0.5" class="svg-pulse"/>
+          <circle cx="148" cy="172" r="3" fill="var(--navy)" opacity="0.5" class="svg-pulse" style="animation-delay:.5s"/>
+          <text x="140" y="210" text-anchor="middle" font-size="10" fill="var(--navy)" font-weight="600">正念觉察</text>
+        </g>
+        <!-- Right: Chart/decision -->
+        <g class="svg-fade-in" style="animation-delay:1s">
+          <circle cx="580" cy="180" r="50" fill="var(--gold-light)" opacity="0.4"/>
+          <rect x="555" y="185" width="12" height="25" rx="2" fill="var(--gold)" opacity="0.4"/>
+          <rect x="572" y="175" width="12" height="35" rx="2" fill="var(--gold)" opacity="0.5"/>
+          <rect x="589" y="168" width="12" height="42" rx="2" fill="var(--gold)" opacity="0.6"/>
+          <path d="M555,165 L580,155 L595,160" stroke="var(--coral)" stroke-width="2" fill="none" opacity="0.5" stroke-linecap="round"/>
+          <circle cx="595" cy="160" r="3" fill="var(--coral)" opacity="0.6" class="svg-pulse"/>
+          <text x="580" y="210" text-anchor="middle" font-size="10" fill="var(--gold)" font-weight="600">金融决策</text>
+        </g>
+        <!-- Connection lines -->
+        <g class="svg-fade-in" style="animation-delay:1.3s">
+          <path d="M190,180 Q280,160 310,180" stroke="var(--navy)" stroke-width="1.5" fill="none" opacity="0.15" stroke-dasharray="6,4"/>
+          <path d="M410,180 Q480,160 530,180" stroke="var(--gold)" stroke-width="1.5" fill="none" opacity="0.15" stroke-dasharray="6,4"/>
+        </g>
+        <!-- Bottom: 8 week timeline -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <line x1="160" y1="310" x2="560" y2="310" stroke="var(--slate)" stroke-width="1.5" opacity="0.15"/>
+          <circle cx="190" cy="310" r="6" fill="var(--navy)" opacity="0.4"/><text x="190" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W1</text>
+          <circle cx="245" cy="310" r="6" fill="var(--teal)" opacity="0.4"/><text x="245" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W2</text>
+          <circle cx="300" cy="310" r="6" fill="var(--sky)" opacity="0.4"/><text x="300" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W3</text>
+          <circle cx="355" cy="310" r="6" fill="var(--coral)" opacity="0.4"/><text x="355" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W4</text>
+          <circle cx="410" cy="310" r="6" fill="var(--lavender)" opacity="0.4"/><text x="410" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W5</text>
+          <circle cx="465" cy="310" r="6" fill="var(--gold)" opacity="0.4"/><text x="465" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W6</text>
+          <circle cx="520" cy="310" r="6" fill="var(--mint)" opacity="0.4"/><text x="520" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W7</text>
+          <circle cx="530" cy="310" r="6" fill="var(--rose)" opacity="0.4" style="display:none"/>
+          <circle cx="540" cy="310" r="6" fill="var(--rose)" opacity="0.4"/><text x="540" y="330" text-anchor="middle" font-size="9" fill="var(--soft)">W8</text>
+        </g>
+        <!-- Floating elements -->
+        <g class="svg-float" opacity="0.3"><text x="100" y="100" font-size="16">🧘</text></g>
+        <g class="svg-float-d" opacity="0.3"><text x="600" y="90" font-size="16">📊</text></g>
+        <g class="svg-float-d2" opacity="0.25"><text x="80" y="300" font-size="14">💡</text></g>
+        <g class="svg-float-d3" opacity="0.25"><text x="630" y="290" font-size="14">🎯</text></g>
+        <!-- Bottom tagline -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <rect x="200" y="370" width="320" height="26" rx="10" fill="var(--navy)" opacity="0.08"/>
+          <text x="360" y="388" text-anchor="middle" font-size="11" fill="var(--navy)" font-weight="600">STAI-S · MAAS · CFI · 360°反馈 · 决策模拟追踪</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ==================== WEEK 1: 正念基础与自我觉察 ==================== -->
+<section class="week-section" id="week1">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w1">1</div><span class="week-label">WEEK 01</span></div>
+      <h2 class="week-title">正念基础与自我觉察</h2>
+      <div class="week-theme w1">🧘 建立身心连接 · 基线决策评估</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w1">🫁</span><span><strong>身体扫描冥想</strong>：从头到脚逐步觉察身体感受，建立身心连接</span></div>
+        <div class="detail-item"><span class="detail-icon w1">🌬️</span><span><strong>正念呼吸</strong>：10分钟专注呼吸练习，培养注意力锚点</span></div>
+        <div class="detail-item"><span class="detail-icon w1">📱</span><span><strong>日常作业</strong>：每日15分钟正念呼吸，使用正念APP辅助</span></div>
+        <div class="detail-item"><span class="detail-icon w1">📈</span><span><strong>基线决策测试</strong>：时间压力下完成金融决策模拟，记录决策时间、准确率与信心水平</span></div>
+        <div class="detail-item"><span class="detail-icon w1">🪞</span><span><strong>反思讨论</strong>：觉察决策过程中的思维模式</span></div>
+      </div>
+      <div class="week-assess w1">
+        <span class="assess-label">🎯 本周目标</span>
+        建立正念基础认知，完成基线决策评估，觉察自身决策模式与思维习惯
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w1"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w1bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#E8F0FA"/><stop offset="100%" style="stop-color:#E8F6F2"/></linearGradient>
+          <radialGradient id="w1glow"><stop offset="0%" style="stop-color:#3A5A7C;stop-opacity:.15"/><stop offset="100%" style="stop-color:#3A5A7C;stop-opacity:0"/></radialGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w1bg)" rx="20"/>
+        <!-- Body scan figure -->
+        <g class="svg-fade-in" transform="translate(250,180)">
+          <circle cx="0" cy="-60" r="22" fill="var(--navy)" opacity="0.12"/>
+          <rect x="-14" y="-38" width="28" height="45" rx="10" fill="var(--navy)" opacity="0.1"/>
+          <!-- Scan line moving down -->
+          <line x1="-30" y1="-70" x2="30" y2="-70" stroke="var(--navy)" stroke-width="2" opacity="0.4" class="svg-float-d">
+            <animate attributeName="y1" values="-70;50" dur="4s" repeatCount="indefinite"/>
+            <animate attributeName="y2" values="-70;50" dur="4s" repeatCount="indefinite"/>
+          </line>
+          <rect x="-30" y="-72" width="60" height="6" rx="3" fill="var(--navy)" opacity="0.15">
+            <animate attributeName="y" values="-72;48" dur="4s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Awareness dots along body -->
+          <circle cx="-8" cy="-55" r="3" fill="var(--navy)" opacity="0.4" class="svg-pulse"/>
+          <circle cx="8" cy="-40" r="3" fill="var(--navy)" opacity="0.4" class="svg-pulse" style="animation-delay:.3s"/>
+          <circle cx="-5" cy="-20" r="3" fill="var(--navy)" opacity="0.4" class="svg-pulse" style="animation-delay:.6s"/>
+          <circle cx="6" cy="0" r="3" fill="var(--navy)" opacity="0.4" class="svg-pulse" style="animation-delay:.9s"/>
+          <circle cx="-4" cy="20" r="3" fill="var(--navy)" opacity="0.4" class="svg-pulse" style="animation-delay:1.2s"/>
+          <circle cx="5" cy="40" r="3" fill="var(--navy)" opacity="0.4" class="svg-pulse" style="animation-delay:1.5s"/>
+        </g>
+        <!-- Breath circle -->
+        <g class="svg-fade-in-d" transform="translate(100,100)">
+          <circle r="35" fill="none" stroke="var(--teal)" stroke-width="1.5" opacity="0.2"/>
+          <circle r="20" fill="var(--teal)" opacity="0.08" class="svg-breathe"/>
+          <circle r="8" fill="var(--teal)" opacity="0.25" class="svg-pulse"/>
+          <text y="55" text-anchor="middle" font-size="10" fill="var(--teal)" font-weight="500">呼吸</text>
+        </g>
+        <!-- Decision chart -->
+        <g class="svg-fade-in-d2" transform="translate(400,100)">
+          <rect x="-40" y="-30" width="80" height="60" rx="10" fill="white" opacity="0.6"/>
+          <polyline points="-30,15 -15,5 0,10 15,-5 30,0" stroke="var(--navy)" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round"/>
+          <circle cx="30" cy="0" r="3" fill="var(--coral)" opacity="0.6" class="svg-pulse"/>
+          <text y="45" text-anchor="middle" font-size="10" fill="var(--navy)" font-weight="500">基线测试</text>
+        </g>
+        <!-- Mirror reflection -->
+        <g class="svg-fade-in-d3" transform="translate(400,300)">
+          <ellipse rx="30" ry="40" fill="white" opacity="0.4" stroke="var(--navy)" stroke-width="1" opacity="0.15"/>
+          <circle cy="-10" r="8" fill="var(--navy)" opacity="0.1"/>
+          <rect x="-6" y="2" width="12" height="16" rx="4" fill="var(--navy)" opacity="0.08"/>
+          <text y="55" text-anchor="middle" font-size="10" fill="var(--navy)" font-weight="500">自我觉察</text>
+        </g>
+        <!-- Floating particles -->
+        <circle cx="80" cy="250" r="4" fill="var(--navy)" opacity="0.15" class="svg-float"/>
+        <circle cx="420" cy="200" r="3" fill="var(--teal)" opacity="0.15" class="svg-float-d"/>
+        <circle cx="150" cy="350" r="3" fill="var(--navy)" opacity="0.1" class="svg-float-d2"/>
+        <circle cx="350" cy="370" r="4" fill="var(--teal)" opacity="0.1" class="svg-float-d3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 2: 情绪觉察与调节 ==================== -->
+<section class="week-section reverse" id="week2">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w2">2</div><span class="week-label">WEEK 02</span></div>
+      <h2 class="week-title">情绪觉察与调节</h2>
+      <div class="week-theme w2">🌊 情绪非评判观察 · RAIN技术应用</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w2">🌊</span><span><strong>正念情绪觉察</strong>：以非评判态度观察情绪的升起、停留与消退</span></div>
+        <div class="detail-item"><span class="detail-icon w2">🌧️</span><span><strong>RAIN技术</strong>：Recognize识别 → Allow允许 → Investigate探索 → Non-identify不认同</span></div>
+        <div class="detail-item"><span class="detail-icon w2">📝</span><span><strong>日常作业</strong>：每日记录3次情绪觉察日志</span></div>
+        <div class="detail-item"><span class="detail-icon w2">📉</span><span><strong>情绪干扰决策测试</strong>：模拟"市场暴跌"场景中做出投资决策</span></div>
+        <div class="detail-item"><span class="detail-icon w2">⚖️</span><span><strong>正念介入练习</strong>：决策前3分钟正念呼吸，对比有无正念介入的决策差异</span></div>
+      </div>
+      <div class="week-assess w2">
+        <span class="assess-label">🎯 本周目标</span>
+        学会以非评判态度观察情绪波动，在高压金融场景中保持情绪觉察力
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w2"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w2bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#E8F6F2"/><stop offset="100%" style="stop-color:#D0ECE6"/></linearGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w2bg)" rx="20"/>
+        <!-- Ocean wave metaphor for emotions -->
+        <g class="svg-fade-in" transform="translate(250,160)">
+          <!-- Calm water surface -->
+          <path d="M-180,20 Q-140,0 -100,20 Q-60,40 -20,20 Q20,0 60,20 Q100,40 140,20 Q180,0 180,20" fill="none" stroke="var(--teal)" stroke-width="2" opacity="0.3">
+            <animate attributeName="d" values="M-180,20 Q-140,0 -100,20 Q-60,40 -20,20 Q20,0 60,20 Q100,40 140,20 Q180,0 180,20;M-180,20 Q-140,35 -100,20 Q-60,5 -20,20 Q20,35 60,20 Q100,5 140,20 Q180,35 180,20;M-180,20 Q-140,0 -100,20 Q-60,40 -20,20 Q20,0 60,20 Q100,40 140,20 Q180,0 180,20" dur="4s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-180,40 Q-140,25 -100,40 Q-60,55 -20,40 Q20,25 60,40 Q100,55 140,40 Q180,25 180,40" fill="none" stroke="var(--teal)" stroke-width="1.5" opacity="0.2">
+            <animate attributeName="d" values="M-180,40 Q-140,25 -100,40 Q-60,55 -20,40 Q20,25 60,40 Q100,55 140,40 Q180,25 180,40;M-180,40 Q-140,50 -100,40 Q-60,30 -20,40 Q20,50 60,40 Q100,30 140,40 Q180,50 180,40;M-180,40 Q-140,25 -100,40 Q-60,55 -20,40 Q20,25 60,40 Q100,55 140,40 Q180,25 180,40" dur="5s" repeatCount="indefinite"/>
+          </path>
+          <!-- Observer above waves -->
+          <circle cy="-30" r="16" fill="var(--teal)" opacity="0.15"/>
+          <circle cy="-30" r="10" fill="var(--teal)" opacity="0.2"/>
+          <circle cy="-30" r="4" fill="var(--teal)" opacity="0.4"/>
+          <text y="-55" text-anchor="middle" font-size="10" fill="var(--teal)" font-weight="500">觉察者</text>
+        </g>
+        <!-- RAIN drops -->
+        <g class="svg-fade-in-d" transform="translate(80,80)">
+          <text font-size="9" fill="var(--teal)" font-weight="600" text-anchor="middle">R</text>
+          <line x1="0" y1="5" x2="0" y2="25" stroke="var(--teal)" stroke-width="1.5" opacity="0.4"/>
+          <ellipse cy="30" rx="4" ry="6" fill="var(--teal)" opacity="0.3" class="svg-drop"/>
+          <text y="50" text-anchor="middle" font-size="8" fill="var(--soft)">识别</text>
+        </g>
+        <g class="svg-fade-in-d2" transform="translate(140,80)">
+          <text font-size="9" fill="var(--teal)" font-weight="600" text-anchor="middle">A</text>
+          <line x1="0" y1="5" x2="0" y2="25" stroke="var(--teal)" stroke-width="1.5" opacity="0.4"/>
+          <ellipse cy="30" rx="4" ry="6" fill="var(--teal)" opacity="0.3" class="svg-drop-d"/>
+          <text y="50" text-anchor="middle" font-size="8" fill="var(--soft)">允许</text>
+        </g>
+        <g class="svg-fade-in-d3" transform="translate(200,80)">
+          <text font-size="9" fill="var(--teal)" font-weight="600" text-anchor="middle">I</text>
+          <line x1="0" y1="5" x2="0" y2="25" stroke="var(--teal)" stroke-width="1.5" opacity="0.4"/>
+          <ellipse cy="30" rx="4" ry="6" fill="var(--teal)" opacity="0.3" class="svg-drop-d2"/>
+          <text y="50" text-anchor="middle" font-size="8" fill="var(--soft)">探索</text>
+        </g>
+        <g class="svg-fade-in-d4" transform="translate(260,80)">
+          <text font-size="9" fill="var(--teal)" font-weight="600" text-anchor="middle">N</text>
+          <line x1="0" y1="5" x2="0" y2="25" stroke="var(--teal)" stroke-width="1.5" opacity="0.4"/>
+          <ellipse cy="30" rx="4" ry="6" fill="var(--teal)" opacity="0.3" class="svg-drop"/>
+          <text y="50" text-anchor="middle" font-size="8" fill="var(--soft)">不认同</text>
+        </g>
+        <!-- Market crash chart -->
+        <g class="svg-fade-in-d2" transform="translate(400,280)">
+          <rect x="-50" y="-50" width="100" height="80" rx="10" fill="white" opacity="0.5"/>
+          <polyline points="-40,-20 -25,-15 -10,-25 5,-10 20,-35 35,-30" stroke="var(--coral)" stroke-width="2" fill="none" opacity="0.5" stroke-linecap="round"/>
+          <text x="0" y="45" text-anchor="middle" font-size="9" fill="var(--coral)" font-weight="500">市场暴跌</text>
+        </g>
+        <!-- Balance scale -->
+        <g class="svg-fade-in-d3" transform="translate(100,320)">
+          <line x1="0" y1="-20" x2="0" y2="10" stroke="var(--teal)" stroke-width="2" opacity="0.3"/>
+          <line x1="-25" y1="-20" x2="25" y2="-20" stroke="var(--teal)" stroke-width="2" opacity="0.3"/>
+          <path d="M-25,-20 L-30,-5 L-20,-5Z" fill="var(--teal)" opacity="0.2" class="svg-float"/>
+          <path d="M25,-20 L30,-5 L20,-5Z" fill="var(--teal)" opacity="0.2" class="svg-float-d"/>
+          <text y="25" text-anchor="middle" font-size="9" fill="var(--teal)" font-weight="500">情绪平衡</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 3: 认知解离与思维灵活性 ==================== -->
+<section class="week-section" id="week3">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w3">3</div><span class="week-label">WEEK 03</span></div>
+      <h2 class="week-title">认知解离与思维灵活性</h2>
+      <div class="week-theme w3">☁️ 云与天空 · 思维去认同化</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w3">💭</span><span><strong>认知解离练习</strong>："我有这个想法" vs "我是这个想法"，将思维视为心理事件而非事实</span></div>
+        <div class="detail-item"><span class="detail-icon w3">☁️</span><span><strong>"云与天空"隐喻</strong>：想法如云朵飘过天空，天空（觉察本身）始终广阔</span></div>
+        <div class="detail-item"><span class="detail-icon w3">🔄</span><span><strong>日常作业</strong>：当觉察到自动化消极思维时，练习认知解离</span></div>
+        <div class="detail-item"><span class="detail-icon w3">🔍</span><span><strong>认知偏差识别测试</strong>：识别确认偏差、锚定效应、损失厌恶等常见偏差</span></div>
+        <div class="detail-item"><span class="detail-icon w3">⏸️</span><span><strong>"暂停-觉察-选择"</strong>：在决策关键节点引入3秒正念暂停</span></div>
+      </div>
+      <div class="week-assess w3">
+        <span class="assess-label">🎯 本周目标</span>
+        学会将思维视为心理事件而非事实，识别并减少认知偏差对决策的影响
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w3"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w3bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#EBF4FA"/><stop offset="100%" style="stop-color:#E8F0FA"/></linearGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w3bg)" rx="20"/>
+        <!-- Sky background -->
+        <rect y="0" width="500" height="280" rx="20" fill="var(--sky)" opacity="0.06"/>
+        <!-- Vast sky (awareness) -->
+        <g class="svg-fade-in">
+          <text x="250" y="30" text-anchor="middle" font-size="11" fill="var(--sky)" font-weight="500" opacity="0.6">广阔的天空 = 觉察本身</text>
+        </g>
+        <!-- Clouds with thoughts drifting -->
+        <g class="svg-float" style="animation:cloudDrift 8s ease-in-out infinite">
+          <ellipse cx="100" cy="80" rx="50" ry="22" fill="white" opacity="0.7"/>
+          <ellipse cx="80" cy="75" rx="30" ry="18" fill="white" opacity="0.6"/>
+          <ellipse cx="120" cy="78" rx="25" ry="15" fill="white" opacity="0.5"/>
+          <text x="100" y="85" text-anchor="middle" font-size="8" fill="var(--soft)">"我不够好"</text>
+        </g>
+        <g class="svg-float-d" style="animation:cloudDrift 10s ease-in-out infinite">
+          <ellipse cx="300" cy="110" rx="55" ry="24" fill="white" opacity="0.65"/>
+          <ellipse cx="280" cy="105" rx="32" ry="18" fill="white" opacity="0.55"/>
+          <ellipse cx="320" cy="108" rx="28" ry="16" fill="white" opacity="0.5"/>
+          <text x="300" y="115" text-anchor="middle" font-size="8" fill="var(--soft)">"市场会崩盘"</text>
+        </g>
+        <g class="svg-float-d2" style="animation:cloudDrift 12s ease-in-out infinite">
+          <ellipse cx="420" cy="70" rx="45" ry="20" fill="white" opacity="0.6"/>
+          <ellipse cx="405" cy="66" rx="28" ry="16" fill="white" opacity="0.5"/>
+          <text x="420" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">"我会失败"</text>
+        </g>
+        <g class="svg-float-d3" style="animation:cloudDrift 9s ease-in-out infinite">
+          <ellipse cx="180" cy="160" rx="40" ry="18" fill="white" opacity="0.55"/>
+          <text x="180" y="165" text-anchor="middle" font-size="8" fill="var(--soft)">"别人更优秀"</text>
+        </g>
+        <!-- Observer below -->
+        <g class="svg-fade-in-d" transform="translate(250,260)">
+          <circle cy="-15" r="14" fill="var(--sky)" opacity="0.15"/>
+          <circle cy="-15" r="8" fill="var(--sky)" opacity="0.2"/>
+          <circle cy="-15" r="3" fill="var(--sky)" opacity="0.4"/>
+          <text y="15" text-anchor="middle" font-size="10" fill="var(--sky)" font-weight="500">天空般的觉察</text>
+        </g>
+        <!-- Pause button -->
+        <g class="svg-fade-in-d2" transform="translate(100,340)">
+          <rect x="-25" y="-25" width="50" height="50" rx="14" fill="white" opacity="0.6"/>
+          <rect x="-8" y="-10" width="5" height="20" rx="2" fill="var(--sky)" opacity="0.5"/>
+          <rect x="3" y="-10" width="5" height="20" rx="2" fill="var(--sky)" opacity="0.5"/>
+          <text y="40" text-anchor="middle" font-size="9" fill="var(--sky)" font-weight="500">3秒暂停</text>
+        </g>
+        <!-- Cognitive bias icons -->
+        <g class="svg-fade-in-d3" transform="translate(400,340)">
+          <circle r="22" fill="white" opacity="0.5"/>
+          <text y="4" text-anchor="middle" font-size="16">🔍</text>
+          <text y="38" text-anchor="middle" font-size="9" fill="var(--sky)" font-weight="500">偏差识别</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 4: 压力应对与心理韧性 ==================== -->
+<section class="week-section reverse" id="week4">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w4">4</div><span class="week-label">WEEK 04</span></div>
+      <h2 class="week-title">压力应对与心理韧性</h2>
+      <div class="week-theme w4">🛡️ 多重压力源 · 韧性构建</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w4">🧘‍♂️</span><span><strong>正念瑜伽/伸展</strong>：结合身体运动的正念练习，释放身体紧张</span></div>
+        <div class="detail-item"><span class="detail-icon w4">🏔️</span><span><strong>困难情境正念练习</strong>：引导想象焦虑的工作场景，以正念态度面对</span></div>
+        <div class="detail-item"><span class="detail-icon w4">🚶</span><span><strong>日常作业</strong>：每日正念行走15分钟</span></div>
+        <div class="detail-item"><span class="detail-icon w4">⚡</span><span><strong>多重压力源决策测试</strong>：同时面临市场波动、团队冲突、监管压力的复合决策场景</span></div>
+        <div class="detail-item"><span class="detail-icon w4">👥</span><span><strong>团体复盘</strong>：分享在压力下保持正念觉察的策略与挑战</span></div>
+      </div>
+      <div class="week-assess w4">
+        <span class="assess-label">🎯 本周目标</span>
+        在多重压力源下保持正念觉察，构建心理韧性与压力应对能力
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w4"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w4bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FAF0EC"/><stop offset="100%" style="stop-color:#F2DDD4"/></linearGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w4bg)" rx="20"/>
+        <!-- Mountain metaphor for resilience -->
+        <g class="svg-fade-in" transform="translate(250,200)">
+          <!-- Mountain -->
+          <path d="M-120,80 L0,-80 L120,80Z" fill="var(--coral)" opacity="0.1"/>
+          <path d="M-80,80 L-20,-40 L40,80Z" fill="var(--coral)" opacity="0.15"/>
+          <!-- Snow cap -->
+          <path d="M-15,-40 L0,-80 L15,-40 L5,-45 L-5,-45Z" fill="white" opacity="0.5"/>
+          <!-- Person on top -->
+          <circle cx="0" cy="-85" r="8" fill="var(--coral)" opacity="0.2"/>
+          <circle cx="0" cy="-85" r="4" fill="var(--coral)" opacity="0.35"/>
+        </g>
+        <!-- Pressure arrows from multiple directions -->
+        <g class="svg-fade-in-d">
+          <line x1="50" y1="100" x2="120" y2="140" stroke="var(--coral)" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="120,140 112,132 118,128" fill="var(--coral)" opacity="0.3"/>
+          <text x="40" y="95" font-size="8" fill="var(--coral)" opacity="0.5">市场波动</text>
+        </g>
+        <g class="svg-fade-in-d2">
+          <line x1="450" y1="100" x2="380" y2="140" stroke="var(--coral)" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="380,140 388,132 382,128" fill="var(--coral)" opacity="0.3"/>
+          <text x="430" y="95" font-size="8" fill="var(--coral)" opacity="0.5">团队冲突</text>
+        </g>
+        <g class="svg-fade-in-d3">
+          <line x1="250" y1="50" x2="250" y2="110" stroke="var(--coral)" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+          <polygon points="250,110 244,102 256,102" fill="var(--coral)" opacity="0.3"/>
+          <text x="250" y="45" text-anchor="middle" font-size="8" fill="var(--coral)" opacity="0.5">监管压力</text>
+        </g>
+        <!-- Shield glow -->
+        <g class="svg-fade-in-d" transform="translate(250,200)">
+          <path d="M0,-50 L35,-30 L35,10 Q35,40 0,55 Q-35,40 -35,10 L-35,-30Z" fill="none" stroke="var(--coral)" stroke-width="1.5" opacity="0.15" style="animation:shieldGlow 3s ease-in-out infinite"/>
+        </g>
+        <!-- Walking figure -->
+        <g class="svg-fade-in-d2" transform="translate(100,340)">
+          <circle cy="-20" r="8" fill="var(--coral)" opacity="0.2"/>
+          <line x1="0" y1="-12" x2="0" y2="5" stroke="var(--coral)" stroke-width="2" opacity="0.2"/>
+          <line x1="0" y1="5" x2="-8" y2="20" stroke="var(--coral)" stroke-width="2" opacity="0.2" stroke-linecap="round"/>
+          <line x1="0" y1="5" x2="8" y2="18" stroke="var(--coral)" stroke-width="2" opacity="0.2" stroke-linecap="round"/>
+          <text y="35" text-anchor="middle" font-size="9" fill="var(--coral)" font-weight="500">正念行走</text>
+        </g>
+        <!-- Yoga figure -->
+        <g class="svg-fade-in-d3" transform="translate(400,340)">
+          <circle cy="-25" r="7" fill="var(--coral)" opacity="0.2"/>
+          <path d="M0,-18 Q0,0 0,10" stroke="var(--coral)" stroke-width="2" opacity="0.2"/>
+          <path d="M-15,-5 Q0,-15 15,-5" stroke="var(--coral)" stroke-width="2" opacity="0.2" fill="none"/>
+          <text y="30" text-anchor="middle" font-size="9" fill="var(--coral)" font-weight="500">正念瑜伽</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 5: 人际正念与沟通 ==================== -->
+<section class="week-section" id="week5">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w5">5</div><span class="week-label">WEEK 05</span></div>
+      <h2 class="week-title">人际正念与沟通</h2>
+      <div class="week-theme w5">🌉 正念倾听 · 正念表达</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w5">👂</span><span><strong>正念倾听练习</strong>：在对话中全神贯注地倾听，不急于回应</span></div>
+        <div class="detail-item"><span class="detail-icon w5">🗣️</span><span><strong>正念沟通</strong>：发言前觉察意图——"我说这句话是为了什么？"</span></div>
+        <div class="detail-item"><span class="detail-icon w5">🤝</span><span><strong>日常作业</strong>：每日至少一次正念倾听练习</span></div>
+        <div class="detail-item"><span class="detail-icon w5">👥</span><span><strong>团队决策模拟</strong>：模拟高管团队会议场景，练习正念倾听与正念表达</span></div>
+        <div class="detail-item"><span class="detail-icon w5">⚖️</span><span><strong>冲突管理练习</strong>：在模拟利益冲突场景中应用正念沟通技术</span></div>
+      </div>
+      <div class="week-assess w5">
+        <span class="assess-label">🎯 本周目标</span>
+        将正念从个人练习延伸到人际互动，提升倾听质量与沟通意识
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w5"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w5bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#F2EEF8"/><stop offset="100%" style="stop-color:#E4DCF0"/></linearGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w5bg)" rx="20"/>
+        <!-- Bridge metaphor for connection -->
+        <g class="svg-fade-in" transform="translate(250,180)">
+          <!-- Bridge arc -->
+          <path d="M-150,40 Q-75,-40 0,-50 Q75,-40 150,40" fill="none" stroke="var(--lavender)" stroke-width="3" opacity="0.25" stroke-dasharray="200" stroke-dashoffset="200" style="animation:bridgeBuild 3s ease forwards"/>
+          <!-- Bridge pillars -->
+          <rect x="-150" y="30" width="8" height="40" rx="2" fill="var(--lavender)" opacity="0.2"/>
+          <rect x="142" y="30" width="8" height="40" rx="2" fill="var(--lavender)" opacity="0.2"/>
+          <rect x="-40" y="5" width="6" height="65" rx="2" fill="var(--lavender)" opacity="0.15"/>
+          <rect x="34" y="5" width="6" height="65" rx="2" fill="var(--lavender)" opacity="0.15"/>
+          <!-- Water below -->
+          <path d="M-180,75 Q-140,65 -100,75 Q-60,85 -20,75 Q20,65 60,75 Q100,85 140,75 Q180,65 180,75" fill="none" stroke="var(--lavender)" stroke-width="1.5" opacity="0.15">
+            <animate attributeName="d" values="M-180,75 Q-140,65 -100,75 Q-60,85 -20,75 Q20,65 60,75 Q100,85 140,75 Q180,65 180,75;M-180,75 Q-140,82 -100,75 Q-60,68 -20,75 Q20,82 60,75 Q100,68 140,75 Q180,82 180,75;M-180,75 Q-140,65 -100,75 Q-60,85 -20,75 Q20,65 60,75 Q100,85 140,75 Q180,65 180,75" dur="4s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <!-- Person A (listener) -->
+        <g class="svg-fade-in-d" transform="translate(100,140)">
+          <circle cy="-15" r="14" fill="var(--lavender)" opacity="0.2"/>
+          <rect x="-8" y="0" width="16" height="24" rx="6" fill="var(--lavender)" opacity="0.15"/>
+          <!-- Ear waves (listening) -->
+          <path d="M18,-15 Q25,-15 25,-8 Q25,0 18,0" stroke="var(--lavender)" stroke-width="1.5" fill="none" opacity="0.3" class="svg-wave"/>
+          <path d="M22,-18 Q32,-18 32,-8 Q32,2 22,2" stroke="var(--lavender)" stroke-width="1" fill="none" opacity="0.2" class="svg-wave" style="animation-delay:.5s"/>
+          <text y="38" text-anchor="middle" font-size="9" fill="var(--lavender)" font-weight="500">正念倾听</text>
+        </g>
+        <!-- Person B (speaker) -->
+        <g class="svg-fade-in-d2" transform="translate(400,140)">
+          <circle cy="-15" r="14" fill="var(--lavender)" opacity="0.2"/>
+          <rect x="-8" y="0" width="16" height="24" rx="6" fill="var(--lavender)" opacity="0.15"/>
+          <!-- Speech waves -->
+          <path d="M-18,-20 Q-25,-20 -25,-12" stroke="var(--lavender)" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <path d="M-22,-24 Q-32,-24 -32,-12" stroke="var(--lavender)" stroke-width="1" fill="none" opacity="0.2"/>
+          <text y="38" text-anchor="middle" font-size="9" fill="var(--lavender)" font-weight="500">正念表达</text>
+        </g>
+        <!-- Sound waves between them -->
+        <g class="svg-fade-in-d3">
+          <circle cx="200" cy="130" r="3" fill="var(--lavender)" opacity="0.2" class="svg-float"/>
+          <circle cx="230" cy="125" r="2" fill="var(--lavender)" opacity="0.15" class="svg-float-d"/>
+          <circle cx="260" cy="128" r="3" fill="var(--lavender)" opacity="0.2" class="svg-float-d2"/>
+          <circle cx="290" cy="125" r="2" fill="var(--lavender)" opacity="0.15" class="svg-float-d3"/>
+        </g>
+        <!-- Team meeting circle -->
+        <g class="svg-fade-in-d2" transform="translate(250,340)">
+          <circle r="40" fill="none" stroke="var(--lavender)" stroke-width="1" opacity="0.15" stroke-dasharray="4,4"/>
+          <circle cx="0" cy="-40" r="8" fill="var(--lavender)" opacity="0.15"/>
+          <circle cx="38" cy="-12" r="8" fill="var(--lavender)" opacity="0.12"/>
+          <circle cx="24" cy="32" r="8" fill="var(--lavender)" opacity="0.1"/>
+          <circle cx="-24" cy="32" r="8" fill="var(--lavender)" opacity="0.1"/>
+          <circle cx="-38" cy="-12" r="8" fill="var(--lavender)" opacity="0.12"/>
+          <text y="60" text-anchor="middle" font-size="9" fill="var(--lavender)" font-weight="500">团队决策</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 6: 正念领导力 ==================== -->
+<section class="week-section reverse" id="week6">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w6">6</div><span class="week-label">WEEK 06</span></div>
+      <h2 class="week-title">正念领导力</h2>
+      <div class="week-theme w6">👑 觉察领导角色 · 慈心冥想</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w6">🧘</span><span><strong>领导力正念冥想</strong>：觉察自己在领导角色中的心理状态与行为模式</span></div>
+        <div class="detail-item"><span class="detail-icon w6">💝</span><span><strong>慈心冥想</strong>：培养对自己、团队成员、利益相关者的善意与同理心</span></div>
+        <div class="detail-item"><span class="detail-icon w6">🙏</span><span><strong>日常作业</strong>：每日慈心冥想10分钟</span></div>
+        <div class="detail-item"><span class="detail-icon w6">⚖️</span><span><strong>伦理决策模拟</strong>：面对利润与道德冲突的金融场景，在正念觉察下做出符合价值观的决策</span></div>
+        <div class="detail-item"><span class="detail-icon w6">🔍</span><span><strong>领导力风格觉察</strong>：反思自己的领导风格及其对团队决策氛围的影响</span></div>
+      </div>
+      <div class="week-assess w6">
+        <span class="assess-label">🎯 本周目标</span>
+        觉察领导角色中的心理模式，培养慈心与伦理决策意识
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w6"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w6bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FAF6E8"/><stop offset="100%" style="stop-color:#F0E8CC"/></linearGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w6bg)" rx="20"/>
+        <!-- Compass for leadership direction -->
+        <g class="svg-fade-in" transform="translate(250,180)">
+          <circle r="80" fill="white" opacity="0.3"/>
+          <circle r="70" fill="none" stroke="var(--gold)" stroke-width="1" opacity="0.2"/>
+          <circle r="50" fill="none" stroke="var(--gold)" stroke-width="0.5" opacity="0.15"/>
+          <!-- Compass needle -->
+          <g style="transform-origin:center;animation:compassSpin 8s ease-in-out infinite">
+            <polygon points="0,-45 -8,0 0,-10 8,0" fill="var(--gold)" opacity="0.3"/>
+            <polygon points="0,45 -8,0 0,10 8,0" fill="var(--coral)" opacity="0.2"/>
+          </g>
+          <circle r="5" fill="var(--gold)" opacity="0.4"/>
+          <!-- Direction labels -->
+          <text y="-60" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="600" opacity="0.5">N</text>
+          <text y="68" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="600" opacity="0.5">S</text>
+          <text x="-65" y="4" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="600" opacity="0.5">W</text>
+          <text x="65" y="4" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="600" opacity="0.5">E</text>
+        </g>
+        <!-- Heart radiating kindness -->
+        <g class="svg-fade-in-d" transform="translate(100,100)">
+          <circle r="30" fill="var(--coral)" opacity="0.06"/>
+          <text y="5" text-anchor="middle" font-size="24" fill="var(--coral)" opacity="0.4">♥</text>
+          <circle r="30" fill="none" stroke="var(--coral)" stroke-width="1" opacity="0.15" class="svg-ring"/>
+          <circle r="30" fill="none" stroke="var(--coral)" stroke-width="1" opacity="0.15" class="svg-ring-d"/>
+          <text y="45" text-anchor="middle" font-size="9" fill="var(--coral)" font-weight="500">慈心</text>
+        </g>
+        <!-- Ethics scale -->
+        <g class="svg-fade-in-d2" transform="translate(400,100)">
+          <line x1="0" y1="-25" x2="0" y2="15" stroke="var(--gold)" stroke-width="2" opacity="0.3"/>
+          <line x1="-30" y1="-25" x2="30" y2="-25" stroke="var(--gold)" stroke-width="2" opacity="0.3"/>
+          <path d="M-30,-25 L-35,-10 L-25,-10Z" fill="var(--gold)" opacity="0.2"/>
+          <path d="M30,-25 L35,-10 L25,-10Z" fill="var(--gold)" opacity="0.2"/>
+          <text x="-30" y="0" text-anchor="middle" font-size="7" fill="var(--gold)" opacity="0.5">利润</text>
+          <text x="30" y="0" text-anchor="middle" font-size="7" fill="var(--gold)" opacity="0.5">道德</text>
+          <text y="30" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="500">伦理决策</text>
+        </g>
+        <!-- Leader figure -->
+        <g class="svg-fade-in-d3" transform="translate(250,340)">
+          <circle cy="-20" r="12" fill="var(--gold)" opacity="0.15"/>
+          <rect x="-8" y="-8" width="16" height="22" rx="5" fill="var(--gold)" opacity="0.12"/>
+          <!-- Crown -->
+          <path d="M-10,-32 L-8,-40 L-4,-34 L0,-42 L4,-34 L8,-40 L10,-32" fill="var(--gold)" opacity="0.25"/>
+          <text y="28" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="500">正念领导者</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 7: 整合应用与实战演练 ==================== -->
+<section class="week-section" id="week7">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w7">7</div><span class="week-label">WEEK 07</span></div>
+      <h2 class="week-title">整合应用与实战演练</h2>
+      <div class="week-theme w7">🧰 正念工具箱 · 综合实战</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w7">🔧</span><span><strong>选择性正念练习</strong>：根据不同工作场景选择最适合的正念技术（会议前呼吸、决策前暂停、谈判中觉察）</span></div>
+        <div class="detail-item"><span class="detail-icon w7">🧰</span><span><strong>个人化正念方案</strong>：每位高管制定适合自己的"正念工具箱"</span></div>
+        <div class="detail-item"><span class="detail-icon w7">⚔️</span><span><strong>综合实战演练</strong>：模拟真实金融决策场景（并购决策、风险对冲），全程应用正念技能</span></div>
+        <div class="detail-item"><span class="detail-icon w7">💬</span><span><strong>同伴反馈</strong>：高管之间互相观察并给予反馈</span></div>
+      </div>
+      <div class="week-assess w7">
+        <span class="assess-label">🎯 本周目标</span>
+        整合前6周所学，在真实场景中灵活应用正念技能，建立个人化正念方案
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w7"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w7bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#E8F6F2"/><stop offset="100%" style="stop-color:#D0F0E2"/></linearGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w7bg)" rx="20"/>
+        <!-- Toolbox metaphor -->
+        <g class="svg-fade-in" transform="translate(250,180)">
+          <!-- Toolbox body -->
+          <rect x="-70" y="-30" width="140" height="70" rx="12" fill="white" opacity="0.5" stroke="var(--mint)" stroke-width="1.5" opacity="0.2"/>
+          <rect x="-50" y="-38" width="100" height="16" rx="6" fill="var(--mint)" opacity="0.15"/>
+          <!-- Handle -->
+          <path d="M-20,-38 Q-20,-52 0,-52 Q20,-52 20,-38" fill="none" stroke="var(--mint)" stroke-width="2" opacity="0.25"/>
+          <!-- Tools inside -->
+          <g class="svg-float">
+            <circle cx="-35" cy="10" r="12" fill="var(--navy)" opacity="0.1"/>
+            <text x="-35" y="14" text-anchor="middle" font-size="12">🌬️</text>
+          </g>
+          <g class="svg-float-d">
+            <circle cx="0" cy="10" r="12" fill="var(--teal)" opacity="0.1"/>
+            <text x="0" y="14" text-anchor="middle" font-size="12">⏸️</text>
+          </g>
+          <g class="svg-float-d2">
+            <circle cx="35" cy="10" r="12" fill="var(--coral)" opacity="0.1"/>
+            <text x="35" y="14" text-anchor="middle" font-size="12">👁️</text>
+          </g>
+          <text y="60" text-anchor="middle" font-size="10" fill="var(--mint)" font-weight="500">正念工具箱</text>
+        </g>
+        <!-- Gear integration metaphor -->
+        <g class="svg-fade-in-d" transform="translate(100,80)">
+          <circle r="25" fill="none" stroke="var(--mint)" stroke-width="2" opacity="0.15" stroke-dasharray="6,4" style="animation:gearSpin 10s linear infinite"/>
+          <circle r="15" fill="var(--mint)" opacity="0.06"/>
+          <text y="4" text-anchor="middle" font-size="10" fill="var(--mint)" font-weight="500">呼吸</text>
+        </g>
+        <g class="svg-fade-in-d2" transform="translate(160,110)">
+          <circle r="20" fill="none" stroke="var(--navy)" stroke-width="2" opacity="0.12" stroke-dasharray="5,3" style="animation:gearSpinR 8s linear infinite"/>
+          <circle r="12" fill="var(--navy)" opacity="0.05"/>
+          <text y="4" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="500">暂停</text>
+        </g>
+        <g class="svg-fade-in-d3" transform="translate(400,80)">
+          <circle r="25" fill="none" stroke="var(--gold)" stroke-width="2" opacity="0.15" stroke-dasharray="6,4" style="animation:gearSpin 12s linear infinite"/>
+          <circle r="15" fill="var(--gold)" opacity="0.06"/>
+          <text y="4" text-anchor="middle" font-size="10" fill="var(--gold)" font-weight="500">觉察</text>
+        </g>
+        <g class="svg-fade-in-d4" transform="translate(340,110)">
+          <circle r="20" fill="none" stroke="var(--coral)" stroke-width="2" opacity="0.12" stroke-dasharray="5,3" style="animation:gearSpinR 9s linear infinite"/>
+          <circle r="12" fill="var(--coral)" opacity="0.05"/>
+          <text y="4" text-anchor="middle" font-size="9" fill="var(--coral)" font-weight="500">倾听</text>
+        </g>
+        <!-- Battle simulation -->
+        <g class="svg-fade-in-d2" transform="translate(250,340)">
+          <rect x="-55" y="-25" width="110" height="50" rx="12" fill="white" opacity="0.4"/>
+          <text y="-5" text-anchor="middle" font-size="10" fill="var(--mint)" font-weight="600">并购决策</text>
+          <text y="12" text-anchor="middle" font-size="10" fill="var(--mint)" font-weight="600">风险对冲</text>
+          <text y="38" text-anchor="middle" font-size="9" fill="var(--mint)" font-weight="500">综合实战</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 8: 巩固与长期规划 ==================== -->
+<section class="week-section reverse" id="week8">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w8">8</div><span class="week-label">WEEK 08</span></div>
+      <h2 class="week-title">巩固与长期规划</h2>
+      <div class="week-theme w8">🎓 深度静默 · 终期评估 · 结业</div>
+      <div class="week-details">
+        <div class="detail-item"><span class="detail-icon w8">🤫</span><span><strong>静默正念冥想</strong>（30分钟）：体验深度的正念静默</span></div>
+        <div class="detail-item"><span class="detail-icon w8">🔄</span><span><strong>回顾与整合</strong>：回顾8周的正念旅程，分享最深刻的觉察与变化</span></div>
+        <div class="detail-item"><span class="detail-icon w8">📊</span><span><strong>终期决策测试</strong>：重复第1周基线决策任务，对比决策质量变化</span></div>
+        <div class="detail-item"><span class="detail-icon w8">📈</span><span><strong>8周效果总结</strong>：汇总行为与心理指标变化，制定个人持续正念练习计划</span></div>
+        <div class="detail-item"><span class="detail-icon w8">🎓</span><span><strong>结业仪式</strong>：颁发"正念领导者"证书，建立正念领导力实践社群</span></div>
+      </div>
+      <div class="week-assess w8">
+        <span class="assess-label">🎯 本周目标</span>
+        巩固8周学习成果，量化评估决策质量提升，建立长期正念练习计划
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w8"></div>
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="w8bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FAF0EC"/><stop offset="100%" style="stop-color:#F0D8E0"/></linearGradient>
+          <linearGradient id="w8rise" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" style="stop-color:var(--rose);stop-opacity:0.05"/><stop offset="100%" style="stop-color:var(--rose);stop-opacity:0.2"/></linearGradient>
+        </defs>
+        <rect width="500" height="420" fill="url(#w8bg)" rx="20"/>
+        <!-- Growth tree metaphor -->
+        <g class="svg-fade-in" transform="translate(250,220)">
+          <!-- Trunk -->
+          <rect x="-8" y="-20" width="16" height="100" rx="4" fill="var(--rose)" opacity="0.15"/>
+          <!-- Branches -->
+          <path d="M0,-20 Q-40,-60 -60,-80" stroke="var(--rose)" stroke-width="3" fill="none" opacity="0.12" stroke-linecap="round"/>
+          <path d="M0,-20 Q40,-60 60,-80" stroke="var(--rose)" stroke-width="3" fill="none" opacity="0.12" stroke-linecap="round"/>
+          <path d="M0,-40 Q-30,-70 -40,-100" stroke="var(--rose)" stroke-width="2" fill="none" opacity="0.1" stroke-linecap="round"/>
+          <path d="M0,-40 Q30,-70 40,-100" stroke="var(--rose)" stroke-width="2" fill="none" opacity="0.1" stroke-linecap="round"/>
+          <!-- Leaves/fruits (achievements) -->
+          <circle cx="-60" cy="-80" r="10" fill="var(--navy)" opacity="0.12" class="svg-pulse"/>
+          <circle cx="60" cy="-80" r="10" fill="var(--teal)" opacity="0.12" class="svg-pulse" style="animation-delay:.3s"/>
+          <circle cx="-40" cy="-100" r="8" fill="var(--gold)" opacity="0.12" class="svg-pulse" style="animation-delay:.6s"/>
+          <circle cx="40" cy="-100" r="8" fill="var(--lavender)" opacity="0.12" class="svg-pulse" style="animation-delay:.9s"/>
+          <circle cx="0" cy="-60" r="12" fill="var(--rose)" opacity="0.1" class="svg-pulse" style="animation-delay:1.2s"/>
+          <!-- Roots -->
+          <path d="M-8,80 Q-30,100 -45,110" stroke="var(--rose)" stroke-width="2" fill="none" opacity="0.1" stroke-linecap="round"/>
+          <path d="M8,80 Q30,100 45,110" stroke="var(--rose)" stroke-width="2" fill="none" opacity="0.1" stroke-linecap="round"/>
+        </g>
+        <!-- Certificate -->
+        <g class="svg-fade-in-d" transform="translate(100,80)">
+          <rect x="-35" y="-25" width="70" height="50" rx="8" fill="white" opacity="0.5" stroke="var(--gold)" stroke-width="1" opacity="0.2"/>
+          <text y="-5" text-anchor="middle" font-size="8" fill="var(--gold)" font-weight="600">正念领导者</text>
+          <text y="10" text-anchor="middle" font-size="7" fill="var(--soft)">CERTIFICATE</text>
+          <text y="38" text-anchor="middle" font-size="9" fill="var(--rose)" font-weight="500">结业证书</text>
+        </g>
+        <!-- Before/After comparison chart -->
+        <g class="svg-fade-in-d2" transform="translate(400,80)">
+          <rect x="-45" y="-30" width="90" height="60" rx="10" fill="white" opacity="0.4"/>
+          <rect x="-35" y="5" width="15" height="20" rx="2" fill="var(--rose)" opacity="0.2"/>
+          <rect x="-15" y="-5" width="15" height="30" rx="2" fill="var(--rose)" opacity="0.3"/>
+          <rect x="5" y="-15" width="15" height="40" rx="2" fill="var(--rose)" opacity="0.4"/>
+          <rect x="25" y="-20" width="15" height="45" rx="2" fill="var(--rose)" opacity="0.5"/>
+          <text x="-28" y="38" font-size="7" fill="var(--soft)">W1</text>
+          <text x="-8" y="38" font-size="7" fill="var(--soft)">W4</text>
+          <text x="12" y="38" font-size="7" fill="var(--soft)">W6</text>
+          <text x="32" y="38" font-size="7" fill="var(--soft)">W8</text>
+          <text y="52" text-anchor="middle" font-size="9" fill="var(--rose)" font-weight="500">决策质量提升</text>
+        </g>
+        <!-- Community circle -->
+        <g class="svg-fade-in-d3" transform="translate(250,370)">
+          <circle r="30" fill="none" stroke="var(--rose)" stroke-width="1" opacity="0.15" stroke-dasharray="4,3"/>
+          <circle cx="0" cy="-30" r="6" fill="var(--rose)" opacity="0.15"/>
+          <circle cx="28" cy="-9" r="6" fill="var(--rose)" opacity="0.12"/>
+          <circle cx="18" cy="24" r="6" fill="var(--rose)" opacity="0.1"/>
+          <circle cx="-18" cy="24" r="6" fill="var(--rose)" opacity="0.1"/>
+          <circle cx="-28" cy="-9" r="6" fill="var(--rose)" opacity="0.12"/>
+          <text y="48" text-anchor="middle" font-size="9" fill="var(--rose)" font-weight="500">实践社群</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== IMPLEMENTATION ==================== -->
+<section class="info-section impl" id="impl">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag impl">⚙ IMPLEMENTATION</div>
+      <h2 class="section-title">实施适配</h2>
+      <p class="section-subtitle">科学配置资源，确保培训方案高效落地</p>
+    </div>
+    <div class="impl-grid">
+      <div class="impl-card reveal" style="transition-delay:.1s">
+        <div class="impl-card-icon c1">🕐</div>
+        <h3>时间安排</h3>
+        <p>每周1次，每次2小时（建议安排在工作日下午或周末），连续8周</p>
+      </div>
+      <div class="impl-card reveal" style="transition-delay:.2s">
+        <div class="impl-card-icon c2">🏢</div>
+        <h3>场地要求</h3>
+        <p>安静、私密的高管培训室，配备冥想坐垫、音响设备</p>
+      </div>
+      <div class="impl-card reveal" style="transition-delay:.3s">
+        <div class="impl-card-icon c3">👥</div>
+        <h3>人员配置</h3>
+        <p>1名具有企业正念培训经验的专业正念导师、1名金融行业背景的心理顾问</p>
+      </div>
+      <div class="impl-card reveal" style="transition-delay:.4s">
+        <div class="impl-card-icon c4">🔒</div>
+        <h3>保密机制</h3>
+        <p>签署团体保密协议，确保高管在决策模拟中分享的真实想法不被外泄</p>
+      </div>
+      <div class="impl-card reveal" style="transition-delay:.5s">
+        <div class="impl-card-icon c5">📱</div>
+        <h3>技术辅助</h3>
+        <p>提供正念APP企业版账号，支持日常练习</p>
+      </div>
+    </div>
+    <!-- Implementation visual -->
+    <div class="reveal-scale" style="max-width:800px;margin:0 auto">
+      <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="800" height="200" rx="20" fill="var(--cream-pale)"/>
+        <!-- Timeline -->
+        <line x1="60" y1="100" x2="740" y2="100" stroke="var(--navy)" stroke-width="2" opacity="0.1"/>
+        <!-- Week dots -->
+        <circle cx="100" cy="100" r="12" fill="var(--navy)" opacity="0.15" class="svg-pulse"/>
+        <text x="100" y="130" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="500">W1</text>
+        <circle cx="190" cy="100" r="12" fill="var(--teal)" opacity="0.15" class="svg-pulse" style="animation-delay:.2s"/>
+        <text x="190" y="130" text-anchor="middle" font-size="9" fill="var(--teal)" font-weight="500">W2</text>
+        <circle cx="280" cy="100" r="12" fill="var(--sky)" opacity="0.15" class="svg-pulse" style="animation-delay:.4s"/>
+        <text x="280" y="130" text-anchor="middle" font-size="9" fill="var(--sky)" font-weight="500">W3</text>
+        <circle cx="370" cy="100" r="12" fill="var(--coral)" opacity="0.15" class="svg-pulse" style="animation-delay:.6s"/>
+        <text x="370" y="130" text-anchor="middle" font-size="9" fill="var(--coral)" font-weight="500">W4</text>
+        <circle cx="460" cy="100" r="12" fill="var(--lavender)" opacity="0.15" class="svg-pulse" style="animation-delay:.8s"/>
+        <text x="460" y="130" text-anchor="middle" font-size="9" fill="var(--lavender)" font-weight="500">W5</text>
+        <circle cx="550" cy="100" r="12" fill="var(--gold)" opacity="0.15" class="svg-pulse" style="animation-delay:1s"/>
+        <text x="550" y="130" text-anchor="middle" font-size="9" fill="var(--gold)" font-weight="500">W6</text>
+        <circle cx="640" cy="100" r="12" fill="var(--mint)" opacity="0.15" class="svg-pulse" style="animation-delay:1.2s"/>
+        <text x="640" y="130" text-anchor="middle" font-size="9" fill="var(--mint)" font-weight="500">W7</text>
+        <circle cx="720" cy="100" r="12" fill="var(--rose)" opacity="0.15" class="svg-pulse" style="animation-delay:1.4s"/>
+        <text x="720" y="130" text-anchor="middle" font-size="9" fill="var(--rose)" font-weight="500">W8</text>
+        <!-- Labels -->
+        <text x="100" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">自我觉察</text>
+        <text x="190" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">情绪调节</text>
+        <text x="280" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">认知解离</text>
+        <text x="370" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">压力应对</text>
+        <text x="460" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">人际正念</text>
+        <text x="550" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">领导力</text>
+        <text x="640" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">整合应用</text>
+        <text x="720" y="75" text-anchor="middle" font-size="8" fill="var(--soft)">巩固规划</text>
+        <!-- Arrow -->
+        <text x="400" y="170" text-anchor="middle" font-size="11" fill="var(--navy)" font-weight="500" opacity="0.5">每周2小时 · 正念训练60min + 决策模拟60min</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LONG-TERM MECHANISM ==================== -->
+<section class="info-section longterm" id="longterm">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">📊 SUSTAINABILITY</div>
+      <h2 class="section-title">长效保障机制</h2>
+      <p class="section-subtitle">建立科学评估体系与持续练习支持，确保培训效果长期可持续</p>
+    </div>
+    <div class="longterm-grid">
+      <div class="longterm-card reveal" style="transition-delay:.1s">
+        <div class="longterm-card-icon l1">🧠</div>
+        <div>
+          <h3>心理指标评估</h3>
+          <p>状态焦虑量表（STAI-S）、正念注意觉察量表（MAAS）、认知灵活性问卷（CFI）、匹兹堡睡眠质量指数（PSQI）——在第1周前、第8周后、第3个月随访时分别测量</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="transition-delay:.2s">
+        <div class="longterm-card-icon l2">📊</div>
+        <div>
+          <h3>行为指标追踪</h3>
+          <p>决策模拟任务中的反应时间、准确率、风险偏好一致性、情绪波动幅度——通过决策模拟系统自动记录</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="transition-delay:.3s">
+        <div class="longterm-card-icon l3">🔄</div>
+        <div>
+          <h3>360度反馈</h3>
+          <p>邀请团队成员评估高管在沟通、决策、情绪管理方面的变化</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="transition-delay:.4s">
+        <div class="longterm-card-icon l4">📅</div>
+        <div>
+          <h3>持续练习支持</h3>
+          <p>每月一次"正念领导力"回顾沙龙，每季度一次正念静修日</p>
+        </div>
+      </div>
+    </div>
+    <!-- Assessment visual -->
+    <div class="reveal-scale" style="max-width:800px;margin:40px auto 0">
+      <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+        <rect width="800" height="220" rx="20" fill="var(--surface)"/>
+        <!-- Assessment timeline -->
+        <line x1="100" y1="110" x2="700" y2="110" stroke="var(--lavender)" stroke-width="2" opacity="0.15"/>
+        <!-- Time points -->
+        <circle cx="150" cy="110" r="20" fill="var(--navy)" opacity="0.08"/>
+        <text x="150" y="115" text-anchor="middle" font-size="10" fill="var(--navy)" font-weight="600">T1</text>
+        <text x="150" y="150" text-anchor="middle" font-size="9" fill="var(--soft)">第1周前</text>
+        <text x="150" y="165" text-anchor="middle" font-size="8" fill="var(--soft)">基线评估</text>
+        <circle cx="400" cy="110" r="20" fill="var(--teal)" opacity="0.08"/>
+        <text x="400" y="115" text-anchor="middle" font-size="10" fill="var(--teal)" font-weight="600">T2</text>
+        <text x="400" y="150" text-anchor="middle" font-size="9" fill="var(--soft)">第8周后</text>
+        <text x="400" y="165" text-anchor="middle" font-size="8" fill="var(--soft)">终期评估</text>
+        <circle cx="650" cy="110" r="20" fill="var(--gold)" opacity="0.08"/>
+        <text x="650" y="115" text-anchor="middle" font-size="10" fill="var(--gold)" font-weight="600">T3</text>
+        <text x="650" y="150" text-anchor="middle" font-size="9" fill="var(--soft)">第3个月</text>
+        <text x="650" y="165" text-anchor="middle" font-size="8" fill="var(--soft)">随访评估</text>
+        <!-- Growth curve -->
+        <path d="M150,160 Q275,140 400,100 Q525,70 650,60" stroke="var(--teal)" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round" stroke-dasharray="8,4"/>
+        <text x="400" y="200" text-anchor="middle" font-size="10" fill="var(--lavender)" font-weight="500" opacity="0.6">STAI-S · MAAS · CFI · PSQI · 360°反馈 · 决策模拟数据</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SDGs & ESG ==================== -->
+<section class="info-section sdgs" id="sdgs">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">🌍 SDGs & ESG</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将正念领导力培训与可持续发展目标深度融合</p>
+    </div>
+    <div class="sdgs-grid">
+      <div class="sdg-card reveal" style="transition-delay:.1s">
+        <div class="sdg-num">SDG 3</div>
+        <div class="sdg-title">良好健康与福祉</div>
+        <div class="sdg-desc">提升高管心理健康水平，预防职业倦怠与心理危机</div>
+      </div>
+      <div class="sdg-card reveal" style="transition-delay:.2s">
+        <div class="sdg-num">SDG 8</div>
+        <div class="sdg-title">体面工作与经济增长</div>
+        <div class="sdg-desc">通过提升决策质量促进企业可持续经营</div>
+      </div>
+      <div class="sdg-card reveal" style="transition-delay:.3s">
+        <div class="sdg-num">ESG-G</div>
+        <div class="sdg-title">公司治理</div>
+        <div class="sdg-desc">正念领导力促进更审慎、更负责任的商业决策</div>
+      </div>
+      <div class="sdg-card reveal" style="transition-delay:.4s">
+        <div class="sdg-num">ESG-S</div>
+        <div class="sdg-title">社会责任</div>
+        <div class="sdg-desc">企业关注高管心理健康，树立行业健康文化标杆</div>
+      </div>
+    </div>
+    <div class="esg-tags reveal">
+      <span class="esg-tag">🧠 心理健康促进</span>
+      <span class="esg-tag">📊 决策质量提升</span>
+      <span class="esg-tag">⚖️ 负责任治理</span>
+      <span class="esg-tag">🤝 行业文化标杆</span>
+      <span class="esg-tag">🌱 可持续经营</span>
+    </div>
+    <!-- SDG visual -->
+    <div class="reveal-scale" style="max-width:700px;margin:40px auto 0">
+      <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="700" height="200" rx="20" fill="var(--cream-pale)"/>
+        <!-- Central hub -->
+        <circle cx="350" cy="100" r="40" fill="var(--navy)" opacity="0.06"/>
+        <circle cx="350" cy="100" r="25" fill="var(--navy)" opacity="0.08"/>
+        <text x="350" y="105" text-anchor="middle" font-size="10" fill="var(--navy)" font-weight="600">正念领导力</text>
+        <!-- Connection lines -->
+        <line x1="310" y1="85" x2="180" y2="55" stroke="var(--teal)" stroke-width="1.5" opacity="0.15"/>
+        <line x1="390" y1="85" x2="520" y2="55" stroke="var(--sky)" stroke-width="1.5" opacity="0.15"/>
+        <line x1="310" y1="115" x2="180" y2="150" stroke="var(--navy)" stroke-width="1.5" opacity="0.15"/>
+        <line x1="390" y1="115" x2="520" y2="150" stroke="var(--coral)" stroke-width="1.5" opacity="0.15"/>
+        <!-- SDG nodes -->
+        <circle cx="160" cy="50" r="28" fill="var(--teal)" opacity="0.08"/>
+        <text x="160" y="48" text-anchor="middle" font-size="9" fill="var(--teal)" font-weight="600">SDG 3</text>
+        <text x="160" y="60" text-anchor="middle" font-size="7" fill="var(--soft)">健康福祉</text>
+        <circle cx="540" cy="50" r="28" fill="var(--sky)" opacity="0.08"/>
+        <text x="540" y="48" text-anchor="middle" font-size="9" fill="var(--sky)" font-weight="600">SDG 8</text>
+        <text x="540" y="60" text-anchor="middle" font-size="7" fill="var(--soft)">经济增长</text>
+        <circle cx="160" cy="155" r="28" fill="var(--navy)" opacity="0.08"/>
+        <text x="160" y="153" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">ESG-G</text>
+        <text x="160" y="165" text-anchor="middle" font-size="7" fill="var(--soft)">公司治理</text>
+        <circle cx="540" cy="155" r="28" fill="var(--coral)" opacity="0.08"/>
+        <text x="540" y="153" text-anchor="middle" font-size="9" fill="var(--coral)" font-weight="600">ESG-S</text>
+        <text x="540" y="165" text-anchor="middle" font-size="7" fill="var(--soft)">社会责任</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <h3 class="footer-title">正念领导力与金融决策</h3>
+  <p class="footer-text">8周系统培训 · 科学评估体系 · 长效保障机制<br>在正念中觉醒领导力，在觉察中优化每一个决策</p>
+</footer>
+
+<script>
+// Progress Bar
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progressBar');
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = (window.scrollY / h * 100) + '%';
+});
+
+// Nav Dots
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = document.getElementById(dot.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Scroll Reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  observer.observe(el);
+});
+
+// Active nav dot on scroll
+const sections = document.querySelectorAll('section, .info-section, footer');
+const navDots = document.querySelectorAll('.nav-dot');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 200;
+    if (window.scrollY >= top) current = sec.id;
+  });
+  navDots.forEach(dot => {
+    dot.classList.toggle('active', dot.dataset.target === current);
+  });
+});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

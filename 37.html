@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老年人自然与音乐疗愈 · 12周课程方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --sage:#5A988C;--sage-light:#D4E8E2;--sage-dark:#3D7A6E;
+    --teal:#5BA89C;--teal-light:#D4EDE8;
+    --mint:#6BB898;--mint-light:#D9F0E4;
+    --olive:#7B8A5B;--olive-light:#E2E8D6;
+    --warm:#C47860;--warm-light:#F5DDD3;
+    --coral:#D97A6A;--coral-light:#F5D9D3;
+    --amber:#B89840;--amber-light:#F5EDCF;
+    --gold:#C9A84C;--gold-light:#FBF4D6;
+    --rose:#C47888;--rose-light:#F2DDE2;
+    --lavender:#967BA5;--lavender-light:#EDE0F3;
+    --blue:#5A8FB5;--blue-light:#D6E6F2;
+    --peach:#F5E0D0;--cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+
+  /* Progress Bar */
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--sage),var(--warm),var(--amber),var(--lavender));width:0%;transition:width .1s linear}
+
+  /* Nav Dots */
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:8px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--sage);transform:scale(1.5);box-shadow:0 0 10px rgba(90,152,140,.5)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  /* Hero */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--sage-light) 0%,var(--cream) 30%,var(--warm-light) 60%,var(--gold-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--sage);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--warm);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--amber);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--lavender);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(90,152,140,.15);border-radius:20px;font-size:13px;color:var(--sage-dark);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.35;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--sage)}
+  .hero-title .accent2{color:var(--warm)}
+  .hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .hero-meta-icon.green{background:rgba(90,152,140,.15)}
+  .hero-meta-icon.warm{background:rgba(196,120,96,.15)}
+  .hero-meta-icon.gold{background:rgba(201,168,76,.15)}
+  .hero-meta-icon.lav{background:rgba(150,123,165,.15)}
+  .hero-illustration{margin-top:36px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:680px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+
+  /* Timeline Overview */
+  .timeline-section{padding:100px 24px;background:var(--surface);position:relative}
+  .timeline-container{max-width:1000px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.overview{background:rgba(90,152,140,.12);color:var(--sage)}
+  .section-tag.impl{background:rgba(196,120,96,.12);color:var(--warm)}
+  .section-tag.longterm{background:rgba(150,123,165,.12);color:var(--lavender)}
+  .section-tag.sdgs{background:rgba(201,168,76,.15);color:var(--amber)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+
+  .timeline-svg{width:100%;max-width:900px;margin:0 auto;display:block}
+
+  /* Week Sections */
+  .week-section{min-height:100vh;display:flex;align-items:center;padding:80px 24px;position:relative}
+  .week-section:nth-child(odd){background:var(--cream-pale)}
+  .week-section:nth-child(even){background:var(--surface)}
+  .week-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .week-section.reverse .week-container{direction:rtl}
+  .week-section.reverse .week-container>*{direction:ltr}
+
+  .week-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+  .week-num-badge{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:#fff}
+  .week-num-badge.nature{background:linear-gradient(135deg,#5A988C,#8BC9A8)}
+  .week-num-badge.music{background:linear-gradient(135deg,#C47860,#E0A08A)}
+  .week-num-badge.fusion{background:linear-gradient(135deg,#B89840,#D4C070)}
+  .week-num-badge.harvest{background:linear-gradient(135deg,#C47888,#E0A0B0)}
+  .week-num-badge.mentor{background:linear-gradient(135deg,#5A8FB5,#8AB8D8)}
+  .week-num-badge.create{background:linear-gradient(135deg,#967BA5,#B8A0C8)}
+  .week-num-badge.finale{background:linear-gradient(135deg,#7B8A5B,#A0B878)}
+  .week-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+
+  .week-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.2vw,34px);font-weight:700;margin-bottom:4px;line-height:1.4}
+  .week-theme{font-size:14px;font-weight:500;margin-bottom:14px}
+  .week-theme.nature{color:var(--sage)}
+  .week-theme.music{color:var(--warm)}
+  .week-theme.fusion{color:var(--amber)}
+  .week-theme.harvest{color:var(--rose)}
+  .week-theme.mentor{color:var(--blue)}
+  .week-theme.create{color:var(--lavender)}
+  .week-theme.finale{color:var(--olive)}
+
+  .week-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:18px}
+  .week-details{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+  .detail-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--soft)}
+  .detail-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+  .detail-icon.nature{background:rgba(90,152,140,.12)}
+  .detail-icon.music{background:rgba(196,120,96,.12)}
+  .detail-icon.fusion{background:rgba(184,152,64,.12)}
+  .detail-icon.harvest{background:rgba(196,120,136,.12)}
+  .detail-icon.mentor{background:rgba(90,143,181,.12)}
+  .detail-icon.create{background:rgba(150,123,165,.12)}
+  .detail-icon.finale{background:rgba(123,138,91,.12)}
+
+  .week-adapt{padding:12px 16px;border-radius:10px;font-size:13px;color:var(--soft);line-height:1.6}
+  .week-adapt.nature{background:rgba(90,152,140,.06);border-left:3px solid var(--sage)}
+  .week-adapt.music{background:rgba(196,120,96,.06);border-left:3px solid var(--warm)}
+  .week-adapt.fusion{background:rgba(184,152,64,.06);border-left:3px solid var(--amber)}
+  .adapt-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+
+  .week-visual{position:relative}
+  .week-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.06))}
+
+  /* Implementation */
+  .impl-section{padding:100px 24px;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .impl-container{max-width:1100px;margin:0 auto}
+  .impl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .impl-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(150,123,165,.06);transition:transform .3s,box-shadow .3s}
+  .impl-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .impl-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .impl-card-icon.c1{background:rgba(90,152,140,.1)}
+  .impl-card-icon.c2{background:rgba(196,120,96,.1)}
+  .impl-card-icon.c3{background:rgba(150,123,165,.1)}
+  .impl-card-icon.c4{background:rgba(201,168,76,.12)}
+  .impl-card-icon.c5{background:rgba(90,143,181,.1)}
+  .impl-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .impl-card p{font-size:14px;color:var(--soft);line-height:1.7}
+
+  /* Long-term */
+  .longterm-section{padding:100px 24px;background:var(--cream-pale)}
+  .longterm-container{max-width:1100px;margin:0 auto}
+  .longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(150,123,165,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .longterm-card-icon.l1{background:rgba(90,152,140,.1)}
+  .longterm-card-icon.l2{background:rgba(196,120,96,.1)}
+  .longterm-card-icon.l3{background:rgba(150,123,165,.1)}
+  .longterm-card-icon.l4{background:rgba(201,168,76,.12)}
+  .longterm-card-icon.l5{background:rgba(90,143,181,.1)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+
+  /* SDGs */
+  .sdgs-section{padding:100px 24px;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .sdgs-container{max-width:1100px;margin:0 auto}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:50px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(196,120,96,.08),rgba(196,120,96,.02));border:1px solid rgba(196,120,96,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(90,152,140,.08),rgba(90,152,140,.02));border:1px solid rgba(90,152,140,.1)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(90,143,181,.08),rgba(90,143,181,.02));border:1px solid rgba(90,143,181,.1)}
+  .sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.12)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--warm)}
+  .sdg-card:nth-child(2) .sdg-num{color:var(--sage)}
+  .sdg-card:nth-child(3) .sdg-num{color:var(--blue)}
+  .sdg-card:nth-child(4) .sdg-num{color:var(--amber)}
+  .sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}
+  .sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .esg-box{padding:28px 32px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(150,123,165,.08)}
+  .esg-box h3{font-size:16px;font-weight:600;margin-bottom:12px;text-align:center}
+
+  /* Footer */
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+
+  /* Scroll Animations */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+
+  /* SVG Animations */
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-rotate{animation:svgRotate 12s linear infinite}
+  .svg-sway{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:600;stroke-dashoffset:600;animation:svgDraw 3s ease forwards}
+  .svg-draw-slow{stroke-dasharray:800;stroke-dashoffset:800;animation:svgDraw 4s ease forwards}
+  .svg-fade-in{opacity:0;animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0;animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0;animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0;animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0;animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0;animation:svgRipple 2.5s ease-out forwards}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}
+  .svg-ring-d{animation:svgRing 3s ease-out 1s infinite}
+  .svg-shimmer{opacity:0;animation:svgShimmer 3s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px);animation:svgRise 1.5s ease forwards}
+  .svg-slide-l{opacity:0;transform:translateX(-30px);animation:svgSlideL 1s ease forwards}
+  .svg-slide-r{opacity:0;transform:translateX(30px);animation:svgSlideR 1s ease forwards}
+  .svg-drop{opacity:0;transform:translateY(-20px);animation:svgDrop 2.5s ease infinite}
+  .svg-drop-d{animation:svgDrop 2.5s ease .8s infinite}
+  .svg-drop-d2{animation:svgDrop 2.5s ease 1.6s infinite}
+  .svg-spin-slow{animation:svgRotate 20s linear infinite}
+  .svg-wave{animation:svgWave 3s ease-in-out infinite}
+  .svg-sway-slow{animation:svgSway 8s ease-in-out infinite}
+  .svg-grow{transform:scaleY(0);transform-origin:bottom;animation:svgGrow 2s ease forwards}
+  .svg-grow-d{animation:svgGrow 2s ease .3s forwards}
+  .svg-grow-d2{animation:svgGrow 2s ease .6s forwards}
+  .svg-grow-d3{animation:svgGrow 2s ease .9s forwards}
+  .svg-note{opacity:0;animation:musicNote 3s ease infinite}
+  .svg-note-d{animation:musicNote 3s ease 1s infinite}
+  .svg-note-d2{animation:musicNote 3s ease 2s infinite}
+  .svg-petal{animation:petalFall 4s ease-in-out infinite}
+  .svg-petal-d{animation:petalFall 4s ease-in-out 1.3s infinite}
+  .svg-petal-d2{animation:petalFall 4s ease-in-out 2.6s infinite}
+
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.1}50%{opacity:.28}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.7}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.7}60%{opacity:.4;transform:translateY(30px)}80%{opacity:0;transform:translateY(40px)}100%{opacity:0;transform:translateY(40px)}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes svgGrow{to{transform:scaleY(1)}}
+  @keyframes musicNote{0%{opacity:0;transform:translateY(0) rotate(0deg)}20%{opacity:.7}80%{opacity:.3}100%{opacity:0;transform:translateY(-40px) rotate(15deg)}}
+  @keyframes petalFall{0%{transform:translateY(0) rotate(0deg);opacity:.7}50%{transform:translateY(15px) rotate(180deg);opacity:.5}100%{transform:translateY(0) rotate(360deg);opacity:.7}}
+
+  @media(max-width:768px){
+    .week-container{grid-template-columns:1fr;gap:32px}
+    .week-section{padding:60px 20px}
+    .week-section.reverse .week-container{direction:ltr}
+    .impl-grid,.sdgs-grid,.longterm-grid{grid-template-columns:1fr}
+    .nav-dots{right:12px;gap:8px}
+    .nav-dot{width:7px;height:7px}
+    .nav-dot .tooltip{display:none}
+    .hero-meta{gap:14px}
+    .timeline-section{padding:60px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="timeline"><span class="tooltip">课程总览</span></div>
+  <div class="nav-dot" data-target="w1n"><span class="tooltip">W1 花园名片</span></div>
+  <div class="nav-dot" data-target="w1m"><span class="tooltip">W1 时光唱片机</span></div>
+  <div class="nav-dot" data-target="w2n"><span class="tooltip">W2 播种希望</span></div>
+  <div class="nav-dot" data-target="w2m"><span class="tooltip">W2 生命之歌</span></div>
+  <div class="nav-dot" data-target="w3f"><span class="tooltip">W3 自然音乐会</span></div>
+  <div class="nav-dot" data-target="w45"><span class="tooltip">W4-5 四季花园</span></div>
+  <div class="nav-dot" data-target="w67"><span class="tooltip">W6-7 收获分享</span></div>
+  <div class="nav-dot" data-target="w8"><span class="tooltip">W8 花园音乐会</span></div>
+  <div class="nav-dot" data-target="w910"><span class="tooltip">W9-10 深化</span></div>
+  <div class="nav-dot" data-target="w1112"><span class="tooltip">W11-12 整合</span></div>
+  <div class="nav-dot" data-target="impl"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div><div class="hero-shape"></div>
+    <div class="hero-shape"></div><div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">老年人自然与音乐疗愈 · 12周课程方案</div>
+    <h1 class="hero-title">
+      让<span class="accent">自然</span>治愈心灵<br>让<span class="accent2">音乐</span>温暖时光
+    </h1>
+    <p class="hero-subtitle">融合园艺治疗与音乐治疗，为社区老年人打造12周双轨疗愈旅程，在自然与旋律中重拾生命的美好</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon green">🌿</div><span>自然疗愈</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon warm">🎵</div><span>音乐疗愈</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon gold">📅</div><span>12周课程</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon lav">🤝</div><span>社区融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 680 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="340" rx="20" fill="#FAF8F2"/>
+        <!-- Garden ground -->
+        <ellipse cx="340" cy="310" rx="300" ry="30" fill="#D4E8E2" opacity=".3"/>
+        <!-- Tree left -->
+        <g class="svg-sway">
+          <rect x="80" y="180" width="12" height="100" rx="4" fill="#8B7355" opacity=".5"/>
+          <circle cx="86" cy="160" r="40" fill="#5A988C" opacity=".25"/>
+          <circle cx="70" cy="150" r="28" fill="#6BB898" opacity=".2"/>
+          <circle cx="100" cy="145" r="25" fill="#7B8A5B" opacity=".2"/>
+        </g>
+        <!-- Tree right -->
+        <g class="svg-sway-slow">
+          <rect x="560" y="190" width="10" height="90" rx="4" fill="#8B7355" opacity=".4"/>
+          <circle cx="565" cy="172" r="35" fill="#5A988C" opacity=".2"/>
+          <circle cx="550" cy="165" r="24" fill="#6BB898" opacity=".18"/>
+        </g>
+        <!-- Elderly person sitting on bench -->
+        <g class="svg-breathe">
+          <rect x="270" y="230" width="100" height="12" rx="4" fill="#C4A882" opacity=".5"/>
+          <rect x="280" y="242" width="6" height="40" rx="2" fill="#A08060" opacity=".4"/>
+          <rect x="354" y="242" width="6" height="40" rx="2" fill="#A08060" opacity=".4"/>
+          <circle cx="320" cy="190" r="22" fill="#F5DDD3"/>
+          <path d="M298 186 Q302 166 320 163 Q338 166 342 186" fill="#9A8A7A" opacity=".5"/>
+          <circle cx="313" cy="188" r="2" fill="#3A3448"/>
+          <circle cx="327" cy="188" r="2" fill="#3A3448"/>
+          <path d="M315 198 Q320 202 325 198" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M302 208 Q298 228 300 248 L340 248 Q342 228 338 208 Q320 200 302 208Z" fill="#5A988C" opacity=".4"/>
+          <path d="M302 218 Q285 232 290 248" stroke="#F5DDD3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M338 218 Q355 232 350 248" stroke="#F5DDD3" stroke-width="7" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Music notes floating -->
+        <g class="svg-note"><text x="420" y="160" font-size="22" fill="#C47860" opacity=".6">♪</text></g>
+        <g class="svg-note-d"><text x="440" y="130" font-size="18" fill="#B89840" opacity=".5">♫</text></g>
+        <g class="svg-note-d2"><text x="200" y="140" font-size="20" fill="#967BA5" opacity=".5">♪</text></g>
+        <!-- Flowers -->
+        <g class="svg-float">
+          <circle cx="160" cy="270" r="8" fill="#F2DDE2" opacity=".6"/>
+          <circle cx="160" cy="270" r="3" fill="#C47888" opacity=".5"/>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="480" cy="275" r="7" fill="#F5EDCF" opacity=".6"/>
+          <circle cx="480" cy="275" r="3" fill="#B89840" opacity=".5"/>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="230" cy="280" r="6" fill="#EDE0F3" opacity=".5"/>
+          <circle cx="230" cy="280" r="2.5" fill="#967BA5" opacity=".4"/>
+        </g>
+        <!-- Butterfly -->
+        <g class="svg-float-d3" transform="translate(460,120)">
+          <ellipse cx="-8" cy="0" rx="8" ry="5" fill="#C47888" opacity=".3" transform="rotate(-20)"/>
+          <ellipse cx="8" cy="0" rx="8" ry="5" fill="#C47888" opacity=".3" transform="rotate(20)"/>
+          <line x1="0" y1="-2" x2="0" y2="6" stroke="#9A6A7A" stroke-width="1"/>
+        </g>
+        <!-- Sparkles -->
+        <circle cx="380" cy="100" r="3" fill="#B89840" opacity=".3" class="svg-pulse"/>
+        <circle cx="250" cy="110" r="2.5" fill="#5A988C" opacity=".3" class="svg-pulse"/>
+        <circle cx="500" cy="160" r="2" fill="#967BA5" opacity=".3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ==================== TIMELINE OVERVIEW ==================== -->
+<section class="timeline-section" id="timeline">
+  <div class="timeline-container">
+    <div class="section-header reveal">
+      <div class="section-tag overview">课程总览</div>
+      <h2 class="section-title">12周双轨疗愈旅程</h2>
+      <p class="section-subtitle">每周2次课程，交替进行"自然疗愈日"与"音乐疗愈日"，逐步深化融合</p>
+    </div>
+    <div class="reveal-scale">
+      <svg class="timeline-svg" viewBox="0 0 900 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="900" height="520" rx="24" fill="#FAF8F2"/>
+        <!-- Two parallel tracks -->
+        <rect x="60" y="60" width="380" height="440" rx="16" fill="#D4E8E2" opacity=".15"/>
+        <rect x="460" y="60" width="380" height="440" rx="16" fill="#F5DDD3" opacity=".15"/>
+        <text x="250" y="90" text-anchor="middle" font-size="15" font-weight="700" fill="#5A988C">🌿 自然疗愈日</text>
+        <text x="650" y="90" text-anchor="middle" font-size="15" font-weight="700" fill="#C47860">🎵 音乐疗愈日</text>
+        <!-- Week nodes - Nature track -->
+        <g class="svg-float">
+          <rect x="100" y="110" width="300" height="50" rx="12" fill="#D4E8E2" opacity=".6"/>
+          <text x="250" y="133" text-anchor="middle" font-size="13" font-weight="600" fill="#3D7A6E">W1 我的花园名片</text>
+          <text x="250" y="150" text-anchor="middle" font-size="10" fill="#5A5466">感官漫步 · 植物名片</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="100" y="175" width="300" height="50" rx="12" fill="#D4E8E2" opacity=".6"/>
+          <text x="250" y="198" text-anchor="middle" font-size="13" font-weight="600" fill="#3D7A6E">W2 播种希望</text>
+          <text x="250" y="215" text-anchor="middle" font-size="10" fill="#5A5466">容器种植 · 植物日记</text>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="100" y="240" width="300" height="50" rx="12" fill="#E2E8D6" opacity=".6"/>
+          <text x="250" y="263" text-anchor="middle" font-size="13" font-weight="600" fill="#5A7A4A">W3 自然音乐会</text>
+          <text x="250" y="280" text-anchor="middle" font-size="10" fill="#5A5466">🌿🎵 融合活动</text>
+        </g>
+        <g class="svg-float">
+          <rect x="100" y="305" width="300" height="50" rx="12" fill="#D4E8E2" opacity=".6"/>
+          <text x="250" y="328" text-anchor="middle" font-size="13" font-weight="600" fill="#3D7A6E">W4-5 四季花园</text>
+          <text x="250" y="345" text-anchor="middle" font-size="10" fill="#5A5466">插花艺术 · 芳香疗愈</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="100" y="370" width="300" height="50" rx="12" fill="#D9F0E4" opacity=".6"/>
+          <text x="250" y="393" text-anchor="middle" font-size="13" font-weight="600" fill="#3D7A6E">W6-7 收获与分享</text>
+          <text x="250" y="410" text-anchor="middle" font-size="10" fill="#5A5466">蔬果收获 · 园艺烹饪</text>
+        </g>
+        <!-- Week nodes - Music track -->
+        <g class="svg-float-d2">
+          <rect x="500" y="110" width="300" height="50" rx="12" fill="#F5DDD3" opacity=".6"/>
+          <text x="650" y="133" text-anchor="middle" font-size="13" font-weight="600" fill="#A05A48">W1 时光唱片机</text>
+          <text x="650" y="150" text-anchor="middle" font-size="10" fill="#5A5466">音乐回忆 · 集体歌唱</text>
+        </g>
+        <g class="svg-float">
+          <rect x="500" y="175" width="300" height="50" rx="12" fill="#F5DDD3" opacity=".6"/>
+          <text x="650" y="198" text-anchor="middle" font-size="13" font-weight="600" fill="#A05A48">W2 我的生命之歌</text>
+          <text x="650" y="215" text-anchor="middle" font-size="10" fill="#5A5466">生命主题曲 · 音乐叙事</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="500" y="240" width="300" height="50" rx="12" fill="#F5EDCF" opacity=".6"/>
+          <text x="650" y="263" text-anchor="middle" font-size="13" font-weight="600" fill="#8A7030">W3 自然音乐会</text>
+          <text x="650" y="280" text-anchor="middle" font-size="10" fill="#5A5466">🌿🎵 融合活动</text>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="500" y="305" width="300" height="50" rx="12" fill="#F5DDD3" opacity=".6"/>
+          <text x="650" y="328" text-anchor="middle" font-size="13" font-weight="600" fill="#A05A48">W4-5 音乐与情感</text>
+          <text x="650" y="345" text-anchor="middle" font-size="10" fill="#5A5466">情绪识别 · 合唱团</text>
+        </g>
+        <g class="svg-float">
+          <rect x="500" y="370" width="300" height="50" rx="12" fill="#F2DDE2" opacity=".6"/>
+          <text x="650" y="393" text-anchor="middle" font-size="13" font-weight="600" fill="#A05A48">W6-7 音乐与记忆</text>
+          <text x="650" y="410" text-anchor="middle" font-size="10" fill="#5A5466">回忆疗法 · 代际互动</text>
+        </g>
+        <!-- Fusion milestones -->
+        <g class="svg-pulse">
+          <circle cx="450" cy="265" r="16" fill="#FBF4D6" stroke="#B89840" stroke-width="2"/>
+          <text x="450" y="270" text-anchor="middle" font-size="14">🎶</text>
+        </g>
+        <!-- Bottom milestones -->
+        <g class="svg-float">
+          <rect x="150" y="440" width="180" height="44" rx="22" fill="#FBF4D6" opacity=".7"/>
+          <text x="240" y="458" text-anchor="middle" font-size="12" font-weight="600" fill="#8A7030">W8 社区花园音乐会</text>
+          <text x="240" y="474" text-anchor="middle" font-size="9" fill="#5A5466">中期融合活动</text>
+        </g>
+        <g class="svg-float-d">
+          <rect x="380" y="440" width="140" height="44" rx="22" fill="#D6E6F2" opacity=".7"/>
+          <text x="450" y="458" text-anchor="middle" font-size="12" font-weight="600" fill="#3A6A8A">W9-10 深化</text>
+          <text x="450" y="474" text-anchor="middle" font-size="9" fill="#5A5466">导师 · 创作</text>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="570" y="440" width="180" height="44" rx="22" fill="#E2E8D6" opacity=".7"/>
+          <text x="660" y="458" text-anchor="middle" font-size="12" font-weight="600" fill="#5A7A4A">W11-12 整合展望</text>
+          <text x="660" y="474" text-anchor="middle" font-size="9" fill="#5A5466">成果展 · 传承</text>
+        </g>
+        <!-- Connecting arrows -->
+        <line x1="400" y1="135" x2="500" y2="135" stroke="#B89840" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+        <line x1="400" y1="200" x2="500" y2="200" stroke="#B89840" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+        <line x1="400" y1="330" x2="500" y2="330" stroke="#B89840" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+        <line x1="400" y1="395" x2="500" y2="395" stroke="#B89840" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 1 NATURE: 我的花园名片 ==================== -->
+<section class="week-section" id="w1n">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-num-badge nature">1</div>
+        <span class="week-label">自然疗愈日</span>
+      </div>
+      <h2 class="week-title">我的花园名片</h2>
+      <div class="week-theme nature">🌿 建立与自然的初步连接</div>
+      <p class="week-desc">在社区花园中进行感官漫步，引导老人关注五种感官体验，采集落叶花瓣制作个人植物名片，围绕美好记忆进行分享。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon nature">👁️</div><span>感官漫步：看、听、闻、触、尝五感体验</span></div>
+        <div class="detail-item"><div class="detail-icon nature">🍂</div><span>手工制作：采集落叶花瓣，制作植物名片</span></div>
+        <div class="detail-item"><div class="detail-icon nature">💬</div><span>分享环节："我与自然的一个美好记忆"</span></div>
+      </div>
+      <div class="week-adapt nature">
+        <span class="adapt-label">♿ 适配方案</span>
+        行动不便者可在室内窗边进行感官体验，由志愿者协助采集植物材料
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Garden path -->
+        <path d="M220 420 Q200 350 220 280 Q240 220 220 160" stroke="#D4E8E2" stroke-width="40" fill="none" stroke-linecap="round" opacity=".4"/>
+        <!-- Flowers along path -->
+        <g class="svg-float">
+          <line x1="140" y1="300" x2="140" y2="270" stroke="#5A988C" stroke-width="2"/>
+          <circle cx="140" cy="265" r="10" fill="#F2DDE2" opacity=".7"/>
+          <circle cx="140" cy="265" r="4" fill="#C47888" opacity=".5"/>
+        </g>
+        <g class="svg-float-d">
+          <line x1="300" y1="250" x2="300" y2="220" stroke="#5A988C" stroke-width="2"/>
+          <circle cx="300" cy="215" r="9" fill="#EDE0F3" opacity=".7"/>
+          <circle cx="300" cy="215" r="3.5" fill="#967BA5" opacity=".5"/>
+        </g>
+        <g class="svg-float-d2">
+          <line x1="170" y1="200" x2="170" y2="175" stroke="#5A988C" stroke-width="2"/>
+          <circle cx="170" cy="170" r="8" fill="#F5EDCF" opacity=".7"/>
+          <circle cx="170" cy="170" r="3" fill="#B89840" opacity=".5"/>
+        </g>
+        <!-- Elderly person with walking stick -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="130" r="20" fill="#F5DDD3"/>
+          <path d="M200 126 Q204 110 220 107 Q236 110 240 126" fill="#9A8A7A" opacity=".5"/>
+          <circle cx="214" cy="128" r="1.8" fill="#3A3448"/>
+          <circle cx="226" cy="128" r="1.8" fill="#3A3448"/>
+          <path d="M216 137 Q220 140 224 137" stroke="#C47860" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M204 148 Q200 175 202 210 L238 210 Q240 175 236 148 Q220 142 204 148Z" fill="#5A988C" opacity=".4"/>
+          <path d="M204 160 Q188 178 192 205" stroke="#F5DDD3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M236 160 Q252 178 248 205" stroke="#F5DDD3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <!-- Walking stick -->
+          <line x1="248" y1="155" x2="260" y2="210" stroke="#8B7355" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- Plant name card -->
+        <g class="svg-float-d3">
+          <rect x="300" y="120" width="100" height="70" rx="8" fill="#FBF4D6" stroke="#E8D48A" stroke-width="1"/>
+          <text x="350" y="145" text-anchor="middle" font-size="10" fill="#5A5466">🌿 我的</text>
+          <text x="350" y="162" text-anchor="middle" font-size="12" font-weight="600" fill="#3D7A6E">花园名片</text>
+          <!-- Small leaf decoration -->
+          <circle cx="320" cy="175" r="4" fill="#D4E8E2" opacity=".6"/>
+          <circle cx="380" cy="175" r="4" fill="#F2DDE2" opacity=".6"/>
+        </g>
+        <!-- Five senses icons -->
+        <g class="svg-pulse"><circle cx="80" cy="140" r="14" fill="#D4E8E2" opacity=".5"/><text x="80" y="145" text-anchor="middle" font-size="12">👁️</text></g>
+        <g class="svg-pulse"><circle cx="80" cy="180" r="14" fill="#D4E8E2" opacity=".5"/><text x="80" y="185" text-anchor="middle" font-size="12">👂</text></g>
+        <g class="svg-pulse"><circle cx="80" cy="220" r="14" fill="#D4E8E2" opacity=".5"/><text x="80" y="225" text-anchor="middle" font-size="12">👃</text></g>
+        <g class="svg-pulse"><circle cx="80" cy="260" r="14" fill="#D4E8E2" opacity=".5"/><text x="80" y="265" text-anchor="middle" font-size="12">✋</text></g>
+        <g class="svg-pulse"><circle cx="80" cy="300" r="14" fill="#D4E8E2" opacity=".5"/><text x="80" y="305" text-anchor="middle" font-size="12">👅</text></g>
+        <!-- Falling leaves -->
+        <g class="svg-petal"><ellipse cx="360" cy="80" rx="6" ry="3" fill="#6BB898" opacity=".4" transform="rotate(30,360,80)"/></g>
+        <g class="svg-petal-d"><ellipse cx="180" cy="90" rx="5" ry="2.5" fill="#C47888" opacity=".3" transform="rotate(-20,180,90)"/></g>
+        <g class="svg-petal-d2"><ellipse cx="280" cy="70" rx="5" ry="2.5" fill="#B89840" opacity=".3" transform="rotate(45,280,70)"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 1 MUSIC: 时光唱片机 ==================== -->
+<section class="week-section reverse" id="w1m">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-num-badge music">1</div>
+        <span class="week-label">音乐疗愈日</span>
+      </div>
+      <h2 class="week-title">时光唱片机</h2>
+      <div class="week-theme music">🎵 通过音乐唤起积极记忆</div>
+      <p class="week-desc">播放老人年轻时代流行歌曲，引导回忆与分享。选择经典老歌进行集体合唱，使用简单打击乐器跟随音乐节奏。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon music">📻</div><span>音乐回忆：播放年轻时代流行歌曲</span></div>
+        <div class="detail-item"><div class="detail-icon music">🎤</div><span>集体歌唱：经典老歌合唱</span></div>
+        <div class="detail-item"><div class="detail-icon music">🥁</div><span>节奏游戏：沙锤、铃鼓跟随节奏</span></div>
+      </div>
+      <div class="week-adapt music">
+        <span class="adapt-label">♿ 适配方案</span>
+        听力障碍者提供歌词卡片与视觉节奏提示
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Vinyl record -->
+        <g class="svg-rotate">
+          <circle cx="220" cy="200" r="120" fill="#3A3448" opacity=".08"/>
+          <circle cx="220" cy="200" r="100" fill="#3A3448" opacity=".06"/>
+          <circle cx="220" cy="200" r="80" fill="#3A3448" opacity=".04"/>
+          <circle cx="220" cy="200" r="60" fill="#C47860" opacity=".15"/>
+          <circle cx="220" cy="200" r="20" fill="#F5DDD3" opacity=".5"/>
+          <circle cx="220" cy="200" r="5" fill="#C47860" opacity=".4"/>
+        </g>
+        <!-- Record player base -->
+        <rect x="100" y="310" width="240" height="16" rx="8" fill="#C4A882" opacity=".3"/>
+        <!-- Tonearm -->
+        <line x1="340" y1="160" x2="280" y2="200" stroke="#8B7355" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+        <circle cx="340" cy="160" r="6" fill="#8B7355" opacity=".4"/>
+        <!-- Elderly people listening -->
+        <g class="svg-breathe">
+          <circle cx="120" cy="340" r="16" fill="#F5DDD3"/>
+          <path d="M104 337 Q108 324 120 322 Q132 324 136 337" fill="#9A8A7A" opacity=".4"/>
+          <path d="M108 352 Q106 370 108 385 L132 385 Q134 370 132 352 Q120 347 108 352Z" fill="#C47860" opacity=".3"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="320" cy="340" r="16" fill="#F5DDD3"/>
+          <path d="M304 337 Q308 324 320 322 Q332 324 336 337" fill="#9A8A7A" opacity=".4"/>
+          <path d="M308 352 Q306 370 308 385 L332 385 Q334 370 332 352 Q320 347 308 352Z" fill="#5A988C" opacity=".3"/>
+        </g>
+        <!-- Music notes -->
+        <g class="svg-note"><text x="160" y="120" font-size="24" fill="#C47860" opacity=".5">♪</text></g>
+        <g class="svg-note-d"><text x="260" y="100" font-size="20" fill="#B89840" opacity=".4">♫</text></g>
+        <g class="svg-note-d2"><text x="300" y="130" font-size="18" fill="#967BA5" opacity=".4">♪</text></g>
+        <!-- Rhythm instruments -->
+        <g class="svg-float">
+          <ellipse cx="60" cy="200" rx="12" ry="18" fill="#EDE0F3" opacity=".5" transform="rotate(-15,60,200)"/>
+          <text x="60" y="205" text-anchor="middle" font-size="10">沙锤</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="380" cy="260" r="16" fill="#F5EDCF" opacity=".5"/>
+          <text x="380" y="265" text-anchor="middle" font-size="10">铃鼓</text>
+        </g>
+        <!-- Memory bubbles -->
+        <g class="svg-float-d2">
+          <rect x="140" y="50" width="80" height="36" rx="18" fill="#F5DDD3" opacity=".5"/>
+          <text x="180" y="73" text-anchor="middle" font-size="11" fill="#A05A48">美好回忆</text>
+        </g>
+        <g class="svg-float-d3">
+          <rect x="240" y="40" width="80" height="36" rx="18" fill="#D4E8E2" opacity=".5"/>
+          <text x="280" y="63" text-anchor="middle" font-size="11" fill="#3D7A6E">青春岁月</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 2 NATURE: 播种希望 ==================== -->
+<section class="week-section" id="w2n">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-num-badge nature">2</div>
+        <span class="week-label">自然疗愈日</span>
+      </div>
+      <h2 class="week-title">播种希望</h2>
+      <div class="week-theme nature">🌱 通过种植建立责任感与期待感</div>
+      <p class="week-desc">每位老人选择一种易养护的植物亲手种植，记录植物生长过程，培养持续观察的习惯，并为自己种植的植物取名。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon nature">🪴</div><span>容器种植：薄荷、罗勒、多肉等</span></div>
+        <div class="detail-item"><div class="detail-icon nature">📓</div><span>植物日记：记录生长过程</span></div>
+        <div class="detail-item"><div class="detail-icon nature">💬</div><span>分享："我给这棵植物取名叫……因为……"</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Soil/ground -->
+        <ellipse cx="220" cy="340" rx="180" ry="30" fill="#D4C8A8" opacity=".2"/>
+        <!-- Three pots with growing plants -->
+        <!-- Pot 1 - Mint -->
+        <g>
+          <path d="M100 280 L110 340 L170 340 L180 280Z" fill="#C47860" opacity=".3"/>
+          <rect x="95" y="270" width="90" height="14" rx="4" fill="#C47860" opacity=".35"/>
+          <g class="svg-sway">
+            <line x1="140" y1="270" x2="140" y2="220" stroke="#5A988C" stroke-width="2.5"/>
+            <ellipse cx="125" cy="225" rx="12" ry="8" fill="#6BB898" opacity=".5" transform="rotate(-30,125,225)"/>
+            <ellipse cx="155" cy="220" rx="12" ry="8" fill="#5A988C" opacity=".5" transform="rotate(25,155,220)"/>
+            <ellipse cx="140" cy="210" rx="10" ry="7" fill="#7B8A5B" opacity=".4" transform="rotate(-10,140,210)"/>
+          </g>
+          <text x="140" y="365" text-anchor="middle" font-size="11" fill="#5A5466">薄荷</text>
+        </g>
+        <!-- Pot 2 - Basil -->
+        <g>
+          <path d="M200 290 L208 340 L252 340 L260 290Z" fill="#967BA5" opacity=".25"/>
+          <rect x="196" y="282" width="68" height="12" rx="4" fill="#967BA5" opacity=".3"/>
+          <g class="svg-sway-slow">
+            <line x1="230" y1="282" x2="230" y2="235" stroke="#5A988C" stroke-width="2"/>
+            <ellipse cx="218" cy="240" rx="10" ry="7" fill="#5A988C" opacity=".45" transform="rotate(-25,218,240)"/>
+            <ellipse cx="242" cy="238" rx="10" ry="7" fill="#6BB898" opacity=".45" transform="rotate(20,242,238)"/>
+            <ellipse cx="230" cy="228" rx="9" ry="6" fill="#7B8A5B" opacity=".35"/>
+          </g>
+          <text x="230" y="365" text-anchor="middle" font-size="11" fill="#5A5466">罗勒</text>
+        </g>
+        <!-- Pot 3 - Succulent -->
+        <g>
+          <path d="M300 300 L306 340 L354 340 L360 300Z" fill="#B89840" opacity=".25"/>
+          <rect x="296" y="293" width="68" height="11" rx="4" fill="#B89840" opacity=".3"/>
+          <g class="svg-sway">
+            <ellipse cx="330" cy="285" rx="14" ry="10" fill="#7B8A5B" opacity=".4"/>
+            <ellipse cx="318" cy="280" rx="10" ry="7" fill="#5A988C" opacity=".35" transform="rotate(-20,318,280)"/>
+            <ellipse cx="342" cy="278" rx="10" ry="7" fill="#6BB898" opacity=".35" transform="rotate(15,342,278)"/>
+          </g>
+          <text x="330" y="365" text-anchor="middle" font-size="11" fill="#5A5466">多肉</text>
+        </g>
+        <!-- Water drops -->
+        <g class="svg-drop"><circle cx="140" cy="190" r="3" fill="#5A8FB5" opacity=".4"/></g>
+        <g class="svg-drop-d"><circle cx="230" cy="200" r="2.5" fill="#5A8FB5" opacity=".35"/></g>
+        <g class="svg-drop-d2"><circle cx="330" cy="210" r="2" fill="#5A8FB5" opacity=".3"/></g>
+        <!-- Sunlight -->
+        <g class="svg-glow">
+          <circle cx="380" cy="80" r="30" fill="#F5EDCF" opacity=".3"/>
+          <line x1="380" y1="40" x2="380" y2="50" stroke="#B89840" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+          <line x1="410" y1="55" x2="405" y2="63" stroke="#B89840" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+          <line x1="420" y1="80" x2="412" y2="80" stroke="#B89840" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+          <line x1="410" y1="105" x2="405" y2="98" stroke="#B89840" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+        </g>
+        <!-- Plant diary -->
+        <g class="svg-float-d">
+          <rect x="30" y="120" width="60" height="80" rx="6" fill="#FBF4D6" stroke="#E8D48A" stroke-width="1"/>
+          <line x1="42" y1="140" x2="78" y2="140" stroke="#E8D48A" stroke-width="1" opacity=".5"/>
+          <line x1="42" y1="155" x2="78" y2="155" stroke="#E8D48A" stroke-width="1" opacity=".5"/>
+          <line x1="42" y1="170" x2="70" y2="170" stroke="#E8D48A" stroke-width="1" opacity=".5"/>
+          <text x="60" y="135" text-anchor="middle" font-size="9" fill="#8A7030">植物日记</text>
+        </g>
+        <!-- Growth arrow -->
+        <g class="svg-pulse">
+          <path d="M60 100 L60 70" stroke="#5A988C" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+          <path d="M55 78 L60 68 L65 78" stroke="#5A988C" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 2 MUSIC: 我的生命之歌 ==================== -->
+<section class="week-section reverse" id="w2m">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-num-badge music">2</div>
+        <span class="week-label">音乐疗愈日</span>
+      </div>
+      <h2 class="week-title">我的生命之歌</h2>
+      <div class="week-theme music">🎶 通过音乐叙事探索生命故事</div>
+      <p class="week-desc">每位老人选择一首代表自己人生的歌曲，围绕选定的歌曲讲述人生中的重要时刻，其他成员用音乐回应讲述者的故事。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon music">🎵</div><span>选择生命主题曲：代表人生的歌曲</span></div>
+        <div class="detail-item"><div class="detail-icon music">📖</div><span>音乐叙事：讲述人生重要时刻</span></div>
+        <div class="detail-item"><div class="detail-icon music">🤝</div><span>团体倾听与回应：用音乐回应故事</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Life timeline winding path -->
+        <path d="M60 380 Q100 300 160 280 Q220 260 220 200 Q220 140 280 120 Q340 100 380 60" stroke="#E8E0D8" stroke-width="3" fill="none" stroke-dasharray="8,6" class="svg-draw-slow"/>
+        <!-- Timeline dots -->
+        <circle cx="60" cy="380" r="8" fill="#F5DDD3" opacity=".6" class="svg-scale-in"/>
+        <text x="60" y="405" text-anchor="middle" font-size="9" fill="#5A5466">出生</text>
+        <circle cx="160" cy="280" r="8" fill="#D4E8E2" opacity=".6" class="svg-scale-in"/>
+        <text x="160" y="305" text-anchor="middle" font-size="9" fill="#5A5466">青年</text>
+        <circle cx="220" cy="200" r="8" fill="#F5EDCF" opacity=".6" class="svg-scale-in"/>
+        <text x="220" y="225" text-anchor="middle" font-size="9" fill="#5A5466">中年</text>
+        <circle cx="280" cy="120" r="8" fill="#EDE0F3" opacity=".6" class="svg-scale-in"/>
+        <text x="280" y="145" text-anchor="middle" font-size="9" fill="#5A5466">退休</text>
+        <circle cx="380" cy="60" r="10" fill="#F5DDD3" opacity=".7" class="svg-scale-in"/>
+        <text x="380" y="85" text-anchor="middle" font-size="9" fill="#5A5466">现在</text>
+        <!-- Music notes along timeline -->
+        <g class="svg-note"><text x="110" y="320" font-size="16" fill="#C47860" opacity=".5">♪</text></g>
+        <g class="svg-note-d"><text x="190" y="230" font-size="14" fill="#B89840" opacity=".4">♫</text></g>
+        <g class="svg-note-d2"><text x="250" y="155" font-size="16" fill="#967BA5" opacity=".4">♪</text></g>
+        <!-- Elderly person telling story -->
+        <g class="svg-breathe">
+          <circle cx="340" cy="180" r="18" fill="#F5DDD3"/>
+          <path d="M322 177 Q326 162 340 160 Q354 162 358 177" fill="#9A8A7A" opacity=".4"/>
+          <circle cx="334" cy="179" r="1.5" fill="#3A3448"/>
+          <circle cx="346" cy="179" r="1.5" fill="#3A3448"/>
+          <path d="M336 188 Q340 191 344 188" stroke="#C47860" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M326 196 Q322 218 324 240 L356 240 Q358 218 354 196 Q340 190 326 196Z" fill="#C47860" opacity=".3"/>
+          <!-- Gesturing hand -->
+          <path d="M354 208 Q370 200 375 190" stroke="#F5DDD3" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Speech bubble with music -->
+        <g class="svg-float">
+          <rect x="300" y="120" width="100" height="40" rx="20" fill="#F5DDD3" opacity=".5"/>
+          <text x="350" y="145" text-anchor="middle" font-size="12" fill="#A05A48">🎵 我的歌</text>
+        </g>
+        <!-- Group listeners -->
+        <g class="svg-breathe">
+          <circle cx="100" cy="160" r="14" fill="#F5DDD3" opacity=".6"/>
+          <path d="M88 175 Q86 195 88 210 L112 210 Q114 195 112 175 Q100 170 88 175Z" fill="#5A988C" opacity=".25"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="140" cy="150" r="14" fill="#F5DDD3" opacity=".6"/>
+          <path d="M128 165 Q126 185 128 200 L152 200 Q154 185 152 165 Q140 160 128 165Z" fill="#967BA5" opacity=".25"/>
+        </g>
+        <!-- Heart connections -->
+        <g class="svg-pulse"><text x="120" y="130" font-size="14" fill="#C47888" opacity=".4">❤️</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 3 FUSION: 自然音乐会 ==================== -->
+<section class="week-section" id="w3f">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-num-badge fusion">3</div>
+        <span class="week-label">自然+音乐融合</span>
+      </div>
+      <h2 class="week-title">自然音乐会</h2>
+      <div class="week-theme fusion">🎶🌿 融合两种疗愈方式</div>
+      <p class="week-desc">在花园中聆听自然声音配合现场乐器演奏，利用自然材料制作简易乐器，使用自制乐器进行户外即兴演奏。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon fusion">🐦</div><span>户外音乐体验：鸟鸣、风声、水声+现场乐器</span></div>
+        <div class="detail-item"><div class="detail-icon fusion">🎋</div><span>自然乐器制作：竹子、干果壳、石子</span></div>
+        <div class="detail-item"><div class="detail-icon fusion">🎶</div><span>即兴合奏：自制乐器户外演奏</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Outdoor garden scene -->
+        <!-- Sky gradient -->
+        <rect x="0" y="0" width="440" height="200" rx="20" fill="#D6E6F2" opacity=".2"/>
+        <!-- Sun -->
+        <g class="svg-glow"><circle cx="360" cy="60" r="35" fill="#F5EDCF" opacity=".3"/></g>
+        <!-- Trees -->
+        <g class="svg-sway">
+          <rect x="40" y="140" width="10" height="100" rx="3" fill="#8B7355" opacity=".4"/>
+          <circle cx="45" cy="120" r="35" fill="#5A988C" opacity=".2"/>
+          <circle cx="30" cy="115" r="22" fill="#6BB898" opacity=".15"/>
+        </g>
+        <g class="svg-sway-slow">
+          <rect x="380" y="150" width="8" height="90" rx="3" fill="#8B7355" opacity=".35"/>
+          <circle cx="384" cy="135" r="28" fill="#5A988C" opacity=".18"/>
+        </g>
+        <!-- Ground -->
+        <ellipse cx="220" cy="340" rx="200" ry="40" fill="#D4E8E2" opacity=".25"/>
+        <!-- People playing instruments -->
+        <g class="svg-breathe">
+          <circle cx="160" cy="240" r="16" fill="#F5DDD3"/>
+          <path d="M144 260 Q140 290 142 320 L178 320 Q180 290 176 260 Q160 254 144 260Z" fill="#5A988C" opacity=".35"/>
+          <!-- Playing bamboo flute -->
+          <line x1="176" y1="268" x2="220" y2="255" stroke="#8B7355" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+          <circle cx="222" cy="254" r="3" fill="#8B7355" opacity=".3"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="280" cy="245" r="16" fill="#F5DDD3"/>
+          <path d="M264 265 Q260 295 262 325 L298 325 Q300 295 296 265 Q280 259 264 265Z" fill="#C47860" opacity=".3"/>
+          <!-- Shaking maracas -->
+          <path d="M264 275 Q248 265 240 255" stroke="#F5DDD3" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="238" cy="252" rx="8" ry="12" fill="#EDE0F3" opacity=".5" transform="rotate(-20,238,252)"/>
+        </g>
+        <!-- Natural sound waves -->
+        <g class="svg-wave" opacity=".3">
+          <path d="M80 200 Q100 190 120 200 Q140 210 160 200" stroke="#5A988C" stroke-width="2" fill="none"/>
+        </g>
+        <g class="svg-wave" opacity=".25">
+          <path d="M280 190 Q300 180 320 190 Q340 200 360 190" stroke="#C47860" stroke-width="2" fill="none"/>
+        </g>
+        <!-- Nature sounds icons -->
+        <g class="svg-float"><text x="60" y="100" font-size="20" opacity=".5">🐦</text></g>
+        <g class="svg-float-d"><text x="320" y="90" font-size="18" opacity=".4">💨</text></g>
+        <g class="svg-float-d2"><text x="200" y="80" font-size="16" opacity=".4">💧</text></g>
+        <!-- Music notes -->
+        <g class="svg-note"><text x="200" y="170" font-size="22" fill="#B89840" opacity=".5">♪</text></g>
+        <g class="svg-note-d"><text x="250" y="160" font-size="18" fill="#967BA5" opacity=".4">♫</text></g>
+        <!-- Homemade instruments -->
+        <g class="svg-float-d3">
+          <rect x="60" y="300" width="70" height="40" rx="8" fill="#E2E8D6" opacity=".5"/>
+          <text x="95" y="325" text-anchor="middle" font-size="10" fill="#5A7A4A">竹笛 🎋</text>
+        </g>
+        <g class="svg-float">
+          <rect x="310" y="310" width="80" height="40" rx="8" fill="#F5EDCF" opacity=".5"/>
+          <text x="350" y="335" text-anchor="middle" font-size="10" fill="#8A7030">果壳沙锤 🥜</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 4-5: 四季花园 + 音乐与情感 ==================== -->
+<section class="week-section" id="w45">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-num-badge nature">4-5</div>
+        <span class="week-label">自然疗愈 · 四季花园</span>
+      </div>
+      <h2 class="week-title">四季花园 & 音乐与情感</h2>
+      <div class="week-theme nature">🌸 感受生命的绽放与律动</div>
+      <p class="week-desc">春季花卉识别与插花艺术，夏季香草种植与芳香疗愈。通过不同风格的音乐识别与表达情绪，组建社区合唱团。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon nature">🌸</div><span>春季：花卉识别与插花艺术</span></div>
+        <div class="detail-item"><div class="detail-icon nature">🌿</div><span>夏季：香草种植与芳香疗愈</span></div>
+        <div class="detail-item"><div class="detail-icon nature">🎨</div><span>延伸：干花书签、香草茶包手工作品</span></div>
+        <div class="detail-item"><div class="detail-icon music">🎭</div><span>情绪识别：不同风格音乐表达情绪</span></div>
+        <div class="detail-item"><div class="detail-icon music">😌</div><span>音乐放松：自然音乐背景+渐进式放松</span></div>
+        <div class="detail-item"><div class="detail-icon music">🎤</div><span>合唱团组建：社区合唱团</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Four seasons quadrants -->
+        <!-- Spring -->
+        <rect x="20" y="20" width="190" height="180" rx="14" fill="#F2DDE2" opacity=".2"/>
+        <g class="svg-float">
+          <line x1="80" y1="150" x2="80" y2="100" stroke="#5A988C" stroke-width="2"/>
+          <circle cx="70" cy="95" r="12" fill="#F2DDE2" opacity=".7"/>
+          <circle cx="70" cy="95" r="5" fill="#C47888" opacity=".5"/>
+          <circle cx="92" cy="90" r="10" fill="#EDE0F3" opacity=".6"/>
+          <circle cx="92" cy="90" r="4" fill="#967BA5" opacity=".4"/>
+          <circle cx="80" cy="80" r="8" fill="#F5DDD3" opacity=".6"/>
+        </g>
+        <text x="115" y="45" text-anchor="middle" font-size="13" font-weight="600" fill="#C47888">🌸 春</text>
+        <text x="115" y="62" text-anchor="middle" font-size="9" fill="#5A5466">插花艺术</text>
+        <!-- Summer -->
+        <rect x="230" y="20" width="190" height="180" rx="14" fill="#F5EDCF" opacity=".15"/>
+        <g class="svg-float-d">
+          <line x1="310" y1="150" x2="310" y2="90" stroke="#7B8A5B" stroke-width="2"/>
+          <ellipse cx="298" cy="95" rx="10" ry="7" fill="#7B8A5B" opacity=".4" transform="rotate(-25,298,95)"/>
+          <ellipse cx="322" cy="92" rx="10" ry="7" fill="#5A988C" opacity=".4" transform="rotate(20,322,92)"/>
+          <ellipse cx="310" cy="82" rx="9" ry="6" fill="#6BB898" opacity=".35"/>
+        </g>
+        <!-- Aroma waves -->
+        <g class="svg-wave" opacity=".3">
+          <path d="M280 70 Q290 65 300 70 Q310 75 320 70" stroke="#B89840" stroke-width="1.5" fill="none"/>
+          <path d="M280 60 Q290 55 300 60 Q310 65 320 60" stroke="#B89840" stroke-width="1.5" fill="none"/>
+        </g>
+        <text x="325" y="45" text-anchor="middle" font-size="13" font-weight="600" fill="#B89840">☀️ 夏</text>
+        <text x="325" y="62" text-anchor="middle" font-size="9" fill="#5A5466">芳香疗愈</text>
+        <!-- Music emotion section -->
+        <rect x="20" y="220" width="400" height="180" rx="14" fill="#F5DDD3" opacity=".1"/>
+        <text x="220" y="248" text-anchor="middle" font-size="13" font-weight="600" fill="#C47860">🎵 音乐与情感</text>
+        <!-- Emotion faces with music -->
+        <g class="svg-float">
+          <circle cx="80" cy="310" r="25" fill="#F2DDE2" opacity=".4"/>
+          <text x="80" y="316" text-anchor="middle" font-size="20">😊</text>
+          <text x="80" y="350" text-anchor="middle" font-size="9" fill="#5A5466">欢快</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="180" cy="310" r="25" fill="#D6E6F2" opacity=".4"/>
+          <text x="180" y="316" text-anchor="middle" font-size="20">😢</text>
+          <text x="180" y="350" text-anchor="middle" font-size="9" fill="#5A5466">舒缓</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="280" cy="310" r="25" fill="#EDE0F3" opacity=".4"/>
+          <text x="280" y="316" text-anchor="middle" font-size="20">😌</text>
+          <text x="280" y="350" text-anchor="middle" font-size="9" fill="#5A5466">平静</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="380" cy="310" r="25" fill="#F5EDCF" opacity=".4"/>
+          <text x="380" y="316" text-anchor="middle" font-size="20">🥰</text>
+          <text x="380" y="350" text-anchor="middle" font-size="9" fill="#5A5466">温暖</text>
+        </g>
+        <!-- Music notes -->
+        <g class="svg-note"><text x="130" y="280" font-size="16" fill="#C47860" opacity=".4">♪</text></g>
+        <g class="svg-note-d"><text x="230" y="275" font-size="14" fill="#967BA5" opacity=".35">♫</text></g>
+        <g class="svg-note-d2"><text x="330" y="280" font-size="16" fill="#B89840" opacity=".4">♪</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 6-7: 收获与分享 + 音乐与记忆 ==================== -->
+<section class="week-section reverse" id="w67">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-num-badge harvest">6-7</div>
+        <span class="week-label">收获与分享</span>
+      </div>
+      <h2 class="week-title">收获分享 & 音乐记忆</h2>
+      <div class="week-theme harvest">🍎 从播种到收获的完整体验</div>
+      <p class="week-desc">体验蔬果种植与收获的完整过程，用自己种植的香草制作食品分享。通过个性化音乐回忆方案、音乐运动和代际互动深化疗愈效果。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon harvest">🍅</div><span>蔬果种植与收获：完整生命体验</span></div>
+        <div class="detail-item"><div class="detail-icon harvest">🍳</div><span>园艺烹饪：用种植的香草制作食品</span></div>
+        <div class="detail-item"><div class="detail-icon harvest">🎨</div><span>自然艺术创作：自然材料拼贴画</span></div>
+        <div class="detail-item"><div class="detail-icon music">🧠</div><span>音乐回忆疗法：个性化回忆方案</span></div>
+        <div class="detail-item"><div class="detail-icon music">🚶</div><span>音乐与运动：音乐太极、音乐散步</span></div>
+        <div class="detail-item"><div class="detail-icon music">👨‍👧</div><span>代际音乐活动：跨代音乐互动</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Harvest basket -->
+        <g class="svg-float">
+          <path d="M140 280 Q130 320 150 340 L290 340 Q310 320 300 280" fill="#C4A882" opacity=".3" stroke="#A08060" stroke-width="1.5"/>
+          <!-- Fruits in basket -->
+          <circle cx="180" cy="300" r="16" fill="#C47860" opacity=".4"/>
+          <circle cx="220" cy="295" r="14" fill="#C47888" opacity=".35"/>
+          <circle cx="255" cy="300" r="15" fill="#B89840" opacity=".35"/>
+          <circle cx="200" cy="280" r="12" fill="#5A988C" opacity=".3"/>
+          <circle cx="240" cy="278" r="11" fill="#C47860" opacity=".3"/>
+        </g>
+        <!-- Harvest text -->
+        <text x="220" y="370" text-anchor="middle" font-size="12" font-weight="500" fill="#5A5466">丰收的喜悦 🌾</text>
+        <!-- Intergenerational scene -->
+        <g class="svg-breathe">
+          <!-- Elderly person -->
+          <circle cx="120" cy="160" r="18" fill="#F5DDD3"/>
+          <path d="M102 157 Q106 142 120 140 Q134 142 138 157" fill="#9A8A7A" opacity=".4"/>
+          <path d="M106 174 Q102 200 104 230 L136 230 Q138 200 134 174 Q120 168 106 174Z" fill="#C47860" opacity=".3"/>
+          <!-- Child -->
+          <circle cx="180" cy="175" r="12" fill="#F5DDD3"/>
+          <path d="M168 172 Q171 162 180 160 Q189 162 192 172" fill="#5A5466" opacity=".3"/>
+          <path d="M170 184 Q168 200 170 218 L190 218 Q192 200 190 184 Q180 180 170 184Z" fill="#5A8FB5" opacity=".3"/>
+        </g>
+        <!-- Music connecting them -->
+        <g class="svg-note"><text x="150" y="140" font-size="18" fill="#C47860" opacity=".5">♪</text></g>
+        <g class="svg-note-d"><text x="160" y="125" font-size="14" fill="#B89840" opacity=".4">♫</text></g>
+        <!-- Heart between them -->
+        <g class="svg-pulse"><text x="150" y="165" font-size="14" fill="#C47888" opacity=".5">❤️</text></g>
+        <!-- Music tai chi figure -->
+        <g class="svg-sway">
+          <circle cx="340" cy="150" r="16" fill="#F5DDD3"/>
+          <path d="M326 166 Q322 190 324 220 L356 220 Q358 190 354 166 Q340 160 326 166Z" fill="#5A988C" opacity=".3"/>
+          <!-- Arms in tai chi pose -->
+          <path d="M326 178 Q305 170 295 180" stroke="#F5DDD3" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M354 178 Q370 168 380 175" stroke="#F5DDD3" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </g>
+        <text x="340" y="245" text-anchor="middle" font-size="10" fill="#5A5466">音乐太极 🧘</text>
+        <!-- Nature collage -->
+        <g class="svg-float-d">
+          <rect x="300" y="280" width="100" height="70" rx="8" fill="#E2E8D6" opacity=".4"/>
+          <ellipse cx="325" cy="310" rx="10" ry="7" fill="#6BB898" opacity=".4" transform="rotate(20,325,310)"/>
+          <circle cx="355" cy="305" r="8" fill="#F2DDE2" opacity=".5"/>
+          <circle cx="340" cy="325" r="6" fill="#F5EDCF" opacity=".5"/>
+          <text x="350" y="365" text-anchor="middle" font-size="9" fill="#5A5466">自然拼贴画</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 8: 社区花园音乐会 ==================== -->
+<section class="week-section" id="w8">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-num-badge fusion">8</div>
+        <span class="week-label">中期融合活动</span>
+      </div>
+      <h2 class="week-title">社区花园音乐会</h2>
+      <div class="week-theme fusion">🎶🌿 展示与庆祝的里程碑</div>
+      <p class="week-desc">在社区花园举办小型音乐会，由参与课程的老人表演。展示自然疗愈成果（植物、手工作品等），邀请社区其他居民参与，扩大社会互动范围。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon fusion">🎤</div><span>老人表演：课程学员登台演出</span></div>
+        <div class="detail-item"><div class="detail-icon fusion">🌿</div><span>成果展示：植物、手工作品展览</span></div>
+        <div class="detail-item"><div class="detail-icon fusion">🏘️</div><span>社区参与：邀请居民扩大互动</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Stage -->
+        <rect x="60" y="260" width="320" height="10" rx="4" fill="#C4A882" opacity=".3"/>
+        <rect x="80" y="270" width="6" height="60" rx="2" fill="#A08060" opacity=".25"/>
+        <rect x="354" y="270" width="6" height="60" rx="2" fill="#A08060" opacity=".25"/>
+        <!-- Curtains -->
+        <path d="M60 60 Q80 80 60 260" fill="#C47860" opacity=".08"/>
+        <path d="M380 60 Q360 80 380 260" fill="#C47860" opacity=".08"/>
+        <!-- Performers -->
+        <g class="svg-breathe">
+          <circle cx="160" cy="200" r="16" fill="#F5DDD3"/>
+          <path d="M144 216 Q140 240 142 260 L178 260 Q180 240 176 216 Q160 210 144 216Z" fill="#5A988C" opacity=".35"/>
+          <!-- Singing -->
+          <path d="M176 226 Q190 220 195 212" stroke="#F5DDD3" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="220" cy="195" r="16" fill="#F5DDD3"/>
+          <path d="M204 211 Q200 235 202 260 L238 260 Q240 235 236 211 Q220 205 204 211Z" fill="#C47860" opacity=".3"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="280" cy="200" r="16" fill="#F5DDD3"/>
+          <path d="M264 216 Q260 240 262 260 L298 260 Q300 240 296 216 Q280 210 264 216Z" fill="#967BA5" opacity=".3"/>
+          <!-- Playing instrument -->
+          <path d="M264 226 Q248 218 240 225" stroke="#F5DDD3" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Music notes everywhere -->
+        <g class="svg-note"><text x="130" y="160" font-size="22" fill="#C47860" opacity=".5">♪</text></g>
+        <g class="svg-note-d"><text x="200" y="140" font-size="18" fill="#B89840" opacity=".45">♫</text></g>
+        <g class="svg-note-d2"><text x="260" y="150" font-size="20" fill="#967BA5" opacity=".45">♪</text></g>
+        <g class="svg-note"><text x="310" y="165" font-size="16" fill="#5A988C" opacity=".4">♫</text></g>
+        <!-- Audience -->
+        <g class="svg-float">
+          <circle cx="100" cy="320" r="10" fill="#F5DDD3" opacity=".5"/>
+          <path d="M92 328 Q90 342 92 355 L108 355 Q110 342 108 328 Q100 325 92 328Z" fill="#B89840" opacity=".2"/>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="160" cy="325" r="10" fill="#F5DDD3" opacity=".5"/>
+          <path d="M152 333 Q150 347 152 360 L168 360 Q170 347 168 333 Q160 330 152 333Z" fill="#C47860" opacity=".2"/>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="220" cy="320" r="10" fill="#F5DDD3" opacity=".5"/>
+          <path d="M212 328 Q210 342 212 355 L228 355 Q230 342 228 328 Q220 325 212 328Z" fill="#5A988C" opacity=".2"/>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="280" cy="325" r="10" fill="#F5DDD3" opacity=".5"/>
+          <path d="M272 333 Q270 347 272 360 L288 360 Q290 347 288 333 Q280 330 272 333Z" fill="#967BA5" opacity=".2"/>
+        </g>
+        <g class="svg-float">
+          <circle cx="340" cy="320" r="10" fill="#F5DDD3" opacity=".5"/>
+          <path d="M332 328 Q330 342 332 355 L348 355 Q350 342 348 328 Q340 325 332 328Z" fill="#5A8FB5" opacity=".2"/>
+        </g>
+        <!-- Spotlights -->
+        <g class="svg-glow"><circle cx="160" cy="100" r="40" fill="#F5EDCF" opacity=".15"/></g>
+        <g class="svg-glow"><circle cx="280" cy="100" r="40" fill="#EDE0F3" opacity=".12"/></g>
+        <!-- Stars/sparkles -->
+        <circle cx="120" cy="80" r="2" fill="#B89840" opacity=".4" class="svg-pulse"/>
+        <circle cx="320" cy="70" r="2.5" fill="#C47860" opacity=".35" class="svg-pulse"/>
+        <circle cx="220" cy="60" r="2" fill="#967BA5" opacity=".3" class="svg-pulse"/>
+        <!-- Plants on display -->
+        <g class="svg-float-d">
+          <rect x="30" y="280" width="30" height="40" rx="4" fill="#D4E8E2" opacity=".4"/>
+          <circle cx="45" cy="275" r="8" fill="#6BB898" opacity=".3"/>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="380" y="280" width="30" height="40" rx="4" fill="#F2DDE2" opacity=".4"/>
+          <circle cx="395" cy="275" r="8" fill="#C47888" opacity=".3"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 9-10: 深化 ==================== -->
+<section class="week-section reverse" id="w910">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-num-badge mentor">9-10</div>
+        <span class="week-label">深化阶段</span>
+      </div>
+      <h2 class="week-title">自然导师 & 创作表达</h2>
+      <div class="week-theme mentor">🌱🎨 从参与者到引领者</div>
+      <p class="week-desc">培养老人成为"自然导师"带领新成员，设计个人花园角落。引导简易歌曲创作、音乐绘画，录制"社区之声"音频纪念。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon mentor">👨‍🏫</div><span>自然导师：带领新成员花园活动</span></div>
+        <div class="detail-item"><div class="detail-icon mentor">🌻</div><span>个人花园角落：认领专属区域</span></div>
+        <div class="detail-item"><div class="detail-icon mentor">📓</div><span>自然观察日记：记录变化与感悟</span></div>
+        <div class="detail-item"><div class="detail-icon create">✍️</div><span>歌曲创作：用熟悉旋律填新词</span></div>
+        <div class="detail-item"><div class="detail-icon create">🎨</div><span>音乐绘画：边听音乐边创作</span></div>
+        <div class="detail-item"><div class="detail-icon create">🎙️</div><span>录制"社区之声"音频纪念</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Garden with personal plots -->
+        <ellipse cx="220" cy="350" rx="180" ry="30" fill="#D4E8E2" opacity=".2"/>
+        <!-- Personal garden plot -->
+        <rect x="60" y="260" width="140" height="80" rx="10" fill="#E2E8D6" opacity=".3" stroke="#7B8A5B" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="130" y="310" text-anchor="middle" font-size="10" fill="#5A7A4A">我的花园角落 🌻</text>
+        <g class="svg-sway">
+          <line x1="100" y1="260" x2="100" y2="230" stroke="#5A988C" stroke-width="2"/>
+          <circle cx="100" cy="225" r="8" fill="#F2DDE2" opacity=".6"/>
+          <circle cx="100" cy="225" r="3" fill="#C47888" opacity=".4"/>
+        </g>
+        <g class="svg-sway-slow">
+          <line x1="160" y1="260" x2="160" y2="235" stroke="#5A988C" stroke-width="2"/>
+          <ellipse cx="150" cy="232" rx="8" ry="5" fill="#6BB898" opacity=".4" transform="rotate(-20,150,232)"/>
+          <ellipse cx="170" cy="230" rx="8" ry="5" fill="#5A988C" opacity=".4" transform="rotate(15,170,230)"/>
+        </g>
+        <!-- Mentor teaching new member -->
+        <g class="svg-breathe">
+          <circle cx="320" cy="220" r="16" fill="#F5DDD3"/>
+          <path d="M304 236 Q300 260 302 290 L338 290 Q340 260 336 236 Q320 230 304 236Z" fill="#5A988C" opacity=".35"/>
+          <!-- Pointing hand -->
+          <path d="M304 248 Q285 240 275 245" stroke="#F5DDD3" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="260" cy="260" r="12" fill="#F5DDD3" opacity=".7"/>
+          <path d="M250 270 Q248 285 250 300 L270 300 Q272 285 270 270 Q260 266 250 270Z" fill="#5A8FB5" opacity=".25"/>
+        </g>
+        <text x="290" y="310" text-anchor="middle" font-size="9" fill="#5A5466">导师带教</text>
+        <!-- Music creation area -->
+        <g class="svg-float">
+          <rect x="280" y="80" width="130" height="100" rx="12" fill="#EDE0F3" opacity=".2"/>
+          <text x="345" y="105" text-anchor="middle" font-size="11" font-weight="500" fill="#7A5A8A">🎵 创作与表达</text>
+          <!-- Music staff lines -->
+          <line x1="300" y1="125" x2="390" y2="125" stroke="#967BA5" stroke-width=".8" opacity=".3"/>
+          <line x1="300" y1="133" x2="390" y2="133" stroke="#967BA5" stroke-width=".8" opacity=".3"/>
+          <line x1="300" y1="141" x2="390" y2="141" stroke="#967BA5" stroke-width=".8" opacity=".3"/>
+          <line x1="300" y1="149" x2="390" y2="149" stroke="#967BA5" stroke-width=".8" opacity=".3"/>
+          <line x1="300" y1="157" x2="390" y2="157" stroke="#967BA5" stroke-width=".8" opacity=".3"/>
+          <!-- Notes on staff -->
+          <g class="svg-note"><text x="315" y="130" font-size="12" fill="#967BA5" opacity=".5">♩</text></g>
+          <g class="svg-note-d"><text x="345" y="140" font-size="12" fill="#967BA5" opacity=".5">♪</text></g>
+          <g class="svg-note-d2"><text x="370" y="128" font-size="12" fill="#967BA5" opacity=".5">♫</text></g>
+        </g>
+        <!-- Recording microphone -->
+        <g class="svg-pulse">
+          <circle cx="100" cy="100" r="20" fill="#D6E6F2" opacity=".3"/>
+          <rect x="94" y="80" width="12" height="20" rx="6" fill="#5A8FB5" opacity=".3"/>
+          <line x1="100" y1="100" x2="100" y2="115" stroke="#5A8FB5" stroke-width="2" opacity=".3"/>
+          <rect x="90" y="115" width="20" height="4" rx="2" fill="#5A8FB5" opacity=".25"/>
+        </g>
+        <text x="100" y="135" text-anchor="middle" font-size="9" fill="#5A5466">录制社区之声</text>
+        <!-- Paint brush -->
+        <g class="svg-float-d">
+          <rect x="30" y="150" width="4" height="40" rx="2" fill="#8B7355" opacity=".4" transform="rotate(-30,32,150)"/>
+          <circle cx="22" cy="190" r="5" fill="#C47860" opacity=".3"/>
+          <text x="50" y="175" font-size="9" fill="#5A5466">音乐绘画</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 11-12: 整合与展望 ==================== -->
+<section class="week-section" id="w1112">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-num-badge finale">11-12</div>
+        <span class="week-label">整合与展望</span>
+      </div>
+      <h2 class="week-title">四季回顾 & 成果展望</h2>
+      <div class="week-theme finale">🌻 回顾旅程，传承希望</div>
+      <p class="week-desc">回顾12周的自然与音乐旅程，举办"自然与音乐"主题展览。老成员带领新成员，建立可持续的课程传承机制。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon finale">🔄</div><span>四季回顾：回顾12周完整旅程</span></div>
+        <div class="detail-item"><div class="detail-icon finale">🖼️</div><span>成果展示：自然与音乐主题展览</span></div>
+        <div class="detail-item"><div class="detail-icon finale">🤝</div><span>传承计划：老成员带领新成员</span></div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <!-- Circular journey path -->
+        <circle cx="220" cy="210" r="140" stroke="#E8E0D8" stroke-width="2" fill="none" stroke-dasharray="8,6" class="svg-draw-slow"/>
+        <!-- Center -->
+        <circle cx="220" cy="210" r="50" fill="#D4E8E2" opacity=".2"/>
+        <text x="220" y="205" text-anchor="middle" font-size="16" font-weight="600" fill="#3D7A6E">12周</text>
+        <text x="220" y="225" text-anchor="middle" font-size="11" fill="#5A5466">疗愈旅程</text>
+        <!-- Season nodes around circle -->
+        <g class="svg-float">
+          <circle cx="220" cy="70" r="22" fill="#F2DDE2" opacity=".5"/>
+          <text x="220" y="65" text-anchor="middle" font-size="14">🌱</text>
+          <text x="220" y="80" text-anchor="middle" font-size="8" fill="#A05A48">播种</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="340" cy="140" r="22" fill="#D4E8E2" opacity=".5"/>
+          <text x="340" y="135" text-anchor="middle" font-size="14">🌸</text>
+          <text x="340" y="150" text-anchor="middle" font-size="8" fill="#3D7A6E">绽放</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="340" cy="280" r="22" fill="#F5EDCF" opacity=".5"/>
+          <text x="340" y="275" text-anchor="middle" font-size="14">☀️</text>
+          <text x="340" y="290" text-anchor="middle" font-size="8" fill="#8A7030">收获</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="220" cy="350" r="22" fill="#EDE0F3" opacity=".5"/>
+          <text x="220" y="345" text-anchor="middle" font-size="14">🎵</text>
+          <text x="220" y="360" text-anchor="middle" font-size="8" fill="#7A5A8A">融合</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="100" cy="280" r="22" fill="#D6E6F2" opacity=".5"/>
+          <text x="100" y="275" text-anchor="middle" font-size="14">🎨</text>
+          <text x="100" y="290" text-anchor="middle" font-size="8" fill="#3A6A8A">创作</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="100" cy="140" r="22" fill="#E2E8D6" opacity=".5"/>
+          <text x="100" y="135" text-anchor="middle" font-size="14">🤝</text>
+          <text x="100" y="150" text-anchor="middle" font-size="8" fill="#5A7A4A">传承</text>
+        </g>
+        <!-- Music notes -->
+        <g class="svg-note"><text x="170" y="100" font-size="16" fill="#C47860" opacity=".4">♪</text></g>
+        <g class="svg-note-d"><text x="280" y="100" font-size="14" fill="#B89840" opacity=".35">♫</text></g>
+        <g class="svg-note-d2"><text x="380" y="210" font-size="16" fill="#967BA5" opacity=".4">♪</text></g>
+        <!-- Exhibition frame -->
+        <g class="svg-float-d2">
+          <rect x="160" y="170" width="120" height="80" rx="6" fill="none" stroke="#C4A882" stroke-width="1.5" stroke-dasharray="4,3" opacity=".3"/>
+          <text x="220" y="215" text-anchor="middle" font-size="10" fill="#8A7A6A">成果展览 🖼️</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== IMPLEMENTATION ==================== -->
+<section class="impl-section" id="impl">
+  <div class="impl-container">
+    <div class="section-header reveal">
+      <div class="section-tag impl">⚙ 实施适配</div>
+      <h2 class="section-title">以人为本的实施策略</h2>
+      <p class="section-subtitle">专业配置、安全保障、分级参与，确保每位老人安心享受疗愈之旅</p>
+    </div>
+    <div class="impl-grid stagger">
+      <div class="impl-card reveal" style="--i:0">
+        <div class="impl-card-icon c1">🏡</div>
+        <h3>场地配置</h3>
+        <p>社区花园（或阳台花园）作为自然疗愈场地，多功能活动室作为音乐疗愈场地，户外遮阳休息区</p>
+      </div>
+      <div class="impl-card reveal" style="--i:1">
+        <div class="impl-card-icon c2">👥</div>
+        <h3>人员配置</h3>
+        <p>1名园艺治疗师、1名注册音乐治疗师、2名经过培训的志愿者（协助行动不便的老人）</p>
+      </div>
+      <div class="impl-card reveal" style="--i:2">
+        <div class="impl-card-icon c3">🛡️</div>
+        <h3>安全措施</h3>
+        <p>户外活动配备防滑设施、遮阳设备、急救箱；音乐活动控制音量，保护听力</p>
+      </div>
+      <div class="impl-card reveal" style="--i:3">
+        <div class="impl-card-icon c4">📊</div>
+        <h3>分级参与</h3>
+        <p>A组（独立参与）、B组（需要少量协助）、C组（需要全程陪同），根据功能水平灵活分组</p>
+      </div>
+      <div class="impl-card reveal" style="--i:4">
+        <div class="impl-card-icon c5">🌧️</div>
+        <h3>天气预案</h3>
+        <p>雨天自然疗愈活动转至室内，使用盆栽植物与自然材料替代，确保课程连续性</p>
+      </div>
+    </div>
+    <!-- Implementation SVG -->
+    <div class="reveal-scale" style="max-width:700px;margin:0 auto">
+      <svg viewBox="0 0 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="200" rx="20" fill="#FAF8F2"/>
+        <!-- Five icons in a row -->
+        <g class="svg-float">
+          <circle cx="80" cy="80" r="30" fill="#D4E8E2" opacity=".4"/>
+          <text x="80" y="85" text-anchor="middle" font-size="22">🏡</text>
+          <text x="80" y="130" text-anchor="middle" font-size="10" fill="#5A5466">场地</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="210" cy="80" r="30" fill="#F5DDD3" opacity=".4"/>
+          <text x="210" y="85" text-anchor="middle" font-size="22">👥</text>
+          <text x="210" y="130" text-anchor="middle" font-size="10" fill="#5A5466">人员</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="340" cy="80" r="30" fill="#EDE0F3" opacity=".4"/>
+          <text x="340" y="85" text-anchor="middle" font-size="22">🛡️</text>
+          <text x="340" y="130" text-anchor="middle" font-size="10" fill="#5A5466">安全</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="470" cy="80" r="30" fill="#F5EDCF" opacity=".4"/>
+          <text x="470" y="85" text-anchor="middle" font-size="22">📊</text>
+          <text x="470" y="130" text-anchor="middle" font-size="10" fill="#5A5466">分级</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="600" cy="80" r="30" fill="#D6E6F2" opacity=".4"/>
+          <text x="600" y="85" text-anchor="middle" font-size="22">🌧️</text>
+          <text x="600" y="130" text-anchor="middle" font-size="10" fill="#5A5466">预案</text>
+        </g>
+        <!-- Connecting line -->
+        <line x1="115" y1="80" x2="175" y2="80" stroke="#D4D0C8" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+        <line x1="245" y1="80" x2="305" y2="80" stroke="#D4D0C8" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+        <line x1="375" y1="80" x2="435" y2="80" stroke="#D4D0C8" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+        <line x1="505" y1="80" x2="565" y2="80" stroke="#D4D0C8" stroke-width="1.5" stroke-dasharray="4,4" opacity=".3"/>
+        <!-- Elderly person in center bottom -->
+        <g class="svg-breathe">
+          <circle cx="350" cy="170" r="12" fill="#F5DDD3" opacity=".6"/>
+          <path d="M340 180 Q338 195 340 205 L360 205 Q362 195 360 180 Q350 176 340 180Z" fill="#5A988C" opacity=".25"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LONG-TERM MECHANISM ==================== -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">长效保障</div>
+      <h2 class="section-title">可持续的长效保障机制</h2>
+      <p class="section-subtitle">从效果评估到课程迭代，构建自我运转的疗愈生态</p>
+    </div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0">
+        <div class="longterm-card-icon l1">📊</div>
+        <div>
+          <h3>效果评估</h3>
+          <p>每4周使用老年抑郁量表（GDS-15）、老年生活质量量表（WHOQOL-OLD）、社交参与度评估进行测量</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:1">
+        <div class="longterm-card-icon l2">🤝</div>
+        <div>
+          <h3>志愿者体系</h3>
+          <p>建立社区志愿者轮值制度，保障活动持续运行</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:2">
+        <div class="longterm-card-icon l3">👨‍👩‍👧</div>
+        <div>
+          <h3>家庭参与</h3>
+          <p>定期举办"家庭开放日"，邀请家属参与自然与音乐疗愈活动</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:3">
+        <div class="longterm-card-icon l4">🎓</div>
+        <div>
+          <h3>专业督导</h3>
+          <p>治疗师每季度接受一次专业督导，确保干预质量</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:4">
+        <div class="longterm-card-icon l5">🔄</div>
+        <div>
+          <h3>课程迭代</h3>
+          <p>根据评估结果与老人反馈，每季度调整课程内容</p>
+        </div>
+      </div>
+    </div>
+    <!-- Long-term cycle SVG -->
+    <div class="reveal-scale" style="max-width:600px;margin:0 auto">
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#F0ECE4"/>
+        <!-- Circular flow -->
+        <circle cx="300" cy="100" r="65" stroke="#E8E0D8" stroke-width="2" fill="none" stroke-dasharray="8,4"/>
+        <!-- Center -->
+        <circle cx="300" cy="100" r="28" fill="#D4E8E2" opacity=".4"/>
+        <text x="300" y="96" text-anchor="middle" font-size="16">♻️</text>
+        <text x="300" y="112" text-anchor="middle" font-size="8" fill="#3D7A6E">持续运转</text>
+        <!-- Nodes -->
+        <g class="svg-float"><circle cx="300" cy="25" r="14" fill="#D4E8E2" opacity=".6"/><text x="300" y="30" text-anchor="middle" font-size="12">📊</text></g>
+        <g class="svg-float-d"><circle cx="370" cy="60" r="14" fill="#F5DDD3" opacity=".6"/><text x="370" y="65" text-anchor="middle" font-size="12">🤝</text></g>
+        <g class="svg-float-d2"><circle cx="370" cy="140" r="14" fill="#EDE0F3" opacity=".6"/><text x="370" y="145" text-anchor="middle" font-size="12">👨‍👩‍👧</text></g>
+        <g class="svg-float-d3"><circle cx="230" cy="140" r="14" fill="#F5EDCF" opacity=".6"/><text x="230" y="145" text-anchor="middle" font-size="12">🎓</text></g>
+        <g class="svg-float"><circle cx="230" cy="60" r="14" fill="#D6E6F2" opacity=".6"/><text x="230" y="65" text-anchor="middle" font-size="12">🔄</text></g>
+        <!-- Arrows -->
+        <path d="M312 28 Q340 35 358 52" stroke="#5A988C" stroke-width="1.5" fill="none" opacity=".3"/>
+        <path d="M378 75 Q385 105 378 130" stroke="#C47860" stroke-width="1.5" fill="none" opacity=".3"/>
+        <path d="M358 152 Q300 175 242 152" stroke="#967BA5" stroke-width="1.5" fill="none" opacity=".3"/>
+        <path d="M222 130 Q215 105 222 75" stroke="#B89840" stroke-width="1.5" fill="none" opacity=".3"/>
+        <path d="M242 52 Q260 35 288 28" stroke="#5A8FB5" stroke-width="1.5" fill="none" opacity=".3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SDGs ==================== -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">🌍 可持续发展</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将老年疗愈与联合国可持续发展目标深度结合</p>
+    </div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0">
+        <div class="sdg-num">03</div>
+        <div class="sdg-title">良好健康与福祉</div>
+        <p class="sdg-desc">促进老年心理健康，延缓认知衰退，减少抗抑郁药物依赖</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:1">
+        <div class="sdg-num">10</div>
+        <div class="sdg-title">减少不平等</div>
+        <p class="sdg-desc">为不同功能水平的老年人提供平等参与机会</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:2">
+        <div class="sdg-num">11</div>
+        <div class="sdg-title">可持续社区</div>
+        <p class="sdg-desc">通过社区花园与音乐活动建设包容性社区</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:3">
+        <div class="sdg-num">12</div>
+        <div class="sdg-title">负责任消费</div>
+        <p class="sdg-desc">利用自然材料与可持续方式进行疗愈活动</p>
+      </div>
+    </div>
+    <div class="esg-box reveal">
+      <h3>📊 ESG-S 社会责任</h3>
+      <p style="font-size:14px;color:var(--soft);text-align:center;line-height:1.8">
+        养老社区履行对老年居民全面福祉的责任，通过自然与音乐疗愈提升老年人生活质量，构建代际融合的可持续社区生态
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">让自然与音乐温暖每位长者的心 🌿🎵</h2>
+    <p class="footer-text">12周双轨疗愈旅程，在花园中播种希望，在旋律中重拾美好，让每一位老人都能享受有尊严、有温度的晚年生活</p>
+    <div class="footer-hearts">🌿 🎵 🌻 💛 🌿</div>
+  </div>
+</footer>
+
+<script>
+// Progress Bar
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY;const h=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/h)*100+'%'});
+
+// Nav Dots
+const dots=document.querySelectorAll('.nav-dot');
+const sectionIds=['hero','timeline','w1n','w1m','w2n','w2m','w3f','w45','w67','w8','w910','w1112','impl','longterm','sdgs'];
+dots.forEach(dot=>{dot.addEventListener('click',()=>{const t=dot.getAttribute('data-target');document.getElementById(t).scrollIntoView({behavior:'smooth'})})});
+const sectionEls=sectionIds.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sectionEls.forEach((el,i)=>{if(el.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((d,i)=>{d.classList.toggle('active',i===c)})});
+
+// Scroll Reveal
+const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});
+revealEls.forEach(el=>obs.observe(el));
+
+// Parallax for hero shapes
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

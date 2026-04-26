@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正念干预满意度高但离职率未降的归因与优化</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --sky:#5B8FA8;--sky-light:#D6E8F0;--sky-pale:#EBF3F8;
+    --sage:#7BA89C;--sage-light:#D6E8E0;
+    --mint:#6EC4B8;--mint-light:#D4EDE8;
+    --lavender:#9B8FA8;--lavender-light:#E8E3EE;
+    --warm:#E8C89E;--warm-light:#FBF2E4;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --peach:#F5E0D0;--deep:#3D3D3D;--soft:#6B6B6B;--surface:#F0ECE4;
+    --alert:#D4896A;--alert-light:#F5DDD0;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.6}
+
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--sky),var(--mint),var(--sage));width:0%;transition:width .1s linear}
+
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+  .nav-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1)}
+  .nav-dot.active{background:var(--sky);transform:scale(1.4);box-shadow:0 0 12px rgba(91,143,168,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:22px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  /* Hero */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--sky-pale) 0%,var(--cream) 40%,var(--lavender-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.1}
+  .hero-shape:nth-child(1){width:400px;height:400px;background:var(--sky);top:-100px;right:-80px;animation:floatShape 8s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:300px;height:300px;background:var(--mint);bottom:-60px;left:-60px;animation:floatShape 10s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--sage);top:30%;left:10%;animation:floatShape 12s ease-in-out infinite}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:40px 24px;width:100%}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(91,143,168,.1);border-radius:20px;font-size:13px;color:var(--sky);font-weight:500;letter-spacing:2px;margin-bottom:20px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4.5vw,44px);font-weight:700;line-height:1.4;margin-bottom:12px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--sky)}
+  .hero-title .alert{color:var(--alert)}
+  .hero-sub{font-size:14px;color:var(--soft);font-weight:300;margin-bottom:24px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-illustration{opacity:0;animation:fadeUp 1s .8s forwards;width:100%}
+  .hero-illustration svg{width:100%;height:auto;display:block}
+  .scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:scrollHintIn 1s 1.2s forwards}
+  .scroll-hint-text{font-size:11px;letter-spacing:2px;color:var(--soft);opacity:.6}
+  .scroll-hint-arrow-wrap{width:20px;height:40px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+  .scroll-hint-arrow-wrap::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:linear-gradient(to bottom,transparent 0%,var(--sky) 100%);border-radius:1px;animation:arrowPulse 2s ease-in-out infinite}
+  .scroll-hint-arrow-wrap::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%) rotate(-45deg);width:8px;height:8px;border-left:2px solid var(--sky);border-bottom:2px solid var(--sky);animation:arrowPulse 2s ease-in-out infinite}
+  @keyframes arrowPulse{0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)}50%{opacity:.8;transform:translateX(-50%) translateY(4px)}}
+  @keyframes scrollHintIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+  /* Visual sections */
+  .visual-section{padding:60px 24px;position:relative}
+  .visual-section:nth-child(odd){background:var(--cream-pale)}
+  .visual-section:nth-child(even){background:var(--surface)}
+  .visual-container{max-width:900px;margin:0 auto}
+  .section-label{text-align:center;margin-bottom:32px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500}
+  .section-tag.cause{background:rgba(212,137,106,.1);color:var(--alert)}
+  .section-tag.optimize{background:rgba(110,196,184,.1);color:var(--mint)}
+  .section-tag.longterm{background:rgba(91,143,168,.1);color:var(--sky)}
+  .section-tag.sdgs{background:rgba(232,200,158,.15);color:#A08050}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.5vw,32px);font-weight:700;margin-top:10px}
+
+  .svg-panel{width:100%;margin:0 auto}
+  .svg-panel svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 8px 30px rgba(0,0,0,.04))}
+
+  .footer{padding:50px 24px;text-align:center;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;margin-bottom:8px}
+  .footer-text{font-size:13px;color:var(--soft);max-width:500px;margin:0 auto}
+
+  /* Scroll Reveal */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ===== SVG ANIMATIONS ===== */
+  .svg-float{opacity:1}.svg-float.anim-active{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d.anim-active{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2.anim-active{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3.anim-active{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{opacity:0}.svg-pulse.anim-active{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{opacity:1}.svg-breathe.anim-active{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-sway{opacity:1}.svg-sway.anim-active{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{opacity:0}.svg-glow.anim-active{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:1000;stroke-dashoffset:1000;opacity:1}.svg-draw.anim-active{animation:svgDraw 3s ease forwards}
+  .svg-fade-in{opacity:0}.svg-fade-in.anim-active{animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0}.svg-fade-in-d.anim-active{animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0}.svg-fade-in-d2.anim-active{animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0}.svg-fade-in-d3.anim-active{animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-fade-in-d4{opacity:0}.svg-fade-in-d4.anim-active{animation:svgFadeIn 1.2s 1.6s ease forwards}
+  .svg-fade-in-d5{opacity:0}.svg-fade-in-d5.anim-active{animation:svgFadeIn 1.2s 2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0}.svg-scale-in.anim-active{animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0}.svg-ripple.anim-active{animation:svgRipple 2.5s ease-out forwards}
+  .svg-particle{opacity:0}.svg-particle.anim-active{animation:svgParticle 4s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px)}.svg-rise.anim-active{animation:svgRise 1.5s ease forwards}
+  .svg-shimmer{opacity:0}.svg-shimmer.anim-active{animation:svgShimmer 3s ease-in-out infinite}
+
+  /* NEW: Water drop animation */
+  .svg-drop{opacity:0;transform:translateY(-30px)}.svg-drop.anim-active{animation:svgDrop 2.5s ease-in infinite}
+  .svg-drop-d.anim-active{animation:svgDrop 2.5s ease-in .8s infinite}
+  .svg-drop-d2.anim-active{animation:svgDrop 2.5s ease-in 1.6s infinite}
+  .svg-drop-d3.anim-active{animation:svgDrop 2.5s ease-in 2.4s infinite}
+
+  /* NEW: Path draw with variable speed */
+  .svg-draw-slow{stroke-dasharray:2000;stroke-dashoffset:2000;opacity:1}.svg-draw-slow.anim-active{animation:svgDraw 5s ease forwards}
+
+  /* NEW: Swing animation */
+  .svg-swing{opacity:1;transform-origin:top center}.svg-swing.anim-active{animation:svgSwing 4s ease-in-out infinite}
+
+  /* NEW: Ripple rings */
+  .svg-ring{transform:scale(0);opacity:0}.svg-ring.anim-active{animation:svgRing 3s ease-out infinite}
+  .svg-ring-d.anim-active{animation:svgRing 3s ease-out 1s infinite}
+  .svg-ring-d2.anim-active{animation:svgRing 3s ease-out 2s infinite}
+
+  /* NEW: Slide in from left */
+  .svg-slide-l{opacity:0;transform:translateX(-40px)}.svg-slide-l.anim-active{animation:svgSlideL 1s ease forwards}
+  /* NEW: Slide in from right */
+  .svg-slide-r{opacity:0;transform:translateX(40px)}.svg-slide-r.anim-active{animation:svgSlideR 1s ease forwards}
+
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.15);opacity:.8}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.08}50%{opacity:.25}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgParticle{0%{opacity:0;transform:translateY(0) translateX(0)}25%{opacity:.5}50%{opacity:.3;transform:translateY(-12px) translateX(6px)}75%{opacity:.15}100%{opacity:0;transform:translateY(-24px) translateX(-4px)}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.6}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-30px)}15%{opacity:.7}60%{opacity:.5;transform:translateY(40px)}80%{opacity:0;transform:translateY(50px)}100%{opacity:0;transform:translateY(50px)}}
+  @keyframes svgSwing{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2);opacity:0}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+
+  @media(max-width:768px){
+    .nav-dots{right:12px;gap:10px}
+    .nav-dot{width:8px;height:8px}
+    .nav-dot .tooltip{display:none}
+  }
+</style>
+
+<style>
+.plan-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #5A5265;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.2s;
+}
+.plan-back-btn:hover {
+    background: rgba(255,255,255,0.98);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+.plan-back-btn .back-arrow { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="cause"><span class="tooltip">归因分析</span></div>
+  <div class="nav-dot" data-target="optimize"><span class="tooltip">优化路径</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ===== HERO: The Paradox Scene ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">归因与优化</div>
+    <h1 class="hero-title">正念干预<span class="accent">满意度高</span> 但<span class="alert">离职率未降</span></h1>
+    <p class="hero-sub">3个月正念冥想干预后的深层归因分析与系统优化路径</p>
+    <div class="hero-illustration svg-anim-group">
+      <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="500" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="hGlow" cx="50%" cy="40%" r="45%"><stop offset="0%" stop-color="#5B8FA8" stop-opacity=".15"/><stop offset="100%" stop-color="#5B8FA8" stop-opacity="0"/></radialGradient>
+          <radialGradient id="hGlowR" cx="50%" cy="40%" r="35%"><stop offset="0%" stop-color="#D4896A" stop-opacity=".12"/><stop offset="100%" stop-color="#D4896A" stop-opacity="0"/></radialGradient>
+          <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EBF3F8" stop-opacity=".5"/><stop offset="100%" stop-color="#FAF8F2" stop-opacity="0"/></linearGradient>
+          <linearGradient id="bridgeGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#6EC4B8"/><stop offset="45%" stop-color="#6EC4B8"/><stop offset="55%" stop-color="#D4896A"/><stop offset="100%" stop-color="#D4896A"/>
+        </defs>
+        <rect x="0" y="0" width="800" height="260" rx="20" fill="url(#hSky)"/>
+
+        <!-- Sun with rays -->
+        <g class="svg-sway" style="transform-origin:680px 65px">
+          <circle cx="680" cy="65" r="32" fill="#E8C89E" opacity=".65"/>
+          <circle cx="680" cy="65" r="20" fill="#E8C89E" opacity=".8"/>
+          <circle cx="680" cy="65" r="11" fill="#F4E4A6" opacity=".95"/>
+          <line x1="680" y1="26" x2="680" y2="14" stroke="#E8C89E" stroke-width="2" opacity=".65" stroke-linecap="round"/>
+          <line x1="710" y1="34" x2="720" y2="24" stroke="#E8C89E" stroke-width="2" opacity=".65" stroke-linecap="round"/>
+          <line x1="724" y1="65" x2="736" y2="65" stroke="#E8C89E" stroke-width="2" opacity=".65" stroke-linecap="round"/>
+          <line x1="710" y1="96" x2="720" y2="106" stroke="#E8C89E" stroke-width="2" opacity=".65" stroke-linecap="round"/>
+          <line x1="650" y1="34" x2="640" y2="24" stroke="#E8C89E" stroke-width="2" opacity=".65" stroke-linecap="round"/>
+          <line x1="636" y1="65" x2="624" y2="65" stroke="#E8C89E" stroke-width="2" opacity=".65" stroke-linecap="round"/>
+          <line x1="650" y1="96" x2="640" y2="106" stroke="#E8C89E" stroke-width="2" opacity=".65" stroke-linecap="round"/>
+        </g>
+
+        <!-- Clouds floating -->
+        <g class="svg-float"><ellipse cx="120" cy="48" rx="48" ry="18" fill="#fff" opacity=".8"/><ellipse cx="152" cy="38" rx="34" ry="14" fill="#fff" opacity=".7"/><ellipse cx="88" cy="42" rx="24" ry="11" fill="#fff" opacity=".6"/></g>
+        <g class="svg-float-d"><ellipse cx="430" cy="38" rx="38" ry="15" fill="#fff" opacity=".7"/><ellipse cx="458" cy="28" rx="28" ry="12" fill="#fff" opacity=".6"/></g>
+        <g class="svg-float-d2"><ellipse cx="290" cy="65" rx="30" ry="12" fill="#fff" opacity=".55"/></g>
+
+        <!-- Birds -->
+        <g class="svg-float" style="animation-delay:.3s">
+          <path d="M170 75 Q176 67 182 75" stroke="#7A7486" stroke-width="1.5" fill="none" opacity=".5"/>
+          <path d="M192 68 Q198 60 204 68" stroke="#7A7486" stroke-width="1.5" fill="none" opacity=".4"/>
+        </g>
+        <g class="svg-float-d" style="animation-delay:.8s">
+          <path d="M535 52 Q540 45 545 52" stroke="#7A7486" stroke-width="1.5" fill="none" opacity=".35"/>
+          <path d="M553 47 Q558 40 563 47" stroke="#7A7486" stroke-width="1.5" fill="none" opacity=".3"/>
+        </g>
+
+        <!-- Mountains layered -->
+        <g class="svg-fade-in"><path d="M0 220 Q80 165 160 190 Q240 140 320 175 Q400 125 480 165 Q560 135 640 170 Q720 130 800 175 L800 260 L0 260Z" fill="#D6E8E0" opacity=".55"/></g>
+        <g class="svg-fade-in-d"><path d="M0 240 Q100 200 200 225 Q300 185 400 215 Q500 180 600 210 Q700 185 800 215 L800 260 L0 260Z" fill="#D6E8E0" opacity=".4"/></g>
+
+        <!-- Ground layers -->
+        <path d="M0 270 Q120 258 240 265 Q360 274 480 264 Q600 254 800 268 L800 500 L0 500Z" fill="#D6E8E0" opacity=".55"/>
+        <path d="M0 295 Q200 285 400 291 Q600 299 800 288 L800 500 L0 500Z" fill="#D6E8E0" opacity=".4"/>
+
+        <!-- Left tree with swing -->
+        <g class="svg-sway" style="transform-origin:90px 225px">
+          <rect x="84" y="225" width="12" height="75" rx="4" fill="#A0937D" opacity=".75"/>
+          <circle cx="90" cy="190" r="40" fill="#7BA89C" opacity=".6"/>
+          <circle cx="74" cy="205" r="28" fill="#6EC4B8" opacity=".55"/>
+          <circle cx="106" cy="198" r="26" fill="#7BA89C" opacity=".6"/>
+          <circle cx="90" cy="178" r="22" fill="#6EC4B8" opacity=".5"/>
+        </g>
+
+        <!-- Right tree -->
+        <g class="svg-sway" style="transform-origin:715px 218px;animation-delay:1.2s">
+          <rect x="709" y="218" width="12" height="78" rx="4" fill="#A0937D" opacity=".75"/>
+          <circle cx="715" cy="182" r="42" fill="#7BA89C" opacity=".55"/>
+          <circle cx="699" cy="198" r="30" fill="#6EC4B8" opacity=".5"/>
+          <circle cx="731" cy="190" r="28" fill="#7BA89C" opacity=".55"/>
+          <circle cx="715" cy="170" r="24" fill="#6EC4B8" opacity=".45"/>
+        </g>
+
+        <!-- Left glow zone (happy) -->
+        <circle cx="250" cy="240" r="130" fill="url(#hGlow)" class="svg-glow"/>
+
+        <!-- Right glow zone (alert) -->
+        <circle cx="550" cy="240" r="130" fill="url(#hGlowR)" class="svg-glow" style="animation-delay:1s"/>
+
+        <!-- === LEFT GROUP: Happy meditators === -->
+        <!-- Person 1 - full body meditating -->
+        <g class="svg-breathe">
+          <circle cx="210" cy="245" r="18" fill="#D6E8F0" opacity=".9"/>
+          <path d="M194 243 Q198 228 210 226 Q222 228 226 243" fill="#7A7486" opacity=".65"/>
+          <path d="M196 253 Q194 275 195 300 L225 300 Q226 275 224 253 Q210 247 196 253Z" fill="#6EC4B8" opacity=".65"/>
+          <path d="M195 300 Q184 316 174 326" stroke="#D6E8F0" stroke-width="7" fill="none" stroke-linecap="round" opacity=".75"/>
+          <path d="M225 300 Q236 316 246 326" stroke="#D6E8F0" stroke-width="7" fill="none" stroke-linecap="round" opacity=".75"/>
+          <path d="M204 250 Q210 256 216 250" stroke="#7A7486" stroke-width="1.3" fill="none" opacity=".65"/>
+        </g>
+
+        <!-- Person 2 - meditating -->
+        <g class="svg-breathe" style="animation-delay:.6s">
+          <circle cx="290" cy="250" r="15" fill="#D4EDE8" opacity=".85"/>
+          <path d="M277 248 Q280 236 290 234 Q300 236 303 248" fill="#7A7486" opacity=".6"/>
+          <path d="M279 256 Q277 274 278 294 L302 294 Q303 274 301 256 Q290 250 279 256Z" fill="#7BA89C" opacity=".6"/>
+          <path d="M284 253 Q290 258 296 253" stroke="#7A7486" stroke-width="1" fill="none" opacity=".55"/>
+        </g>
+
+        <!-- Satisfaction stars -->
+        <g class="svg-scale-in" style="animation-delay:1.2s">
+          <text x="195" y="218" font-size="16" opacity=".8">⭐</text>
+          <text x="222" y="212" font-size="14" opacity=".7">⭐</text>
+          <text x="248" y="220" font-size="12" opacity=".65">⭐</text>
+        </g>
+
+        <!-- Floating hearts -->
+        <g class="svg-float-d3"><text x="260" y="225" font-size="11" opacity=".65">💚</text></g>
+        <g class="svg-float-d2"><text x="185" y="230" font-size="10" opacity=".6">✨</text></g>
+
+        <!-- Satisfaction badge -->
+        <g class="svg-rise" style="animation-delay:1.8s">
+          <rect x="195" y="345" width="130" height="32" rx="16" fill="#D4EDE8" opacity=".85"/>
+          <text x="260" y="366" text-anchor="middle" font-size="12" fill="#6EC4B8" font-weight="600">😊 满意度高</text>
+        </g>
+
+        <!-- === CENTER: Broken bridge === -->
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <!-- Left bridge -->
+          <path d="M330 280 L390 280" stroke="#6EC4B8" stroke-width="4" opacity=".7" stroke-linecap="round" class="svg-draw" stroke-dasharray="65" stroke-dashoffset="65"/>
+          <!-- Right bridge -->
+          <path d="M410 280 L470 280" stroke="#D4896A" stroke-width="4" opacity=".7" stroke-linecap="round" class="svg-draw" stroke-dasharray="65" stroke-dashoffset="65" style="animation-delay:.4s"/>
+          <!-- Crack lines -->
+          <path d="M393 270 L398 290" stroke="#D4896A" stroke-width="1.8" opacity=".6" class="svg-draw" stroke-dasharray="25" stroke-dashoffset="25" style="animation-delay:.6s"/>
+          <path d="M407 270 L402 290" stroke="#D4896A" stroke-width="1.8" opacity=".6" class="svg-draw" stroke-dasharray="25" stroke-dashoffset="25" style="animation-delay:.8s"/>
+          <!-- Gap label -->
+          <text x="400" y="265" text-anchor="middle" font-size="10" fill="#D4896A" opacity=".75" font-weight="600">断层</text>
+        </g>
+
+        <!-- Question marks pulsing -->
+        <g class="svg-pulse" style="animation-delay:.8s"><text x="382" y="250" font-size="20" fill="#D4896A" opacity=".5">?</text></g>
+        <g class="svg-pulse" style="animation-delay:1.6s"><text x="418" y="255" font-size="17" fill="#D4896A" opacity=".4">?</text></g>
+        <g class="svg-pulse" style="animation-delay:2.4s"><text x="400" y="240" font-size="14" fill="#D4896A" opacity=".35">?</text></g>
+
+        <!-- === RIGHT GROUP: Person leaving === -->
+        <g class="svg-float-d">
+          <circle cx="530" cy="242" r="18" fill="#F5DDD0" opacity=".9"/>
+          <path d="M514 240 Q518 225 530 223 Q542 225 546 240" fill="#7A7486" opacity=".65"/>
+          <path d="M516 250 Q514 272 515 298 L545 298 Q546 272 544 250 Q530 244 516 250Z" fill="#D4896A" opacity=".55"/>
+          <!-- Frown -->
+          <path d="M524 248 Q530 242 536 248" stroke="#7A7486" stroke-width="1.3" fill="none" opacity=".6"/>
+          <!-- Suitcase -->
+          <rect x="521" y="300" width="18" height="16" rx="3" fill="#A0937D" opacity=".7"/>
+          <line x1="530" y1="300" x2="530" y2="293" stroke="#A0937D" stroke-width="2" opacity=".7"/>
+          <rect x="525" y="291" width="10" height="4" rx="2" fill="#A0937D" opacity=".6"/>
+          <!-- Walking lines -->
+          <line x1="558" y1="270" x2="570" y2="264" stroke="#D4896A" stroke-width="1.2" opacity=".5" stroke-linecap="round"/>
+          <line x1="562" y1="282" x2="574" y2="280" stroke="#D4896A" stroke-width="1.2" opacity=".45" stroke-linecap="round"/>
+          <line x1="558" y1="294" x2="568" y2="296" stroke="#D4896A" stroke-width="1.2" opacity=".4" stroke-linecap="round"/>
+        </g>
+
+        <!-- Turnover badge -->
+        <g class="svg-rise" style="animation-delay:2.2s">
+          <rect x="465" y="345" width="130" height="32" rx="16" fill="#F5DDD0" opacity=".85"/>
+          <text x="530" y="366" text-anchor="middle" font-size="12" fill="#D4896A" font-weight="600">📉 离职率未降</text>
+        </g>
+
+        <!-- Flowers blooming -->
+        <g class="svg-scale-in" style="animation-delay:.6s"><circle cx="175" cy="330" r="7" fill="#E8C89E" opacity=".65"/><circle cx="175" cy="330" r="3" fill="#F4E4A6" opacity=".8"/></g>
+        <g class="svg-scale-in" style="animation-delay:.9s"><circle cx="625" cy="325" r="6" fill="#9B8FA8" opacity=".6"/><circle cx="625" cy="325" r="2.5" fill="#E8E3EE" opacity=".75"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.2s"><circle cx="400" cy="340" r="5" fill="#D4896A" opacity=".5"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.5s"><circle cx="145" cy="340" r="5" fill="#6EC4B8" opacity=".55"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.8s"><circle cx="660" cy="335" r="5.5" fill="#7BA89C" opacity=".55"/></g>
+
+        <!-- Grass patches swaying -->
+        <g class="svg-sway" style="transform-origin:200px 320px;animation-delay:.3s">
+          <line x1="196" y1="323" x2="193" y2="308" stroke="#6EC4B8" stroke-width="1.8" opacity=".5" stroke-linecap="round"/>
+          <line x1="200" y1="323" x2="200" y2="304" stroke="#7BA89C" stroke-width="1.8" opacity=".5" stroke-linecap="round"/>
+          <line x1="204" y1="323" x2="207" y2="308" stroke="#6EC4B8" stroke-width="1.8" opacity=".5" stroke-linecap="round"/>
+        </g>
+        <g class="svg-sway" style="transform-origin:600px 315px;animation-delay:.9s">
+          <line x1="596" y1="318" x2="593" y2="303" stroke="#6EC4B8" stroke-width="1.8" opacity=".45" stroke-linecap="round"/>
+          <line x1="600" y1="318" x2="600" y2="299" stroke="#7BA89C" stroke-width="1.8" opacity=".45" stroke-linecap="round"/>
+          <line x1="604" y1="318" x2="607" y2="303" stroke="#6EC4B8" stroke-width="1.8" opacity=".45" stroke-linecap="round"/>
+        </g>
+
+        <!-- Water drops falling (storytelling: tears of disconnection) -->
+        <g class="svg-drop" style="animation-delay:.5s"><path d="M396 200 Q398 192 400 200 Q398 206 396 200Z" fill="#5B8FA8" opacity=".45"/></g>
+        <g class="svg-drop-d" style="animation-delay:1s"><path d="M404 195 Q406 187 408 195 Q406 201 404 195Z" fill="#5B8FA8" opacity=".4"/></g>
+        <g class="svg-drop-d2" style="animation-delay:1.5s"><path d="M392 198 Q394 190 396 198 Q394 204 392 198Z" fill="#5B8FA8" opacity=".35"/></g>
+
+        <!-- Sparkles -->
+        <circle cx="200" cy="95" r="2.5" fill="#5B8FA8" opacity=".6" class="svg-pulse"/>
+        <circle cx="590" cy="85" r="2.5" fill="#D4896A" opacity=".6" class="svg-pulse" style="animation-delay:1s"/>
+        <circle cx="400" cy="58" r="2" fill="#E8C89E" opacity=".6" class="svg-shimmer"/>
+        <circle cx="350" cy="105" r="2" fill="#6EC4B8" opacity=".55" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="465" cy="100" r="2" fill="#9B8FA8" opacity=".55" class="svg-shimmer" style="animation-delay:2s"/>
+
+        <!-- Floating emoji badges -->
+        <g class="svg-scale-in" style="animation-delay:.5s"><circle cx="55" cy="100" r="18" fill="#D4EDE8" opacity=".65"/><text x="55" y="107" text-anchor="middle" font-size="16">😊</text></g>
+        <g class="svg-scale-in" style="animation-delay:.9s"><circle cx="745" cy="95" r="18" fill="#F5DDD0" opacity=".65"/><text x="745" y="102" text-anchor="middle" font-size="16">😔</text></g>
+        <g class="svg-scale-in" style="animation-delay:1.3s"><circle cx="400" y="42" r="17" fill="#E8E3EE" opacity=".65"/><text x="400" y="49" text-anchor="middle" font-size="15">🔍</text></g>
+
+        <!-- Bottom journey badges -->
+        <g class="svg-rise" style="animation-delay:2.4s"><rect x="25" y="440" width="115" height="28" rx="14" fill="#D4EDE8" opacity=".8"/><text x="82" y="459" text-anchor="middle" font-size="10" fill="#6EC4B8" font-weight="500">归因分析</text></g>
+        <g class="svg-rise" style="animation-delay:2.6s"><rect x="160" y="440" width="115" height="28" rx="14" fill="#F5DDD0" opacity=".8"/><text x="217" y="459" text-anchor="middle" font-size="10" fill="#D4896A" font-weight="500">优化路径</text></g>
+        <g class="svg-rise" style="animation-delay:2.8s"><rect x="295" y="440" width="115" height="28" rx="14" fill="#D6E8F0" opacity=".8"/><text x="352" y="459" text-anchor="middle" font-size="10" fill="#5B8FA8" font-weight="500">长效保障</text></g>
+        <g class="svg-rise" style="animation-delay:3s"><rect x="430" y="440" width="115" height="28" rx="14" fill="#D6E8E0" opacity=".8"/><text x="487" y="459" text-anchor="middle" font-size="10" fill="#7BA89C" font-weight="500">三阶段推进</text></g>
+        <g class="svg-rise" style="animation-delay:3.2s"><rect x="565" y="440" width="115" height="28" rx="14" fill="#FBF2E4" opacity=".8"/><text x="622" y="459" text-anchor="middle" font-size="10" fill="#A08050" font-weight="500">ESG融合</text></g>
+        <g class="svg-rise" style="animation-delay:3.4s"><rect x="700" y="440" width="80" height="28" rx="14" fill="#E8E3EE" opacity=".8"/><text x="740" y="459" text-anchor="middle" font-size="10" fill="#9B8FA8" font-weight="500">SDGs</text></g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">向下滚动探索</span>
+    <div class="scroll-hint-arrow-wrap"></div>
+  </div>
+</section>
+
+<!-- ===== CAUSE ANALYSIS: Iceberg Deep Dive ===== -->
+<section class="visual-section" id="cause">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag cause">归因分析</div><h2 class="section-title">四大深层原因</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="620" rx="20" fill="#FAF8F2"/>
+
+        <!-- Water surface with wave animation -->
+        <g class="svg-fade-in" style="animation-delay:.2s">
+          <path d="M0 210 Q50 200 100 208 Q150 216 200 206 Q250 196 300 208 Q350 220 400 210 Q450 200 500 212 Q550 224 600 210 Q650 196 700 208 Q750 220 800 210" stroke="#5B8FA8" stroke-width="2.5" fill="none" opacity=".6" class="svg-draw" stroke-dasharray="1200" stroke-dashoffset="1200"/>
+          <text x="770" y="205" font-size="10" fill="#5B8FA8" opacity=".6" font-weight="500">水面</text>
+          <!-- Water fill -->
+          <path d="M0 210 Q50 200 100 208 Q150 216 200 206 Q250 196 300 208 Q350 220 400 210 Q450 200 500 212 Q550 224 600 210 Q650 196 700 208 Q750 220 800 210 L800 620 L0 620Z" fill="#EBF3F8" opacity=".35"/>
+        </g>
+
+        <!-- ABOVE WATER: Small visible satisfaction tip -->
+        <g class="svg-fade-in" style="animation-delay:.4s">
+          <path d="M340 210 L400 110 L460 210 Z" fill="#6EC4B8" opacity=".4"/>
+          <path d="M355 205 L400 130 L445 205 Z" fill="#6EC4B8" opacity=".33"/>
+          <text x="400" y="180" text-anchor="middle" font-size="13" fill="#6EC4B8" opacity=".85" font-weight="600">满意度</text>
+          <text x="400" y="165" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".65">（可见部分）</text>
+          <!-- Stars above -->
+          <g class="svg-scale-in" style="animation-delay:1s">
+            <text x="368" y="148" font-size="14" opacity=".5">⭐</text>
+            <text x="418" y="142" font-size="13" opacity=".45">⭐</text>
+            <text x="393" y="135" font-size="12" opacity=".4">⭐</text>
+          </g>
+        </g>
+
+        <!-- BELOW WATER: Large iceberg body -->
+        <g class="svg-fade-in" style="animation-delay:.7s">
+          <path d="M240 210 Q290 300 330 400 Q365 480 400 510 Q435 480 470 400 Q510 300 560 210 Z" fill="#D4896A" opacity=".2"/>
+          <path d="M260 210 Q300 290 340 380 Q370 450 400 475 Q430 450 460 380 Q500 290 540 210 Z" fill="#D4896A" opacity=".15"/>
+        </g>
+
+        <!-- Bubbles rising from deep -->
+        <g class="svg-particle" style="animation-delay:.5s"><circle cx="350" cy="500" r="3" fill="#5B8FA8" opacity=".3"/></g>
+        <g class="svg-particle" style="animation-delay:1.5s"><circle cx="420" cy="520" r="2.5" fill="#5B8FA8" opacity=".25"/></g>
+        <g class="svg-particle" style="animation-delay:2.5s"><circle cx="380" cy="540" r="2" fill="#5B8FA8" opacity=".2"/></g>
+        <g class="svg-particle" style="animation-delay:3.5s"><circle cx="450" cy="510" r="2.5" fill="#5B8FA8" opacity=".25"/></g>
+
+        <!-- Cause 1: Shallow intervention -->
+        <g class="svg-slide-l" style="animation-delay:1s">
+          <rect x="295" y="230" width="210" height="60" rx="12" fill="#fff" opacity=".8" stroke="#D4896A" stroke-width="1.2"/>
+          <circle cx="325" cy="260" r="16" fill="#D4896A" opacity=".3"/>
+          <text x="325" y="266" text-anchor="middle" font-size="15" fill="#D4896A" opacity=".8" font-weight="700">1</text>
+          <text x="355" y="253" font-size="12" fill="#D4896A" opacity=".85" font-weight="600">浅层体验</text>
+          <text x="355" y="272" font-size="10" fill="#D4896A" opacity=".65">仅舒缓情绪，未消解核心诱因</text>
+          <!-- Ripple rings -->
+          <circle cx="310" cy="260" r="8" fill="none" stroke="#D4896A" stroke-width="1" opacity=".4" class="svg-ring"/>
+          <circle cx="310" cy="260" r="8" fill="none" stroke="#D4896A" stroke-width="1" opacity=".4" class="svg-ring-d"/>
+        </g>
+
+        <!-- Cause 2: Scene mismatch -->
+        <g class="svg-slide-r" style="animation-delay:1.3s">
+          <rect x="280" y="305" width="240" height="60" rx="12" fill="#fff" opacity=".8" stroke="#E8C89E" stroke-width="1.2"/>
+          <circle cx="310" cy="335" r="16" fill="#E8C89E" opacity=".35"/>
+          <text x="310" y="341" text-anchor="middle" font-size="15" fill="#A08050" opacity=".8" font-weight="700">2</text>
+          <text x="340" y="328" font-size="12" fill="#A08050" opacity=".85" font-weight="600">场景脱节</text>
+          <text x="340" y="347" font-size="10" fill="#A08050" opacity=".65">同质化方案，脱离实际工作场景</text>
+          <circle cx="295" cy="335" r="8" fill="none" stroke="#E8C89E" stroke-width="1" opacity=".4" class="svg-ring" style="animation-delay:.5s"/>
+        </g>
+
+        <!-- Cause 3: Structural factors -->
+        <g class="svg-slide-l" style="animation-delay:1.6s">
+          <rect x="265" y="380" width="270" height="60" rx="12" fill="#fff" opacity=".8" stroke="#9B8FA8" stroke-width="1.2"/>
+          <circle cx="295" cy="410" r="16" fill="#9B8FA8" opacity=".3"/>
+          <text x="295" y="416" text-anchor="middle" font-size="15" fill="#9B8FA8" opacity=".8" font-weight="700">3</text>
+          <text x="325" y="403" font-size="12" fill="#9B8FA8" opacity=".85" font-weight="600">忽视结构性因素</text>
+          <text x="325" y="422" font-size="10" fill="#9B8FA8" opacity=".65">薪酬/发展/管理/负荷未排查化解</text>
+          <circle cx="280" cy="410" r="8" fill="none" stroke="#9B8FA8" stroke-width="1" opacity=".4" class="svg-ring" style="animation-delay:1s"/>
+        </g>
+
+        <!-- Cause 4: No culture support -->
+        <g class="svg-slide-r" style="animation-delay:1.9s">
+          <rect x="250" y="455" width="300" height="60" rx="12" fill="#fff" opacity=".8" stroke="#5B8FA8" stroke-width="1.2"/>
+          <circle cx="280" cy="485" r="16" fill="#5B8FA8" opacity=".3"/>
+          <text x="280" y="491" text-anchor="middle" font-size="15" fill="#5B8FA8" opacity=".8" font-weight="700">4</text>
+          <text x="310" y="478" font-size="12" fill="#5B8FA8" opacity=".85" font-weight="600">缺乏组织文化支撑</text>
+          <text x="310" y="497" font-size="10" fill="#5B8FA8" opacity=".65">仅面向基层，管理者未同步升级</text>
+          <circle cx="265" cy="485" r="8" fill="none" stroke="#5B8FA8" stroke-width="1" opacity=".4" class="svg-ring" style="animation-delay:1.5s"/>
+        </g>
+
+        <!-- Left annotation: shallow zone -->
+        <g class="svg-fade-in" style="animation-delay:2.2s">
+          <path d="M180 150 L340 150" stroke="#6EC4B8" stroke-width="1.2" fill="none" opacity=".55" stroke-dasharray="4,3"/>
+          <rect x="50" y="135" width="130" height="32" rx="12" fill="#D4EDE8" opacity=".5"/>
+          <text x="115" y="156" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".8">浅层干预区域</text>
+        </g>
+
+        <!-- Right annotation: deep cause zone -->
+        <g class="svg-fade-in" style="animation-delay:2.5s">
+          <path d="M555 400 L575 400" stroke="#D4896A" stroke-width="1.2" fill="none" opacity=".55" stroke-dasharray="4,3"/>
+          <rect x="575" y="385" width="150" height="32" rx="12" fill="#F5DDD0" opacity=".5"/>
+          <text x="650" y="406" text-anchor="middle" font-size="11" fill="#D4896A" opacity=".8">深层诱因区域</text>
+        </g>
+
+        <!-- Curved arrow: "not reaching deep" -->
+        <g class="svg-fade-in" style="animation-delay:2.8s">
+          <path d="M120 170 Q60 320 120 490" stroke="#9B8FA8" stroke-width="1.8" fill="none" opacity=".5" class="svg-draw-slow" stroke-dasharray="400" stroke-dashoffset="400"/>
+          <text x="55" y="340" font-size="10" fill="#9B8FA8" opacity=".6" transform="rotate(-90,55,340)">未触及深层 ↓</text>
+        </g>
+
+        <!-- Water drops falling into the deep -->
+        <g class="svg-drop" style="animation-delay:1s"><path d="M395 220 Q397 212 399 220 Q397 226 395 220Z" fill="#5B8FA8" opacity=".4"/></g>
+        <g class="svg-drop-d" style="animation-delay:2s"><path d="M405 215 Q407 207 409 215 Q407 221 405 215Z" fill="#5B8FA8" opacity=".35"/></g>
+        <g class="svg-drop-d2" style="animation-delay:3s"><path d="M388 218 Q390 210 392 218 Q390 224 388 218Z" fill="#5B8FA8" opacity=".3"/></g>
+
+        <!-- Shimmer particles -->
+        <circle cx="400" cy="170" r="2.5" fill="#6EC4B8" opacity=".45" class="svg-shimmer"/>
+        <circle cx="400" cy="380" r="2.5" fill="#D4896A" opacity=".45" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="400" cy="550" r="2" fill="#5B8FA8" opacity=".4" class="svg-shimmer" style="animation-delay:2s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OPTIMIZATION: Four Pillars + Three Phases ===== -->
+<section class="visual-section" id="optimize">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag optimize">优化路径</div><h2 class="section-title">四维系统优化 + 三阶段推进</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="700" rx="20" fill="#FAF8F2"/>
+
+        <!-- === TOP: Four optimization pillars === -->
+        <!-- Pillar 1: Root governance -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="20" y="20" width="185" height="260" rx="16" fill="#D6E8F0" opacity=".45"/>
+          <g class="svg-breathe">
+            <circle cx="112" cy="72" r="24" fill="#fff" opacity=".85" stroke="#D6E8F0" stroke-width="1.2"/>
+            <!-- Root icon -->
+            <line x1="112" y1="88" x2="112" y2="112" stroke="#5B8FA8" stroke-width="2.5" opacity=".65"/>
+            <path d="M98 112 Q105 125 112 112" stroke="#5B8FA8" stroke-width="2" fill="none" opacity=".6"/>
+            <path d="M112 112 Q119 128 126 112" stroke="#5B8FA8" stroke-width="2" fill="none" opacity=".55"/>
+            <path d="M92 106 Q98 120 104 106" stroke="#5B8FA8" stroke-width="2" fill="none" opacity=".5"/>
+            <path d="M120 106 Q126 122 132 106" stroke="#5B8FA8" stroke-width="2" fill="none" opacity=".5"/>
+          </g>
+          <text x="112" y="145" text-anchor="middle" font-size="13" fill="#5B8FA8" opacity=".85" font-weight="600">根源化治理</text>
+          <g class="svg-fade-in" style="animation-delay:.8s">
+            <rect x="35" y="162" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="112" y="181" text-anchor="middle" font-size="10" fill="#5B8FA8" opacity=".75">📋 Stay Interview 留任访谈</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <rect x="35" y="198" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="112" y="217" text-anchor="middle" font-size="10" fill="#5B8FA8" opacity=".75">📈 晋升激励体系优化</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="35" y="234" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="112" y="253" text-anchor="middle" font-size="10" fill="#5B8FA8" opacity=".75">🔄 工作调配体系</text>
+          </g>
+        </g>
+
+        <!-- Pillar 2: Extend cycle -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <rect x="215" y="20" width="185" height="260" rx="16" fill="#D4EDE8" opacity=".45"/>
+          <g class="svg-breathe" style="animation-delay:.3s">
+            <circle cx="307" cy="72" r="24" fill="#fff" opacity=".85" stroke="#D4EDE8" stroke-width="1.2"/>
+            <circle cx="307" cy="72" r="14" fill="none" stroke="#6EC4B8" stroke-width="1.8" opacity=".65"/>
+            <line x1="307" y1="72" x2="307" y2="62" stroke="#6EC4B8" stroke-width="1.8" opacity=".65"/>
+            <line x1="307" y1="72" x2="316" y2="76" stroke="#6EC4B8" stroke-width="1.2" opacity=".55"/>
+            <path d="M293 58 Q307 50 321 58" stroke="#6EC4B8" stroke-width="1.2" fill="none" opacity=".55"/>
+            <polygon points="319,55 323,58 319,61" fill="#6EC4B8" opacity=".55"/>
+          </g>
+          <text x="307" y="145" text-anchor="middle" font-size="13" fill="#6EC4B8" opacity=".85" font-weight="600">拉长干预周期</text>
+          <g class="svg-fade-in" style="animation-delay:.9s">
+            <rect x="230" y="162" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="307" y="181" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity=".75">🌱 基础期</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.1s">
+            <rect x="230" y="198" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="307" y="217" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity=".75">🌿 深化期</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.3s">
+            <rect x="230" y="234" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="307" y="253" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity=".75">🌳 巩固期</text>
+          </g>
+        </g>
+
+        <!-- Pillar 3: Differentiated -->
+        <g class="svg-fade-in" style="animation-delay:.7s">
+          <rect x="410" y="20" width="185" height="260" rx="16" fill="#D6E8E0" opacity=".45"/>
+          <g class="svg-breathe" style="animation-delay:.6s">
+            <circle cx="502" cy="72" r="24" fill="#fff" opacity=".85" stroke="#D6E8E0" stroke-width="1.2"/>
+            <circle cx="502" cy="72" r="14" fill="none" stroke="#7BA89C" stroke-width="1.8" opacity=".65"/>
+            <circle cx="502" cy="72" r="8" fill="none" stroke="#7BA89C" stroke-width="1.8" opacity=".55"/>
+            <circle cx="502" cy="72" r="3.5" fill="#7BA89C" opacity=".6"/>
+          </g>
+          <text x="502" y="145" text-anchor="middle" font-size="13" fill="#7BA89C" opacity=".85" font-weight="600">差异化方案</text>
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <rect x="425" y="162" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="502" y="181" text-anchor="middle" font-size="10" fill="#7BA89C" opacity=".75">🎯 岗位特性定制</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="425" y="198" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="502" y="217" text-anchor="middle" font-size="10" fill="#7BA89C" opacity=".75">🏭 场景化训练</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.4s">
+            <rect x="425" y="234" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="502" y="253" text-anchor="middle" font-size="10" fill="#7BA89C" opacity=".75">🔗 工作场景融合</text>
+          </g>
+        </g>
+
+        <!-- Pillar 4: Management empowerment -->
+        <g class="svg-fade-in" style="animation-delay:.9s">
+          <rect x="605" y="20" width="185" height="260" rx="16" fill="#E8E3EE" opacity=".45"/>
+          <g class="svg-breathe" style="animation-delay:.9s">
+            <circle cx="697" cy="72" r="24" fill="#fff" opacity=".85" stroke="#E8E3EE" stroke-width="1.2"/>
+            <circle cx="690" cy="66" r="5" fill="#D6E8F0" opacity=".75"/>
+            <circle cx="704" cy="66" r="5" fill="#D4EDE8" opacity=".75"/>
+            <path d="M697 78 L697 86" stroke="#9B8FA8" stroke-width="1.8" opacity=".65"/>
+            <polygon points="693,83 697,90 701,83" fill="#9B8FA8" opacity=".65"/>
+          </g>
+          <text x="697" y="145" text-anchor="middle" font-size="13" fill="#9B8FA8" opacity=".85" font-weight="600">管理层赋能</text>
+          <g class="svg-fade-in" style="animation-delay:1.1s">
+            <rect x="620" y="162" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="697" y="181" text-anchor="middle" font-size="10" fill="#9B8FA8" opacity=".75">🧘 正念领导力培训</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.3s">
+            <rect x="620" y="198" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="697" y="217" text-anchor="middle" font-size="10" fill="#9B8FA8" opacity=".75">💬 柔性沟通能力</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.5s">
+            <rect x="620" y="234" width="155" height="28" rx="10" fill="#fff" opacity=".7"/>
+            <text x="697" y="253" text-anchor="middle" font-size="10" fill="#9B8FA8" opacity=".75">📊 多维量表评估</text>
+          </g>
+        </g>
+
+        <!-- Connection arrows -->
+        <path d="M205 150 L215 150" stroke="#5B8FA8" stroke-width="2" opacity=".5"/>
+        <polygon points="213,146 221,150 213,154" fill="#5B8FA8" opacity=".5"/>
+        <path d="M400 150 L410 150" stroke="#6EC4B8" stroke-width="2" opacity=".5"/>
+        <polygon points="408,146 416,150 408,154" fill="#6EC4B8" opacity=".5"/>
+        <path d="M595 150 L605 150" stroke="#7BA89C" stroke-width="2" opacity=".5"/>
+        <polygon points="593,146 601,150 593,154" fill="#7BA89C" opacity=".5"/>
+
+        <!-- Divider -->
+        <g class="svg-fade-in" style="animation-delay:1.6s">
+          <line x1="40" y1="300" x2="760" y2="300" stroke="#E8E3EE" stroke-width="1" opacity=".45" stroke-dasharray="6,4"/>
+        </g>
+
+        <!-- === BOTTOM: Three phase growth === -->
+        <!-- Phase 1: Seed -->
+        <g class="svg-fade-in" style="animation-delay:1.8s">
+          <rect x="30" y="320" width="230" height="360" rx="16" fill="#D6E8F0" opacity=".3"/>
+          <text x="145" y="350" text-anchor="middle" font-size="12" fill="#5B8FA8" opacity=".75" font-weight="600">🌱 基础期</text>
+          <!-- Seedling -->
+          <g class="svg-breathe">
+            <rect x="132" y="530" width="26" height="18" rx="5" fill="#D6E8F0" opacity=".6"/>
+            <line x1="145" y1="530" x2="145" y2="460" stroke="#5B8FA8" stroke-width="3" opacity=".6"/>
+            <ellipse cx="132" cy="470" rx="16" ry="9" fill="#6EC4B8" opacity=".55" transform="rotate(-28,132,470)"/>
+            <ellipse cx="158" cy="465" rx="16" ry="9" fill="#7BA89C" opacity=".5" transform="rotate(28,158,465)"/>
+            <ellipse cx="142" cy="452" rx="10" ry="6" fill="#6EC4B8" opacity=".45" transform="rotate(-12,142,452)"/>
+          </g>
+          <!-- Water drops feeding the seed -->
+          <g class="svg-drop" style="animation-delay:.5s"><path d="M125 420 Q127 410 129 420 Q127 427 125 420Z" fill="#5B8FA8" opacity=".4"/></g>
+          <g class="svg-drop-d" style="animation-delay:1.2s"><path d="M158 425 Q160 415 162 425 Q160 432 158 425Z" fill="#5B8FA8" opacity=".35"/></g>
+          <g class="svg-drop-d2" style="animation-delay:1.9s"><path d="M140 415 Q142 405 144 415 Q142 422 140 415Z" fill="#5B8FA8" opacity=".3"/></g>
+          <!-- Sun glow -->
+          <g class="svg-pulse" style="animation-delay:.8s"><circle cx="170" cy="410" r="4" fill="#E8C89E" opacity=".45"/></g>
+          <g class="svg-pulse" style="animation-delay:2s"><circle cx="120" cy="405" r="3" fill="#E8C89E" opacity=".35"/></g>
+          <text x="145" y="650" text-anchor="middle" font-size="10" fill="#5B8FA8" opacity=".6">第1-2个月</text>
+        </g>
+
+        <!-- Arrow 1→2 -->
+        <g class="svg-fade-in" style="animation-delay:2.3s">
+          <path d="M265 500 L285 500" stroke="#5B8FA8" stroke-width="2.5" opacity=".55"/>
+          <polygon points="283,496 291,500 283,504" fill="#5B8FA8" opacity=".55"/>
+        </g>
+
+        <!-- Phase 2: Growing -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <rect x="285" y="320" width="230" height="360" rx="16" fill="#D4EDE8" opacity=".3"/>
+          <text x="400" y="350" text-anchor="middle" font-size="12" fill="#6EC4B8" opacity=".75" font-weight="600">🌿 深化期</text>
+          <g class="svg-breathe" style="animation-delay:.3s">
+            <rect x="387" y="530" width="26" height="18" rx="5" fill="#D4EDE8" opacity=".6"/>
+            <line x1="400" y1="530" x2="400" y2="440" stroke="#6EC4B8" stroke-width="3.5" opacity=".6"/>
+            <circle cx="400" cy="428" r="18" fill="#6EC4B8" opacity=".45"/>
+            <ellipse cx="385" cy="450" rx="18" ry="10" fill="#7BA89C" opacity=".5" transform="rotate(-22,385,450)"/>
+            <ellipse cx="415" cy="445" rx="18" ry="10" fill="#5B8FA8" opacity=".45" transform="rotate(22,415,445)"/>
+            <ellipse cx="393" cy="435" rx="12" ry="7" fill="#6EC4B8" opacity=".42" transform="rotate(-15,393,435)"/>
+            <ellipse cx="410" cy="430" rx="12" ry="7" fill="#7BA89C" opacity=".42" transform="rotate(15,410,430)"/>
+          </g>
+          <!-- Sun rays -->
+          <g class="svg-pulse" style="animation-delay:.5s"><circle cx="435" cy="410" r="4" fill="#E8C89E" opacity=".45"/></g>
+          <g class="svg-pulse" style="animation-delay:1.5s"><circle cx="365" cy="405" r="3.5" fill="#E8C89E" opacity=".35"/></g>
+          <!-- Water drops -->
+          <g class="svg-drop" style="animation-delay:1s"><path d="M380 415 Q382 405 384 415 Q382 422 380 415Z" fill="#6EC4B8" opacity=".35"/></g>
+          <g class="svg-drop-d" style="animation-delay:2s"><path d="M415 410 Q417 400 419 410 Q417 417 415 410Z" fill="#6EC4B8" opacity=".3"/></g>
+          <text x="400" y="650" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity=".6">第3-6个月</text>
+        </g>
+
+        <!-- Arrow 2→3 -->
+        <g class="svg-fade-in" style="animation-delay:2.5s">
+          <path d="M520 500 L540 500" stroke="#6EC4B8" stroke-width="2.5" opacity=".55"/>
+          <polygon points="538,496 546,500 538,504" fill="#6EC4B8" opacity=".55"/>
+        </g>
+
+        <!-- Phase 3: Full tree -->
+        <g class="svg-fade-in" style="animation-delay:2.2s">
+          <rect x="540" y="320" width="230" height="360" rx="16" fill="#D6E8E0" opacity=".3"/>
+          <text x="655" y="350" text-anchor="middle" font-size="12" fill="#7BA89C" opacity=".75" font-weight="600">🌳 巩固期</text>
+          <g class="svg-breathe" style="animation-delay:.6s">
+            <rect x="642" y="530" width="26" height="18" rx="5" fill="#D6E8E0" opacity=".6"/>
+            <line x1="655" y1="530" x2="655" y2="430" stroke="#7BA89C" stroke-width="4" opacity=".6"/>
+            <circle cx="655" cy="415" r="28" fill="#7BA89C" opacity=".45"/>
+            <circle cx="640" cy="432" r="20" fill="#6EC4B8" opacity=".45"/>
+            <circle cx="670" cy="426" r="20" fill="#5B8FA8" opacity=".4"/>
+            <circle cx="655" cy="405" r="18" fill="#6EC4B8" opacity=".42"/>
+            <ellipse cx="633" cy="448" rx="15" ry="9" fill="#7BA89C" opacity=".42" transform="rotate(-25,633,448)"/>
+            <ellipse cx="677" cy="442" rx="15" ry="9" fill="#6EC4B8" opacity=".42" transform="rotate(25,677,442)"/>
+          </g>
+          <!-- Fruits -->
+          <g class="svg-scale-in" style="animation-delay:2.8s">
+            <circle cx="638" cy="408" r="5" fill="#E8C89E" opacity=".45"/>
+            <circle cx="672" cy="402" r="5" fill="#6EC4B8" opacity=".4"/>
+            <circle cx="655" cy="393" r="4.5" fill="#E8C89E" opacity=".4"/>
+          </g>
+          <!-- Checkmark -->
+          <g class="svg-scale-in" style="animation-delay:3.2s">
+            <circle cx="655" cy="610" r="14" fill="#7BA89C" opacity=".3"/>
+            <path d="M648 610 L652 615 L662 604" stroke="#fff" stroke-width="2.5" fill="none" opacity=".55" stroke-linecap="round"/>
+          </g>
+          <!-- Water drops -->
+          <g class="svg-drop" style="animation-delay:1.5s"><path d="M640 400 Q642 390 644 400 Q642 407 640 400Z" fill="#7BA89C" opacity=".3"/></g>
+          <g class="svg-drop-d" style="animation-delay:2.5s"><path d="M668 395 Q670 385 672 395 Q670 402 668 395Z" fill="#7BA89C" opacity=".25"/></g>
+          <text x="655" y="650" text-anchor="middle" font-size="10" fill="#7BA89C" opacity=".6">第7-12个月</text>
+        </g>
+
+        <!-- Particles -->
+        <circle cx="112" cy="50" r="2" fill="#5B8FA8" opacity=".45" class="svg-shimmer"/>
+        <circle cx="307" cy="50" r="2" fill="#6EC4B8" opacity=".45" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="502" cy="50" r="2" fill="#7BA89C" opacity=".45" class="svg-shimmer" style="animation-delay:2s"/>
+        <circle cx="697" cy="50" r="2" fill="#9B8FA8" opacity=".45" class="svg-shimmer" style="animation-delay:3s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONGTERM: Ecosystem ===== -->
+<section class="visual-section" id="longterm">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag longterm">长效保障</div><h2 class="section-title">五维长效保障机制</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="560" rx="20" fill="#FAF8F2"/>
+
+        <!-- Central hub with glow -->
+        <g class="svg-fade-in" style="animation-delay:.2s">
+          <circle cx="400" cy="280" r="70" fill="#D6E8F0" opacity=".3" class="svg-glow"/>
+          <circle cx="400" cy="280" r="55" fill="#fff" opacity=".85" stroke="#D6E8F0" stroke-width="1.8"/>
+          <text x="400" y="270" text-anchor="middle" font-size="15" fill="#5B8FA8" opacity=".9" font-weight="700">长效</text>
+          <text x="400" y="295" text-anchor="middle" font-size="15" fill="#5B8FA8" opacity=".9" font-weight="700">保障</text>
+        </g>
+
+        <!-- Outer ring - path drawing -->
+        <circle cx="400" cy="280" r="180" fill="none" stroke="#D6E8F0" stroke-width="1.2" opacity=".45" stroke-dasharray="5,5" class="svg-draw-slow" stroke-dasharray="1200" stroke-dashoffset="1200" style="animation-delay:1s"/>
+
+        <!-- Ripple rings from center -->
+        <circle cx="400" cy="280" r="30" fill="none" stroke="#5B8FA8" stroke-width="1" opacity=".35" class="svg-ring"/>
+        <circle cx="400" cy="280" r="30" fill="none" stroke="#5B8FA8" stroke-width="1" opacity=".35" class="svg-ring-d"/>
+        <circle cx="400" cy="280" r="30" fill="none" stroke="#5B8FA8" stroke-width="1" opacity=".35" class="svg-ring-d2"/>
+
+        <!-- Node 1: Top - Mutual check-in -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <circle cx="400" cy="65" r="42" fill="#D6E8F0" opacity=".45"/>
+          <circle cx="400" cy="65" r="34" fill="#fff" opacity=".85" stroke="#D6E8F0" stroke-width="1.2"/>
+          <circle cx="388" cy="55" r="7" fill="#D6E8F0" opacity=".8"/>
+          <circle cx="412" cy="55" r="7" fill="#D4EDE8" opacity=".8"/>
+          <path d="M394 70 Q400 76 406 70" stroke="#5B8FA8" stroke-width="1.2" fill="none" opacity=".65"/>
+          <path d="M383 64 Q388 58 393 64" stroke="#5B8FA8" stroke-width="1.2" fill="none" opacity=".55"/>
+          <path d="M407 64 Q412 58 417 64" stroke="#6EC4B8" stroke-width="1.2" fill="none" opacity=".55"/>
+        </g>
+        <path d="M400 110 L400 223" stroke="#5B8FA8" stroke-width="1.8" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:.7s"/>
+        <rect x="370" y="122" width="60" height="18" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="400" y="135" text-anchor="middle" font-size="11" fill="#5B8FA8" opacity=".75" font-weight="500">互助打卡</text>
+        <rect x="362" y="138" width="76" height="15" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="400" y="150" text-anchor="middle" font-size="9" fill="#5B8FA8" opacity=".6">自愿+随机模式</text>
+
+        <!-- Node 2: Top-right - Audio library -->
+        <g class="svg-fade-in" style="animation-delay:.8s">
+          <circle cx="580" cy="145" r="42" fill="#D4EDE8" opacity=".45"/>
+          <circle cx="580" cy="145" r="34" fill="#fff" opacity=".85" stroke="#D4EDE8" stroke-width="1.2"/>
+          <path d="M566 143 Q560 130 566 122 Q572 117 578 122 L582 122 Q588 117 594 122 Q600 130 594 143" fill="none" stroke="#6EC4B8" stroke-width="1.8" opacity=".65"/>
+          <rect x="562" y="143" width="10" height="12" rx="2.5" fill="#6EC4B8" opacity=".55"/>
+          <rect x="588" y="143" width="10" height="12" rx="2.5" fill="#6EC4B8" opacity=".55"/>
+          <text x="580" y="168" text-anchor="middle" font-size="9" fill="#6EC4B8" opacity=".55">♪</text>
+        </g>
+        <path d="M438 258 L545 168" stroke="#6EC4B8" stroke-width="1.8" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:1s"/>
+        <rect x="483" y="185" width="44" height="18" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="505" y="198" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".75" font-weight="500">音频库</text>
+        <rect x="475" y="201" width="60" height="15" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="505" y="213" text-anchor="middle" font-size="9" fill="#6EC4B8" opacity=".6">碎片化练习</text>
+
+        <!-- Node 3: Bottom-right - TTT -->
+        <g class="svg-fade-in" style="animation-delay:1.1s">
+          <circle cx="580" cy="415" r="42" fill="#D6E8E0" opacity=".45"/>
+          <circle cx="580" cy="415" r="34" fill="#fff" opacity=".85" stroke="#D6E8E0" stroke-width="1.2"/>
+          <circle cx="580" cy="400" r="7" fill="#D6E8F0" opacity=".8"/>
+          <path d="M572 398 Q576 390 580 389 Q584 390 588 398" fill="#7A7486" opacity=".55"/>
+          <circle cx="568" cy="418" r="5" fill="#D4EDE8" opacity=".7"/>
+          <circle cx="592" cy="418" r="5" fill="#E8E3EE" opacity=".7"/>
+          <path d="M568 426 Q580 434 592 426" stroke="#7BA89C" stroke-width="1.2" fill="none" opacity=".55"/>
+        </g>
+        <path d="M438 302 L545 392" stroke="#7BA89C" stroke-width="1.8" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:1.3s"/>
+        <rect x="483" y="347" width="44" height="18" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="505" y="360" text-anchor="middle" font-size="11" fill="#7BA89C" opacity=".75" font-weight="500">TTT培育</text>
+        <rect x="475" y="363" width="60" height="15" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="505" y="375" text-anchor="middle" font-size="9" fill="#7BA89C" opacity=".6">内部引导员</text>
+
+        <!-- Node 4: Bottom-left - System module -->
+        <g class="svg-fade-in" style="animation-delay:1.4s">
+          <circle cx="220" cy="415" r="42" fill="#E8E3EE" opacity=".45"/>
+          <circle cx="220" cy="415" r="34" fill="#fff" opacity=".85" stroke="#E8E3EE" stroke-width="1.2"/>
+          <rect x="200" y="400" width="40" height="28" rx="5" fill="#fff" opacity=".75" stroke="#E8E3EE" stroke-width="1.2"/>
+          <rect x="205" y="405" width="30" height="18" rx="3" fill="#E8E3EE" opacity=".5"/>
+          <line x1="210" y1="412" x2="230" y2="412" stroke="#9B8FA8" stroke-width="1.2" opacity=".5"/>
+          <line x1="210" y1="417" x2="226" y2="417" stroke="#9B8FA8" stroke-width="1.2" opacity=".45"/>
+        </g>
+        <path d="M362 302 L255 392" stroke="#9B8FA8" stroke-width="1.8" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:1.6s"/>
+        <rect x="273" y="347" width="44" height="18" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="295" y="360" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".75" font-weight="500">系统模块</text>
+        <rect x="265" y="363" width="60" height="15" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="295" y="375" text-anchor="middle" font-size="9" fill="#9B8FA8" opacity=".6">自有系统嵌入</text>
+
+        <!-- Node 5: Top-left - Stay interview -->
+        <g class="svg-fade-in" style="animation-delay:1.7s">
+          <circle cx="220" cy="145" r="42" fill="#FBF2E4" opacity=".45"/>
+          <circle cx="220" cy="145" r="34" fill="#fff" opacity=".85" stroke="#FBF2E4" stroke-width="1.2"/>
+          <rect x="205" y="130" width="30" height="36" rx="4" fill="#fff" opacity=".75" stroke="#FBF2E4" stroke-width="1.2"/>
+          <line x1="212" y1="140" x2="228" y2="140" stroke="#A08050" stroke-width="1.2" opacity=".55"/>
+          <line x1="212" y1="146" x2="226" y2="146" stroke="#A08050" stroke-width="1.2" opacity=".5"/>
+          <line x1="212" y1="152" x2="222" y2="152" stroke="#A08050" stroke-width="1.2" opacity=".45"/>
+          <path d="M214 158 L218 162 L226 153" stroke="#7BA89C" stroke-width="1.8" fill="none" opacity=".65" stroke-linecap="round"/>
+        </g>
+        <path d="M362 258 L255 168" stroke="#A08050" stroke-width="1.8" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="120" stroke-dashoffset="120" style="animation-delay:1.9s"/>
+        <rect x="273" y="185" width="44" height="18" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="295" y="198" text-anchor="middle" font-size="11" fill="#A08050" opacity=".75" font-weight="500">留任访谈</text>
+        <rect x="259" y="201" width="72" height="15" rx="4" fill="#FAF8F2" opacity=".85"/>
+        <text x="295" y="213" text-anchor="middle" font-size="9" fill="#A08050" opacity=".6">双向长效管控</text>
+
+        <!-- Center pulse -->
+        <circle cx="400" cy="280" r="4" fill="#5B8FA8" opacity=".65" class="svg-pulse"/>
+
+        <!-- Particles floating from center -->
+        <circle cx="400" cy="280" r="2.5" fill="#5B8FA8" opacity=".55" class="svg-particle"/>
+        <circle cx="400" cy="280" r="2" fill="#6EC4B8" opacity=".5" class="svg-particle" style="animation-delay:1s"/>
+        <circle cx="400" cy="280" r="2" fill="#7BA89C" opacity=".5" class="svg-particle" style="animation-delay:2s"/>
+        <circle cx="400" cy="280" r="1.5" fill="#9B8FA8" opacity=".45" class="svg-particle" style="animation-delay:3s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs: Dual Cards ===== -->
+<section class="visual-section" id="sdgs">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag sdgs">SDGs & ESG</div><h2 class="section-title">可持续发展目标融合</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="440" rx="20" fill="#FAF8F2"/>
+
+        <!-- SDG 3 -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="25" y="25" width="365" height="390" rx="20" fill="#fff" opacity=".65" stroke="#D6E8F0" stroke-width="1.2"/>
+          <text x="75" y="130" font-family="'Noto Serif SC',serif" font-size="80" fill="#5B8FA8" opacity=".2" font-weight="700">03</text>
+          <!-- Health illustration -->
+          <g class="svg-breathe">
+            <circle cx="310" cy="95" r="30" fill="#D6E8F0" opacity=".45"/>
+            <circle cx="310" cy="85" r="10" fill="#D6E8F0" opacity=".75"/>
+            <path d="M298 98 Q304 108 310 98 Q316 108 322 98" stroke="#5B8FA8" stroke-width="1.8" fill="none" opacity=".6"/>
+          </g>
+          <!-- Heart pulse -->
+          <g class="svg-pulse" style="animation-delay:.5s">
+            <path d="M285 140 Q285 128 296 128 Q307 128 307 140 Q307 158 285 170 Q263 158 263 140 Q263 128 274 128 Q285 128 285 140Z" fill="#D4896A" opacity=".35"/>
+          </g>
+          <!-- Ripple from heart -->
+          <circle cx="285" cy="148" r="12" fill="none" stroke="#D4896A" stroke-width="1" opacity=".35" class="svg-ring"/>
+          <circle cx="285" cy="148" r="12" fill="none" stroke="#D4896A" stroke-width="1" opacity=".35" class="svg-ring-d"/>
+          <!-- KPI bars -->
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <rect x="55" y="200" width="310" height="42" rx="12" fill="#D6E8F0" opacity=".25"/>
+            <text x="78" y="226" font-size="11" fill="#5B8FA8" opacity=".75">焦虑缓解率</text>
+            <rect x="185" y="216" width="90" height="10" rx="5" fill="#5B8FA8" opacity=".4"/>
+            <rect x="185" y="216" width="62" height="10" rx="5" fill="#5B8FA8" opacity=".65" class="svg-draw" stroke-dasharray="62" stroke-dashoffset="62" style="animation-delay:1.5s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="55" y="252" width="310" height="42" rx="12" fill="#D4EDE8" opacity=".25"/>
+            <text x="78" y="278" font-size="11" fill="#6EC4B8" opacity=".75">职业倦怠降幅</text>
+            <rect x="185" y="268" width="90" height="10" rx="5" fill="#6EC4B8" opacity=".4"/>
+            <rect x="185" y="268" width="54" height="10" rx="5" fill="#6EC4B8" opacity=".65" class="svg-draw" stroke-dasharray="54" stroke-dashoffset="54" style="animation-delay:1.8s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.4s">
+            <rect x="55" y="304" width="310" height="42" rx="12" fill="#D6E8E0" opacity=".25"/>
+            <text x="78" y="330" font-size="11" fill="#7BA89C" opacity=".75">身心健康提升</text>
+            <rect x="185" y="320" width="90" height="10" rx="5" fill="#7BA89C" opacity=".4"/>
+            <rect x="185" y="320" width="70" height="10" rx="5" fill="#7BA89C" opacity=".65" class="svg-draw" stroke-dasharray="70" stroke-dashoffset="70" style="animation-delay:2.1s"/>
+          </g>
+          <!-- Water drops on KPI -->
+          <g class="svg-drop" style="animation-delay:2s"><path d="M280 195 Q282 187 284 195 Q282 201 280 195Z" fill="#5B8FA8" opacity=".35"/></g>
+          <g class="svg-drop-d" style="animation-delay:3s"><path d="M300 248 Q302 240 304 248 Q302 254 300 248Z" fill="#6EC4B8" opacity=".3"/></g>
+          <text x="207" y="55" text-anchor="middle" font-size="15" fill="#5B8FA8" opacity=".85" font-weight="700">良好健康与福祉</text>
+        </g>
+
+        <!-- SDG 8 -->
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <rect x="410" y="25" width="365" height="390" rx="20" fill="#fff" opacity=".65" stroke="#D6E8E0" stroke-width="1.2"/>
+          <text x="460" y="130" font-family="'Noto Serif SC',serif" font-size="80" fill="#7BA89C" opacity=".2" font-weight="700">08</text>
+          <g class="svg-breathe" style="animation-delay:.3s">
+            <circle cx="695" cy="95" r="30" fill="#D6E8E0" opacity=".45"/>
+            <rect x="681" y="85" width="28" height="20" rx="4" fill="#7BA89C" opacity=".5"/>
+            <line x1="695" y1="85" x2="695" y2="78" stroke="#7BA89C" stroke-width="2.2" opacity=".55"/>
+            <rect x="689" y="75" width="12" height="5" rx="2.5" fill="#7BA89C" opacity=".48"/>
+          </g>
+          <!-- Growth arrows -->
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <path d="M670 140 L670 168 L648 168" stroke="#7BA89C" stroke-width="1.8" fill="none" opacity=".55"/>
+            <path d="M695 148 L695 130 L718 130" stroke="#6EC4B8" stroke-width="1.8" fill="none" opacity=".55"/>
+            <polygon points="716,126 724,130 716,134" fill="#6EC4B8" opacity=".55"/>
+          </g>
+          <!-- KPI bars -->
+          <g class="svg-fade-in" style="animation-delay:1.1s">
+            <rect x="440" y="200" width="310" height="42" rx="12" fill="#D6E8E0" opacity=".25"/>
+            <text x="463" y="226" font-size="11" fill="#7BA89C" opacity=".75">正念覆盖率</text>
+            <rect x="570" y="216" width="90" height="10" rx="5" fill="#7BA89C" opacity=".4"/>
+            <rect x="570" y="216" width="66" height="10" rx="5" fill="#7BA89C" opacity=".65" class="svg-draw" stroke-dasharray="66" stroke-dashoffset="66" style="animation-delay:1.6s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.3s">
+            <rect x="440" y="252" width="310" height="42" rx="12" fill="#D4EDE8" opacity=".25"/>
+            <text x="463" y="278" font-size="11" fill="#6EC4B8" opacity=".75">员工留任率</text>
+            <rect x="570" y="268" width="90" height="10" rx="5" fill="#6EC4B8" opacity=".4"/>
+            <rect x="570" y="268" width="74" height="10" rx="5" fill="#6EC4B8" opacity=".65" class="svg-draw" stroke-dasharray="74" stroke-dashoffset="74" style="animation-delay:1.9s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.5s">
+            <rect x="440" y="304" width="310" height="42" rx="12" fill="#E8E3EE" opacity=".25"/>
+            <text x="463" y="330" font-size="11" fill="#9B8FA8" opacity=".75">正念领导力评分</text>
+            <rect x="570" y="320" width="90" height="10" rx="5" fill="#9B8FA8" opacity=".4"/>
+            <rect x="570" y="320" width="56" height="10" rx="5" fill="#9B8FA8" opacity=".65" class="svg-draw" stroke-dasharray="56" stroke-dashoffset="56" style="animation-delay:2.2s"/>
+          </g>
+          <!-- Water drops -->
+          <g class="svg-drop" style="animation-delay:2.2s"><path d="M665 195 Q667 187 669 195 Q667 201 665 195Z" fill="#7BA89C" opacity=".35"/></g>
+          <g class="svg-drop-d" style="animation-delay:3.2s"><path d="M685 248 Q687 240 689 248 Q687 254 685 248Z" fill="#6EC4B8" opacity=".3"/></g>
+          <text x="592" y="55" text-anchor="middle" font-size="15" fill="#7BA89C" opacity=".85" font-weight="700">体面工作和经济增长</text>
+        </g>
+
+        <!-- ESG bridge -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <rect x="335" y="185" width="130" height="46" rx="14" fill="#FBF2E4" opacity=".55"/>
+          <text x="400" y="214" text-anchor="middle" font-size="12" fill="#A08050" opacity=".8" font-weight="600">ESG 量化KPI</text>
+        </g>
+        <path d="M385 185 L365 160" stroke="#A08050" stroke-width="1.2" fill="none" opacity=".45" stroke-dasharray="3,3" class="svg-draw" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:2.3s"/>
+        <path d="M415 185 L435 160" stroke="#A08050" stroke-width="1.2" fill="none" opacity=".45" stroke-dasharray="3,3" class="svg-draw" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:2.5s"/>
+
+        <!-- Shimmer -->
+        <circle cx="400" cy="208" r="2" fill="#A08050" opacity=".45" class="svg-shimmer"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal"><h2 class="footer-title">从体验到治理 · 从浅层到根源 🔄</h2><p class="footer-text">以系统化归因分析与四维优化路径，让正念干预真正转化为可量化的留任成效</p></div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d)*100+'%'});
+
+const dots=document.querySelectorAll('.nav-dot');
+const sections=['hero','cause','optimize','longterm','sdgs'];
+dots.forEach(dot=>{dot.addEventListener('click',()=>{document.getElementById(dot.getAttribute('data-target')).scrollIntoView({behavior:'smooth'})})});
+const sectionEls=sections.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sectionEls.forEach((el,i)=>{if(el.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((dot,i)=>{dot.classList.toggle('active',i===c)})});
+
+const revealElements=document.querySelectorAll('.reveal');
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+revealElements.forEach(el=>revealObserver.observe(el));
+
+const svgAnimGroups=document.querySelectorAll('.svg-anim-group');
+const svgAnimObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){const els=entry.target.querySelectorAll('.svg-float,.svg-float-d,.svg-float-d2,.svg-float-d3,.svg-pulse,.svg-breathe,.svg-sway,.svg-swing,.svg-glow,.svg-draw,.svg-draw-slow,.svg-fade-in,.svg-fade-in-d,.svg-fade-in-d2,.svg-fade-in-d3,.svg-fade-in-d4,.svg-fade-in-d5,.svg-scale-in,.svg-ripple,.svg-particle,.svg-rise,.svg-shimmer,.svg-drop,.svg-drop-d,.svg-drop-d2,.svg-drop-d3,.svg-ring,.svg-ring-d,.svg-ring-d2,.svg-slide-l,.svg-slide-r');els.forEach(el=>el.classList.add('anim-active'));svgAnimObserver.unobserve(entry.target)}})},{threshold:.12,rootMargin:'0px 0px -20px 0px'});
+svgAnimGroups.forEach(group=>svgAnimObserver.observe(group));
+
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((shape,i)=>{shape.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
+</script>
+
+<script>
+(function() {
+    var source = sessionStorage.getItem('plan_source') || 'home';
+    var mainPage = 'index.html';
+    var btn = document.createElement('a');
+    btn.className = 'plan-back-btn';
+    btn.href = mainPage;
+    var label = source === 'cap' ? '返回校园CAP' : source === 'eap' ? '返回企业EAP' : '返回首页';
+    btn.innerHTML = '<span class="back-arrow">←</span> ' + label;
+    // Add hash to indicate which page to switch to
+    if (source === 'cap') btn.href += '#page-cap';
+    else if (source === 'eap') btn.href += '#page-eap';
+    document.body.appendChild(btn);
+})();
+</script>
+</body>
+</html>

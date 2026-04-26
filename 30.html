@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>春归计划 — 疫情后大学师生身心复原多元方案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FFF8F0;--cream-d:#F5EDE3;--peach:#FFDAB9;--peach-l:#FFE8D6;
+  --sage:#A8C5A0;--sage-d:#7BA37A;--teal:#5BA4A4;--teal-d:#3D8B8B;
+  --coral:#E8836B;--coral-l:#F4A89A;--lavender:#B8A9C9;--lavender-l:#D5CCE4;
+  --amber:#E6A23C;--amber-l:#F0C78A;--text:#3D3D3D;--text-l:#6B6B6B;
+  --text-ll:#9B9B9B;--white:#FFFFFF;--shadow:0 4px 24px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 40px rgba(0,0,0,.12);--radius:16px;--radius-sm:10px;
+  --font-sans:'Noto Sans SC',sans-serif;--font-serif:'Noto Serif SC',serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-sans);color:var(--text);background:var(--cream);line-height:1.8;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--font-serif);font-weight:700;line-height:1.4}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+
+/* ========== PROGRESS BAR ========== */
+.progress-bar{position:fixed;top:0;left:0;width:100%;height:4px;z-index:1000;background:var(--cream-d)}
+.progress-bar .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--coral),var(--amber),var(--sage),var(--teal),var(--lavender));border-radius:0 2px 2px 0;transition:width .15s linear}
+
+/* ========== NAV DOTS ========== */
+.nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+.nav-dot{width:12px;height:12px;border-radius:50%;background:var(--peach);border:2px solid var(--coral-l);cursor:pointer;position:relative;transition:all .3s}
+.nav-dot.active{background:var(--coral);transform:scale(1.3);border-color:var(--coral)}
+.nav-dot .tooltip{position:absolute;right:24px;top:50%;transform:translateY(-50%);background:var(--white);color:var(--text);padding:6px 14px;border-radius:8px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:var(--shadow);font-family:var(--font-sans)}
+.nav-dot:hover .tooltip{opacity:1}
+
+/* ========== CONTAINER ========== */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ========== HERO ========== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--cream) 0%,var(--peach-l) 50%,var(--lavender-l) 100%)}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-content{position:relative;z-index:2;text-align:center;padding:40px 20px}
+.hero-content h1{font-size:clamp(2.5rem,6vw,4.5rem);color:var(--coral);margin-bottom:16px;letter-spacing:4px}
+.hero-content .subtitle{font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text-l);font-weight:300;margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-content .meta{display:inline-flex;gap:24px;flex-wrap:wrap;justify-content:center}
+.hero-content .meta span{background:var(--white);padding:8px 20px;border-radius:30px;font-size:.9rem;color:var(--teal-d);box-shadow:var(--shadow);display:flex;align-items:center;gap:6px}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-ll);font-size:.85rem;animation:hero-bounce 2s infinite}
+.hero-scroll svg{width:24px;height:24px;stroke:var(--text-ll)}
+
+/* ========== SECTION COMMON ========== */
+.section{padding:100px 0;position:relative}
+.section-header{text-align:center;margin-bottom:60px}
+.section-header .phase-tag{display:inline-block;padding:6px 20px;border-radius:30px;font-size:.85rem;font-weight:500;margin-bottom:16px}
+.section-header h2{font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:12px}
+.section-header p{font-size:1.05rem;color:var(--text-l);max-width:700px;margin:0 auto}
+
+/* Phase colors */
+.phase1 .phase-tag{background:var(--peach-l);color:var(--coral)}
+.phase1 h2{color:var(--coral)}
+.phase2 .phase-tag{background:var(--sage);color:var(--white)}
+.phase2 h2{color:var(--sage-d)}
+.phase3 .phase-tag{background:var(--amber-l);color:#8B6914}
+.phase3 h2{color:#8B6914}
+
+/* ========== WEEK CARD ========== */
+.week-section{display:flex;align-items:center;gap:60px;margin-bottom:80px;opacity:0;transition:all .8s ease}
+.week-section.reveal-left{transform:translateX(-60px)}
+.week-section.reveal-right{transform:translateX(60px)}
+.week-section.reveal-scale{transform:scale(.9)}
+.week-section.visible{opacity:1;transform:translate(0) scale(1)}
+.week-section:nth-child(odd){flex-direction:row}
+.week-section:nth-child(even){flex-direction:row-reverse}
+.week-visual{flex:1;min-width:0}
+.week-text{flex:1;min-width:0}
+.week-num{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.week-text h3{font-size:1.5rem;margin-bottom:16px}
+.week-activities{display:flex;flex-direction:column;gap:10px}
+.activity{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;background:var(--white);border-radius:var(--radius-sm);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.activity-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem;color:var(--white);font-weight:700}
+.activity-icon.art{background:var(--coral)}
+.activity-icon.mind{background:var(--teal)}
+.activity-icon.out{background:var(--sage-d)}
+.activity-info{flex:1}
+.activity-info strong{display:block;font-size:.95rem;margin-bottom:2px}
+.activity-info span{font-size:.82rem;color:var(--text-l)}
+
+/* ========== PHASE 2 TABLE ========== */
+.schedule-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:60px}
+.schedule-table thead{background:linear-gradient(135deg,var(--sage),var(--teal))}
+.schedule-table th{padding:16px 20px;color:var(--white);font-weight:500;font-size:.9rem;text-align:left}
+.schedule-table td{padding:14px 20px;border-bottom:1px solid var(--cream-d);font-size:.9rem}
+.schedule-table tr:last-child td{border-bottom:none}
+.schedule-table tr:hover td{background:var(--cream)}
+.schedule-table .day-cell{font-weight:600;color:var(--teal-d);white-space:nowrap}
+
+/* ========== WORKSHOP CARDS ========== */
+.workshop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;margin-bottom:60px}
+.workshop-card{background:var(--white);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s;opacity:0;transform:translateY(30px)}
+.workshop-card.visible{opacity:1;transform:translateY(0)}
+.workshop-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.workshop-card .wc-week{font-size:.8rem;font-weight:600;color:var(--coral);margin-bottom:8px}
+.workshop-card h4{font-size:1.1rem;margin-bottom:8px}
+.workshop-card p{font-size:.88rem;color:var(--text-l)}
+.workshop-card .wc-visual{height:120px;margin-bottom:16px;display:flex;align-items:center;justify-content:center}
+
+/* ========== PHASE 3 CARDS ========== */
+.phase3-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px}
+.phase3-card{background:var(--white);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);text-align:center;opacity:0;transform:translateY(30px);transition:all .6s}
+.phase3-card.visible{opacity:1;transform:translateY(0)}
+.phase3-card .p3-icon{width:80px;height:80px;margin:0 auto 20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.phase3-card h4{font-size:1.15rem;margin-bottom:8px}
+.phase3-card p{font-size:.9rem;color:var(--text-l)}
+
+/* ========== ADAPT CARDS ========== */
+.adapt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.adapt-card{background:var(--white);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);opacity:0;transform:translateY(30px);transition:all .6s}
+.adapt-card.visible{opacity:1;transform:translateY(0)}
+.adapt-card .ac-icon{width:56px;height:56px;border-radius:14px;margin-bottom:16px;display:flex;align-items:center;justify-content:center}
+.adapt-card h4{font-size:1.05rem;margin-bottom:8px}
+.adapt-card p{font-size:.88rem;color:var(--text-l)}
+
+/* ========== MECHANISM CARDS ========== */
+.mech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.mech-card{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);text-align:center;opacity:0;transform:scale(.9);transition:all .6s}
+.mech-card.visible{opacity:1;transform:scale(1)}
+.mech-card .mc-icon{width:60px;height:60px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.mech-card h4{font-size:1rem;margin-bottom:6px}
+.mech-card p{font-size:.85rem;color:var(--text-l)}
+
+/* ========== SDG CARDS ========== */
+.sdg-section{background:linear-gradient(180deg,var(--cream) 0%,var(--peach-l) 100%)}
+.sdg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px;margin-bottom:50px}
+.sdg-card{background:var(--white);border-radius:var(--radius);padding:24px 16px;text-align:center;box-shadow:var(--shadow);opacity:0;transform:translateY(20px);transition:all .6s}
+.sdg-card.visible{opacity:1;transform:translateY(0)}
+.sdg-card .sdg-num{font-size:2rem;font-weight:700;margin-bottom:4px}
+.sdg-card h4{font-size:.95rem;margin-bottom:6px}
+.sdg-card p{font-size:.82rem;color:var(--text-l)}
+.esg-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.esg-card{background:var(--white);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);border-left:4px solid;opacity:0;transform:translateX(-20px);transition:all .6s}
+.esg-card.visible{opacity:1;transform:translateX(0)}
+.esg-card.e{border-color:var(--sage)}
+.esg-card.s{border-color:var(--teal)}
+.esg-card.g{border-color:var(--amber)}
+.esg-card h4{font-size:1.05rem;margin-bottom:8px}
+.esg-card p{font-size:.88rem;color:var(--text-l)}
+
+/* ========== FOOTER ========== */
+.footer{text-align:center;padding:60px 24px;background:linear-gradient(135deg,var(--teal-d),var(--sage-d));color:var(--white)}
+.footer h3{font-size:1.6rem;margin-bottom:16px;font-family:var(--font-serif)}
+.footer p{font-size:1rem;opacity:.9;max-width:600px;margin:0 auto 24px}
+.footer .footer-line{width:60px;height:3px;background:var(--peach);margin:0 auto 20px;border-radius:2px}
+
+/* ========== SVG ANIMATIONS ========== */
+.svg-float{animation:svgFloat 4s ease-in-out infinite}
+.svg-float-d{animation:svgFloat 5s ease-in-out infinite .5s}
+.svg-float-d2{animation:svgFloat 6s ease-in-out infinite 1s}
+.svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+.svg-breathe{animation:svgBreathe 4s ease-in-out infinite}
+.svg-sway{animation:svgSway 3s ease-in-out infinite}
+.svg-draw{stroke-dasharray:1000;stroke-dashoffset:1000;animation:svgDraw 3s ease forwards}
+.svg-fade-in{opacity:0;animation:svgFadeIn 1s ease forwards}
+.svg-fade-in-d1{opacity:0;animation:svgFadeIn 1s ease forwards .3s}
+.svg-fade-in-d2{opacity:0;animation:svgFadeIn 1s ease forwards .6s}
+.svg-fade-in-d3{opacity:0;animation:svgFadeIn 1s ease forwards .9s}
+.svg-fade-in-d4{opacity:0;animation:svgFadeIn 1s ease forwards 1.2s}
+.svg-scale-in{transform:scale(0);animation:svgScaleIn .6s ease forwards}
+.svg-scale-in-d1{transform:scale(0);animation:svgScaleIn .6s ease forwards .2s}
+.svg-scale-in-d2{transform:scale(0);animation:svgScaleIn .6s ease forwards .4s}
+.svg-ripple{animation:svgRipple 2s ease-out infinite}
+.svg-ring{animation:svgRing 3s ease-in-out infinite}
+.svg-rise{transform:translateY(20px);opacity:0;animation:svgRise 1s ease forwards}
+.svg-slide-l{transform:translateX(-30px);opacity:0;animation:svgSlideL .8s ease forwards}
+.svg-slide-r{transform:translateX(30px);opacity:0;animation:svgSlideR .8s ease forwards}
+.svg-drop{transform:translateY(-20px);opacity:0;animation:svgDrop .6s ease forwards}
+.svg-grow{transform:scaleY(0);transform-origin:bottom;animation:svgGrow 1s ease forwards}
+.svg-glow{animation:svgGlow 2s ease-in-out infinite}
+.svg-shimmer{animation:svgShimmer 2s ease-in-out infinite}
+.svg-wave{animation:svgWave 3s ease-in-out infinite}
+.svg-rotate{animation:svgRotate 8s linear infinite}
+
+@keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes svgPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.85}}
+@keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes svgDraw{to{stroke-dashoffset:0}}
+@keyframes svgFadeIn{to{opacity:1}}
+@keyframes svgScaleIn{to{transform:scale(1)}}
+@keyframes svgRipple{0%{r:5;opacity:1}100%{r:30;opacity:0}}
+@keyframes svgRing{0%,100%{stroke-width:2;opacity:.6}50%{stroke-width:4;opacity:1}}
+@keyframes svgRise{to{transform:translateY(0);opacity:1}}
+@keyframes svgSlideL{to{transform:translateX(0);opacity:1}}
+@keyframes svgSlideR{to{transform:translateX(0);opacity:1}}
+@keyframes svgDrop{to{transform:translateY(0);opacity:1}}
+@keyframes svgGrow{to{transform:scaleY(1)}}
+@keyframes svgGlow{0%,100%{filter:drop-shadow(0 0 3px rgba(232,131,107,.3))}50%{filter:drop-shadow(0 0 10px rgba(232,131,107,.6))}}
+@keyframes svgShimmer{0%,100%{opacity:.7}50%{opacity:1}}
+@keyframes svgWave{0%,100%{transform:translateX(0)}25%{transform:translateX(5px)}75%{transform:translateX(-5px)}}
+@keyframes svgRotate{to{transform:rotate(360deg)}}
+@keyframes hero-bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ========== FLOATING BG CIRCLES ========== */
+.float-circle{position:absolute;border-radius:50%;opacity:.15;pointer-events:none}
+.float-circle.c1{width:300px;height:300px;background:var(--peach);top:-50px;left:-80px;animation:floatC 8s ease-in-out infinite}
+.float-circle.c2{width:200px;height:200px;background:var(--lavender);top:20%;right:-40px;animation:floatC 10s ease-in-out infinite 1s}
+.float-circle.c3{width:250px;height:250px;background:var(--sage);bottom:-60px;left:30%;animation:floatC 9s ease-in-out infinite 2s}
+.float-circle.c4{width:180px;height:180px;background:var(--amber-l);top:40%;left:10%;animation:floatC 7s ease-in-out infinite .5s}
+@keyframes floatC{0%,100%{transform:translate(0,0)}50%{transform:translate(15px,-20px)}}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:900px){
+  .week-section,.week-section:nth-child(even){flex-direction:column!important;gap:30px}
+  .nav-dots{display:none}
+  .schedule-table{font-size:.8rem}
+  .schedule-table th,.schedule-table td{padding:10px 12px}
+}
+@media(max-width:600px){
+  .section{padding:60px 0}
+  .hero-content h1{letter-spacing:2px}
+  .workshop-grid,.adapt-grid,.mech-grid,.phase3-grid,.sdg-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+
+<!-- Nav Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="phase1"><span class="tooltip">阶段一：重启期</span></div>
+  <div class="nav-dot" data-target="phase2"><span class="tooltip">阶段二：深化期</span></div>
+  <div class="nav-dot" data-target="phase3"><span class="tooltip">阶段三：巩固期</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="mechanism"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdg"><span class="tooltip">SDGs & ESG</span></div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="float-circle c1"></div>
+    <div class="float-circle c2"></div>
+    <div class="float-circle c3"></div>
+    <div class="float-circle c4"></div>
+  </div>
+  <div class="hero-content">
+    <!-- Hero SVG: 校园春天复苏 -->
+    <svg viewBox="0 0 600 320" width="600" height="320" style="max-width:100%;margin-bottom:24px">
+      <!-- 太阳 -->
+      <circle cx="500" cy="60" r="40" fill="#F0C78A" class="svg-pulse" opacity=".8"/>
+      <g class="svg-rotate" style="transform-origin:500px 60px">
+        <line x1="500" y1="10" x2="500" y2="0" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+        <line x1="545" y1="25" x2="553" y2="17" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+        <line x1="550" y1="60" x2="560" y2="60" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+        <line x1="545" y1="95" x2="553" y2="103" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+        <line x1="455" y1="25" x2="447" y2="17" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+        <line x1="450" y1="60" x2="440" y2="60" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+        <line x1="455" y1="95" x2="447" y2="103" stroke="#E6A23C" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <!-- 樱花树 -->
+      <g class="svg-sway" style="transform-origin:180px 280px">
+        <path d="M180 280 Q175 220 170 180 Q168 150 180 120 Q190 100 200 90 Q210 85 215 95 Q220 110 210 130 Q200 150 195 180 Q190 220 185 280Z" fill="#8B6F5E" opacity=".7"/>
+        <circle cx="160" cy="100" r="28" fill="#FFB7C5" class="svg-float" opacity=".8"/>
+        <circle cx="200" cy="80" r="32" fill="#FFC0CB" class="svg-float-d" opacity=".7"/>
+        <circle cx="230" cy="105" r="25" fill="#FFB7C5" class="svg-float-d2" opacity=".8"/>
+        <circle cx="175" cy="70" r="22" fill="#FFD1DC" class="svg-float" opacity=".6"/>
+        <circle cx="215" cy="65" r="20" fill="#FFC0CB" class="svg-float-d" opacity=".7"/>
+        <!-- 花瓣飘落 -->
+        <ellipse cx="250" cy="140" rx="4" ry="6" fill="#FFB7C5" class="svg-drop" opacity=".6" transform="rotate(30 250 140)"/>
+        <ellipse cx="140" cy="160" rx="3" ry="5" fill="#FFD1DC" class="svg-drop" opacity=".5" transform="rotate(-20 140 160)"/>
+        <ellipse cx="220" cy="170" rx="4" ry="5" fill="#FFB7C5" class="svg-fade-in-d2" opacity=".5" transform="rotate(45 220 170)"/>
+      </g>
+      <!-- 学生剪影 -->
+      <g class="svg-fade-in" style="transform-origin:350px 260px">
+        <circle cx="350" cy="220" r="14" fill="#5BA4A4" opacity=".7"/>
+        <path d="M350 234 Q340 240 336 260 L364 260 Q360 240 350 234Z" fill="#5BA4A4" opacity=".7"/>
+        <!-- 书本 -->
+        <rect x="365" y="248" width="18" height="14" rx="2" fill="#E6A23C" opacity=".6" transform="rotate(-10 374 255)"/>
+      </g>
+      <!-- 第二个学生 -->
+      <g class="svg-fade-in-d2" style="transform-origin:400px 255px">
+        <circle cx="400" cy="218" r="13" fill="#B8A9C9" opacity=".7"/>
+        <path d="M400 231 Q391 237 387 255 L413 255 Q409 237 400 231Z" fill="#B8A9C9" opacity=".7"/>
+      </g>
+      <!-- 地面 -->
+      <path d="M0 280 Q100 270 200 275 Q300 265 400 270 Q500 268 600 275 L600 320 L0 320Z" fill="#A8C5A0" opacity=".3"/>
+      <path d="M0 290 Q150 282 300 288 Q450 280 600 285 L600 320 L0 320Z" fill="#7BA37A" opacity=".2"/>
+      <!-- 小花 -->
+      <g class="svg-float-d">
+        <circle cx="80" cy="278" r="5" fill="#E8836B" opacity=".6"/>
+        <circle cx="80" cy="278" r="2" fill="#F0C78A"/>
+        <line x1="80" y1="283" x2="80" y2="295" stroke="#7BA37A" stroke-width="2"/>
+      </g>
+      <g class="svg-float-d2">
+        <circle cx="450" cy="272" r="4" fill="#B8A9C9" opacity=".6"/>
+        <circle cx="450" cy="272" r="1.5" fill="#F0C78A"/>
+        <line x1="450" y1="276" x2="450" y2="286" stroke="#7BA37A" stroke-width="1.5"/>
+      </g>
+      <g class="svg-float">
+        <circle cx="520" cy="276" r="4.5" fill="#FFB7C5" opacity=".6"/>
+        <circle cx="520" cy="276" r="1.8" fill="#F0C78A"/>
+        <line x1="520" y1="280" x2="520" y2="292" stroke="#7BA37A" stroke-width="1.5"/>
+      </g>
+      <!-- 鸟 -->
+      <path d="M300 50 Q310 40 320 50" fill="none" stroke="#8B6F5E" stroke-width="2" class="svg-float" opacity=".5"/>
+      <path d="M330 60 Q338 52 346 60" fill="none" stroke="#8B6F5E" stroke-width="1.5" class="svg-float-d" opacity=".4"/>
+    </svg>
+    <h1>春归计划</h1>
+    <p class="subtitle">疫情后大学师生身心复原多元方案</p>
+    <div class="meta">
+      <span>&#9734; 项目周期 16 周</span>
+      <span>&#9734; 三阶段递进</span>
+      <span>&#9734; 艺术·正念·户外</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>向下探索</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ==================== PHASE 1 ==================== -->
+<section class="section phase1" id="phase1">
+  <div class="container">
+    <div class="section-header">
+      <span class="phase-tag">阶段一 · 第1-4周</span>
+      <h2>重启期 —— "回到当下"</h2>
+      <p>通过艺术表达、正念练习和户外活动，帮助师生重新建立与当下时刻的连接，唤醒被疫情遮蔽的感知力。</p>
+    </div>
+
+    <!-- Phase 1 SVG: 种子发芽 -->
+    <div style="text-align:center;margin-bottom:60px" class="reveal-scale">
+      <svg viewBox="0 0 400 200" width="400" height="200" style="max-width:100%">
+        <ellipse cx="200" cy="180" rx="120" ry="15" fill="#A8C5A0" opacity=".2"/>
+        <!-- 种子 -->
+        <ellipse cx="200" cy="170" rx="12" ry="8" fill="#8B6F5E" class="svg-pulse" opacity=".6"/>
+        <!-- 根系 -->
+        <path d="M200 178 Q195 190 188 200" fill="none" stroke="#7BA37A" stroke-width="2" class="svg-grow" opacity=".5"/>
+        <path d="M200 178 Q205 192 212 200" fill="none" stroke="#7BA37A" stroke-width="2" class="svg-grow" opacity=".5"/>
+        <!-- 嫩芽 -->
+        <path d="M200 162 Q195 140 185 125" fill="none" stroke="#7BA37A" stroke-width="3" stroke-linecap="round" class="svg-rise"/>
+        <path d="M200 162 Q205 138 215 120" fill="none" stroke="#7BA37A" stroke-width="3" stroke-linecap="round" class="svg-rise"/>
+        <ellipse cx="183" cy="120" rx="14" ry="8" fill="#A8C5A0" class="svg-fade-in-d1" transform="rotate(-30 183 120)"/>
+        <ellipse cx="217" cy="115" rx="14" ry="8" fill="#A8C5A0" class="svg-fade-in-d2" transform="rotate(25 217 115)"/>
+        <!-- 阳光 -->
+        <line x1="200" y1="60" x2="200" y2="90" stroke="#F0C78A" stroke-width="2" class="svg-shimmer" opacity=".6"/>
+        <line x1="170" y1="70" x2="185" y2="95" stroke="#F0C78A" stroke-width="1.5" class="svg-shimmer" opacity=".4"/>
+        <line x1="230" y1="70" x2="215" y2="95" stroke="#F0C78A" stroke-width="1.5" class="svg-shimmer" opacity=".4"/>
+        <circle cx="200" cy="50" r="20" fill="#F0C78A" opacity=".3" class="svg-glow"/>
+        <!-- 水滴 -->
+        <path d="M160 100 Q160 92 164 88 Q168 92 168 100 Q164 104 160 100Z" fill="#5BA4A4" class="svg-drop" opacity=".5"/>
+      </svg>
+    </div>
+
+    <!-- Week 1 -->
+    <div class="week-section reveal-left" id="w1">
+      <div class="week-visual">
+        <svg viewBox="0 0 360 280" width="100%" style="max-width:360px">
+          <!-- 相机 -->
+          <g class="svg-float">
+            <rect x="120" y="60" width="120" height="90" rx="12" fill="none" stroke="#E8836B" stroke-width="2.5"/>
+            <circle cx="180" cy="105" r="28" fill="none" stroke="#E8836B" stroke-width="2.5"/>
+            <circle cx="180" cy="105" r="18" fill="#FFDAB9" opacity=".4"/>
+            <rect x="155" y="50" width="50" height="15" rx="5" fill="none" stroke="#E8836B" stroke-width="2"/>
+            <circle cx="215" cy="75" r="5" fill="#E8836B" opacity=".5"/>
+          </g>
+          <!-- 色彩散射 -->
+          <circle cx="100" cy="180" r="15" fill="#E8836B" opacity=".3" class="svg-pulse"/>
+          <circle cx="140" cy="200" r="12" fill="#5BA4A4" opacity=".3" class="svg-pulse" style="animation-delay:.3s"/>
+          <circle cx="180" cy="185" r="18" fill="#A8C5A0" opacity=".3" class="svg-pulse" style="animation-delay:.6s"/>
+          <circle cx="220" cy="195" r="14" fill="#B8A9C9" opacity=".3" class="svg-pulse" style="animation-delay:.9s"/>
+          <circle cx="260" cy="180" r="11" fill="#E6A23C" opacity=".3" class="svg-pulse" style="animation-delay:1.2s"/>
+          <!-- 五指感官 -->
+          <g class="svg-fade-in-d2" transform="translate(50,210)">
+            <ellipse cx="30" cy="10" rx="6" ry="14" fill="#F4A89A" opacity=".6" transform="rotate(-15 30 10)"/>
+            <ellipse cx="45" cy="5" rx="6" ry="16" fill="#F4A89A" opacity=".6" transform="rotate(-5 45 5)"/>
+            <ellipse cx="60" cy="3" rx="6" ry="17" fill="#F4A89A" opacity=".6"/>
+            <ellipse cx="75" cy="5" rx="6" ry="16" fill="#F4A89A" opacity=".6" transform="rotate(5 75 5)"/>
+            <ellipse cx="88" cy="12" rx="6" ry="13" fill="#F4A89A" opacity=".6" transform="rotate(15 88 12)"/>
+            <rect x="20" y="18" width="78" height="22" rx="10" fill="#F4A89A" opacity=".5"/>
+          </g>
+          <!-- 校园小路 -->
+          <path d="M200 240 Q250 230 300 240 Q330 245 350 250" fill="none" stroke="#A8C5A0" stroke-width="3" stroke-linecap="round" class="svg-draw" opacity=".5"/>
+          <circle cx="280" cy="238" r="4" fill="#A8C5A0" class="svg-fade-in-d3" opacity=".4"/>
+          <circle cx="310" cy="243" r="3" fill="#A8C5A0" class="svg-fade-in-d4" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="week-text">
+        <div class="week-num" style="color:var(--coral)">第 1 周</div>
+        <h3>感知重启</h3>
+        <div class="week-activities">
+          <div class="activity">
+            <div class="activity-icon art">艺</div>
+            <div class="activity-info"><strong>校园色彩地图</strong><span>用相机捕捉校园中不同色彩，拼贴成个人色彩地图</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon mind">念</div>
+            <div class="activity-info"><strong>着陆练习</strong><span>5-4-3-2-1感官着陆法，回到当下</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon out">外</div>
+            <div class="activity-info"><strong>校园正念行走</strong><span>缓慢行走，觉察每一步的触感与周围环境</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 2 -->
+    <div class="week-section reveal-right" id="w2">
+      <div class="week-visual">
+        <svg viewBox="0 0 360 280" width="100%" style="max-width:360px">
+          <!-- 拼贴画 -->
+          <g class="svg-float-d">
+            <rect x="80" y="40" width="80" height="60" rx="4" fill="#FFDAB9" opacity=".6" transform="rotate(-5 120 70)"/>
+            <rect x="140" y="50" width="70" height="55" rx="4" fill="#D5CCE4" opacity=".6" transform="rotate(3 175 77)"/>
+            <rect x="100" y="80" width="90" height="50" rx="4" fill="#FFE8D6" opacity=".5" transform="rotate(-2 145 105)"/>
+            <rect x="170" y="30" width="60" height="65" rx="4" fill="#C8E6C9" opacity=".5" transform="rotate(6 200 62)"/>
+            <!-- 剪刀 -->
+            <path d="M250 50 L270 70 M250 70 L270 50" stroke="#E8836B" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="245" cy="50" r="6" fill="none" stroke="#E8836B" stroke-width="2"/>
+            <circle cx="245" cy="70" r="6" fill="none" stroke="#E8836B" stroke-width="2"/>
+          </g>
+          <!-- 呼吸波浪 -->
+          <path d="M40 180 Q80 150 120 180 Q160 210 200 180 Q240 150 280 180 Q320 210 340 180" fill="none" stroke="#5BA4A4" stroke-width="3" stroke-linecap="round" class="svg-wave" opacity=".6"/>
+          <path d="M40 200 Q80 175 120 200 Q160 225 200 200 Q240 175 280 200 Q320 225 340 200" fill="none" stroke="#5BA4A4" stroke-width="2" stroke-linecap="round" class="svg-wave" opacity=".3" style="animation-delay:.5s"/>
+          <!-- 花园种子 -->
+          <g class="svg-fade-in-d1">
+            <ellipse cx="100" cy="250" rx="8" ry="5" fill="#8B6F5E" opacity=".5"/>
+            <ellipse cx="160" cy="255" rx="7" ry="4.5" fill="#8B6F5E" opacity=".4"/>
+            <ellipse cx="220" cy="248" rx="9" ry="5" fill="#8B6F5E" opacity=".5"/>
+            <ellipse cx="280" cy="253" rx="7" ry="4" fill="#8B6F5E" opacity=".4"/>
+            <!-- 小芽 -->
+            <path d="M100 245 Q98 235 95 228" fill="none" stroke="#7BA37A" stroke-width="2" class="svg-rise"/>
+            <path d="M220 243 Q222 232 225 225" fill="none" stroke="#7BA37A" stroke-width="2" class="svg-rise" style="animation-delay:.3s"/>
+          </g>
+        </svg>
+      </div>
+      <div class="week-text">
+        <div class="week-num" style="color:var(--coral)">第 2 周</div>
+        <h3>表达与呼吸</h3>
+        <div class="week-activities">
+          <div class="activity">
+            <div class="activity-icon art">艺</div>
+            <div class="activity-info"><strong>疫情拼贴画</strong><span>用杂志碎片拼贴表达疫情期间的感受与记忆</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon mind">念</div>
+            <div class="activity-info"><strong>呼吸锚定</strong><span>学习腹式呼吸与4-7-8呼吸法，建立内在安全锚点</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon out">外</div>
+            <div class="activity-info"><strong>校园花园种植</strong><span>亲手播种，体验生命萌发的力量与希望</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 3 -->
+    <div class="week-section reveal-left" id="w3">
+      <div class="week-visual">
+        <svg viewBox="0 0 360 280" width="100%" style="max-width:360px">
+          <!-- 壁画创作 -->
+          <g class="svg-float">
+            <rect x="60" y="30" width="200" height="120" rx="6" fill="#FFF8F0" stroke="#D5CCE4" stroke-width="2"/>
+            <!-- 画中的图案 -->
+            <circle cx="120" cy="70" r="20" fill="#FFB7C5" opacity=".4" class="svg-scale-in"/>
+            <circle cx="180" cy="80" r="25" fill="#A8C5A0" opacity=".4" class="svg-scale-in-d1"/>
+            <path d="M90 110 Q130 90 170 110 Q210 130 240 110" fill="none" stroke="#5BA4A4" stroke-width="2" class="svg-draw" opacity=".5"/>
+            <!-- 画笔 -->
+            <line x1="280" y1="40" x2="310" y2="100" stroke="#8B6F5E" stroke-width="4" stroke-linecap="round"/>
+            <path d="M310 100 L314 110 L306 108Z" fill="#E8836B"/>
+          </g>
+          <!-- 身体扫描光线 -->
+          <g class="svg-fade-in-d2">
+            <ellipse cx="180" cy="200" rx="40" ry="55" fill="none" stroke="#5BA4A4" stroke-width="1.5" opacity=".3"/>
+            <line x1="140" y1="175" x2="220" y2="175" stroke="#5BA4A4" stroke-width="1" opacity=".2" class="svg-shimmer"/>
+            <line x1="145" y1="195" x2="215" y2="195" stroke="#5BA4A4" stroke-width="1" opacity=".3" class="svg-shimmer" style="animation-delay:.3s"/>
+            <line x1="148" y1="215" x2="212" y2="215" stroke="#5BA4A4" stroke-width="1" opacity=".4" class="svg-shimmer" style="animation-delay:.6s"/>
+            <circle cx="180" cy="175" r="4" fill="#5BA4A4" class="svg-pulse" opacity=".5"/>
+            <circle cx="180" cy="195" r="4" fill="#5BA4A4" class="svg-pulse" opacity=".5" style="animation-delay:.5s"/>
+            <circle cx="180" cy="215" r="4" fill="#5BA4A4" class="svg-pulse" opacity=".5" style="animation-delay:1s"/>
+          </g>
+          <!-- 自然日记 -->
+          <g class="svg-fade-in-d3">
+            <rect x="260" y="180" width="60" height="75" rx="4" fill="#FFF8F0" stroke="#A8C5A0" stroke-width="1.5"/>
+            <line x1="270" y1="195" x2="310" y2="195" stroke="#A8C5A0" stroke-width="1" opacity=".4"/>
+            <line x1="270" y1="208" x2="305" y2="208" stroke="#A8C5A0" stroke-width="1" opacity=".4"/>
+            <line x1="270" y1="221" x2="308" y2="221" stroke="#A8C5A0" stroke-width="1" opacity=".4"/>
+            <line x1="270" y1="234" x2="300" y2="234" stroke="#A8C5A0" stroke-width="1" opacity=".4"/>
+            <!-- 小叶子 -->
+            <path d="M275 185 Q280 178 285 185 Q280 188 275 185Z" fill="#7BA37A" opacity=".5"/>
+          </g>
+        </svg>
+      </div>
+      <div class="week-text">
+        <div class="week-num" style="color:var(--coral)">第 3 周</div>
+        <h3>共创与觉察</h3>
+        <div class="week-activities">
+          <div class="activity">
+            <div class="activity-icon art">艺</div>
+            <div class="activity-info"><strong>集体壁画</strong><span>共同创作校园希望之墙，体验集体疗愈力量</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon mind">念</div>
+            <div class="activity-info"><strong>身体扫描</strong><span>从头到脚逐步觉察身体各部位的感受</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon out">外</div>
+            <div class="activity-info"><strong>自然观察日记</strong><span>记录校园中一个角落的每日变化</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 4 -->
+    <div class="week-section reveal-right" id="w4">
+      <div class="week-visual">
+        <svg viewBox="0 0 360 280" width="100%" style="max-width:360px">
+          <!-- 声音波形 -->
+          <g class="svg-wave" style="transform-origin:180px 80px">
+            <rect x="60" y="60" width="6" height="40" rx="3" fill="#B8A9C9" opacity=".5"/>
+            <rect x="80" y="45" width="6" height="70" rx="3" fill="#B8A9C9" opacity=".6"/>
+            <rect x="100" y="55" width="6" height="50" rx="3" fill="#B8A9C9" opacity=".5"/>
+            <rect x="120" y="35" width="6" height="90" rx="3" fill="#B8A9C9" opacity=".7"/>
+            <rect x="140" y="50" width="6" height="60" rx="3" fill="#B8A9C9" opacity=".6"/>
+            <rect x="160" y="30" width="6" height="100" rx="3" fill="#B8A9C9" opacity=".8"/>
+            <rect x="180" y="40" width="6" height="80" rx="3" fill="#B8A9C9" opacity=".7"/>
+            <rect x="200" y="50" width="6" height="60" rx="3" fill="#B8A9C9" opacity=".6"/>
+            <rect x="220" y="35" width="6" height="90" rx="3" fill="#B8A9C9" opacity=".7"/>
+            <rect x="240" y="55" width="6" height="50" rx="3" fill="#B8A9C9" opacity=".5"/>
+            <rect x="260" y="45" width="6" height="70" rx="3" fill="#B8A9C9" opacity=".6"/>
+            <rect x="280" y="60" width="6" height="40" rx="3" fill="#B8A9C9" opacity=".5"/>
+          </g>
+          <!-- 慈悲心形 -->
+          <g class="svg-breathe" style="transform-origin:120px 180px">
+            <path d="M120 200 Q100 180 100 165 Q100 150 112 150 Q120 150 120 160 Q120 150 128 150 Q140 150 140 165 Q140 180 120 200Z" fill="#E8836B" opacity=".4"/>
+            <path d="M120 195 Q105 180 105 168 Q105 157 114 157 Q120 157 120 165 Q120 157 126 157 Q135 157 135 168 Q135 180 120 195Z" fill="#E8836B" opacity=".3"/>
+          </g>
+          <!-- 瑜伽姿势 -->
+          <g class="svg-fade-in-d1" transform="translate(220,150)">
+            <circle cx="30" cy="10" r="10" fill="#5BA4A4" opacity=".5"/>
+            <line x1="30" y1="20" x2="30" y2="60" stroke="#5BA4A4" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+            <line x1="30" y1="35" x2="10" y2="50" stroke="#5BA4A4" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+            <line x1="30" y1="35" x2="50" y2="50" stroke="#5BA4A4" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+            <line x1="30" y1="60" x2="15" y2="90" stroke="#5BA4A4" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+            <line x1="30" y1="60" x2="45" y2="90" stroke="#5BA4A4" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+            <!-- 双手合十 -->
+            <path d="M25 48 L30 42 L35 48" fill="none" stroke="#5BA4A4" stroke-width="2" opacity=".6"/>
+          </g>
+        </svg>
+      </div>
+      <div class="week-text">
+        <div class="week-num" style="color:var(--coral)">第 4 周</div>
+        <h3>倾听与慈悲</h3>
+        <div class="week-activities">
+          <div class="activity">
+            <div class="activity-icon art">艺</div>
+            <div class="activity-info"><strong>声音地图</strong><span>闭眼聆听校园声音，绘制个人声音景观图</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon mind">念</div>
+            <div class="activity-info"><strong>慈悲冥想</strong><span>对自己和他人发送善意与关怀</span></div>
+          </div>
+          <div class="activity">
+            <div class="activity-icon out">外</div>
+            <div class="activity-info"><strong>晨间户外瑜伽</strong><span>在校园绿地中练习瑜伽，身心合一</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PHASE 2 ==================== -->
+<section class="section phase2" id="phase2">
+  <div class="container">
+    <div class="section-header">
+      <span class="phase-tag">阶段二 · 第5-12周</span>
+      <h2>深化期 —— "探索与整合"</h2>
+      <p>在前期基础上深入探索内在世界，通过系统化的艺术疗愈工作坊和正念冥想练习，整合疫情经历，重建心理韧性。</p>
+    </div>
+
+    <!-- Phase 2 SVG: 树木生长 -->
+    <div style="text-align:center;margin-bottom:60px" class="reveal-scale">
+      <svg viewBox="0 0 400 220" width="400" height="220" style="max-width:100%">
+        <ellipse cx="200" cy="200" rx="140" ry="15" fill="#A8C5A0" opacity=".15"/>
+        <!-- 树干 -->
+        <path d="M200 200 Q195 160 190 130 Q188 110 195 90" fill="none" stroke="#8B6F5E" stroke-width="6" stroke-linecap="round" class="svg-grow"/>
+        <path d="M195 140 Q180 120 165 115" fill="none" stroke="#8B6F5E" stroke-width="4" stroke-linecap="round" class="svg-grow" style="animation-delay:.3s"/>
+        <path d="M193 125 Q210 110 225 108" fill="none" stroke="#8B6F5E" stroke-width="4" stroke-linecap="round" class="svg-grow" style="animation-delay:.5s"/>
+        <!-- 树冠 -->
+        <circle cx="195" cy="75" r="40" fill="#A8C5A0" opacity=".3" class="svg-breathe"/>
+        <circle cx="160" cy="90" r="30" fill="#7BA37A" opacity=".25" class="svg-breathe" style="animation-delay:.5s"/>
+        <circle cx="230" cy="85" r="32" fill="#A8C5A0" opacity=".25" class="svg-breathe" style="animation-delay:1s"/>
+        <circle cx="195" cy="55" r="25" fill="#C8E6C9" opacity=".3" class="svg-breathe" style="animation-delay:1.5s"/>
+        <!-- 根系 -->
+        <path d="M200 200 Q180 210 160 215" fill="none" stroke="#8B6F5E" stroke-width="3" stroke-linecap="round" opacity=".4" class="svg-fade-in"/>
+        <path d="M200 200 Q220 212 240 218" fill="none" stroke="#8B6F5E" stroke-width="3" stroke-linecap="round" opacity=".4" class="svg-fade-in-d1"/>
+        <path d="M200 200 Q195 215 190 225" fill="none" stroke="#8B6F5E" stroke-width="2" stroke-linecap="round" opacity=".3" class="svg-fade-in-d2"/>
+      </svg>
+    </div>
+
+    <!-- Schedule Table -->
+    <div class="reveal" style="overflow-x:auto;margin-bottom:60px">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>周一</th>
+            <th>周三</th>
+            <th>周五</th>
+            <th>周末</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="day-cell">上午</td>
+            <td>正念冥想练习</td>
+            <td>艺术疗愈工作坊</td>
+            <td>户外自然活动</td>
+            <td rowspan="2">综合实践<br>（自由结合三项活动）</td>
+          </tr>
+          <tr>
+            <td class="day-cell">下午</td>
+            <td>反思与分享</td>
+            <td>创作与表达</td>
+            <td>团体互动</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Art Therapy Workshops -->
+    <h3 style="text-align:center;font-size:1.4rem;margin-bottom:30px;color:var(--sage-d)">艺术疗愈工作坊主题</h3>
+    <div class="workshop-grid">
+      <!-- W5 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 水彩风景 -->
+            <ellipse cx="60" cy="70" rx="50" ry="25" fill="#A8C5A0" opacity=".3" class="svg-float"/>
+            <circle cx="150" cy="30" r="20" fill="#F0C78A" opacity=".4" class="svg-pulse"/>
+            <path d="M30 50 Q60 30 90 50 Q120 35 150 50" fill="none" stroke="#5BA4A4" stroke-width="2" opacity=".5" class="svg-wave"/>
+            <rect x="20" y="60" width="160" height="30" rx="4" fill="#FFDAB9" opacity=".2"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 5 周</div>
+        <h4>水彩风景画</h4>
+        <p>用水彩描绘内心的风景，表达情绪的色彩与形态</p>
+      </div>
+      <!-- W6 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 黏土雕塑 -->
+            <ellipse cx="100" cy="75" rx="40" ry="15" fill="#D5CCE4" opacity=".3"/>
+            <path d="M80 75 Q80 40 100 35 Q120 40 120 75Z" fill="#C8B8D8" opacity=".4" class="svg-breathe"/>
+            <circle cx="90" cy="55" r="3" fill="#8B6F5E" opacity=".3"/>
+            <circle cx="110" cy="55" r="3" fill="#8B6F5E" opacity=".3"/>
+            <path d="M95 65 Q100 68 105 65" fill="none" stroke="#8B6F5E" stroke-width="1.5" opacity=".3"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 6 周</div>
+        <h4>黏土雕塑</h4>
+        <p>用手塑造形态，体验触觉带来的疗愈力量</p>
+      </div>
+      <!-- W7 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 纤维连接网 -->
+            <circle cx="60" cy="40" r="8" fill="none" stroke="#E8836B" stroke-width="2" class="svg-pulse" opacity=".5"/>
+            <circle cx="100" cy="30" r="8" fill="none" stroke="#5BA4A4" stroke-width="2" class="svg-pulse" opacity=".5" style="animation-delay:.3s"/>
+            <circle cx="140" cy="45" r="8" fill="none" stroke="#A8C5A0" stroke-width="2" class="svg-pulse" opacity=".5" style="animation-delay:.6s"/>
+            <circle cx="80" cy="65" r="8" fill="none" stroke="#B8A9C9" stroke-width="2" class="svg-pulse" opacity=".5" style="animation-delay:.9s"/>
+            <circle cx="120" cy="60" r="8" fill="none" stroke="#E6A23C" stroke-width="2" class="svg-pulse" opacity=".5" style="animation-delay:1.2s"/>
+            <line x1="68" y1="40" x2="92" y2="30" stroke="#D5CCE4" stroke-width="1" opacity=".4"/>
+            <line x1="108" y1="30" x2="132" y2="45" stroke="#D5CCE4" stroke-width="1" opacity=".4"/>
+            <line x1="64" y1="46" x2="74" y2="60" stroke="#D5CCE4" stroke-width="1" opacity=".4"/>
+            <line x1="88" y1="65" x2="112" y2="60" stroke="#D5CCE4" stroke-width="1" opacity=".4"/>
+            <line x1="128" y1="55" x2="120" y2="60" stroke="#D5CCE4" stroke-width="1" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 7 周</div>
+        <h4>纤维艺术连接网</h4>
+        <p>用毛线和织物编织连接，象征人际支持网络</p>
+      </div>
+      <!-- W8 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 书写信件 -->
+            <rect x="50" y="20" width="100" height="65" rx="4" fill="#FFF8F0" stroke="#E8836B" stroke-width="1.5" class="svg-float"/>
+            <line x1="65" y1="35" x2="135" y2="35" stroke="#E8836B" stroke-width="1" opacity=".3"/>
+            <line x1="65" y1="48" x2="130" y2="48" stroke="#E8836B" stroke-width="1" opacity=".3"/>
+            <line x1="65" y1="61" x2="120" y2="61" stroke="#E8836B" stroke-width="1" opacity=".3"/>
+            <!-- 信封 -->
+            <path d="M55 85 L100 70 L145 85" fill="none" stroke="#E8836B" stroke-width="1.5" opacity=".4"/>
+            <!-- 笔 -->
+            <line x1="155" y1="30" x2="170" y2="75" stroke="#8B6F5E" stroke-width="3" stroke-linecap="round"/>
+            <path d="M170 75 L173 82 L167 80Z" fill="#5BA4A4" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 8 周</div>
+        <h4>书写疗愈信件</h4>
+        <p>给过去的自己、未来的自己或重要的人写一封信</p>
+      </div>
+      <!-- W9 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 摄影镜头 -->
+            <circle cx="100" cy="50" r="30" fill="none" stroke="#8B6F5E" stroke-width="3" class="svg-ring"/>
+            <circle cx="100" cy="50" r="20" fill="none" stroke="#8B6F5E" stroke-width="2" class="svg-ring" style="animation-delay:.5s"/>
+            <circle cx="100" cy="50" r="10" fill="#5BA4A4" opacity=".3" class="svg-pulse"/>
+            <circle cx="100" cy="50" r="4" fill="#5BA4A4" opacity=".5"/>
+            <!-- 闪光 -->
+            <line x1="140" y1="20" x2="155" y2="10" stroke="#F0C78A" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+            <line x1="148" y1="30" x2="165" y2="25" stroke="#F0C78A" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 9 周</div>
+        <h4>疗愈摄影</h4>
+        <p>用镜头捕捉生活中被忽视的美好瞬间</p>
+      </div>
+      <!-- W10 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 面具 -->
+            <ellipse cx="100" cy="50" rx="45" ry="35" fill="#FFDAB9" opacity=".4" class="svg-breathe"/>
+            <ellipse cx="100" cy="50" rx="45" ry="35" fill="none" stroke="#E8836B" stroke-width="2"/>
+            <!-- 眼睛 -->
+            <ellipse cx="82" cy="42" rx="10" ry="7" fill="none" stroke="#8B6F5E" stroke-width="1.5"/>
+            <ellipse cx="118" cy="42" rx="10" ry="7" fill="none" stroke="#8B6F5E" stroke-width="1.5"/>
+            <!-- 嘴 -->
+            <path d="M88 62 Q100 72 112 62" fill="none" stroke="#8B6F5E" stroke-width="1.5"/>
+            <!-- 装饰 -->
+            <circle cx="75" cy="25" r="3" fill="#B8A9C9" opacity=".5" class="svg-float"/>
+            <circle cx="125" cy="25" r="3" fill="#B8A9C9" opacity=".5" class="svg-float-d"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 10 周</div>
+        <h4>面具制作</h4>
+        <p>创作内外两面不同的面具，探索真实自我</p>
+      </div>
+      <!-- W11 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 音乐音符 -->
+            <g class="svg-float">
+              <circle cx="70" cy="65" r="8" fill="#E8836B" opacity=".5"/>
+              <line x1="78" y1="65" x2="78" y2="30" stroke="#E8836B" stroke-width="2.5"/>
+              <path d="M78 30 Q90 25 90 35 Q90 40 78 38" fill="#E8836B" opacity=".4"/>
+            </g>
+            <g class="svg-float-d">
+              <circle cx="120" cy="55" r="8" fill="#5BA4A4" opacity=".5"/>
+              <line x1="128" y1="55" x2="128" y2="20" stroke="#5BA4A4" stroke-width="2.5"/>
+              <path d="M128 20 Q140 15 140 25 Q140 30 128 28" fill="#5BA4A4" opacity=".4"/>
+            </g>
+            <g class="svg-float-d2">
+              <circle cx="155" cy="70" r="7" fill="#B8A9C9" opacity=".5"/>
+              <line x1="162" y1="70" x2="162" y2="38" stroke="#B8A9C9" stroke-width="2"/>
+              <path d="M162 38 Q172 34 172 42 Q172 46 162 44" fill="#B8A9C9" opacity=".4"/>
+            </g>
+            <!-- 声波 -->
+            <path d="M30 50 Q40 40 50 50 Q60 60 70 50" fill="none" stroke="#E6A23C" stroke-width="1.5" opacity=".3" class="svg-wave"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 11 周</div>
+        <h4>音乐与声音疗愈</h4>
+        <p>通过音乐创作和声音探索释放情绪</p>
+      </div>
+      <!-- W12 -->
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 100" width="180" height="90">
+            <!-- 展览画廊 -->
+            <rect x="20" y="15" width="55" height="45" rx="3" fill="#FFDAB9" stroke="#D5CCE4" stroke-width="1.5" class="svg-fade-in"/>
+            <rect x="85" y="10" width="55" height="50" rx="3" fill="#D5CCE4" stroke="#A8C5A0" stroke-width="1.5" class="svg-fade-in-d1"/>
+            <rect x="150" y="18" width="45" height="42" rx="3" fill="#C8E6C9" stroke="#E8836B" stroke-width="1.5" class="svg-fade-in-d2"/>
+            <!-- 画框内容 -->
+            <circle cx="47" cy="37" r="10" fill="#E8836B" opacity=".3"/>
+            <path d="M95 30 Q112 25 130 35" fill="none" stroke="#5BA4A4" stroke-width="2" opacity=".4"/>
+            <rect x="160" y="28" width="25" height="20" rx="2" fill="#E6A23C" opacity=".3"/>
+            <!-- 底座 -->
+            <line x1="10" y1="75" x2="195" y2="75" stroke="#8B6F5E" stroke-width="2" opacity=".3"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 12 周</div>
+        <h4>艺术展览与分享</h4>
+        <p>举办成果展览，分享八周创作旅程</p>
+      </div>
+    </div>
+
+    <!-- Mindfulness Themes -->
+    <h3 style="text-align:center;font-size:1.4rem;margin-bottom:30px;color:var(--teal-d)">正念冥想主题</h3>
+    <div class="workshop-grid">
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- 情绪波浪 -->
+            <path d="M10 40 Q30 20 50 40 Q70 60 90 40 Q110 20 130 40 Q150 60 170 40 Q185 25 195 40" fill="none" stroke="#5BA4A4" stroke-width="2.5" stroke-linecap="round" class="svg-wave"/>
+            <path d="M10 50 Q30 35 50 50 Q70 65 90 50 Q110 35 130 50 Q150 65 170 50 Q185 38 195 50" fill="none" stroke="#B8A9C9" stroke-width="1.5" stroke-linecap="round" class="svg-wave" style="animation-delay:.5s" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 5 周</div>
+        <h4>情绪波浪</h4>
+        <p>观察情绪如波浪般起伏，学会与情绪共处</p>
+      </div>
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- 身体关怀 -->
+            <ellipse cx="100" cy="40" rx="30" ry="28" fill="none" stroke="#E8836B" stroke-width="2" class="svg-breathe"/>
+            <circle cx="100" cy="40" r="5" fill="#E8836B" opacity=".3" class="svg-pulse"/>
+            <path d="M100 12 L100 8" stroke="#E8836B" stroke-width="1.5" opacity=".4"/>
+            <path d="M100 68 L100 72" stroke="#E8836B" stroke-width="1.5" opacity=".4"/>
+            <path d="M70 40 L66 40" stroke="#E8836B" stroke-width="1.5" opacity=".4"/>
+            <path d="M130 40 L134 40" stroke="#E8836B" stroke-width="1.5" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 6 周</div>
+        <h4>身体关怀冥想</h4>
+        <p>以温柔觉知关怀身体的每一个部分</p>
+      </div>
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- RAIN 雨滴 -->
+            <text x="30" y="35" font-family="var(--font-serif)" font-size="28" fill="#5BA4A4" opacity=".5" class="svg-float">R</text>
+            <text x="65" y="35" font-family="var(--font-serif)" font-size="28" fill="#5BA4A4" opacity=".5" class="svg-float-d">A</text>
+            <text x="100" y="35" font-family="var(--font-serif)" font-size="28" fill="#5BA4A4" opacity=".5" class="svg-float-d2">I</text>
+            <text x="125" y="35" font-family="var(--font-serif)" font-size="28" fill="#5BA4A4" opacity=".5" class="svg-float">N</text>
+            <!-- 雨滴 -->
+            <path d="M50 55 Q50 48 53 45 Q56 48 56 55 Q53 58 50 55Z" fill="#5BA4A4" opacity=".3" class="svg-drop"/>
+            <path d="M100 60 Q100 53 103 50 Q106 53 106 60 Q103 63 100 60Z" fill="#5BA4A4" opacity=".3" class="svg-drop" style="animation-delay:.4s"/>
+            <path d="M150 52 Q150 45 153 42 Q156 45 156 52 Q153 55 150 52Z" fill="#5BA4A4" opacity=".3" class="svg-drop" style="animation-delay:.8s"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 7 周</div>
+        <h4>RAIN 情绪调节</h4>
+        <p>识别、允许、探究、非认同四步情绪调节法</p>
+      </div>
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- 慈悲涟漪 -->
+            <circle cx="100" cy="40" r="8" fill="#E8836B" opacity=".4" class="svg-pulse"/>
+            <circle cx="100" cy="40" r="16" fill="none" stroke="#E8836B" stroke-width="1.5" opacity=".3" class="svg-ripple"/>
+            <circle cx="100" cy="40" r="24" fill="none" stroke="#E8836B" stroke-width="1" opacity=".2" class="svg-ripple" style="animation-delay:.5s"/>
+            <circle cx="100" cy="40" r="32" fill="none" stroke="#E8836B" stroke-width="1" opacity=".1" class="svg-ripple" style="animation-delay:1s"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 8 周</div>
+        <h4>慈悲涟漪冥想</h4>
+        <p>将善意从自己扩展到他人、社区和世界</p>
+      </div>
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- 正念进食 -->
+            <circle cx="100" cy="45" r="20" fill="none" stroke="#E6A23C" stroke-width="2" class="svg-breathe"/>
+            <circle cx="100" cy="45" r="8" fill="#E6A23C" opacity=".3"/>
+            <path d="M80 30 Q85 25 90 30" fill="none" stroke="#7BA37A" stroke-width="2" opacity=".5"/>
+            <path d="M110 30 Q115 25 120 30" fill="none" stroke="#7BA37A" stroke-width="2" opacity=".5"/>
+            <!-- 蒸汽 -->
+            <path d="M92 25 Q94 18 92 12" fill="none" stroke="#D5CCE4" stroke-width="1.5" opacity=".3" class="svg-wave"/>
+            <path d="M100 23 Q102 16 100 10" fill="none" stroke="#D5CCE4" stroke-width="1.5" opacity=".3" class="svg-wave" style="animation-delay:.3s"/>
+            <path d="M108 25 Q110 18 108 12" fill="none" stroke="#D5CCE4" stroke-width="1.5" opacity=".3" class="svg-wave" style="animation-delay:.6s"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 9 周</div>
+        <h4>正念进食</h4>
+        <p>以全部感官体验食物，培养感恩与觉知</p>
+      </div>
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- 行走脚印 -->
+            <ellipse cx="60" cy="40" rx="10" ry="16" fill="#A8C5A0" opacity=".3" class="svg-fade-in" transform="rotate(-10 60 40)"/>
+            <ellipse cx="60" cy="25" rx="5" ry="4" fill="#A8C5A0" opacity=".2" class="svg-fade-in" transform="rotate(-10 60 25)"/>
+            <ellipse cx="100" cy="42" rx="10" ry="16" fill="#7BA37A" opacity=".3" class="svg-fade-in-d1" transform="rotate(10 100 42)"/>
+            <ellipse cx="100" cy="27" rx="5" ry="4" fill="#7BA37A" opacity=".2" class="svg-fade-in-d1" transform="rotate(10 100 27)"/>
+            <ellipse cx="140" cy="40" rx="10" ry="16" fill="#A8C5A0" opacity=".3" class="svg-fade-in-d2" transform="rotate(-10 140 40)"/>
+            <ellipse cx="140" cy="25" rx="5" ry="4" fill="#A8C5A0" opacity=".2" class="svg-fade-in-d2" transform="rotate(-10 140 25)"/>
+            <!-- 路径 -->
+            <path d="M60 58 Q100 62 140 58" fill="none" stroke="#A8C5A0" stroke-width="1.5" stroke-dasharray="4 4" opacity=".3"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 10 周</div>
+        <h4>正念行走</h4>
+        <p>觉知每一步的触感，在行走中找到内心的平静</p>
+      </div>
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- 开放觉察 -->
+            <circle cx="100" cy="40" r="28" fill="none" stroke="#B8A9C9" stroke-width="2" class="svg-ring"/>
+            <circle cx="100" cy="40" r="18" fill="none" stroke="#B8A9C9" stroke-width="1.5" class="svg-ring" style="animation-delay:.5s" opacity=".6"/>
+            <circle cx="100" cy="40" r="8" fill="#B8A9C9" opacity=".2" class="svg-pulse"/>
+            <!-- 射线 -->
+            <line x1="100" y1="8" x2="100" y2="14" stroke="#B8A9C9" stroke-width="1.5" opacity=".3" class="svg-shimmer"/>
+            <line x1="100" y1="66" x2="100" y2="72" stroke="#B8A9C9" stroke-width="1.5" opacity=".3" class="svg-shimmer" style="animation-delay:.5s"/>
+            <line x1="68" y1="40" x2="74" y2="40" stroke="#B8A9C9" stroke-width="1.5" opacity=".3" class="svg-shimmer" style="animation-delay:.3s"/>
+            <line x1="126" y1="40" x2="132" y2="40" stroke="#B8A9C9" stroke-width="1.5" opacity=".3" class="svg-shimmer" style="animation-delay:.8s"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 11 周</div>
+        <h4>开放觉察</h4>
+        <p>不评判地觉察当下的一切体验</p>
+      </div>
+      <div class="workshop-card">
+        <div class="wc-visual">
+          <svg viewBox="0 0 200 80" width="180" height="72">
+            <!-- 个人仪式 -->
+            <g class="svg-glow" style="transform-origin:100px 40px">
+              <path d="M100 15 L105 30 L120 30 L108 40 L112 55 L100 46 L88 55 L92 40 L80 30 L95 30Z" fill="#E6A23C" opacity=".3"/>
+            </g>
+            <circle cx="100" cy="38" r="12" fill="none" stroke="#E6A23C" stroke-width="1.5" class="svg-pulse" opacity=".4"/>
+            <circle cx="100" cy="38" r="4" fill="#E6A23C" opacity=".3"/>
+          </svg>
+        </div>
+        <div class="wc-week">第 12 周</div>
+        <h4>个人仪式创建</h4>
+        <p>设计属于自己的日常正念仪式，建立持续练习习惯</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PHASE 3 ==================== -->
+<section class="section phase3" id="phase3">
+  <div class="container">
+    <div class="section-header">
+      <span class="phase-tag">阶段三 · 第13-16周</span>
+      <h2>巩固期 —— "持续成长"</h2>
+      <p>整合前两个阶段的学习成果，建立可持续的自我疗愈实践，培养同伴支持能力，为长期身心健康奠定基础。</p>
+    </div>
+
+    <!-- Phase 3 SVG: 果实丰收 -->
+    <div style="text-align:center;margin-bottom:60px" class="reveal-scale">
+      <svg viewBox="0 0 400 200" width="400" height="200" style="max-width:100%">
+        <!-- 树 -->
+        <path d="M200 180 L200 100" stroke="#8B6F5E" stroke-width="6" stroke-linecap="round"/>
+        <path d="M200 130 Q175 110 160 115" fill="none" stroke="#8B6F5E" stroke-width="4" stroke-linecap="round"/>
+        <path d="M200 115 Q225 100 240 105" fill="none" stroke="#8B6F5E" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="200" cy="80" r="45" fill="#A8C5A0" opacity=".25"/>
+        <circle cx="165" cy="95" r="30" fill="#7BA37A" opacity=".2"/>
+        <circle cx="235" cy="90" r="32" fill="#A8C5A0" opacity=".2"/>
+        <!-- 果实 -->
+        <circle cx="170" cy="110" r="8" fill="#E8836B" opacity=".6" class="svg-float"/>
+        <circle cx="230" cy="105" r="7" fill="#E6A23C" opacity=".6" class="svg-float-d"/>
+        <circle cx="195" cy="120" r="9" fill="#E8836B" opacity=".5" class="svg-float-d2"/>
+        <circle cx="210" cy="100" r="6" fill="#B8A9C9" opacity=".5" class="svg-float"/>
+        <circle cx="155" cy="100" r="7" fill="#E6A23C" opacity=".5" class="svg-float-d"/>
+        <!-- 庆祝 -->
+        <g class="svg-fade-in-d2">
+          <path d="M80 50 L82 40 L84 50" fill="#E8836B" opacity=".4"/>
+          <path d="M320 60 L322 50 L324 60" fill="#5BA4A4" opacity=".4"/>
+          <path d="M100 30 L102 22 L104 30" fill="#E6A23C" opacity=".4"/>
+          <path d="M300 40 L302 32 L304 40" fill="#B8A9C9" opacity=".4"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="phase3-grid">
+      <!-- W13 -->
+      <div class="phase3-card">
+        <div class="p3-icon" style="background:var(--peach-l)">
+          <svg viewBox="0 0 60 60" width="48" height="48">
+            <!-- 工具箱 -->
+            <rect x="10" y="25" width="40" height="25" rx="4" fill="none" stroke="#E8836B" stroke-width="2.5"/>
+            <rect x="22" y="20" width="16" height="8" rx="3" fill="none" stroke="#E8836B" stroke-width="2"/>
+            <line x1="30" y1="28" x2="30" y2="50" stroke="#E8836B" stroke-width="1.5" opacity=".4"/>
+            <circle cx="20" cy="37" r="3" fill="#E8836B" opacity=".3" class="svg-pulse"/>
+            <circle cx="40" cy="37" r="3" fill="#5BA4A4" opacity=".3" class="svg-pulse" style="animation-delay:.5s"/>
+          </svg>
+        </div>
+        <h4>第13周：疗愈工具箱</h4>
+        <p>整合16周所学，创建个人专属的身心疗愈工具箱，包含艺术、正念和户外活动三大模块的自助资源。</p>
+      </div>
+      <!-- W14 -->
+      <div class="phase3-card">
+        <div class="p3-icon" style="background:var(--lavender-l)">
+          <svg viewBox="0 0 60 60" width="48" height="48">
+            <!-- 传递火炬 -->
+            <g class="svg-glow" style="transform-origin:30px 25px">
+              <path d="M30 10 Q25 18 28 25 Q30 30 35 28 Q38 25 35 18 Q33 14 30 10Z" fill="#E6A23C" opacity=".5"/>
+            </g>
+            <rect x="26" y="28" width="8" height="20" rx="2" fill="#8B6F5E" opacity=".5"/>
+            <!-- 传递箭头 -->
+            <path d="M42 35 L50 30 L42 25" fill="none" stroke="#B8A9C9" stroke-width="2" stroke-linecap="round" class="svg-wave"/>
+          </svg>
+        </div>
+        <h4>第14周：同伴引导员培训</h4>
+        <p>培训有意愿的参与者成为同伴引导员，学习带领正念和艺术活动的基本技能，建立朋辈支持体系。</p>
+      </div>
+      <!-- W15 -->
+      <div class="phase3-card">
+        <div class="p3-icon" style="background:#C8E6C9">
+          <svg viewBox="0 0 60 60" width="48" height="48">
+            <!-- 庆祝 -->
+            <g class="svg-float">
+              <path d="M30 15 L32 25 L42 25 L34 31 L37 41 L30 35 L23 41 L26 31 L18 25 L28 25Z" fill="#A8C5A0" opacity=".5"/>
+            </g>
+            <!-- 彩带 -->
+            <path d="M10 20 Q15 15 20 20" fill="none" stroke="#E8836B" stroke-width="1.5" opacity=".4" class="svg-wave"/>
+            <path d="M40 15 Q45 10 50 15" fill="none" stroke="#5BA4A4" stroke-width="1.5" opacity=".4" class="svg-wave" style="animation-delay:.3s"/>
+            <path d="M15 40 Q20 35 25 40" fill="none" stroke="#B8A9C9" stroke-width="1.5" opacity=".4" class="svg-wave" style="animation-delay:.6s"/>
+          </svg>
+        </div>
+        <h4>第15周：春归闭幕式</h4>
+        <p>举办庆祝活动，展示艺术作品，分享成长故事，表彰优秀参与者，共同见证复原之旅的里程碑。</p>
+      </div>
+      <!-- W16 -->
+      <div class="phase3-card">
+        <div class="p3-icon" style="background:var(--amber-l)">
+          <svg viewBox="0 0 60 60" width="48" height="48">
+            <!-- 持续承诺 -->
+            <g class="svg-breathe" style="transform-origin:30px 30px">
+              <circle cx="30" cy="30" r="20" fill="none" stroke="#E6A23C" stroke-width="2"/>
+              <path d="M30 15 L30 30 L40 35" fill="none" stroke="#E6A23C" stroke-width="2" stroke-linecap="round"/>
+            </g>
+            <circle cx="30" cy="30" r="3" fill="#E6A23C" opacity=".4"/>
+          </svg>
+        </div>
+        <h4>第16周：持续实践承诺</h4>
+        <p>制定个人持续实践计划，签署自我关怀承诺书，加入校友支持网络，确保复原成果的长期维持。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== IMPLEMENTATION ADAPTATION ==================== -->
+<section class="section" id="adapt" style="background:var(--cream-d)">
+  <div class="container">
+    <div class="section-header">
+      <span class="phase-tag" style="background:var(--lavender-l);color:var(--lavender)">灵活适配</span>
+      <h2 style="color:var(--text)">实施适配方案</h2>
+      <p>根据不同高校的实际情况，灵活调整实施方案，确保方案的普适性与有效性。</p>
+    </div>
+    <div class="adapt-grid">
+      <!-- 师生差异化 -->
+      <div class="adapt-card">
+        <div class="ac-icon" style="background:var(--peach-l)">
+          <svg viewBox="0 0 40 40" width="36" height="36">
+            <!-- 师生连接 -->
+            <circle cx="15" cy="14" r="6" fill="none" stroke="#E8836B" stroke-width="2"/>
+            <path d="M15 20 Q10 24 8 30 L22 30 Q20 24 15 20Z" fill="none" stroke="#E8836B" stroke-width="1.5"/>
+            <circle cx="28" cy="14" r="5" fill="none" stroke="#5BA4A4" stroke-width="2"/>
+            <path d="M28 19 Q24 22 22 28 L34 28 Q32 22 28 19Z" fill="none" stroke="#5BA4A4" stroke-width="1.5"/>
+            <path d="M20 16 L23 16" stroke="#B8A9C9" stroke-width="1.5" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <h4>师生差异化设计</h4>
+        <p>针对教师和学生的不同需求设计差异化活动方案，教师侧重压力管理与职业倦怠预防，学生侧重学业焦虑与社交重建。</p>
+      </div>
+      <!-- 线上线下融合 -->
+      <div class="adapt-card">
+        <div class="ac-icon" style="background:var(--lavender-l)">
+          <svg viewBox="0 0 40 40" width="36" height="36">
+            <!-- 线上线下 -->
+            <rect x="5" y="8" width="22" height="16" rx="2" fill="none" stroke="#B8A9C9" stroke-width="2"/>
+            <line x1="5" y1="24" x2="27" y2="24" stroke="#B8A9C9" stroke-width="2"/>
+            <rect x="28" y="14" width="10" height="8" rx="1" fill="none" stroke="#5BA4A4" stroke-width="1.5"/>
+            <path d="M16 28 L16 34" stroke="#B8A9C9" stroke-width="1.5"/>
+            <line x1="10" y1="34" x2="22" y2="34" stroke="#B8A9C9" stroke-width="1.5"/>
+            <!-- 连接线 -->
+            <path d="M27 18 L28 18" stroke="#E8836B" stroke-width="1.5" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <h4>线上线下融合</h4>
+        <p>结合线上平台与线下活动，提供灵活参与方式。线上提供冥想音频、艺术教程和社区交流，线下开展工作坊和户外活动。</p>
+      </div>
+      <!-- 院系联动 -->
+      <div class="adapt-card">
+        <div class="ac-icon" style="background:#C8E6C9">
+          <svg viewBox="0 0 40 40" width="36" height="36">
+            <!-- 院系桥梁 -->
+            <rect x="3" y="12" width="12" height="16" rx="2" fill="none" stroke="#7BA37A" stroke-width="2"/>
+            <rect x="25" y="12" width="12" height="16" rx="2" fill="none" stroke="#7BA37A" stroke-width="2"/>
+            <path d="M15 20 Q20 14 25 20" fill="none" stroke="#E6A23C" stroke-width="2" stroke-linecap="round" class="svg-wave"/>
+            <path d="M15 24 Q20 30 25 24" fill="none" stroke="#E6A23C" stroke-width="2" stroke-linecap="round" class="svg-wave" style="animation-delay:.5s"/>
+            <line x1="7" y1="18" x2="11" y2="18" stroke="#7BA37A" stroke-width="1.5" opacity=".4"/>
+            <line x1="7" y1="22" x2="11" y2="22" stroke="#7BA37A" stroke-width="1.5" opacity=".4"/>
+            <line x1="29" y1="18" x2="33" y2="18" stroke="#7BA37A" stroke-width="1.5" opacity=".4"/>
+            <line x1="29" y1="22" x2="33" y2="22" stroke="#7BA37A" stroke-width="1.5" opacity=".4"/>
+          </svg>
+        </div>
+        <h4>院系联动机制</h4>
+        <p>建立跨院系协作机制，与心理健康中心、艺术学院、体育部门等联动，形成全校性身心复原支持网络。</p>
+      </div>
+      <!-- 文化适配 -->
+      <div class="adapt-card">
+        <div class="ac-icon" style="background:var(--amber-l)">
+          <svg viewBox="0 0 40 40" width="36" height="36">
+            <!-- 文化元素 -->
+            <circle cx="20" cy="20" r="14" fill="none" stroke="#E6A23C" stroke-width="2" class="svg-rotate" style="transform-origin:20px 20px"/>
+            <circle cx="20" cy="20" r="8" fill="none" stroke="#E8836B" stroke-width="1.5" opacity=".5"/>
+            <circle cx="20" cy="20" r="3" fill="#E6A23C" opacity=".3"/>
+            <!-- 文化符号 -->
+            <path d="M20 6 L20 10" stroke="#E6A23C" stroke-width="1.5" opacity=".4"/>
+            <path d="M20 30 L20 34" stroke="#E6A23C" stroke-width="1.5" opacity=".4"/>
+            <path d="M6 20 L10 20" stroke="#E6A23C" stroke-width="1.5" opacity=".4"/>
+            <path d="M30 20 L34 20" stroke="#E6A23C" stroke-width="1.5" opacity=".4"/>
+          </svg>
+        </div>
+        <h4>文化适配</h4>
+        <p>融入本土文化元素，如中医养生理念、传统艺术形式、节气活动等，使方案更贴近师生的文化背景和生活习惯。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LONG-TERM MECHANISM ==================== -->
+<section class="section" id="mechanism">
+  <div class="container">
+    <div class="section-header">
+      <span class="phase-tag" style="background:var(--sage);color:var(--white)">长效保障</span>
+      <h2 style="color:var(--sage-d)">长效保障机制</h2>
+      <p>建立可持续的校园身心复原生态系统，确保"春归计划"的长期效果和持续发展。</p>
+    </div>
+
+    <!-- 循环生态系统 SVG -->
+    <div style="text-align:center;margin-bottom:50px" class="reveal-scale">
+      <svg viewBox="0 0 300 200" width="300" height="200" style="max-width:100%">
+        <!-- 中心 -->
+        <circle cx="150" cy="100" r="30" fill="#A8C5A0" opacity=".2" class="svg-breathe"/>
+        <text x="150" y="105" text-anchor="middle" font-family="var(--font-serif)" font-size="12" fill="#7BA37A">春归</text>
+        <!-- 环绕节点 -->
+        <circle cx="150" cy="30" r="18" fill="#FFDAB9" opacity=".4" class="svg-float"/>
+        <text x="150" y="34" text-anchor="middle" font-size="8" fill="#E8836B">空间</text>
+        <circle cx="245" cy="65" r="18" fill="#D5CCE4" opacity=".4" class="svg-float-d"/>
+        <text x="245" y="69" text-anchor="middle" font-size="8" fill="#B8A9C9">课程</text>
+        <circle cx="245" cy="135" r="18" fill="#C8E6C9" opacity=".4" class="svg-float-d2"/>
+        <text x="245" y="139" text-anchor="middle" font-size="8" fill="#7BA37A">同伴</text>
+        <circle cx="150" cy="170" r="18" fill="#FFE8D6" opacity=".4" class="svg-float"/>
+        <text x="150" y="174" text-anchor="middle" font-size="8" fill="#E6A23C">数字</text>
+        <circle cx="55" cy="135" r="18" fill="#FFD1DC" opacity=".4" class="svg-float-d"/>
+        <text x="55" y="139" text-anchor="middle" font-size="8" fill="#E8836B">研究</text>
+        <circle cx="55" cy="65" r="18" fill="#B8D4E3" opacity=".4" class="svg-float-d2"/>
+        <text x="55" y="69" text-anchor="middle" font-size="8" fill="#5BA4A4">评估</text>
+        <!-- 连接线 -->
+        <line x1="150" y1="48" x2="150" y2="70" stroke="#A8C5A0" stroke-width="1" opacity=".3"/>
+        <line x1="168" y1="42" x2="228" y2="60" stroke="#A8C5A0" stroke-width="1" opacity=".3"/>
+        <line x1="168" y1="158" x2="228" y2="140" stroke="#A8C5A0" stroke-width="1" opacity=".3"/>
+        <line x1="150" y1="152" x2="150" y2="130" stroke="#A8C5A0" stroke-width="1" opacity=".3"/>
+        <line x1="132" y1="158" x2="72" y2="140" stroke="#A8C5A0" stroke-width="1" opacity=".3"/>
+        <line x1="132" y1="42" x2="72" y2="60" stroke="#A8C5A0" stroke-width="1" opacity=".3"/>
+      </svg>
+    </div>
+
+    <div class="mech-grid">
+      <div class="mech-card">
+        <div class="mc-icon" style="background:var(--peach-l)">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <rect x="8" y="12" width="24" height="18" rx="3" fill="none" stroke="#E8836B" stroke-width="2"/>
+            <path d="M8 18 L20 12 L32 18" fill="none" stroke="#E8836B" stroke-width="1.5"/>
+            <rect x="16" y="22" width="8" height="8" rx="1" fill="none" stroke="#E8836B" stroke-width="1.5" opacity=".5"/>
+          </svg>
+        </div>
+        <h4>校园疗愈空间</h4>
+        <p>建设专属的校园正念室、艺术创作空间和疗愈花园，为师生提供安全舒适的复原环境。</p>
+      </div>
+      <div class="mech-card">
+        <div class="mc-icon" style="background:var(--lavender-l)">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <rect x="8" y="6" width="24" height="28" rx="3" fill="none" stroke="#B8A9C9" stroke-width="2"/>
+            <line x1="14" y1="14" x2="26" y2="14" stroke="#B8A9C9" stroke-width="1.5" opacity=".4"/>
+            <line x1="14" y1="20" x2="26" y2="20" stroke="#B8A9C9" stroke-width="1.5" opacity=".4"/>
+            <line x1="14" y1="26" x2="22" y2="26" stroke="#B8A9C9" stroke-width="1.5" opacity=".4"/>
+            <circle cx="11" cy="10" r="1.5" fill="#B8A9C9" opacity=".5"/>
+          </svg>
+        </div>
+        <h4>课程化嵌入</h4>
+        <p>将身心复原模块嵌入通识教育和专业课程，实现心理健康教育的常态化与制度化。</p>
+      </div>
+      <div class="mech-card">
+        <div class="mc-icon" style="background:#C8E6C9">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="14" cy="16" r="5" fill="none" stroke="#7BA37A" stroke-width="2"/>
+            <circle cx="28" cy="16" r="5" fill="none" stroke="#7BA37A" stroke-width="2"/>
+            <circle cx="21" cy="28" r="5" fill="none" stroke="#7BA37A" stroke-width="2"/>
+            <line x1="18" y1="19" x2="18" y2="25" stroke="#7BA37A" stroke-width="1.5" opacity=".4"/>
+            <line x1="24" y1="19" x2="24" y2="25" stroke="#7BA37A" stroke-width="1.5" opacity=".4"/>
+            <line x1="16" y1="16" x2="26" y2="16" stroke="#7BA37A" stroke-width="1.5" opacity=".4"/>
+          </svg>
+        </div>
+        <h4>同伴支持网络</h4>
+        <p>培养经过培训的同伴引导员，建立朋辈互助小组和线上支持社区，形成可持续的支持网络。</p>
+      </div>
+      <div class="mech-card">
+        <div class="mc-icon" style="background:var(--amber-l)">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <rect x="6" y="10" width="28" height="20" rx="3" fill="none" stroke="#E6A23C" stroke-width="2"/>
+            <line x1="6" y1="16" x2="34" y2="16" stroke="#E6A23C" stroke-width="1.5" opacity=".4"/>
+            <circle cx="10" cy="13" r="1.5" fill="#E6A23C" opacity=".5"/>
+            <circle cx="14" cy="13" r="1.5" fill="#E6A23C" opacity=".5"/>
+            <circle cx="18" cy="13" r="1.5" fill="#E6A23C" opacity=".5"/>
+            <rect x="10" y="20" width="8" height="6" rx="1" fill="#E6A23C" opacity=".2"/>
+            <rect x="22" y="20" width="8" height="6" rx="1" fill="#E6A23C" opacity=".2"/>
+          </svg>
+        </div>
+        <h4>数字平台</h4>
+        <p>开发专属数字平台，提供正念冥想音频库、艺术疗愈教程、进度追踪和社区互动功能。</p>
+      </div>
+      <div class="mech-card">
+        <div class="mc-icon" style="background:#B8D4E3">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <path d="M8 30 L14 18 L20 24 L26 12 L32 22" fill="none" stroke="#5BA4A4" stroke-width="2" stroke-linecap="round" class="svg-draw"/>
+            <circle cx="14" cy="18" r="2" fill="#5BA4A4" opacity=".4"/>
+            <circle cx="20" cy="24" r="2" fill="#5BA4A4" opacity=".4"/>
+            <circle cx="26" cy="12" r="2" fill="#5BA4A4" opacity=".4"/>
+          </svg>
+        </div>
+        <h4>研究评估</h4>
+        <p>建立科学的评估体系，通过前后测、质性访谈和长期追踪研究，验证方案效果并持续优化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SDGs & ESG ==================== -->
+<section class="section sdg-section" id="sdg">
+  <div class="container">
+    <div class="section-header">
+      <span class="phase-tag" style="background:var(--amber-l);color:#8B6914">全球目标</span>
+      <h2 style="color:var(--text)">SDGs & ESG 目标融合</h2>
+      <p>"春归计划"与联合国可持续发展目标和ESG理念深度融合，推动高校社会责任实践。</p>
+    </div>
+
+    <!-- 地球与目标 SVG -->
+    <div style="text-align:center;margin-bottom:50px" class="reveal-scale">
+      <svg viewBox="0 0 300 180" width="300" height="180" style="max-width:100%">
+        <!-- 地球 -->
+        <circle cx="150" cy="90" r="50" fill="#B8D4E3" opacity=".3" class="svg-rotate" style="transform-origin:150px 90px"/>
+        <ellipse cx="150" cy="90" rx="50" ry="50" fill="none" stroke="#5BA4A4" stroke-width="2" opacity=".5"/>
+        <path d="M120 70 Q140 65 160 72 Q175 78 180 90" fill="none" stroke="#7BA37A" stroke-width="2" opacity=".4"/>
+        <path d="M115 95 Q130 100 150 95 Q170 90 185 95" fill="none" stroke="#7BA37A" stroke-width="2" opacity=".4"/>
+        <!-- 目标图标环绕 -->
+        <g class="svg-float">
+          <circle cx="60" cy="40" r="14" fill="#E8836B" opacity=".2"/>
+          <text x="60" y="44" text-anchor="middle" font-size="10" fill="#E8836B" font-weight="700">3</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="240" cy="40" r="14" fill="#E6A23C" opacity=".2"/>
+          <text x="240" y="44" text-anchor="middle" font-size="10" fill="#E6A23C" font-weight="700">4</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="60" cy="140" r="14" fill="#A8C5A0" opacity=".3"/>
+          <text x="60" y="144" text-anchor="middle" font-size="10" fill="#7BA37A" font-weight="700">10</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="240" cy="140" r="14" fill="#5BA4A4" opacity=".2"/>
+          <text x="240" y="144" text-anchor="middle" font-size="10" fill="#5BA4A4" font-weight="700">11</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="30" cy="90" r="14" fill="#B8A9C9" opacity=".2"/>
+          <text x="30" y="94" text-anchor="middle" font-size="10" fill="#B8A9C9" font-weight="700">16</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="270" cy="90" r="14" fill="#F4A89A" opacity=".2"/>
+          <text x="270" y="94" text-anchor="middle" font-size="10" fill="#E8836B" font-weight="700">17</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- SDG Cards -->
+    <div class="sdg-grid">
+      <div class="sdg-card">
+        <div class="sdg-num" style="color:#4C9F38">SDG 3</div>
+        <h4>良好健康与福祉</h4>
+        <p>促进师生身心健康，提升心理韧性与整体福祉水平</p>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num" style="color:#C5192D">SDG 4</div>
+        <h4>优质教育</h4>
+        <p>推动全人教育理念，将身心健康教育融入高等教育体系</p>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num" style="color:#DD1367">SDG 10</div>
+        <h4>减少不平等</h4>
+        <p>关注弱势群体需求，确保心理健康服务的公平可及性</p>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num" style="color:#FD9D24">SDG 11</div>
+        <h4>可持续社区</h4>
+        <p>建设包容、安全、有韧性的校园社区环境</p>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num" style="color:#00689D">SDG 16</div>
+        <h4>和平与正义</h4>
+        <p>营造和谐校园文化，促进理解、包容与相互尊重</p>
+      </div>
+      <div class="sdg-card">
+        <div class="sdg-num" style="color:#19486A">SDG 17</div>
+        <h4>伙伴关系</h4>
+        <p>建立校际合作网络，共享资源与最佳实践</p>
+      </div>
+    </div>
+
+    <!-- ESG -->
+    <h3 style="text-align:center;font-size:1.3rem;margin-bottom:30px;color:var(--text)">ESG 三维度融合</h3>
+    <div class="esg-box">
+      <div class="esg-card e">
+        <h4>Environmental (环境)</h4>
+        <p>通过户外活动和自然连接培养生态意识，校园花园种植促进生物多样性，疗愈空间采用可持续设计理念，倡导绿色健康的生活方式。</p>
+      </div>
+      <div class="esg-card s">
+        <h4>Social (社会)</h4>
+        <p>关注师生心理健康这一核心社会议题，建立包容性支持体系，减少心理健康服务的不平等，培养具有社会责任感的健康公民。</p>
+      </div>
+      <div class="esg-card g">
+        <h4>Governance (治理)</h4>
+        <p>建立科学的评估与监督机制，确保方案实施的透明性与问责制，将身心健康指标纳入高校治理体系，推动制度化的长效保障。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-line"></div>
+  <h3>春天终将归来</h3>
+  <p>每一个经历过寒冬的生命，都值得被温柔以待。"春归计划"愿与每一位师生同行，在复原之路上共同成长，迎接内心的春天。</p>
+  <p style="font-size:.85rem;opacity:.7;margin-top:20px">春归计划 · 疫情后大学师生身心复原多元方案</p>
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// Progress Bar
+const fill = document.getElementById('progressFill');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  fill.style.width = progress + '%';
+});
+
+// Nav Dots
+const dots = document.querySelectorAll('.nav-dot');
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = document.getElementById(dot.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// IntersectionObserver for scroll animations
+const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Observe all animated elements
+document.querySelectorAll('.reveal-left, .reveal-right, .reveal-scale, .reveal, .workshop-card, .phase3-card, .adapt-card, .mech-card, .sdg-card, .esg-card').forEach(el => {
+  observer.observe(el);
+});
+
+// Active nav dot on scroll
+const sections = ['hero', 'phase1', 'phase2', 'phase3', 'adapt', 'mechanism', 'sdg'];
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      dots.forEach(d => d.classList.remove('active'));
+      const activeDot = document.querySelector(`.nav-dot[data-target="${id}"]`);
+      if (activeDot) activeDot.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

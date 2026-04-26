@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跨国公司正念领导力训练框架</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --navy:#3A5A7C;--navy-light:#D0DEF0;--navy-pale:#E8F0F8;
+    --teal:#5A9E96;--teal-light:#D0EDE8;--teal-pale:#E8F5F2;
+    --gold:#B89840;--gold-light:#F5EDCF;--gold-pale:#FBF6E6;
+    --coral:#C87868;--coral-light:#F5DDD5;--coral-pale:#FAF0EC;
+    --plum:#8A6B9A;--plum-light:#E8D8F0;--plum-pale:#F5EEF8;
+    --sky:#6AA5C6;--sky-light:#DCEEF8;--sky-pale:#EEF6FC;
+    --sage:#6B8F71;--sage-light:#D6E8DA;--sage-pale:#EBF5EE;
+    --amber:#C49A3C;--amber-light:#F5ECD0;
+    --rose:#C47888;--rose-light:#F2DDE2;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--navy),var(--teal),var(--gold),var(--coral),var(--plum));width:0%;transition:width .1s linear}
+
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:8px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--navy);transform:scale(1.5);box-shadow:0 0 10px rgba(58,90,124,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  /* Hero */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy-pale) 0%,var(--cream) 30%,var(--gold-pale) 60%,var(--plum-pale) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.1}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--navy);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--teal);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:240px;height:240px;background:var(--gold);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:180px;height:180px;background:var(--plum);bottom:20%;right:12%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(58,90,124,.1);border-radius:20px;font-size:13px;color:var(--navy);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(30px,5vw,54px);font-weight:700;line-height:1.3;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--navy)}
+  .hero-title .accent2{color:var(--teal)}
+  .hero-subtitle{font-size:clamp(14px,2vw,18px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .hero-meta-icon.navy{background:rgba(58,90,124,.1)}
+  .hero-meta-icon.teal{background:rgba(90,158,150,.12)}
+  .hero-meta-icon.gold{background:rgba(184,152,64,.15)}
+  .hero-meta-icon.coral{background:rgba(200,120,104,.12)}
+  .hero-illustration{margin-top:36px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:640px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 48px rgba(0,0,0,.06))}
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp .8s 1.4s forwards}
+  .scroll-hint span{font-size:11px;color:var(--soft);letter-spacing:1px}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--navy);border-bottom:2px solid var(--navy);transform:rotate(45deg);animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+  /* Week Sections */
+  .week-section{padding:80px 24px;position:relative}
+  .week-section:nth-child(odd){background:var(--cream-pale)}
+  .week-section:nth-child(even){background:var(--surface)}
+  .week-container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .week-section.reverse .week-container{direction:rtl}
+  .week-section.reverse .week-container>*{direction:ltr}
+
+  .week-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+  .week-badge{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#fff}
+  .week-badge.w1{background:linear-gradient(135deg,#3A5A7C,#5A7A9C)}
+  .week-badge.w2{background:linear-gradient(135deg,#C47868,#D89888)}
+  .week-badge.w3{background:linear-gradient(135deg,#6AA5C6,#8AC4E0)}
+  .week-badge.w4{background:linear-gradient(135deg,#5A9E96,#7ABEB6)}
+  .week-badge.w5{background:linear-gradient(135deg,#8A6B9A,#A88BB8)}
+  .week-badge.w6{background:linear-gradient(135deg,#B89840,#D4B860)}
+  .week-badge.w7{background:linear-gradient(135deg,#6B8F71,#8BAF91)}
+  .week-badge.w8{background:linear-gradient(135deg,#C49A3C,#E0B85C)}
+  .week-badge.w9{background:linear-gradient(135deg,#C47888,#D898A8)}
+  .week-badge.w10{background:linear-gradient(135deg,#3A5A7C,#6A8AAC)}
+  .week-badge.w11{background:linear-gradient(135deg,#5A9E96,#80C0B8)}
+  .week-badge.w12{background:linear-gradient(135deg,#8A6B9A,#B08BC0)}
+  .week-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+
+  .week-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.2vw,34px);font-weight:700;margin-bottom:4px;line-height:1.4}
+  .week-theme{font-size:14px;font-weight:500;margin-bottom:14px}
+  .week-theme.w1{color:var(--navy)}.week-theme.w2{color:var(--coral)}.week-theme.w3{color:var(--sky)}
+  .week-theme.w4{color:var(--teal)}.week-theme.w5{color:var(--plum)}.week-theme.w6{color:var(--gold)}
+  .week-theme.w7{color:var(--sage)}.week-theme.w8{color:var(--amber)}.week-theme.w9{color:var(--rose)}
+  .week-theme.w10{color:var(--navy)}.week-theme.w11{color:var(--teal)}.week-theme.w12{color:var(--plum)}
+
+  .week-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:16px}
+  .week-details{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+  .detail-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--soft)}
+  .detail-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+  .detail-icon.w1{background:rgba(58,90,124,.1)}.detail-icon.w2{background:rgba(196,120,104,.1)}
+  .detail-icon.w3{background:rgba(106,165,198,.1)}.detail-icon.w4{background:rgba(90,158,150,.1)}
+  .detail-icon.w5{background:rgba(138,107,154,.1)}.detail-icon.w6{background:rgba(184,152,64,.12)}
+  .detail-icon.w7{background:rgba(107,143,113,.1)}.detail-icon.w8{background:rgba(196,154,60,.12)}
+  .detail-icon.w9{background:rgba(196,120,136,.1)}.detail-icon.w10{background:rgba(58,90,124,.1)}
+  .detail-icon.w11{background:rgba(90,158,150,.1)}.detail-icon.w12{background:rgba(138,107,154,.1)}
+
+  .week-practice{padding:14px 18px;border-radius:12px;font-size:13px;color:var(--soft);line-height:1.7}
+  .week-practice.w1{background:rgba(58,90,124,.06);border-left:3px solid var(--navy)}
+  .week-practice.w2{background:rgba(196,120,104,.06);border-left:3px solid var(--coral)}
+  .week-practice.w3{background:rgba(106,165,198,.06);border-left:3px solid var(--sky)}
+  .week-practice.w4{background:rgba(90,158,150,.06);border-left:3px solid var(--teal)}
+  .week-practice.w5{background:rgba(138,107,154,.06);border-left:3px solid var(--plum)}
+  .week-practice.w6{background:rgba(184,152,64,.08);border-left:3px solid var(--gold)}
+  .week-practice.w7{background:rgba(107,143,113,.06);border-left:3px solid var(--sage)}
+  .week-practice.w8{background:rgba(196,154,60,.08);border-left:3px solid var(--amber)}
+  .week-practice.w9{background:rgba(196,120,136,.06);border-left:3px solid var(--rose)}
+  .week-practice.w10{background:rgba(58,90,124,.06);border-left:3px solid var(--navy)}
+  .week-practice.w11{background:rgba(90,158,150,.06);border-left:3px solid var(--teal)}
+  .week-practice.w12{background:rgba(138,107,154,.06);border-left:3px solid var(--plum)}
+  .practice-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+
+  .week-visual{position:relative}
+  .week-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+
+  /* Info Sections */
+  .info-section{padding:100px 24px;position:relative}
+  .info-section.adapt{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .info-section.longterm{background:var(--cream-pale)}
+  .info-section.sdgs{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .info-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:60px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.adapt{background:rgba(58,90,124,.1);color:var(--navy)}
+  .section-tag.longterm{background:rgba(90,158,150,.1);color:var(--teal)}
+  .section-tag.sdgs{background:rgba(184,152,64,.12);color:var(--gold)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+
+  .info-with-visual{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:60px}
+  .info-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+  .info-text h3{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;margin-bottom:12px}
+  .info-text p{font-size:15px;color:var(--soft);line-height:1.8;margin-bottom:16px}
+  .info-text .info-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .info-text .info-tag{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500}
+  .info-tag.t1{background:rgba(58,90,124,.08);color:var(--navy)}
+  .info-tag.t2{background:rgba(90,158,150,.08);color:var(--teal)}
+  .info-tag.t3{background:rgba(184,152,64,.1);color:var(--gold)}
+  .info-tag.t4{background:rgba(138,107,154,.08);color:var(--plum)}
+
+  /* Adapt Cards */
+  .adapt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:60px}
+  .adapt-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(58,90,124,.06);transition:transform .3s,box-shadow .3s}
+  .adapt-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .adapt-card-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+  .adapt-card-icon.a1{background:rgba(58,90,124,.1)}
+  .adapt-card-icon.a2{background:rgba(90,158,150,.1)}
+  .adapt-card-icon.a3{background:rgba(184,152,64,.12)}
+  .adapt-card-icon.a4{background:rgba(138,107,154,.1)}
+  .adapt-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .adapt-card p{font-size:14px;color:var(--soft);line-height:1.7}
+
+  /* Longterm */
+  .longterm-list{display:flex;flex-direction:column;gap:20px;max-width:800px;margin:0 auto}
+  .longterm-item{display:flex;gap:20px;align-items:flex-start;padding:24px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(90,158,150,.06);transition:transform .3s}
+  .longterm-item:hover{transform:translateX(6px)}
+  .longterm-num{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--teal),#7ABEB6);flex-shrink:0}
+  .longterm-text h4{font-size:15px;font-weight:600;margin-bottom:4px}
+  .longterm-text p{font-size:14px;color:var(--soft);line-height:1.7}
+
+  /* SDGs */
+  .sdgs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(196,120,136,.08),rgba(196,120,136,.02));border:1px solid rgba(196,120,136,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(58,90,124,.08),rgba(58,90,124,.02));border:1px solid rgba(58,90,124,.1)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(90,158,150,.08),rgba(90,158,150,.02));border:1px solid rgba(90,158,150,.1)}
+  .sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(184,152,64,.08),rgba(184,152,64,.02));border:1px solid rgba(184,152,64,.1)}
+  .sdg-card:nth-child(5){background:linear-gradient(135deg,rgba(138,107,154,.08),rgba(138,107,154,.02));border:1px solid rgba(138,107,154,.1)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:32px;font-weight:700;margin-bottom:6px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--rose)}
+  .sdg-card:nth-child(2) .sdg-num{color:var(--navy)}
+  .sdg-card:nth-child(3) .sdg-num{color:var(--teal)}
+  .sdg-card:nth-child(4) .sdg-num{color:var(--gold)}
+  .sdg-card:nth-child(5) .sdg-num{color:var(--plum)}
+  .sdg-title{font-size:14px;font-weight:600;margin-bottom:8px}
+  .sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .esg-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px;max-width:900px;margin-left:auto;margin-right:auto}
+  .esg-card{padding:24px;border-radius:16px;background:#fff;border:1px solid rgba(0,0,0,.04);box-shadow:0 4px 20px rgba(0,0,0,.03)}
+  .esg-card h4{font-size:15px;font-weight:600;margin-bottom:10px}
+  .esg-card h4.esg-g{color:var(--teal)}
+  .esg-card h4.esg-s{color:var(--navy)}
+  .esg-card p{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+
+  /* Scroll Reveal */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+
+  /* SVG Animations */
+  .svg-float{opacity:1}.svg-float.anim-active{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d.anim-active{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2.anim-active{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3.anim-active{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{opacity:0}.svg-pulse.anim-active{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{opacity:1}.svg-breathe.anim-active{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-rotate{opacity:1}.svg-rotate.anim-active{animation:svgRotate 12s linear infinite}
+  .svg-rotate-slow.anim-active{animation:svgRotate 20s linear infinite}
+  .svg-sway{opacity:1}.svg-sway.anim-active{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{opacity:0}.svg-glow.anim-active{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:600;stroke-dashoffset:600;opacity:1}.svg-draw.anim-active{animation:svgDraw 3s ease forwards}
+  .svg-draw-slow{stroke-dasharray:800;stroke-dashoffset:800;opacity:1}.svg-draw-slow.anim-active{animation:svgDraw 5s ease forwards}
+  .svg-fade-in{opacity:0}.svg-fade-in.anim-active{animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0}.svg-fade-in-d.anim-active{animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0}.svg-fade-in-d2.anim-active{animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0}.svg-fade-in-d3.anim-active{animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-fade-in-d4{opacity:0}.svg-fade-in-d4.anim-active{animation:svgFadeIn 1.2s 1.6s ease forwards}
+  .svg-fade-in-d5{opacity:0}.svg-fade-in-d5.anim-active{animation:svgFadeIn 1.2s 2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0}.svg-scale-in.anim-active{animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0}.svg-ripple.anim-active{animation:svgRipple 2.5s ease-out forwards}
+  .svg-ring{transform:scale(0);opacity:0}.svg-ring.anim-active{animation:svgRing 3s ease-out infinite}
+  .svg-ring-d{transform:scale(0);opacity:0}.svg-ring-d.anim-active{animation:svgRing 3s ease-out 1s infinite}
+  .svg-ring-d2{transform:scale(0);opacity:0}.svg-ring-d2.anim-active{animation:svgRing 3s ease-out 2s infinite}
+  .svg-shimmer{opacity:0}.svg-shimmer.anim-active{animation:svgShimmer 3s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px)}.svg-rise.anim-active{animation:svgRise 1.5s ease forwards}
+  .svg-slide-l{opacity:0;transform:translateX(-30px)}.svg-slide-l.anim-active{animation:svgSlideL 1s ease forwards}
+  .svg-slide-r{opacity:0;transform:translateX(30px)}.svg-slide-r.anim-active{animation:svgSlideR 1s ease forwards}
+  .svg-drop{opacity:0;transform:translateY(-20px)}.svg-drop.anim-active{animation:svgDrop 2.5s ease infinite}
+  .svg-drop-d{opacity:0;transform:translateY(-20px)}.svg-drop-d.anim-active{animation:svgDrop 2.5s ease .8s infinite}
+  .svg-drop-d2{opacity:0;transform:translateY(-20px)}.svg-drop-d2.anim-active{animation:svgDrop 2.5s ease 1.6s infinite}
+  .svg-wave{opacity:1}.svg-wave.anim-active{animation:svgWave 3s ease-in-out infinite}
+  .svg-morph{opacity:1}.svg-morph.anim-active{animation:svgMorph 6s ease-in-out infinite}
+
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.08}50%{opacity:.25}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.6}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.8}60%{opacity:.5;transform:translateY(30px)}80%{opacity:0;transform:translateY(40px)}100%{opacity:0;transform:translateY(40px)}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes svgMorph{0%,100%{border-radius:50%}50%{border-radius:40% 60% 60% 40% / 60% 40% 40% 60%}}
+  @keyframes pathDraw{to{stroke-dashoffset:0}}
+  @keyframes orbitMove{0%{transform:rotate(0deg) translateX(60px) rotate(0deg)}100%{transform:rotate(360deg) translateX(60px) rotate(-360deg)}}
+  @keyframes particleFloat{0%{opacity:0;transform:translateY(0)}20%{opacity:.8}80%{opacity:.4}100%{opacity:0;transform:translateY(-40px)}}
+  @keyframes connectDraw{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+  @keyframes scaleBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  @keyframes gentleSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  @keyframes dashFlow{to{stroke-dashoffset:-20}}
+
+  @media(max-width:900px){
+    .week-container{grid-template-columns:1fr;gap:32px}
+    .week-section{padding:60px 20px}
+    .week-section.reverse .week-container{direction:ltr}
+    .nav-dots{right:12px;gap:6px}
+    .nav-dot{width:7px;height:7px}
+    .nav-dot .tooltip{display:none}
+    .info-with-visual{grid-template-columns:1fr;gap:32px}
+    .adapt-grid{grid-template-columns:1fr}
+    .sdgs-grid{grid-template-columns:1fr}
+    .esg-row{grid-template-columns:1fr}
+    .hero-meta{gap:14px}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周</span></div>
+  <div class="nav-dot" data-target="week5"><span class="tooltip">第5周</span></div>
+  <div class="nav-dot" data-target="week6"><span class="tooltip">第6周</span></div>
+  <div class="nav-dot" data-target="week7"><span class="tooltip">第7周</span></div>
+  <div class="nav-dot" data-target="week8"><span class="tooltip">第8周</span></div>
+  <div class="nav-dot" data-target="week9"><span class="tooltip">第9周</span></div>
+  <div class="nav-dot" data-target="week10"><span class="tooltip">第10周</span></div>
+  <div class="nav-dot" data-target="week11"><span class="tooltip">第11周</span></div>
+  <div class="nav-dot" data-target="week12"><span class="tooltip">第12周</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">MINDFUL LEADERSHIP</div>
+    <h1 class="hero-title">跨国公司<span class="accent">正念领导力</span><br>训练框架设计</h1>
+    <p class="hero-subtitle">12周系统化训练 · 从个人觉察到组织变革 · 培养面向未来的觉知型领导者</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon navy">🧠</div><span>神经科学基础</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon teal">🌍</div><span>跨文化领导力</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon gold">⚡</div><span>12周系统训练</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon coral">🎯</div><span>SDGs融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3A5A7C" stop-opacity=".15"/><stop offset="100%" stop-color="#5A9E96" stop-opacity=".08"/></linearGradient>
+          <linearGradient id="hg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#B89840" stop-opacity=".12"/><stop offset="100%" stop-color="#C47868" stop-opacity=".06"/></linearGradient>
+          <radialGradient id="hg3" cx="50%" cy="50%"><stop offset="0%" stop-color="#8A6B9A" stop-opacity=".1"/><stop offset="100%" stop-color="#8A6B9A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <!-- Central mind/brain -->
+        <ellipse cx="320" cy="160" rx="80" ry="80" fill="url(#hg3)" class="svg-breathe anim-active"/>
+        <circle cx="320" cy="160" r="50" fill="none" stroke="#3A5A7C" stroke-width="1.5" opacity=".2" class="svg-pulse anim-active"/>
+        <circle cx="320" cy="160" r="70" fill="none" stroke="#5A9E96" stroke-width="1" opacity=".15" class="svg-ring anim-active"/>
+        <circle cx="320" cy="160" r="90" fill="none" stroke="#B89840" stroke-width="1" opacity=".1" class="svg-ring-d anim-active"/>
+        <!-- Brain silhouette -->
+        <path d="M300 140 Q310 120 330 125 Q345 115 355 130 Q370 128 370 145 Q378 155 365 165 Q368 178 355 180 Q350 195 335 190 Q320 198 310 188 Q295 192 290 178 Q280 172 285 160 Q278 148 290 142 Z" fill="none" stroke="#3A5A7C" stroke-width="2" opacity=".35" class="svg-draw anim-active"/>
+        <!-- Orbiting elements -->
+        <g style="transform-origin:320px 160px" class="svg-rotate-slow anim-active">
+          <circle cx="380" cy="160" r="8" fill="#5A9E96" opacity=".5"/>
+          <circle cx="260" cy="160" r="6" fill="#B89840" opacity=".4"/>
+          <circle cx="320" cy="100" r="7" fill="#C47868" opacity=".4"/>
+          <circle cx="320" cy="220" r="5" fill="#8A6B9A" opacity=".4"/>
+        </g>
+        <g style="transform-origin:320px 160px" class="svg-rotate anim-active">
+          <circle cx="400" cy="120" r="4" fill="#6AA5C6" opacity=".5"/>
+          <circle cx="240" cy="200" r="4" fill="#6B8F71" opacity=".5"/>
+          <circle cx="390" cy="200" r="3" fill="#C47888" opacity=".4"/>
+          <circle cx="250" cy="120" r="3" fill="#C49A3C" opacity=".4"/>
+        </g>
+        <!-- Connection lines -->
+        <line x1="320" y1="80" x2="320" y2="240" stroke="#3A5A7C" stroke-width=".5" opacity=".1" stroke-dasharray="4 4" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="240" y1="160" x2="400" y2="160" stroke="#5A9E96" stroke-width=".5" opacity=".1" stroke-dasharray="4 4" style="animation:dashFlow 2s linear infinite"/>
+        <!-- Floating labels -->
+        <text x="180" y="100" font-size="11" fill="#3A5A7C" opacity=".5" font-family="'Noto Sans SC'" class="svg-float anim-active">觉察</text>
+        <text x="430" y="110" font-size="11" fill="#5A9E96" opacity=".5" font-family="'Noto Sans SC'" class="svg-float-d anim-active">共情</text>
+        <text x="440" y="200" font-size="11" fill="#B89840" opacity=".5" font-family="'Noto Sans SC'" class="svg-float-d2 anim-active">决策</text>
+        <text x="170" y="210" font-size="11" fill="#8A6B9A" opacity=".5" font-family="'Noto Sans SC'" class="svg-float-d3 anim-active">战略</text>
+        <!-- Particles -->
+        <circle cx="200" cy="140" r="2" fill="#3A5A7C" opacity=".3" class="svg-drop anim-active"/>
+        <circle cx="440" cy="160" r="2" fill="#5A9E96" opacity=".3" class="svg-drop-d anim-active"/>
+        <circle cx="320" cy="60" r="2" fill="#B89840" opacity=".3" class="svg-drop-d2 anim-active"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ==================== WEEK 1: 停下来，看见 ==================== -->
+<section class="week-section" id="week1">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-badge w1">1</div><span class="week-label">WEEK ONE</span></div>
+      <h2 class="week-title">正念领导力启动</h2>
+      <div class="week-theme w1">"停下来，看见"</div>
+      <p class="week-desc">正念的科学基础、正念领导力模型概览、神经可塑性与领导力发展。建立与身体感受的联结，开启觉察之旅。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w1">🫁</div><span>"正念觉察扫描"（20分钟）：身体扫描练习</span></div>
+        <div class="detail-item"><div class="detail-icon w1">📝</div><span>"领导力觉察日记"：每日记录3次"此刻我的状态"</span></div>
+      </div>
+      <div class="week-practice w1">
+        <span class="practice-label">课后实践</span>
+        每日10分钟正式正念练习（使用APP引导音频）+ 3次觉察记录
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="w1g" cx="50%" cy="40%"><stop offset="0%" stop-color="#3A5A7C" stop-opacity=".08"/><stop offset="100%" stop-color="#3A5A7C" stop-opacity="0"/></radialGradient>
+          <linearGradient id="w1l" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3A5A7C" stop-opacity="0"/><stop offset="50%" stop-color="#3A5A7C" stop-opacity=".3"/><stop offset="100%" stop-color="#3A5A7C" stop-opacity="0"/></linearGradient>
+        </defs>
+        <rect width="400" height="360" rx="20" fill="#F0F4F8"/>
+        <ellipse cx="200" cy="140" rx="160" ry="120" fill="url(#w1g)"/>
+        <!-- Eye metaphor - large eye -->
+        <ellipse cx="200" cy="150" rx="80" ry="45" fill="none" stroke="#3A5A7C" stroke-width="2" opacity=".25" class="svg-breathe anim-active"/>
+        <circle cx="200" cy="150" r="28" fill="none" stroke="#5A7A9C" stroke-width="1.5" opacity=".3" class="svg-pulse anim-active"/>
+        <circle cx="200" cy="150" r="12" fill="#3A5A7C" opacity=".2"/>
+        <circle cx="200" cy="150" r="5" fill="#3A5A7C" opacity=".4"/>
+        <!-- Light rays from eye -->
+        <line x1="200" y1="100" x2="200" y2="60" stroke="#3A5A7C" stroke-width="1" opacity=".15" class="svg-shimmer anim-active"/>
+        <line x1="240" y1="110" x2="270" y2="80" stroke="#3A5A7C" stroke-width="1" opacity=".12" class="svg-shimmer anim-active"/>
+        <line x1="160" y1="110" x2="130" y2="80" stroke="#3A5A7C" stroke-width="1" opacity=".12" class="svg-shimmer anim-active"/>
+        <!-- Pause button -->
+        <rect x="175" y="230" width="50" height="50" rx="14" fill="#3A5A7C" opacity=".08" class="svg-scale-in anim-active"/>
+        <rect x="190" y="244" width="6" height="22" rx="2" fill="#3A5A7C" opacity=".4"/>
+        <rect x="204" y="244" width="6" height="22" rx="2" fill="#3A5A7C" opacity=".4"/>
+        <!-- Body scan dots -->
+        <circle cx="200" cy="300" r="4" fill="#5A7A9C" opacity=".3" class="svg-float anim-active"/>
+        <circle cx="200" cy="315" r="3" fill="#5A7A9C" opacity=".25" class="svg-float-d anim-active"/>
+        <circle cx="200" cy="328" r="2" fill="#5A7A9C" opacity=".2" class="svg-float-d2 anim-active"/>
+        <text x="200" y="348" text-anchor="middle" font-size="10" fill="#3A5A7C" opacity=".4" font-family="'Noto Sans SC'">身体扫描</text>
+        <!-- Neural connections -->
+        <path d="M120 130 Q160 100 200 120 Q240 100 280 130" fill="none" stroke="#3A5A7C" stroke-width="1" opacity=".15" stroke-dasharray="3 3" style="animation:dashFlow 3s linear infinite"/>
+        <path d="M130 170 Q170 190 200 170 Q230 190 270 170" fill="none" stroke="#5A7A9C" stroke-width="1" opacity=".12" stroke-dasharray="3 3" style="animation:dashFlow 3s linear infinite"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 2: 与情绪共舞 ==================== -->
+<section class="week-section reverse" id="week2">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-badge w2">2</div><span class="week-label">WEEK TWO</span></div>
+      <h2 class="week-title">情绪觉察与调节</h2>
+      <div class="week-theme w2">"与情绪共舞"</div>
+      <p class="week-desc">情绪的神经科学基础、情绪智能模型、领导者情绪传染效应。学会识别、允许、探索、不认同。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w2">🌧️</div><span>"RAIN技术"（20分钟）：识别→允许→探索→不认同</span></div>
+        <div class="detail-item"><div class="detail-icon w2">👣</div><span>"情绪足迹"分析：识别触发点和惯性行为</span></div>
+      </div>
+      <div class="week-practice w2">
+        <span class="practice-label">课后实践</span>
+        每日RAIN练习 + 记录一个"情绪转折点"案例
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#FAF0EC"/>
+        <!-- Dance metaphor - two figures with flowing energy -->
+        <defs>
+          <linearGradient id="w2g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#C47868" stop-opacity=".12"/><stop offset="100%" stop-color="#D89888" stop-opacity=".04"/></linearGradient>
+        </defs>
+        <ellipse cx="200" cy="180" rx="150" ry="130" fill="url(#w2g)"/>
+        <!-- RAIN drops -->
+        <text x="80" y="60" font-size="28" opacity=".2" class="svg-float anim-active">R</text>
+        <text x="160" y="50" font-size="28" opacity=".2" class="svg-float-d anim-active">A</text>
+        <text x="240" y="50" font-size="28" opacity=".2" class="svg-float-d2 anim-active">I</text>
+        <text x="310" y="60" font-size="28" opacity=".2" class="svg-float-d3 anim-active">N</text>
+        <!-- Flowing wave (emotion) -->
+        <path d="M60 180 Q100 140 140 170 Q180 200 220 165 Q260 130 300 170 Q340 200 370 170" fill="none" stroke="#C47868" stroke-width="2" opacity=".25" class="svg-wave anim-active"/>
+        <path d="M60 200 Q100 165 140 190 Q180 215 220 185 Q260 155 300 190 Q340 215 370 190" fill="none" stroke="#D89888" stroke-width="1.5" opacity=".15" class="svg-wave anim-active"/>
+        <!-- Two dancing silhouettes -->
+        <circle cx="160" cy="120" r="16" fill="#C47868" opacity=".15" class="svg-sway anim-active"/>
+        <path d="M160 136 L155 180 Q150 200 160 210" fill="none" stroke="#C47868" stroke-width="2" opacity=".2"/>
+        <circle cx="240" cy="125" r="16" fill="#D89888" opacity=".15" class="svg-sway anim-active"/>
+        <path d="M240 141 L245 185 Q250 205 240 215" fill="none" stroke="#D89888" stroke-width="2" opacity=".2"/>
+        <!-- Energy connection between them -->
+        <path d="M176 130 Q200 110 224 135" fill="none" stroke="#C47868" stroke-width="1" opacity=".2" stroke-dasharray="4 4" style="animation:dashFlow 2s linear infinite"/>
+        <!-- Emotion spectrum -->
+        <circle cx="100" cy="280" r="12" fill="#C47868" opacity=".12" class="svg-pulse anim-active"/>
+        <circle cx="160" cy="290" r="10" fill="#D89888" opacity=".1" class="svg-pulse anim-active"/>
+        <circle cx="220" cy="285" r="14" fill="#E8A898" opacity=".1" class="svg-pulse anim-active"/>
+        <circle cx="280" cy="295" r="8" fill="#C47868" opacity=".12" class="svg-pulse anim-active"/>
+        <text x="200" y="330" text-anchor="middle" font-size="10" fill="#C47868" opacity=".4" font-family="'Noto Sans SC'">情绪光谱</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 3: 看见思维的盲区 ==================== -->
+<section class="week-section" id="week3">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-badge w3">3</div><span class="week-label">WEEK THREE</span></div>
+      <h2 class="week-title">认知觉察与去自动化</h2>
+      <div class="week-theme w3">"看见思维的盲区"</div>
+      <p class="week-desc">认知偏差与决策陷阱、固定思维vs成长思维、去自动化反应。将思维视为"天空中的云"。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w3">☁️</div><span>"思维观察"冥想（20分钟）：将思维视为天空中的云</span></div>
+        <div class="detail-item"><div class="detail-icon w3">🔍</div><span>"决策回溯"分析：识别近期决策中的认知偏差</span></div>
+      </div>
+      <div class="week-practice w3">
+        <span class="practice-label">课后实践</span>
+        每日思维观察练习 + 记录一个"自动化反应被中断"的时刻
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#EEF6FC"/>
+        <defs>
+          <linearGradient id="w3s" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#6AA5C6" stop-opacity=".05"/><stop offset="100%" stop-color="#6AA5C6" stop-opacity="0"/></linearGradient>
+        </defs>
+        <rect width="400" height="360" rx="20" fill="url(#w3s)"/>
+        <!-- Sky and clouds metaphor -->
+        <!-- Clear sky background -->
+        <rect x="40" y="40" width="320" height="200" rx="16" fill="#DCEEF8" opacity=".3"/>
+        <!-- Sun (awareness) -->
+        <circle cx="320" cy="80" r="30" fill="#6AA5C6" opacity=".1" class="svg-glow anim-active"/>
+        <circle cx="320" cy="80" r="18" fill="#6AA5C6" opacity=".15" class="svg-pulse anim-active"/>
+        <!-- Clouds (thoughts) floating by -->
+        <g class="svg-float anim-active">
+          <ellipse cx="120" cy="100" rx="40" ry="18" fill="#fff" opacity=".7"/>
+          <ellipse cx="105" cy="95" rx="25" ry="15" fill="#fff" opacity=".7"/>
+          <ellipse cx="138" cy="93" rx="22" ry="14" fill="#fff" opacity=".7"/>
+        </g>
+        <g class="svg-float-d anim-active">
+          <ellipse cx="250" cy="130" rx="35" ry="16" fill="#fff" opacity=".5"/>
+          <ellipse cx="237" cy="125" rx="22" ry="13" fill="#fff" opacity=".5"/>
+          <ellipse cx="265" cy="123" rx="20" ry="12" fill="#fff" opacity=".5"/>
+        </g>
+        <g class="svg-float-d2 anim-active">
+          <ellipse cx="170" cy="160" rx="30" ry="14" fill="#fff" opacity=".4"/>
+          <ellipse cx="158" cy="156" rx="20" ry="11" fill="#fff" opacity=".4"/>
+        </g>
+        <!-- Observer figure at bottom -->
+        <circle cx="200" cy="280" r="14" fill="#6AA5C6" opacity=".15"/>
+        <path d="M200 294 L195 330 L205 330 Z" fill="#6AA5C6" opacity=".1"/>
+        <!-- Gaze lines upward -->
+        <line x1="200" y1="266" x2="200" y2="220" stroke="#6AA5C6" stroke-width="1" opacity=".15" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="195" y1="266" x2="160" y2="230" stroke="#6AA5C6" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="205" y1="266" x2="240" y2="230" stroke="#6AA5C6" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <!-- Labels -->
+        <text x="100" y="88" font-size="9" fill="#6AA5C6" opacity=".4" font-family="'Noto Sans SC'">评判</text>
+        <text x="235" y="118" font-size="9" fill="#6AA5C6" opacity=".4" font-family="'Noto Sans SC'">担忧</text>
+        <text x="155" y="150" font-size="9" fill="#6AA5C6" opacity=".4" font-family="'Noto Sans SC'">假设</text>
+        <text x="200" y="350" text-anchor="middle" font-size="10" fill="#6AA5C6" opacity=".4" font-family="'Noto Sans SC'">天空中的观察者</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 4: 听见未说出口的 ==================== -->
+<section class="week-section reverse" id="week4">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-badge w4">4</div><span class="week-label">WEEK FOUR</span></div>
+      <h2 class="week-title">深度倾听与共情</h2>
+      <div class="week-theme w4">"听见未说出口的"</div>
+      <p class="week-desc">三级倾听模型（内在倾听/聚焦倾听/全局倾听）、跨文化共情、正念沟通。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w4">👂</div><span>"正念对话"练习（30分钟）：不带评判的深度倾听</span></div>
+        <div class="detail-item"><div class="detail-icon w4">🗺️</div><span>"跨文化共情地图"：多文化视角分析情境</span></div>
+      </div>
+      <div class="week-practice w4">
+        <span class="practice-label">课后实践</span>
+        每日一次"正念对话"实践（至少10分钟深度倾听）
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#E8F5F2"/>
+        <defs>
+          <radialGradient id="w4g" cx="50%" cy="50%"><stop offset="0%" stop-color="#5A9E96" stop-opacity=".08"/><stop offset="100%" stop-color="#5A9E96" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="180" rx="160" ry="140" fill="url(#w4g)"/>
+        <!-- Two people facing each other -->
+        <!-- Person 1 (left) -->
+        <circle cx="130" cy="150" r="20" fill="#5A9E96" opacity=".12" class="svg-breathe anim-active"/>
+        <path d="M130 170 L125 220 L135 220 Z" fill="#5A9E96" opacity=".08"/>
+        <!-- Person 2 (right) -->
+        <circle cx="270" cy="150" r="20" fill="#7ABEB6" opacity=".12" class="svg-breathe anim-active"/>
+        <path d="M270 170 L265 220 L275 220 Z" fill="#7ABEB6" opacity=".08"/>
+        <!-- Sound waves between them (3 levels) -->
+        <path d="M155 140 Q175 130 200 135 Q225 130 245 140" fill="none" stroke="#5A9E96" stroke-width="1.5" opacity=".2" class="svg-wave anim-active"/>
+        <path d="M160 155 Q180 145 200 150 Q220 145 240 155" fill="none" stroke="#5A9E96" stroke-width="1.2" opacity=".15" class="svg-wave anim-active"/>
+        <path d="M165 170 Q182 162 200 165 Q218 162 235 170" fill="none" stroke="#5A9E96" stroke-width="1" opacity=".1" class="svg-wave anim-active"/>
+        <!-- Heart between them -->
+        <path d="M193 185 Q193 178 200 178 Q207 178 207 185 Q207 195 200 202 Q193 195 193 185 Z" fill="#5A9E96" opacity=".15" class="svg-pulse anim-active"/>
+        <!-- Three listening levels labels -->
+        <g class="svg-fade-in anim-active">
+          <rect x="60" y="250" width="80" height="28" rx="8" fill="#5A9E96" opacity=".08"/>
+          <text x="100" y="269" text-anchor="middle" font-size="10" fill="#5A9E96" opacity=".5" font-family="'Noto Sans SC'">内在倾听</text>
+        </g>
+        <g class="svg-fade-in-d anim-active">
+          <rect x="160" y="250" width="80" height="28" rx="8" fill="#5A9E96" opacity=".1"/>
+          <text x="200" y="269" text-anchor="middle" font-size="10" fill="#5A9E96" opacity=".6" font-family="'Noto Sans SC'">聚焦倾听</text>
+        </g>
+        <g class="svg-fade-in-d2 anim-active">
+          <rect x="260" y="250" width="80" height="28" rx="8" fill="#5A9E96" opacity=".12"/>
+          <text x="300" y="269" text-anchor="middle" font-size="10" fill="#5A9E96" opacity=".7" font-family="'Noto Sans SC'">全局倾听</text>
+        </g>
+        <!-- Arrow progression -->
+        <path d="M145 264 L155 264" fill="none" stroke="#5A9E96" stroke-width="1" opacity=".2"/>
+        <path d="M245 264 L255 264" fill="none" stroke="#5A9E96" stroke-width="1" opacity=".2"/>
+        <text x="200" y="310" text-anchor="middle" font-size="10" fill="#5A9E96" opacity=".4" font-family="'Noto Sans SC'">三级倾听模型</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 5: 创造归属感 ==================== -->
+<section class="week-section" id="week5">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-badge w5">5</div><span class="week-label">WEEK FIVE</span></div>
+      <h2 class="week-title">包容性领导力</h2>
+      <div class="week-theme w5">"创造归属感"</div>
+      <p class="week-desc">无意识偏见、心理安全感、包容性团队文化、跨文化领导力。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w5">🪞</div><span>"偏见觉察"练习：隐含联想测试（IAT）和反思日记</span></div>
+        <div class="detail-item"><div class="detail-icon w5">🛡️</div><span>"心理安全感工作坊"：小组讨论发言安全感</span></div>
+      </div>
+      <div class="week-practice w5">
+        <span class="practice-label">课后实践</span>
+        在团队会议中刻意创造发言空间（轮值发言、匿名输入）
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#F5EEF8"/>
+        <defs>
+          <radialGradient id="w5g" cx="50%" cy="50%"><stop offset="0%" stop-color="#8A6B9A" stop-opacity=".06"/><stop offset="100%" stop-color="#8A6B9A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="180" rx="160" ry="140" fill="url(#w5g)"/>
+        <!-- Circle of diverse people -->
+        <g style="transform-origin:200px 170px" class="svg-rotate-slow anim-active">
+          <circle cx="200" cy="100" r="14" fill="#8A6B9A" opacity=".15"/>
+          <circle cx="269" cy="135" r="14" fill="#A88BB8" opacity=".12"/>
+          <circle cx="269" cy="205" r="14" fill="#C47888" opacity=".12"/>
+          <circle cx="200" cy="240" r="14" fill="#6AA5C6" opacity=".12"/>
+          <circle cx="131" cy="205" r="14" fill="#5A9E96" opacity=".12"/>
+          <circle cx="131" cy="135" r="14" fill="#B89840" opacity=".12"/>
+        </g>
+        <!-- Center - shield (psychological safety) -->
+        <path d="M200 140 L230 155 L230 185 Q230 210 200 225 Q170 210 170 185 L170 155 Z" fill="#8A6B9A" opacity=".06" stroke="#8A6B9A" stroke-width="1.5" opacity=".15" class="svg-breathe anim-active"/>
+        <text x="200" y="185" text-anchor="middle" font-size="11" fill="#8A6B9A" opacity=".4" font-family="'Noto Sans SC'">安全</text>
+        <!-- Connection lines from center to each person -->
+        <line x1="200" y1="140" x2="200" y2="114" stroke="#8A6B9A" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="230" y1="160" x2="255" y2="145" stroke="#8A6B9A" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="230" y1="195" x2="255" y2="205" stroke="#8A6B9A" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="200" y1="225" x2="200" y2="226" stroke="#8A6B9A" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="170" y1="195" x2="145" y2="205" stroke="#8A6B9A" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="170" y1="160" x2="145" y2="145" stroke="#8A6B9A" stroke-width=".8" opacity=".1" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <!-- Diverse colors around -->
+        <circle cx="80" cy="80" r="6" fill="#8A6B9A" opacity=".1" class="svg-float anim-active"/>
+        <circle cx="320" cy="80" r="6" fill="#A88BB8" opacity=".1" class="svg-float-d anim-active"/>
+        <circle cx="80" cy="300" r="6" fill="#C47888" opacity=".1" class="svg-float-d2 anim-active"/>
+        <circle cx="320" cy="300" r="6" fill="#6AA5C6" opacity=".1" class="svg-float-d3 anim-active"/>
+        <text x="200" y="340" text-anchor="middle" font-size="10" fill="#8A6B9A" opacity=".4" font-family="'Noto Sans SC'">包容之圆</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 6: 将冲突变为对话 ==================== -->
+<section class="week-section reverse" id="week6">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-badge w6">6</div><span class="week-label">WEEK SIX</span></div>
+      <h2 class="week-title">正念反馈与冲突转化</h2>
+      <div class="week-theme w6">"将冲突变为对话"</div>
+      <p class="week-desc">非暴力沟通（NVC）在领导力中的应用、正念冲突调解、困难对话。暂停-觉察-回应三步法。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w6">💬</div><span>"正念反馈"角色扮演：给予和接收反馈时的全然觉察</span></div>
+        <div class="detail-item"><div class="detail-icon w6">🔄</div><span>"冲突转化"模拟：暂停-觉察-回应三步法</span></div>
+      </div>
+      <div class="week-practice w6">
+        <span class="practice-label">课后实践</span>
+        本周进行一次"正念反馈"实践，记录体验
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#FBF6E6"/>
+        <defs>
+          <linearGradient id="w6g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#B89840" stop-opacity=".08"/><stop offset="100%" stop-color="#D4B860" stop-opacity=".03"/></linearGradient>
+        </defs>
+        <ellipse cx="200" cy="180" rx="160" ry="130" fill="url(#w6g)"/>
+        <!-- Bridge metaphor - conflict to dialogue -->
+        <!-- Two cliffs -->
+        <rect x="30" y="180" width="80" height="120" rx="8" fill="#B89840" opacity=".08"/>
+        <rect x="290" y="180" width="80" height="120" rx="8" fill="#D4B860" opacity=".08"/>
+        <!-- Figures on cliffs -->
+        <circle cx="70" cy="165" r="14" fill="#B89840" opacity=".15"/>
+        <path d="M70 179 L65 210 L75 210 Z" fill="#B89840" opacity=".1"/>
+        <circle cx="330" cy="165" r="14" fill="#D4B860" opacity=".15"/>
+        <path d="M330 179 L325 210 L335 210 Z" fill="#D4B860" opacity=".1"/>
+        <!-- Bridge arch -->
+        <path d="M110 190 Q200 110 290 190" fill="none" stroke="#B89840" stroke-width="2.5" opacity=".2" class="svg-draw anim-active"/>
+        <!-- Bridge planks -->
+        <line x1="130" y1="182" x2="130" y2="195" stroke="#B89840" stroke-width="1" opacity=".1"/>
+        <line x1="160" y1="165" x2="160" y2="178" stroke="#B89840" stroke-width="1" opacity=".1"/>
+        <line x1="200" y1="158" x2="200" y2="172" stroke="#B89840" stroke-width="1" opacity=".1"/>
+        <line x1="240" y1="165" x2="240" y2="178" stroke="#B89840" stroke-width="1" opacity=".1"/>
+        <line x1="270" y1="182" x2="270" y2="195" stroke="#B89840" stroke-width="1" opacity=".1"/>
+        <!-- Three steps on bridge -->
+        <g class="svg-fade-in anim-active">
+          <circle cx="150" cy="170" r="10" fill="#B89840" opacity=".1"/>
+          <text x="150" y="174" text-anchor="middle" font-size="8" fill="#B89840" opacity=".5" font-family="'Noto Sans SC'">暂停</text>
+        </g>
+        <g class="svg-fade-in-d anim-active">
+          <circle cx="200" cy="155" r="10" fill="#B89840" opacity=".12"/>
+          <text x="200" y="159" text-anchor="middle" font-size="8" fill="#B89840" opacity=".5" font-family="'Noto Sans SC'">觉察</text>
+        </g>
+        <g class="svg-fade-in-d2 anim-active">
+          <circle cx="250" cy="170" r="10" fill="#B89840" opacity=".1"/>
+          <text x="250" y="174" text-anchor="middle" font-size="8" fill="#B89840" opacity=".5" font-family="'Noto Sans SC'">回应</text>
+        </g>
+        <!-- Water below -->
+        <path d="M40 260 Q80 250 120 260 Q160 270 200 260 Q240 250 280 260 Q320 270 360 260" fill="none" stroke="#B89840" stroke-width="1" opacity=".08" class="svg-wave anim-active"/>
+        <text x="200" y="330" text-anchor="middle" font-size="10" fill="#B89840" opacity=".4" font-family="'Noto Sans SC'">对话之桥</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 7: 在复杂中保持清晰 ==================== -->
+<section class="week-section" id="week7">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-badge w7">7</div><span class="week-label">WEEK SEVEN</span></div>
+      <h2 class="week-title">正念决策</h2>
+      <div class="week-theme w7">"在复杂中保持清晰"</div>
+      <p class="week-desc">压力下的决策质量、直觉与理性的整合、正念决策框架。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w7">🧭</div><span>"决策冥想"（20分钟）：觉察身体反应和直觉信号</span></div>
+        <div class="detail-item"><div class="detail-icon w7">🔴</div><span>"红队思考"练习：从反对者视角审视决策假设</span></div>
+      </div>
+      <div class="week-practice w7">
+        <span class="practice-label">课后实践</span>
+        对一个真实决策应用正念决策框架，记录过程
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#EBF5EE"/>
+        <defs>
+          <radialGradient id="w7g" cx="50%" cy="50%"><stop offset="0%" stop-color="#6B8F71" stop-opacity=".06"/><stop offset="100%" stop-color="#6B8F71" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="180" rx="160" ry="140" fill="url(#w7g)"/>
+        <!-- Compass metaphor -->
+        <!-- Outer compass ring -->
+        <circle cx="200" cy="170" r="90" fill="none" stroke="#6B8F71" stroke-width="1.5" opacity=".12" class="svg-rotate-slow anim-active"/>
+        <circle cx="200" cy="170" r="70" fill="none" stroke="#6B8F71" stroke-width="1" opacity=".1"/>
+        <!-- Compass directions -->
+        <text x="200" y="78" text-anchor="middle" font-size="11" fill="#6B8F71" opacity=".3" font-family="'Noto Sans SC'">理性</text>
+        <text x="200" y="278" text-anchor="middle" font-size="11" fill="#6B8F71" opacity=".3" font-family="'Noto Sans SC'">直觉</text>
+        <text x="108" y="175" text-anchor="middle" font-size="11" fill="#6B8F71" opacity=".3" font-family="'Noto Sans SC'">数据</text>
+        <text x="292" y="175" text-anchor="middle" font-size="11" fill="#6B8F71" opacity=".3" font-family="'Noto Sans SC'">价值</text>
+        <!-- Compass needle -->
+        <g style="transform-origin:200px 170px" class="svg-sway anim-active">
+          <polygon points="200,100 195,170 205,170" fill="#6B8F71" opacity=".15"/>
+          <polygon points="200,240 195,170 205,170" fill="#8BAF91" opacity=".1"/>
+          <circle cx="200" cy="170" r="6" fill="#6B8F71" opacity=".2"/>
+        </g>
+        <!-- Decision points around -->
+        <circle cx="120" cy="110" r="8" fill="#6B8F71" opacity=".1" class="svg-pulse anim-active"/>
+        <circle cx="280" cy="110" r="8" fill="#8BAF91" opacity=".1" class="svg-pulse anim-active"/>
+        <circle cx="120" cy="230" r="8" fill="#8BAF91" opacity=".1" class="svg-pulse anim-active"/>
+        <circle cx="280" cy="230" r="8" fill="#6B8F71" opacity=".1" class="svg-pulse anim-active"/>
+        <!-- Clarity lines -->
+        <line x1="200" y1="170" x2="120" y2="110" stroke="#6B8F71" stroke-width=".5" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="200" y1="170" x2="280" y2="110" stroke="#6B8F71" stroke-width=".5" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <text x="200" y="330" text-anchor="middle" font-size="10" fill="#6B8F71" opacity=".4" font-family="'Noto Sans SC'">正念决策罗盘</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 8: 看见全局 ==================== -->
+<section class="week-section reverse" id="week8">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-badge w8">8</div><span class="week-label">WEEK EIGHT</span></div>
+      <h2 class="week-title">战略正念</h2>
+      <div class="week-theme w8">"看见全局"</div>
+      <p class="week-desc">系统思维、长期主义vs短期压力、正念与战略清晰度。从微观到宏观逐层扩展觉察。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w8">🦅</div><span>"鹰眼冥想"（20分钟）：从个人到组织/行业/社会逐层扩展</span></div>
+        <div class="detail-item"><div class="detail-icon w8">🔮</div><span>"战略直觉"工作坊：正念可视化探索未来场景</span></div>
+      </div>
+      <div class="week-practice w8">
+        <span class="practice-label">课后实践</span>
+        每日"鹰眼冥想" + 记录一个"全局视角的新发现"
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#FBF6E6"/>
+        <defs>
+          <radialGradient id="w8g" cx="50%" cy="50%"><stop offset="0%" stop-color="#C49A3C" stop-opacity=".06"/><stop offset="100%" stop-color="#C49A3C" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="180" rx="170" ry="150" fill="url(#w8g)"/>
+        <!-- Eagle eye / concentric circles expanding -->
+        <circle cx="200" cy="170" r="30" fill="#C49A3C" opacity=".06" class="svg-breathe anim-active"/>
+        <circle cx="200" cy="170" r="30" fill="none" stroke="#C49A3C" stroke-width="1.5" opacity=".15" class="svg-ripple anim-active"/>
+        <circle cx="200" cy="170" r="60" fill="none" stroke="#C49A3C" stroke-width="1.2" opacity=".12" class="svg-ring anim-active"/>
+        <circle cx="200" cy="170" r="90" fill="none" stroke="#C49A3C" stroke-width="1" opacity=".1" class="svg-ring-d anim-active"/>
+        <circle cx="200" cy="170" r="120" fill="none" stroke="#C49A3C" stroke-width=".8" opacity=".08" class="svg-ring-d2 anim-active"/>
+        <!-- Labels at each level -->
+        <text x="200" y="175" text-anchor="middle" font-size="10" fill="#C49A3C" opacity=".4" font-family="'Noto Sans SC'" class="svg-fade-in anim-active">个人</text>
+        <text x="200" y="135" text-anchor="middle" font-size="10" fill="#C49A3C" opacity=".35" font-family="'Noto Sans SC'" class="svg-fade-in-d anim-active">团队</text>
+        <text x="200" y="100" text-anchor="middle" font-size="10" fill="#C49A3C" opacity=".3" font-family="'Noto Sans SC'" class="svg-fade-in-d2 anim-active">组织</text>
+        <text x="200" y="60" text-anchor="middle" font-size="10" fill="#C49A3C" opacity=".25" font-family="'Noto Sans SC'" class="svg-fade-in-d3 anim-active">行业/社会</text>
+        <!-- Eagle silhouette simplified -->
+        <path d="M180 220 Q190 210 200 215 Q210 210 220 220 L215 225 Q210 222 200 226 Q190 222 185 225 Z" fill="#C49A3C" opacity=".2" class="svg-float anim-active"/>
+        <!-- Expanding arrows -->
+        <path d="M200 195 L200 80" fill="none" stroke="#C49A3C" stroke-width="1" opacity=".1" stroke-dasharray="4 4" style="animation:dashFlow 2s linear infinite"/>
+        <polygon points="196,82 200,72 204,82" fill="#C49A3C" opacity=".15"/>
+        <text x="200" y="330" text-anchor="middle" font-size="10" fill="#C49A3C" opacity=".4" font-family="'Noto Sans SC'">鹰眼视角</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 9: 做正确的事 ==================== -->
+<section class="week-section" id="week9">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-badge w9">9</div><span class="week-label">WEEK NINE</span></div>
+      <h2 class="week-title">伦理领导力与正念</h2>
+      <div class="week-theme w9">"做正确的事"</div>
+      <p class="week-desc">商业伦理、利益相关者思维、正念与价值观一致性。探索个人核心价值观与组织使命的联结。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w9">💎</div><span>"价值观澄清"冥想：探索核心价值观与组织使命</span></div>
+        <div class="detail-item"><div class="detail-icon w9">⚖️</div><span>"伦理困境"案例研讨：复杂伦理情境中的正念决策</span></div>
+      </div>
+      <div class="week-practice w9">
+        <span class="practice-label">课后实践</span>
+        撰写"领导力价值观宣言"
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#FAF0EC"/>
+        <defs>
+          <radialGradient id="w9g" cx="50%" cy="45%"><stop offset="0%" stop-color="#C47888" stop-opacity=".08"/><stop offset="100%" stop-color="#C47888" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="160" rx="160" ry="140" fill="url(#w9g)"/>
+        <!-- Diamond/gem metaphor for values -->
+        <polygon points="200,80 260,140 200,220 140,140" fill="none" stroke="#C47888" stroke-width="2" opacity=".2" class="svg-breathe anim-active"/>
+        <polygon points="200,100 245,140 200,200 155,140" fill="#C47888" opacity=".04"/>
+        <!-- Inner facets -->
+        <line x1="200" y1="80" x2="200" y2="220" stroke="#C47888" stroke-width=".8" opacity=".1"/>
+        <line x1="140" y1="140" x2="260" y2="140" stroke="#C47888" stroke-width=".8" opacity=".1"/>
+        <line x1="200" y1="80" x2="140" y2="140" stroke="#C47888" stroke-width=".5" opacity=".08"/>
+        <line x1="200" y1="80" x2="260" y2="140" stroke="#C47888" stroke-width=".5" opacity=".08"/>
+        <line x1="200" y1="220" x2="140" y2="140" stroke="#C47888" stroke-width=".5" opacity=".08"/>
+        <line x1="200" y1="220" x2="260" y2="140" stroke="#C47888" stroke-width=".5" opacity=".08"/>
+        <!-- Light refraction -->
+        <line x1="200" y1="80" x2="120" y2="60" stroke="#C47888" stroke-width=".8" opacity=".1" class="svg-shimmer anim-active"/>
+        <line x1="200" y1="80" x2="280" y2="60" stroke="#D898A8" stroke-width=".8" opacity=".1" class="svg-shimmer anim-active"/>
+        <line x1="260" y1="140" x2="320" y2="120" stroke="#C47888" stroke-width=".8" opacity=".1" class="svg-shimmer anim-active"/>
+        <!-- Value words -->
+        <text x="200" y="145" text-anchor="middle" font-size="11" fill="#C47888" opacity=".35" font-family="'Noto Sans SC'" class="svg-fade-in anim-active">诚信</text>
+        <text x="175" y="125" text-anchor="middle" font-size="9" fill="#C47888" opacity=".25" font-family="'Noto Sans SC'" class="svg-fade-in-d anim-active">公正</text>
+        <text x="225" y="125" text-anchor="middle" font-size="9" fill="#C47888" opacity=".25" font-family="'Noto Sans SC'" class="svg-fade-in-d2 anim-active">责任</text>
+        <text x="200" y="170" text-anchor="middle" font-size="9" fill="#C47888" opacity=".25" font-family="'Noto Sans SC'" class="svg-fade-in-d3 anim-active">勇气</text>
+        <!-- Scale at bottom -->
+        <line x1="140" y1="280" x2="260" y2="280" stroke="#C47888" stroke-width="1.5" opacity=".15"/>
+        <line x1="200" y1="270" x2="200" y2="280" stroke="#C47888" stroke-width="1.5" opacity=".15"/>
+        <path d="M130 280 L140 265 L150 280" fill="none" stroke="#C47888" stroke-width="1" opacity=".12" class="svg-sway anim-active"/>
+        <path d="M250 280 L260 265 L270 280" fill="none" stroke="#C47888" stroke-width="1" opacity=".12" class="svg-sway anim-active"/>
+        <text x="200" y="310" text-anchor="middle" font-size="10" fill="#C47888" opacity=".4" font-family="'Noto Sans SC'">价值之钻</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 10: 从个人到集体 ==================== -->
+<section class="week-section reverse" id="week10">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-badge w10">10</div><span class="week-label">WEEK TEN</span></div>
+      <h2 class="week-title">团队正念</h2>
+      <div class="week-theme w10">"从个人到集体"</div>
+      <p class="week-desc">团队正念的概念与实践、正念会议、团队心理安全感。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w10">🤝</div><span>"正念会议"设计：开场静默、觉察检查、深度倾听轮</span></div>
+        <div class="detail-item"><div class="detail-icon w10">👥</div><span>"团队觉察"练习：引导集体觉察和反思</span></div>
+      </div>
+      <div class="week-practice w10">
+        <span class="practice-label">课后实践</span>
+        在真实团队会议中实践"正念会议"格式
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#E8F0F8"/>
+        <defs>
+          <radialGradient id="w10g" cx="50%" cy="50%"><stop offset="0%" stop-color="#3A5A7C" stop-opacity=".06"/><stop offset="100%" stop-color="#3A5A7C" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="180" rx="160" ry="140" fill="url(#w10g)"/>
+        <!-- Network/team constellation -->
+        <!-- Central node -->
+        <circle cx="200" cy="160" r="18" fill="#3A5A7C" opacity=".1" class="svg-pulse anim-active"/>
+        <text x="200" y="164" text-anchor="middle" font-size="9" fill="#3A5A7C" opacity=".4" font-family="'Noto Sans SC'">团队</text>
+        <!-- Surrounding nodes -->
+        <circle cx="130" cy="110" r="14" fill="#5A7A9C" opacity=".1" class="svg-float anim-active"/>
+        <circle cx="270" cy="110" r="14" fill="#6A8AAC" opacity=".1" class="svg-float-d anim-active"/>
+        <circle cx="110" cy="190" r="12" fill="#5A7A9C" opacity=".08" class="svg-float-d2 anim-active"/>
+        <circle cx="290" cy="190" r="12" fill="#6A8AAC" opacity=".08" class="svg-float-d3 anim-active"/>
+        <circle cx="150" cy="250" r="13" fill="#5A7A9C" opacity=".09" class="svg-float anim-active"/>
+        <circle cx="250" cy="250" r="13" fill="#6A8AAC" opacity=".09" class="svg-float-d anim-active"/>
+        <!-- Connection lines -->
+        <line x1="200" y1="160" x2="130" y2="110" stroke="#3A5A7C" stroke-width="1" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="200" y1="160" x2="270" y2="110" stroke="#3A5A7C" stroke-width="1" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="200" y1="160" x2="110" y2="190" stroke="#3A5A7C" stroke-width="1" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="200" y1="160" x2="290" y2="190" stroke="#3A5A7C" stroke-width="1" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="200" y1="160" x2="150" y2="250" stroke="#3A5A7C" stroke-width="1" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <line x1="200" y1="160" x2="250" y2="250" stroke="#3A5A7C" stroke-width="1" opacity=".08" stroke-dasharray="3 3" style="animation:dashFlow 2s linear infinite"/>
+        <!-- Inter-node connections -->
+        <line x1="130" y1="110" x2="270" y2="110" stroke="#3A5A7C" stroke-width=".5" opacity=".05" stroke-dasharray="3 3"/>
+        <line x1="150" y1="250" x2="250" y2="250" stroke="#3A5A7C" stroke-width=".5" opacity=".05" stroke-dasharray="3 3"/>
+        <line x1="110" y1="190" x2="150" y2="250" stroke="#3A5A7C" stroke-width=".5" opacity=".05" stroke-dasharray="3 3"/>
+        <line x1="290" y1="190" x2="250" y2="250" stroke="#3A5A7C" stroke-width=".5" opacity=".05" stroke-dasharray="3 3"/>
+        <!-- Meeting table hint -->
+        <ellipse cx="200" cy="160" rx="100" ry="50" fill="none" stroke="#3A5A7C" stroke-width=".8" opacity=".06" stroke-dasharray="6 4"/>
+        <text x="200" y="320" text-anchor="middle" font-size="10" fill="#3A5A7C" opacity=".4" font-family="'Noto Sans SC'">团队正念网络</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 11: 从训练到实践 ==================== -->
+<section class="week-section" id="week11">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-badge w11">11</div><span class="week-label">WEEK ELEVEN</span></div>
+      <h2 class="week-title">正念领导力行动计划</h2>
+      <div class="week-theme w11">"从训练到实践"</div>
+      <p class="week-desc">个人领导力发展计划制定、障碍预判与应对策略。90天正念领导力计划。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w11">📋</div><span>"90天正念领导力计划"制定：目标、实践、资源、评估</span></div>
+        <div class="detail-item"><div class="detail-icon w11">🤝</div><span>同伴教练：两人一组互相支持计划执行</span></div>
+      </div>
+      <div class="week-practice w11">
+        <span class="practice-label">课后实践</span>
+        开始执行90天计划，每周同伴教练会话
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#E8F5F2"/>
+        <defs>
+          <linearGradient id="w11g" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5A9E96" stop-opacity=".06"/><stop offset="100%" stop-color="#7ABEB6" stop-opacity=".02"/></linearGradient>
+        </defs>
+        <rect width="400" height="360" rx="20" fill="url(#w11g)"/>
+        <!-- Mountain/path metaphor - journey -->
+        <!-- Mountain -->
+        <polygon points="200,60 320,280 80,280" fill="#5A9E96" opacity=".05" stroke="#5A9E96" stroke-width="1" opacity=".1"/>
+        <!-- Path going up -->
+        <path d="M120 280 Q140 240 160 220 Q180 200 200 180 Q220 160 240 140 Q260 120 270 100" fill="none" stroke="#5A9E96" stroke-width="2" opacity=".15" class="svg-draw anim-active"/>
+        <!-- Milestones on path -->
+        <circle cx="160" cy="220" r="8" fill="#5A9E96" opacity=".1" class="svg-scale-in anim-active"/>
+        <text x="160" y="224" text-anchor="middle" font-size="7" fill="#5A9E96" opacity=".4" font-family="'Noto Sans SC'">30天</text>
+        <circle cx="220" cy="155" r="8" fill="#5A9E96" opacity=".12" class="svg-scale-in anim-active"/>
+        <text x="220" y="159" text-anchor="middle" font-size="7" fill="#5A9E96" opacity=".4" font-family="'Noto Sans SC'">60天</text>
+        <circle cx="265" cy="105" r="8" fill="#5A9E96" opacity=".15" class="svg-scale-in anim-active"/>
+        <text x="265" y="109" text-anchor="middle" font-size="7" fill="#5A9E96" opacity=".4" font-family="'Noto Sans SC'">90天</text>
+        <!-- Flag at top -->
+        <line x1="270" y1="100" x2="270" y2="70" stroke="#5A9E96" stroke-width="1.5" opacity=".2"/>
+        <polygon points="270,70 300,80 270,90" fill="#5A9E96" opacity=".12" class="svg-wave anim-active"/>
+        <!-- Two figures at base (peer coaches) -->
+        <circle cx="100" cy="270" r="10" fill="#5A9E96" opacity=".1"/>
+        <circle cx="130" cy="270" r="10" fill="#7ABEB6" opacity=".1"/>
+        <line x1="110" y1="270" x2="120" y2="270" stroke="#5A9E96" stroke-width="1" opacity=".15" stroke-dasharray="2 2"/>
+        <text x="200" y="330" text-anchor="middle" font-size="10" fill="#5A9E96" opacity=".4" font-family="'Noto Sans SC'">90天攀登之路</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WEEK 12: 正念领导力之旅 ==================== -->
+<section class="week-section reverse" id="week12">
+  <div class="week-container">
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-badge w12">12</div><span class="week-label">WEEK TWELVE</span></div>
+      <h2 class="week-title">结业与持续发展</h2>
+      <div class="week-theme w12">"正念领导力之旅"</div>
+      <p class="week-desc">回顾与整合、长期发展路径、组织变革催化。360度反馈对比、正念领导力社群启动。</p>
+      <div class="week-details">
+        <div class="detail-item"><div class="detail-icon w12">🎓</div><span>个人成长分享 + 360度反馈对比 + 结业仪式</span></div>
+        <div class="detail-item"><div class="detail-icon w12">🌐</div><span>"正念领导力社群"启动 + 每月线上集体练习</span></div>
+        <div class="detail-item"><div class="detail-icon w12">📚</div><span>每季度线下进阶工作坊（半天）</span></div>
+      </div>
+      <div class="week-practice w12">
+        <span class="practice-label">后续安排</span>
+        每月线上集体练习（30分钟），每季度线下进阶工作坊（半天）
+      </div>
+    </div>
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="360" rx="20" fill="#F5EEF8"/>
+        <defs>
+          <radialGradient id="w12g" cx="50%" cy="45%"><stop offset="0%" stop-color="#8A6B9A" stop-opacity=".08"/><stop offset="100%" stop-color="#8A6B9A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="200" cy="160" rx="170" ry="140" fill="url(#w12g)"/>
+        <!-- Tree of growth metaphor -->
+        <!-- Trunk -->
+        <rect x="193" y="200" width="14" height="80" rx="4" fill="#8A6B9A" opacity=".08"/>
+        <!-- Roots -->
+        <path d="M200 280 Q180 290 160 285" fill="none" stroke="#8A6B9A" stroke-width="1.5" opacity=".08"/>
+        <path d="M200 280 Q220 290 240 285" fill="none" stroke="#8A6B9A" stroke-width="1.5" opacity=".08"/>
+        <!-- Branches and leaves -->
+        <circle cx="200" cy="160" r="50" fill="#8A6B9A" opacity=".04" class="svg-breathe anim-active"/>
+        <circle cx="170" cy="140" r="25" fill="#A88BB8" opacity=".06" class="svg-float anim-active"/>
+        <circle cx="230" cy="140" r="25" fill="#B08BC0" opacity=".06" class="svg-float-d anim-active"/>
+        <circle cx="200" cy="120" r="28" fill="#8A6B9A" opacity=".05" class="svg-float-d2 anim-active"/>
+        <circle cx="155" cy="165" r="18" fill="#A88BB8" opacity=".05" class="svg-float-d3 anim-active"/>
+        <circle cx="245" cy="165" r="18" fill="#B08BC0" opacity=".05" class="svg-float anim-active"/>
+        <!-- Fruits (achievements) -->
+        <circle cx="175" cy="125" r="5" fill="#C47888" opacity=".15" class="svg-pulse anim-active"/>
+        <circle cx="225" cy="125" r="5" fill="#5A9E96" opacity=".15" class="svg-pulse anim-active"/>
+        <circle cx="200" cy="105" r="5" fill="#B89840" opacity=".15" class="svg-pulse anim-active"/>
+        <circle cx="160" cy="155" r="4" fill="#6AA5C6" opacity=".12" class="svg-pulse anim-active"/>
+        <circle cx="240" cy="155" r="4" fill="#C49A3C" opacity=".12" class="svg-pulse anim-active"/>
+        <!-- Stars (celebration) -->
+        <text x="100" y="80" font-size="16" opacity=".15" class="svg-shimmer anim-active">✦</text>
+        <text x="290" y="70" font-size="14" opacity=".12" class="svg-shimmer anim-active">✦</text>
+        <text x="320" y="120" font-size="12" opacity=".1" class="svg-shimmer anim-active">✦</text>
+        <text x="80" y="130" font-size="10" opacity=".1" class="svg-shimmer anim-active">✦</text>
+        <!-- Certificate ribbon -->
+        <path d="M185 200 L200 190 L215 200" fill="none" stroke="#8A6B9A" stroke-width="1" opacity=".15"/>
+        <text x="200" y="330" text-anchor="middle" font-size="10" fill="#8A6B9A" opacity=".4" font-family="'Noto Sans SC'">成长之树</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 实施适配 ==================== -->
+<section class="info-section adapt" id="adapt">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag adapt">⚙ 实施适配</div>
+      <h2 class="section-title">灵活适配，精准落地</h2>
+      <p class="section-subtitle">针对不同文化背景、管理层级和学习形式，提供定制化的实施方案</p>
+    </div>
+    <div class="adapt-grid">
+      <div class="adapt-card reveal">
+        <div class="adapt-card-icon a1">🌏</div>
+        <h3>文化适配</h3>
+        <p>提供中英双语材料，案例涵盖不同文化背景的管理情境，确保跨文化团队的共同参与和理解。</p>
+      </div>
+      <div class="adapt-card reveal">
+        <div class="adapt-card-icon a2">📊</div>
+        <h3>层级适配</h3>
+        <p>针对高层管理者增加战略维度，针对中层管理者增加团队管理维度，实现精准的能力提升。</p>
+      </div>
+      <div class="adapt-card reveal">
+        <div class="adapt-card-icon a3">💻</div>
+        <h3>形式适配</h3>
+        <p>线上直播+线下工作坊混合模式，关键模块（如正念对话、冲突转化）以线下为主，确保深度体验。</p>
+      </div>
+      <div class="adapt-card reveal">
+        <div class="adapt-card-icon a4">⏱️</div>
+        <h3>节奏适配</h3>
+        <p>每周核心练习时间控制在2-3小时，配合每日10-15分钟个人练习，融入繁忙的管理者日程。</p>
+      </div>
+    </div>
+    <div class="info-with-visual reveal">
+      <div class="info-visual">
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="280" rx="20" fill="#E8F0F8"/>
+          <!-- Gears metaphor for adaptation -->
+          <g style="transform-origin:160px 140px" class="svg-rotate-slow anim-active">
+            <circle cx="160" cy="140" r="50" fill="none" stroke="#3A5A7C" stroke-width="2" opacity=".12"/>
+            <circle cx="160" cy="140" r="35" fill="none" stroke="#3A5A7C" stroke-width="1.5" opacity=".1"/>
+            <circle cx="160" cy="140" r="12" fill="#3A5A7C" opacity=".06"/>
+            <!-- Gear teeth -->
+            <rect x="155" y="85" width="10" height="12" rx="2" fill="#3A5A7C" opacity=".08"/>
+            <rect x="155" y="183" width="10" height="12" rx="2" fill="#3A5A7C" opacity=".08"/>
+            <rect x="105" y="135" width="12" height="10" rx="2" fill="#3A5A7C" opacity=".08"/>
+            <rect x="203" y="135" width="12" height="10" rx="2" fill="#3A5A7C" opacity=".08"/>
+          </g>
+          <g style="transform-origin:270px 180px" class="svg-rotate anim-active">
+            <circle cx="270" cy="180" r="35" fill="none" stroke="#5A7A9C" stroke-width="1.5" opacity=".1"/>
+            <circle cx="270" cy="180" r="22" fill="none" stroke="#5A7A9C" stroke-width="1" opacity=".08"/>
+            <circle cx="270" cy="180" r="8" fill="#5A7A9C" opacity=".05"/>
+            <rect x="266" y="142" width="8" height="10" rx="2" fill="#5A7A9C" opacity=".06"/>
+            <rect x="266" y="208" width="8" height="10" rx="2" fill="#5A7A9C" opacity=".06"/>
+            <rect x="232" y="176" width="10" height="8" rx="2" fill="#5A7A9C" opacity=".06"/>
+            <rect x="298" y="176" width="10" height="8" rx="2" fill="#5A7A9C" opacity=".06"/>
+          </g>
+          <!-- Labels -->
+          <text x="160" y="230" text-anchor="middle" font-size="10" fill="#3A5A7C" opacity=".4" font-family="'Noto Sans SC'">核心框架</text>
+          <text x="270" y="240" text-anchor="middle" font-size="10" fill="#5A7A9C" opacity=".4" font-family="'Noto Sans SC'">适配机制</text>
+          <text x="200" y="270" text-anchor="middle" font-size="9" fill="#3A5A7C" opacity=".3" font-family="'Noto Sans SC'">灵活运转 · 精准适配</text>
+        </svg>
+      </div>
+      <div class="info-text">
+        <h3>混合式学习设计</h3>
+        <p>通过线上与线下相结合的方式，既保证学习的灵活性，又确保关键技能的深度练习。每周2-3小时的核心练习配合每日微练习，让正念成为管理者的日常习惯。</p>
+        <div class="info-tags">
+          <span class="info-tag t1">线上直播</span>
+          <span class="info-tag t2">线下工作坊</span>
+          <span class="info-tag t3">APP引导</span>
+          <span class="info-tag t4">同伴教练</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 长效保障机制 ==================== -->
+<section class="info-section longterm" id="longterm">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">🔄 长效保障</div>
+      <h2 class="section-title">可持续的组织变革</h2>
+      <p class="section-subtitle">建立长效机制，确保正念领导力的持续深化和组织级影响</p>
+    </div>
+    <div class="longterm-list">
+      <div class="longterm-item reveal">
+        <div class="longterm-num">1</div>
+        <div class="longterm-text">
+          <h4>内部认证体系</h4>
+          <p>建立"正念领导力教练"内部认证体系，培养内部教练持续支持管理者发展</p>
+        </div>
+      </div>
+      <div class="longterm-item reveal">
+        <div class="longterm-num">2</div>
+        <div class="longterm-text">
+          <h4>绩效指标纳入</h4>
+          <p>将正念领导力指标纳入管理者绩效考核（团队心理安全感评分、360度反馈中的情绪智能维度）</p>
+        </div>
+      </div>
+      <div class="longterm-item reveal">
+        <div class="longterm-num">3</div>
+        <div class="longterm-text">
+          <h4>实践创新基金</h4>
+          <p>设立"正念领导力实践基金"，支持管理者将正念理念转化为团队创新项目</p>
+        </div>
+      </div>
+      <div class="longterm-item reveal">
+        <div class="longterm-num">4</div>
+        <div class="longterm-text">
+          <h4>年度峰会</h4>
+          <p>每年举办"正念领导力峰会"，分享最佳实践和研究成果</p>
+        </div>
+      </div>
+      <div class="longterm-item reveal">
+        <div class="longterm-num">5</div>
+        <div class="longterm-text">
+          <h4>外部合作研究</h4>
+          <p>与外部正念领导力研究机构合作，开展效果追踪研究和持续改进</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SDGs & ESG ==================== -->
+<section class="info-section sdgs" id="sdgs">
+  <div class="info-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">🎯 SDGs & ESG</div>
+      <h2 class="section-title">可持续发展目标融合</h2>
+      <p class="section-subtitle">将正念领导力训练与联合国可持续发展目标和ESG指标深度对接</p>
+    </div>
+    <div class="sdgs-grid">
+      <div class="sdg-card reveal">
+        <div class="sdg-num">5.5</div>
+        <div class="sdg-title">性别平等</div>
+        <div class="sdg-desc">通过包容性领导力促进女性管理者的参与和赋权</div>
+      </div>
+      <div class="sdg-card reveal">
+        <div class="sdg-num">8.5</div>
+        <div class="sdg-title">体面工作</div>
+        <div class="sdg-desc">提升管理者能力，创造体面和高效的工作环境</div>
+      </div>
+      <div class="sdg-card reveal">
+        <div class="sdg-num">8.8</div>
+        <div class="sdg-title">安全环境</div>
+        <div class="sdg-desc">通过正念领导力减少职场压力和心理伤害</div>
+      </div>
+      <div class="sdg-card reveal">
+        <div class="sdg-num">12.6</div>
+        <div class="sdg-title">可持续实践</div>
+        <div class="sdg-desc">鼓励企业采取可持续的管理实践和负责任决策</div>
+      </div>
+      <div class="sdg-card reveal" style="grid-column:1/-1">
+        <div class="sdg-num">16.7</div>
+        <div class="sdg-title">包容性决策</div>
+        <div class="sdg-desc">推动包容和参与式的组织决策机制</div>
+      </div>
+    </div>
+    <div class="esg-row reveal">
+      <div class="esg-card">
+        <h4 class="esg-g">ESG-G 治理指标</h4>
+        <p>管理层情绪智能评分、员工敬业度变化、团队心理安全感指数、决策质量评估、多元化与包容性指标</p>
+      </div>
+      <div class="esg-card">
+        <h4 class="esg-s">ESG-S 社会指标</h4>
+        <p>员工心理健康指数、职场满意度、管理者培训覆盖率</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <h2 class="footer-title">开启正念领导力之旅</h2>
+  <p class="footer-text">从觉察到行动，从个人到组织，正念领导力让每一位管理者成为变革的力量</p>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const progress = (scrollTop / scrollHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+
+// Scroll reveal
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const svgAnimElements = document.querySelectorAll('.svg-float, .svg-float-d, .svg-float-d2, .svg-float-d3, .svg-pulse, .svg-breathe, .svg-rotate, .svg-rotate-slow, .svg-sway, .svg-glow, .svg-draw, .svg-draw-slow, .svg-fade-in, .svg-fade-in-d, .svg-fade-in-d2, .svg-fade-in-d3, .svg-fade-in-d4, .svg-fade-in-d5, .svg-scale-in, .svg-ripple, .svg-ring, .svg-ring-d, .svg-ring-d2, .svg-shimmer, .svg-rise, .svg-slide-l, .svg-slide-r, .svg-drop, .svg-drop-d, .svg-drop-d2, .svg-wave, .svg-morph');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      entry.target.classList.add('anim-active');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => observer.observe(el));
+svgAnimElements.forEach(el => observer.observe(el));
+
+// Nav dots
+const navDots = document.querySelectorAll('.nav-dot');
+const sections = document.querySelectorAll('section, .info-section');
+
+navDots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = document.getElementById(dot.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Active nav dot on scroll
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navDots.forEach(d => d.classList.remove('active'));
+      const activeDot = document.querySelector(`.nav-dot[data-target="${id}"]`);
+      if (activeDot) activeDot.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(s => { if (s.id) sectionObserver.observe(s); });
+</script>
+
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>灾后社区艺术疗愈干预方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --warm:#C47860;--warm-light:#F5DDD3;--coral:#D97A6A;--coral-light:#F5D9D3;
+    --amber:#B89840;--amber-light:#F5EDCF;--gold:#C9A84C;--gold-light:#FBF4D6;
+    --peach:#F5E0D0;--cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --sage:#5A988C;--sage-light:#D4E8E2;--teal:#5BA89C;--teal-light:#D4EDE8;
+    --mint:#6BB898;--mint-light:#D9F0E4;--blue:#5A8FB5;--blue-light:#D6E6F2;
+    --rose:#C47888;--rose-light:#F2DDE2;--lavender:#967BA5;--lavender-light:#EDE0F3;
+    --plum:#8A6B9A;--plum-light:#E8D8F0;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+    --olive:#7B8A5B;--olive-light:#E2E8D6;--sky:#6AA5C6;--sky-light:#DCEEF8;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--warm),var(--amber),var(--sage),var(--lavender));width:0%;transition:width .1s linear}
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--warm);transform:scale(1.5);box-shadow:0 0 10px rgba(196,120,96,.5)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--peach) 0%,var(--cream) 30%,var(--warm-light) 65%,var(--gold-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--warm);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--amber);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--sage);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--gold);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(196,120,96,.18);border-radius:20px;font-size:13px;color:var(--warm);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,4.5vw,48px);font-weight:700;line-height:1.35;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--warm)}.hero-title .accent2{color:var(--sage)}
+  .hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+  .hero-meta-icon.warm{background:rgba(196,120,96,.15)}.hero-meta-icon.sage{background:rgba(90,152,140,.15)}.hero-meta-icon.amber{background:rgba(184,152,64,.15)}.hero-meta-icon.lavender{background:rgba(150,123,165,.12)}
+  .hero-illustration{margin-top:36px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:680px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 48px rgba(0,0,0,.06))}
+  .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeUp .8s 1.4s forwards}
+  .scroll-hint span{font-size:11px;color:var(--soft);letter-spacing:1px}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--warm);border-bottom:2px solid var(--warm);transform:rotate(45deg);animation:scrollBounce 2s ease-in-out infinite}
+  @keyframes scrollBounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .hero-badge,.hero-title,.hero-subtitle,.hero-meta,.hero-illustration{transform:translateY(20px)}
+  .phase-header{padding:100px 24px 60px;text-align:center;position:relative}
+  .phase-header.ph1{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .phase-header.ph2{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .phase-header.ph3{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .phase-header-icon{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+  .phase-header-icon.ph1{background:linear-gradient(135deg,rgba(196,120,96,.15),rgba(196,120,96,.05))}
+  .phase-header-icon.ph2{background:linear-gradient(135deg,rgba(184,152,64,.15),rgba(184,152,64,.05))}
+  .phase-header-icon.ph3{background:linear-gradient(135deg,rgba(90,152,140,.15),rgba(90,152,140,.05))}
+  .phase-header-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .phase-header-tag.ph1{background:rgba(196,120,96,.12);color:var(--warm)}
+  .phase-header-tag.ph2{background:rgba(184,152,64,.12);color:var(--amber)}
+  .phase-header-tag.ph3{background:rgba(90,152,140,.12);color:var(--sage)}
+  .phase-header-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .phase-header-sub{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto;line-height:1.8}
+  .phase-section{padding:80px 24px;position:relative}
+  .phase-section:nth-child(odd){background:var(--cream-pale)}
+  .phase-section:nth-child(even){background:var(--surface)}
+  .phase-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .phase-section.reverse .phase-container{direction:rtl}
+  .phase-section.reverse .phase-container>*{direction:ltr}
+  .phase-text{display:flex;flex-direction:column;gap:6px}
+  .phase-week{font-size:11px;letter-spacing:2px;font-weight:500;text-transform:uppercase;margin-bottom:4px}
+  .phase-week.c1{color:var(--warm)}.phase-week.c2{color:var(--amber)}.phase-week.c3{color:var(--sage)}.phase-week.c4{color:var(--blue)}.phase-week.c5{color:var(--rose)}.phase-week.c6{color:var(--lavender)}.phase-week.c7{color:var(--olive)}.phase-week.c8{color:var(--sky)}
+  .phase-title{font-family:'Noto Serif SC',serif;font-size:clamp(20px,2.5vw,28px);font-weight:700;line-height:1.4;margin-bottom:6px}
+  .phase-theme{font-size:14px;font-weight:500;margin-bottom:8px}
+  .phase-theme.c1{color:var(--warm)}.phase-theme.c2{color:var(--amber)}.phase-theme.c3{color:var(--sage)}.phase-theme.c4{color:var(--blue)}.phase-theme.c5{color:var(--rose)}.phase-theme.c6{color:var(--lavender)}.phase-theme.c7{color:var(--olive)}.phase-theme.c8{color:var(--sky)}
+  .phase-desc{font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:12px}
+  .phase-items{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .phase-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .phase-item-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .phase-item-icon.c1{background:rgba(196,120,96,.15)}.phase-item-icon.c2{background:rgba(184,152,64,.15)}.phase-item-icon.c3{background:rgba(90,152,140,.15)}.phase-item-icon.c4{background:rgba(90,143,181,.15)}.phase-item-icon.c5{background:rgba(196,120,136,.15)}.phase-item-icon.c6{background:rgba(150,123,165,.15)}.phase-item-icon.c7{background:rgba(123,138,91,.15)}.phase-item-icon.c8{background:rgba(106,165,198,.15)}
+  .phase-goal{padding:12px 16px;border-radius:10px;font-size:12px;color:var(--soft);line-height:1.6}
+  .phase-goal.c1{background:rgba(196,120,96,.08);border-left:3px solid var(--warm)}.phase-goal.c2{background:rgba(184,152,64,.08);border-left:3px solid var(--amber)}.phase-goal.c3{background:rgba(90,152,140,.08);border-left:3px solid var(--sage)}.phase-goal.c4{background:rgba(90,143,181,.08);border-left:3px solid var(--blue)}.phase-goal.c5{background:rgba(196,120,136,.08);border-left:3px solid var(--rose)}.phase-goal.c6{background:rgba(150,123,165,.08);border-left:3px solid var(--lavender)}.phase-goal.c7{background:rgba(123,138,91,.08);border-left:3px solid var(--olive)}.phase-goal.c8{background:rgba(106,165,198,.08);border-left:3px solid var(--sky)}
+  .goal-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+  .phase-visual{position:relative}
+  .phase-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.06))}
+  .phase-decoration{position:absolute;width:80px;height:80px;border-radius:50%;opacity:.1;z-index:-1}
+  .phase-decoration.c1{background:var(--warm);top:-20px;right:-20px}.phase-decoration.c2{background:var(--amber);bottom:-20px;left:-20px}.phase-decoration.c3{background:var(--sage);top:-20px;left:-20px}.phase-decoration.c4{background:var(--blue);bottom:-20px;right:-20px}.phase-decoration.c5{background:var(--rose);top:-20px;right:-20px}.phase-decoration.c6{background:var(--lavender);bottom:-20px;left:-20px}.phase-decoration.c7{background:var(--olive);top:-20px;left:-20px}.phase-decoration.c8{background:var(--sky);bottom:-20px;right:-20px}
+  .assess-section{padding:100px 24px;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .assess-container,.adapt-container,.longterm-container,.sdgs-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.assess{background:rgba(184,152,64,.12);color:var(--amber)}.section-tag.adapt{background:rgba(90,152,140,.12);color:var(--sage)}.section-tag.longterm{background:rgba(150,123,165,.12);color:var(--lavender)}.section-tag.sdgs{background:rgba(196,120,96,.12);color:var(--warm)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+  .assess-grid,.adapt-grid,.longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:50px}
+  .assess-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s}
+  .assess-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .assess-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .assess-card-icon.a1{background:rgba(184,152,64,.1)}.assess-card-icon.a2{background:rgba(196,120,96,.1)}
+  .assess-card h3{font-size:16px;font-weight:600;margin-bottom:8px}.assess-card p{font-size:14px;color:var(--soft);line-height:1.7}
+  .assess-illustration,.longterm-illustration{max-width:600px;margin:0 auto;border-radius:20px;overflow:hidden}
+  .assess-illustration svg,.longterm-illustration svg{width:100%;height:auto;display:block}
+  .adapt-section{padding:100px 24px;background:var(--cream-pale)}
+  .adapt-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .adapt-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .adapt-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .adapt-card-icon.d1{background:rgba(90,152,140,.1)}.adapt-card-icon.d2{background:rgba(196,120,96,.1)}.adapt-card-icon.d3{background:rgba(150,123,165,.1)}.adapt-card-icon.d4{background:rgba(184,152,64,.15)}
+  .adapt-card h3{font-size:15px;font-weight:600;margin-bottom:6px}.adapt-card p{font-size:13px;color:var(--soft);line-height:1.7}
+  .longterm-section{padding:100px 24px;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(155,143,168,.06);transition:transform .3s,box-shadow .3s}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;margin-bottom:14px}
+  .longterm-card-icon.l1{background:rgba(150,123,165,.1)}.longterm-card-icon.l2{background:rgba(196,120,96,.1)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}.longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+  .sdgs-section{padding:100px 24px;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:50px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(196,120,96,.08),rgba(196,120,96,.02));border:1px solid rgba(196,120,96,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(90,152,140,.08),rgba(90,152,140,.02));border:1px solid rgba(90,152,140,.1)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(184,152,64,.1),rgba(184,152,64,.02));border:1px solid rgba(184,152,64,.12)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--warm)}.sdg-card:nth-child(2) .sdg-num{color:var(--sage)}.sdg-card:nth-child(3) .sdg-num{color:var(--amber)}
+  .sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}.sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}.svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}.svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}.svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}.svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-rotate{animation:svgRotate 12s linear infinite}.svg-sway{animation:svgSway 6s ease-in-out infinite}.svg-sway-slow{animation:svgSway 8s ease-in-out infinite}
+  .svg-glow{animation:svgGlow 4s ease-in-out infinite}.svg-wave{animation:svgWave 3s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:600;stroke-dashoffset:600;animation:svgDraw 3s ease forwards}.svg-draw-slow{stroke-dasharray:800;stroke-dashoffset:800;animation:svgDraw 4s ease forwards}
+  .svg-fade-in{opacity:0;animation:svgFadeIn 1.2s ease forwards}.svg-fade-in-d{opacity:0;animation:svgFadeIn 1.2s .4s ease forwards}.svg-fade-in-d2{opacity:0;animation:svgFadeIn 1.2s .8s ease forwards}.svg-fade-in-d3{opacity:0;animation:svgFadeIn 1.2s 1.2s ease forwards}.svg-fade-in-d4{opacity:0;animation:svgFadeIn 1.2s 1.6s ease forwards}.svg-fade-in-d5{opacity:0;animation:svgFadeIn 1.2s 2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0;animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0;animation:svgRipple 2.5s ease-out forwards}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}.svg-ring-d{animation:svgRing 3s ease-out 1s infinite}.svg-ring-d2{animation:svgRing 3s ease-out 2s infinite}
+  .svg-shimmer{opacity:0;animation:svgShimmer 3s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px);animation:svgRise 1.5s ease forwards}
+  .svg-slide-l{opacity:0;transform:translateX(-30px);animation:svgSlideL 1s ease forwards}.svg-slide-r{opacity:0;transform:translateX(30px);animation:svgSlideR 1s ease forwards}
+  .svg-fall{opacity:0;transform:translateY(-15px);animation:svgFall 3s ease-in infinite}.svg-fall-d{animation:svgFall 3s ease-in 1s infinite}.svg-fall-d2{animation:svgFall 3s ease-in 2s infinite}
+  .svg-grow{transform:scaleY(0);transform-origin:bottom;animation:svgGrow 2s ease forwards}.svg-grow-d{animation:svgGrow 2s ease .3s forwards}.svg-grow-d2{animation:svgGrow 2s ease .6s forwards}
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.1}50%{opacity:.28}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.7}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgFall{0%{opacity:0;transform:translateY(-15px)}20%{opacity:.8}100%{opacity:0;transform:translateY(25px)}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes svgGrow{to{transform:scaleY(1)}}
+  @media(max-width:900px){.phase-container{grid-template-columns:1fr;gap:30px}.phase-section{padding:60px 20px}.phase-section.reverse .phase-container{direction:ltr}.assess-grid,.adapt-grid,.longterm-grid,.sdgs-grid{grid-template-columns:1fr}.nav-dots{right:12px;gap:8px}.nav-dot{width:7px;height:7px}.nav-dot .tooltip{display:none}.hero-meta{gap:14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="phase1"><span class="tooltip">第一阶段</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周·安全岛</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周·生命线</span></div>
+  <div class="nav-dot" data-target="phase2"><span class="tooltip">第二阶段</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周·情绪拼贴</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周·身体地图</span></div>
+  <div class="nav-dot" data-target="week5"><span class="tooltip">第5周·叙事剧场</span></div>
+  <div class="nav-dot" data-target="phase3"><span class="tooltip">第三阶段</span></div>
+  <div class="nav-dot" data-target="week6"><span class="tooltip">第6周·记忆墙</span></div>
+  <div class="nav-dot" data-target="week7"><span class="tooltip">第7周·感恩联结</span></div>
+  <div class="nav-dot" data-target="week8"><span class="tooltip">第8周·未来愿景</span></div>
+  <div class="nav-dot" data-target="assess"><span class="tooltip">评估指标</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">灾后社区艺术疗愈干预方案</div>
+    <h1 class="hero-title">用<span class="accent">艺术</span>疗愈创伤<br>用<span class="accent2">社区</span>重建希望</h1>
+    <p class="hero-subtitle">面向灾后社区居民的8周艺术治疗干预计划，融合绘画、拼贴、戏剧与团体叙事，从安全稳定到创伤处理，再到重建联结，陪伴社区走出阴霾、重获力量</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon warm">🎨</div><span>艺术疗愈</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon sage">🤝</div><span>8周计划</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon amber">🏘️</div><span>社区干预</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon lavender">🌱</div><span>SDGs融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 680 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="380" rx="20" fill="#FAF8F2"/>
+        <path d="M0 310 Q80 300 160 310 Q240 320 320 305 Q400 290 480 310 Q560 330 680 310 L680 380 L0 380Z" fill="#E8D8C8" opacity="0.3"/>
+        <path d="M200 310 L210 325 L205 340 L215 355 L208 370" stroke="#C4B8A8" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M450 305 L455 318 L448 330 L458 345" stroke="#C4B8A8" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <g class="svg-grow"><line x1="210" y1="325" x2="210" y2="295" stroke="#6BB898" stroke-width="2"/><circle cx="210" cy="290" r="6" fill="#D97A6A" opacity="0.6"/><circle cx="210" cy="290" r="3" fill="#F5DDD3"/></g>
+        <g class="svg-grow-d"><line x1="455" y1="318" x2="455" y2="290" stroke="#6BB898" stroke-width="2"/><circle cx="455" cy="285" r="5" fill="#C9A84C" opacity="0.6"/><circle cx="455" cy="285" r="2.5" fill="#FBF4D6"/></g>
+        <g class="svg-breathe">
+          <circle cx="150" cy="200" r="22" fill="#F5D9D3"/><path d="M128 196 Q132 176 150 173 Q168 176 172 196" fill="#7A7486" opacity="0.4"/>
+          <circle cx="143" cy="198" r="2" fill="#3A3448"/><circle cx="157" cy="198" r="2" fill="#3A3448"/>
+          <path d="M145 208 Q150 211 155 208" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M132 218 Q128 245 130 270 L170 270 Q172 245 168 218 Q150 212 132 218Z" fill="#C47860" opacity="0.4"/>
+          <path d="M168 230 Q185 240 195 250" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <line x1="195" y1="250" x2="200" y2="230" stroke="#9B8FA8" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <g class="svg-float-d">
+          <rect x="190" y="170" width="50" height="65" rx="3" fill="#fff" stroke="#D4D0C8" stroke-width="1.5"/>
+          <circle cx="215" cy="190" r="8" fill="#F5EDCF" opacity="0.8"/>
+          <rect x="205" y="205" width="20" height="15" rx="2" fill="#D4EDE8" opacity="0.6"/>
+          <polygon points="200,205 215,195 230,205" fill="#C47860" opacity="0.3"/>
+          <line x1="190" y1="240" x2="175" y2="275" stroke="#C0BCB4" stroke-width="2"/>
+          <line x1="240" y1="240" x2="255" y2="275" stroke="#C0BCB4" stroke-width="2"/>
+        </g>
+        <g class="svg-breathe">
+          <circle cx="340" cy="180" r="26" fill="#F5D9D3"/><path d="M314 175 Q318 152 340 148 Q362 152 366 175" fill="#5A5466" opacity="0.35"/>
+          <path d="M332 178 Q336 175 340 178" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M340 178 Q344 175 348 178" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M335 190 Q340 194 345 190" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M318 202 Q314 235 316 270 L364 270 Q366 235 362 202 Q340 195 318 202Z" fill="#5A988C" opacity="0.35"/>
+          <path d="M318 220 Q298 240 300 265" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M362 220 Q382 240 380 265" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+        <circle cx="340" cy="180" r="50" fill="#D97A6A" opacity="0.06" class="svg-pulse"/>
+        <circle cx="340" cy="180" r="70" fill="#D97A6A" opacity="0.03" class="svg-pulse"/>
+        <g class="svg-breathe">
+          <circle cx="530" cy="200" r="22" fill="#F5D9D3"/><path d="M508 196 Q512 176 530 173 Q548 176 552 196" fill="#5A5466" opacity="0.35"/>
+          <circle cx="523" cy="198" r="2" fill="#3A3448"/><circle cx="537" cy="198" r="2" fill="#3A3448"/>
+          <path d="M525 208 Q530 211 535 208" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M512 218 Q508 245 510 270 L550 270 Q552 245 548 218 Q530 212 512 218Z" fill="#967BA5" opacity="0.35"/>
+          <path d="M548 230 Q565 240 560 255" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-float"><rect x="555" y="225" width="22" height="18" rx="3" fill="#F5DDD3" opacity="0.7" transform="rotate(-10,566,234)"/></g>
+        <g class="svg-float-d"><rect x="570" y="245" width="18" height="14" rx="3" fill="#D4EDE8" opacity="0.7" transform="rotate(8,579,252)"/></g>
+        <g class="svg-float-d2"><circle cx="580" cy="225" r="8" fill="#F5EDCF" opacity="0.6"/></g>
+        <path d="M200 240 Q270 260 320 250" stroke="#C47860" stroke-width="1" stroke-dasharray="6,4" opacity="0.2" class="svg-draw"/>
+        <path d="M360 250 Q420 260 520 240" stroke="#967BA5" stroke-width="1" stroke-dasharray="6,4" opacity="0.2" class="svg-draw"/>
+        <g class="svg-float"><circle cx="80" cy="140" r="14" fill="#D4EDE8" opacity="0.5"/><text x="80" y="145" text-anchor="middle" font-size="14">🌿</text></g>
+        <g class="svg-float-d"><circle cx="600" cy="130" r="14" fill="#F5EDCF" opacity="0.5"/><text x="600" y="135" text-anchor="middle" font-size="14">💛</text></g>
+        <g class="svg-float-d2"><circle cx="340" cy="80" r="16" fill="#F2DDE2" opacity="0.5"/><text x="340" y="86" text-anchor="middle" font-size="16">❤️</text></g>
+        <circle cx="260" cy="120" r="3" fill="#C47860" opacity="0.3" class="svg-pulse"/>
+        <circle cx="420" cy="110" r="2.5" fill="#5A988C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="480" cy="160" r="2" fill="#C9A84C" opacity="0.4" class="svg-pulse"/>
+        <path d="M240 60 Q340 20 440 60" stroke="#C47860" stroke-width="2" fill="none" opacity="0.12" class="svg-draw-slow"/>
+        <path d="M250 65 Q340 30 430 65" stroke="#C9A84C" stroke-width="2" fill="none" opacity="0.12" class="svg-draw-slow"/>
+        <path d="M260 70 Q340 40 420 70" stroke="#5A988C" stroke-width="2" fill="none" opacity="0.12" class="svg-draw-slow"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- PHASE 1 HEADER -->
+<div class="phase-header ph1" id="phase1">
+  <div class="reveal">
+    <div class="phase-header-icon ph1">🛡️</div>
+    <div class="phase-header-tag ph1">第一阶段 · 第1-2周</div>
+    <h2 class="phase-header-title">安全与稳定</h2>
+    <p class="phase-header-sub">建立心理安全感，稳定情绪，降低急性应激反应。通过安全岛创作与团体生命线活动，帮助居民重建内在安全感与自我效能感。</p>
+  </div>
+</div>
+
+<!-- WEEK 1 -->
+<section class="phase-section" id="week1">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c1">第1周</div>
+      <h2 class="phase-title">安全岛创作</h2>
+      <div class="phase-theme c1">Safe Island Creation</div>
+      <p class="phase-desc">引导居民用绘画或拼贴方式描绘让自己感到安全的场景，治疗师提供丰富材料（画笔、颜料、旧杂志、布料等）。同时进行grounding练习（五感觉察法），帮助居民从创伤闪回中回到当下。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c1">🎨</div><span>绘画/拼贴描绘安全场景</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">🖐️</div><span>五感觉察法 grounding 练习</span></div>
+        <div class="phase-item"><div class="phase-item-icon c1">🧵</div><span>丰富材料：画笔、颜料、杂志、布料</span></div>
+      </div>
+      <div class="phase-goal c1"><span class="goal-label">🎯 核心目标</span>帮助居民从创伤闪回中回到当下，建立内在安全感与心理稳定基线</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c1"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <path d="M0 300 Q55 290 110 300 Q165 310 220 295 Q275 280 330 300 Q385 320 440 300 L440 420 L0 420Z" fill="#D6E6F2" opacity="0.3"/>
+        <g class="svg-wave" opacity="0.3"><path d="M0 310 Q55 300 110 310 Q165 320 220 305 Q275 290 330 310 Q385 330 440 310" stroke="#5A8FB5" stroke-width="1.5" fill="none"/></g>
+        <g class="svg-wave" opacity="0.2"><path d="M0 325 Q55 315 110 325 Q165 335 220 320 Q275 305 330 325 Q385 345 440 325" stroke="#5A8FB5" stroke-width="1" fill="none"/></g>
+        <ellipse cx="220" cy="300" rx="120" ry="40" fill="#D9F0E4" opacity="0.6"/>
+        <ellipse cx="220" cy="295" rx="100" ry="30" fill="#E2E8D6" opacity="0.5"/>
+        <g class="svg-breathe">
+          <rect x="190" y="240" width="60" height="45" rx="4" fill="#F5DDD3" opacity="0.8"/>
+          <polygon points="185,240 220,210 255,240" fill="#C47860" opacity="0.5"/>
+          <rect x="210" y="260" width="20" height="25" rx="2" fill="#C9A84C" opacity="0.4"/>
+          <rect x="195" y="250" width="12" height="12" rx="1" fill="#D6E6F2" opacity="0.6"/>
+          <rect x="233" y="250" width="12" height="12" rx="1" fill="#D6E6F2" opacity="0.6"/>
+          <rect x="197" y="252" width="8" height="8" rx="1" fill="#F5EDCF" opacity="0.5" class="svg-glow"/>
+          <rect x="235" y="252" width="8" height="8" rx="1" fill="#F5EDCF" opacity="0.5" class="svg-glow"/>
+        </g>
+        <g class="svg-sway">
+          <rect x="140" y="260" width="8" height="30" rx="2" fill="#7B8A5B" opacity="0.5"/>
+          <circle cx="144" cy="248" r="18" fill="#6BB898" opacity="0.4"/>
+          <circle cx="136" cy="255" r="12" fill="#5A988C" opacity="0.3"/>
+          <circle cx="152" cy="252" r="10" fill="#D9F0E4" opacity="0.4"/>
+        </g>
+        <g class="svg-sway-slow"><rect x="290" y="265" width="6" height="22" rx="2" fill="#7B8A5B" opacity="0.4"/><circle cx="293" cy="255" r="14" fill="#6BB898" opacity="0.35"/></g>
+        <g class="svg-rotate"><circle cx="350" cy="80" r="25" fill="#F5EDCF" opacity="0.5"/><circle cx="350" cy="80" r="18" fill="#C9A84C" opacity="0.3"/></g>
+        <g opacity="0.15"><line x1="350" y1="45" x2="350" y2="35" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/><line x1="350" y1="115" x2="350" y2="125" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/><line x1="315" y1="80" x2="305" y2="80" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/><line x1="385" y1="80" x2="395" y2="80" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/></g>
+        <g class="svg-float"><circle cx="70" cy="120" r="16" fill="#F5DDD3" opacity="0.7"/><text x="70" y="125" text-anchor="middle" font-size="14">👁️</text><text x="70" y="148" text-anchor="middle" font-size="9" fill="#5A5466">视觉</text></g>
+        <g class="svg-float-d"><circle cx="70" cy="190" r="16" fill="#D4EDE8" opacity="0.7"/><text x="70" y="195" text-anchor="middle" font-size="14">👂</text><text x="70" y="218" text-anchor="middle" font-size="9" fill="#5A5466">听觉</text></g>
+        <g class="svg-float-d2"><circle cx="370" cy="140" r="16" fill="#F5EDCF" opacity="0.7"/><text x="370" y="145" text-anchor="middle" font-size="14">👃</text><text x="370" y="168" text-anchor="middle" font-size="9" fill="#5A5466">嗅觉</text></g>
+        <g class="svg-float"><circle cx="370" cy="210" r="16" fill="#F2DDE2" opacity="0.7"/><text x="370" y="215" text-anchor="middle" font-size="14">🤲</text><text x="370" y="238" text-anchor="middle" font-size="9" fill="#5A5466">触觉</text></g>
+        <g class="svg-float-d"><circle cx="220" cy="160" r="16" fill="#EDE0F3" opacity="0.7"/><text x="220" y="165" text-anchor="middle" font-size="14">👅</text><text x="220" y="188" text-anchor="middle" font-size="9" fill="#5A5466">味觉</text></g>
+        <g class="svg-breathe"><circle cx="220" cy="270" r="10" fill="#F5D9D3"/><path d="M210 278 Q208 290 210 300 L230 300 Q232 290 230 278 Q220 274 210 278Z" fill="#5A988C" opacity="0.4"/></g>
+        <g class="svg-pulse" opacity="0.15"><path d="M220 130 L200 145 L200 170 Q200 190 220 200 Q240 190 240 170 L240 145Z" fill="#C47860"/></g>
+        <g class="svg-float-d2"><text x="160" y="200" font-size="12" opacity="0.4">💗</text></g>
+        <g class="svg-float"><text x="280" y="180" font-size="10" opacity="0.3">✨</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 2 -->
+<section class="phase-section reverse" id="week2">
+  <div class="phase-container">
+    <div class="phase-visual reveal-left">
+      <div class="phase-decoration c2"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <rect x="40" y="60" width="360" height="300" rx="8" fill="#FAF8F2" stroke="#E8D8C8" stroke-width="1"/>
+        <ellipse cx="40" cy="60" rx="12" ry="8" fill="#E8D8C8"/><ellipse cx="400" cy="60" rx="12" ry="8" fill="#E8D8C8"/>
+        <ellipse cx="40" cy="360" rx="12" ry="8" fill="#E8D8C8"/><ellipse cx="400" cy="360" rx="12" ry="8" fill="#E8D8C8"/>
+        <line x1="80" y1="210" x2="360" y2="210" stroke="#C9A84C" stroke-width="2" stroke-dasharray="8,4" class="svg-draw"/>
+        <g class="svg-scale-in"><circle cx="100" cy="210" r="8" fill="#6BB898" opacity="0.7"/><text x="100" y="195" text-anchor="middle" font-size="9" fill="#5A5466">童年</text><text x="100" y="235" text-anchor="middle" font-size="8" fill="#5A988C">快乐时光</text><rect x="85" y="245" width="30" height="20" rx="3" fill="#D9F0E4" opacity="0.5"/><text x="100" y="259" text-anchor="middle" font-size="10">☀️</text></g>
+        <g class="svg-scale-in" style="animation-delay:.3s"><circle cx="170" cy="210" r="8" fill="#C47860" opacity="0.7"/><text x="170" y="195" text-anchor="middle" font-size="9" fill="#5A5466">青年</text><text x="170" y="235" text-anchor="middle" font-size="8" fill="#C47860">重要成就</text><rect x="155" y="245" width="30" height="20" rx="3" fill="#F5DDD3" opacity="0.5"/><text x="170" y="259" text-anchor="middle" font-size="10">🏆</text></g>
+        <g class="svg-scale-in" style="animation-delay:.6s"><circle cx="240" cy="210" r="8" fill="#5A8FB5" opacity="0.7"/><text x="240" y="195" text-anchor="middle" font-size="9" fill="#5A5466">成年</text><text x="240" y="235" text-anchor="middle" font-size="8" fill="#5A8FB5">家庭温暖</text><rect x="225" y="245" width="30" height="20" rx="3" fill="#D6E6F2" opacity="0.5"/><text x="240" y="259" text-anchor="middle" font-size="10">🏠</text></g>
+        <g class="svg-scale-in" style="animation-delay:.9s"><circle cx="310" cy="210" r="10" fill="#D97A6A" opacity="0.5" stroke="#D97A6A" stroke-width="1.5"/><text x="310" y="195" text-anchor="middle" font-size="9" fill="#5A5466">灾难</text><text x="310" y="235" text-anchor="middle" font-size="8" fill="#D97A6A">创伤经历</text><g opacity="0.4"><path d="M300 250 L306 242 L302 242 L308 234" stroke="#5A8FB5" stroke-width="1.5" fill="none" stroke-linecap="round"/></g></g>
+        <g class="svg-scale-in" style="animation-delay:1.2s"><circle cx="360" cy="210" r="8" fill="#C9A84C" opacity="0.7"/><text x="360" y="195" text-anchor="middle" font-size="9" fill="#5A5466">现在</text><text x="360" y="235" text-anchor="middle" font-size="8" fill="#C9A84C">重建力量</text><rect x="345" y="245" width="30" height="20" rx="3" fill="#F5EDCF" opacity="0.5"/><text x="360" y="259" text-anchor="middle" font-size="10">💪</text></g>
+        <path d="M100 170 Q170 140 240 150 Q310 160 360 140" stroke="#6BB898" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.3" class="svg-draw"/>
+        <g class="svg-breathe"><circle cx="120" cy="100" r="12" fill="#F5D9D3"/><path d="M108 112 Q106 125 108 140 L132 140 Q134 125 132 112 Q120 108 108 112Z" fill="#C47860" opacity="0.3"/><path d="M132 120 Q145 130 150 140" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-breathe" style="animation-delay:.5s"><circle cx="320" cy="100" r="12" fill="#F5D9D3"/><path d="M308 112 Q306 125 308 140 L332 140 Q334 125 332 112 Q320 108 308 112Z" fill="#967BA5" opacity="0.3"/><path d="M308 120 Q295 130 290 140" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-pulse" opacity="0.2"><circle cx="220" cy="330" r="20" stroke="#5A988C" stroke-width="2" fill="none"/><text x="220" y="335" text-anchor="middle" font-size="12" fill="#5A988C">🫁</text></g>
+        <text x="220" y="365" text-anchor="middle" font-size="10" fill="#5A5466" opacity="0.5">腹式呼吸 + 渐进式肌肉放松</text>
+      </svg>
+    </div>
+    <div class="phase-text reveal-right">
+      <div class="phase-week c2">第2周</div>
+      <h2 class="phase-title">团体生命线</h2>
+      <div class="phase-theme c2">Group Lifeline</div>
+      <p class="phase-desc">每位居民在长卷上绘制自己人生中的重要时刻和积极资源，强调灾难前的能力与成就，重建自我效能感。配合呼吸放松训练（腹式呼吸+渐进式肌肉放松）。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c2">📜</div><span>长卷绘制人生重要时刻与积极资源</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">⭐</div><span>强调灾难前的能力与成就</span></div>
+        <div class="phase-item"><div class="phase-item-icon c2">🫁</div><span>腹式呼吸 + 渐进式肌肉放松训练</span></div>
+      </div>
+      <div class="phase-goal c2"><span class="goal-label">🎯 核心目标</span>重建自我效能感，帮助居民重新发现自己的内在力量与积极资源</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 2 HEADER -->
+<div class="phase-header ph2" id="phase2">
+  <div class="reveal">
+    <div class="phase-header-icon ph2">🎭</div>
+    <div class="phase-header-tag ph2">第二阶段 · 第3-5周</div>
+    <h2 class="phase-header-title">创伤处理与表达</h2>
+    <p class="phase-header-sub">通过非语言模式的艺术媒介安全地表达和处理创伤体验，促进情绪释放与认知重构。</p>
+  </div>
+</div>
+
+<!-- WEEK 3 -->
+<section class="phase-section" id="week3">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c3">第3周</div>
+      <h2 class="phase-title">情绪拼贴</h2>
+      <div class="phase-theme c3">Emotion Collage</div>
+      <p class="phase-desc">居民借助各类色彩、图文素材拼贴呈现灾后复杂情绪与内心感受。以非语言、象征性的艺术方式外化难以言说的创伤体验，降低直面创伤的心理阻力，实现情绪初步宣泄与梳理。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c3">✂️</div><span>色彩、图文素材拼贴呈现复杂情绪</span></div>
+        <div class="phase-item"><div class="phase-item-icon c3">💭</div><span>非语言、象征性方式外化创伤体验</span></div>
+        <div class="phase-item"><div class="phase-item-icon c3">🌊</div><span>降低心理阻力，实现情绪宣泄与梳理</span></div>
+      </div>
+      <div class="phase-goal c3"><span class="goal-label">🎯 核心目标</span>以非语言艺术方式安全表达创伤，实现情绪初步宣泄与梳理</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c3"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <rect x="60" y="50" width="320" height="320" rx="12" fill="#fff" stroke="#E8D8C8" stroke-width="1.5"/>
+        <g class="svg-float"><rect x="90" y="80" width="80" height="60" rx="4" fill="#F5DDD3" opacity="0.8" transform="rotate(-5,130,110)"/><text x="130" y="108" text-anchor="middle" font-size="10" fill="#C47860" opacity="0.6">恐惧</text><path d="M110 118 Q120 112 130 118 Q140 124 150 118" stroke="#D97A6A" stroke-width="1.5" fill="none" opacity="0.4"/></g>
+        <g class="svg-float-d"><rect x="200" y="70" width="70" height="55" rx="4" fill="#D6E6F2" opacity="0.8" transform="rotate(3,235,97)"/><text x="235" y="95" text-anchor="middle" font-size="10" fill="#5A8FB5" opacity="0.6">悲伤</text><circle cx="225" cy="108" r="3" fill="#5A8FB5" opacity="0.3"/><circle cx="245" cy="108" r="3" fill="#5A8FB5" opacity="0.3"/></g>
+        <g class="svg-float-d2"><rect x="290" y="90" width="65" height="50" rx="4" fill="#F2DDE2" opacity="0.8" transform="rotate(-2,322,115)"/><text x="322" y="112" text-anchor="middle" font-size="10" fill="#C47888" opacity="0.6">愤怒</text><path d="M310 122 L316 118 L322 122 L328 118 L334 122" stroke="#C47888" stroke-width="1.5" fill="none" opacity="0.4"/></g>
+        <g class="svg-float"><rect x="100" y="170" width="75" height="55" rx="4" fill="#EDE0F3" opacity="0.8" transform="rotate(4,137,197)"/><text x="137" y="195" text-anchor="middle" font-size="10" fill="#967BA5" opacity="0.6">迷茫</text><circle cx="137" cy="210" r="8" fill="#967BA5" opacity="0.15" stroke="#967BA5" stroke-width="1" stroke-dasharray="3,2"/></g>
+        <g class="svg-float-d"><rect x="200" y="160" width="80" height="60" rx="4" fill="#D9F0E4" opacity="0.8" transform="rotate(-3,240,190)"/><text x="240" y="188" text-anchor="middle" font-size="10" fill="#5A988C" opacity="0.6">希望</text><path d="M230 200 L240 195 L250 200" stroke="#6BB898" stroke-width="1.5" fill="none" opacity="0.4"/></g>
+        <g class="svg-float-d2"><rect x="300" y="170" width="60" height="45" rx="4" fill="#F5EDCF" opacity="0.8" transform="rotate(2,330,192)"/><text x="330" y="190" text-anchor="middle" font-size="10" fill="#C9A84C" opacity="0.6">温暖</text><circle cx="330" cy="202" r="4" fill="#C9A84C" opacity="0.2"/></g>
+        <g class="svg-float-d3"><circle cx="150" cy="270" r="20" fill="#D97A6A" opacity="0.2"/><circle cx="150" cy="270" r="12" fill="#D97A6A" opacity="0.15"/></g>
+        <g class="svg-float"><rect x="220" y="250" width="40" height="40" rx="4" fill="#5A988C" opacity="0.15" transform="rotate(15,240,270)"/></g>
+        <g class="svg-float-d2"><polygon points="320,260 335,245 350,260 335,275" fill="#C9A84C" opacity="0.15"/></g>
+        <g class="svg-breathe"><circle cx="220" cy="360" r="14" fill="#F5D9D3"/><path d="M206 355 Q210 340 220 338 Q230 340 234 355" fill="#5A5466" opacity="0.3"/><path d="M208 368 Q206 380 208 395 L232 395 Q234 380 232 368 Q220 363 208 368Z" fill="#5A988C" opacity="0.3"/><path d="M232 375 Q250 365 260 355" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-float" transform="translate(255,340)"><text font-size="16">✂️</text></g>
+        <g opacity="0.15"><circle cx="80" cy="350" r="6" fill="#D97A6A"/><circle cx="95" cy="350" r="6" fill="#C9A84C"/><circle cx="110" cy="350" r="6" fill="#6BB898"/><circle cx="125" cy="350" r="6" fill="#5A8FB5"/><circle cx="140" cy="350" r="6" fill="#967BA5"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 4 -->
+<section class="phase-section reverse" id="week4">
+  <div class="phase-container">
+    <div class="phase-visual reveal-left">
+      <div class="phase-decoration c4"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <circle cx="220" cy="210" r="150" fill="#F2DDE2" opacity="0.15"/>
+        <g class="svg-breathe">
+          <circle cx="220" cy="80" r="30" fill="#F5D9D3" opacity="0.7"/><path d="M190 75 Q195 50 220 46 Q245 50 250 75" fill="#5A5466" opacity="0.3"/>
+          <rect x="210" y="108" width="20" height="15" rx="4" fill="#F5D9D3" opacity="0.5"/>
+          <path d="M175 123 Q170 160 172 220 L268 220 Q270 160 265 123 Q220 115 175 123Z" fill="#F5D9D3" opacity="0.4"/>
+          <path d="M175 135 Q150 170 140 220 Q135 240 145 260" stroke="#F5D9D3" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path d="M265 135 Q290 170 300 220 Q305 240 295 260" stroke="#F5D9D3" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path d="M190 218 Q185 270 180 330" stroke="#F5D9D3" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path d="M250 218 Q255 270 260 330" stroke="#F5D9D3" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <ellipse cx="175" cy="340" rx="18" ry="8" fill="#F5D9D3" opacity="0.4"/><ellipse cx="265" cy="340" rx="18" ry="8" fill="#F5D9D3" opacity="0.4"/>
+        </g>
+        <g class="svg-pulse"><circle cx="220" cy="70" r="12" fill="#D97A6A" opacity="0.2"/><path d="M215 65 L220 60 L225 65 M220 60 L220 72" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/><text x="250" y="65" font-size="9" fill="#D97A6A" opacity="0.7">紧张</text></g>
+        <g class="svg-pulse" style="animation-delay:.5s"><circle cx="220" cy="160" r="18" fill="#D97A6A" opacity="0.15"/><text x="220" y="164" text-anchor="middle" font-size="12">💓</text><text x="260" y="155" font-size="9" fill="#D97A6A" opacity="0.7">心悸</text></g>
+        <g class="svg-pulse" style="animation-delay:1s"><circle cx="170" cy="135" r="10" fill="#C47888" opacity="0.2"/><text x="170" y="139" text-anchor="middle" font-size="10">⚡</text><text x="120" y="130" font-size="9" fill="#C47888" opacity="0.7">紧绷</text></g>
+        <g class="svg-pulse" style="animation-delay:1.5s"><circle cx="270" cy="135" r="10" fill="#C47888" opacity="0.2"/><text x="270" y="139" text-anchor="middle" font-size="10">⚡</text></g>
+        <g class="svg-pulse" style="animation-delay:.8s"><circle cx="220" cy="195" r="14" fill="#C9A84C" opacity="0.15"/><text x="220" y="199" text-anchor="middle" font-size="11">🌀</text><text x="260" y="200" font-size="9" fill="#C9A84C" opacity="0.7">不安</text></g>
+        <g class="svg-pulse" style="animation-delay:1.2s"><circle cx="145" cy="260" r="8" fill="#967BA5" opacity="0.2"/><text x="145" y="264" text-anchor="middle" font-size="9">〰️</text><text x="100" y="265" font-size="9" fill="#967BA5" opacity="0.7">颤抖</text></g>
+        <g class="svg-pulse" style="animation-delay:.3s"><circle cx="180" cy="280" r="10" fill="#D97A6A" opacity="0.15"/><text x="180" y="284" text-anchor="middle" font-size="10">🔥</text><text x="130" y="285" font-size="9" fill="#D97A6A" opacity="0.7">酸痛</text></g>
+        <g class="svg-float" opacity="0.2"><path d="M310 100 Q330 90 350 100 Q370 110 390 100" stroke="#5A988C" stroke-width="2" fill="none"/></g>
+        <g class="svg-float-d" opacity="0.2"><path d="M310 140 Q330 130 350 140 Q370 150 390 140" stroke="#5A988C" stroke-width="2" fill="none"/></g>
+        <text x="220" y="390" text-anchor="middle" font-size="10" fill="#5A5466" opacity="0.5">身体感受地图 · 觉察创伤在身体中的留存印记</text>
+      </svg>
+    </div>
+    <div class="phase-text reveal-right">
+      <div class="phase-week c4">第4周</div>
+      <h2 class="phase-title">身体地图绘制</h2>
+      <div class="phase-theme c4">Body Map Drawing</div>
+      <p class="phase-desc">引导居民绘制身体感受地图，标注灾后躯体紧张、疼痛、心悸、紧绷等应激体感位置。帮助个体觉察创伤在身体中的留存印记，通过视觉化表达释放躯体化情绪，缓解灾后身心躯体症状。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c4">🫀</div><span>标注躯体紧张、疼痛、心悸等应激体感</span></div>
+        <div class="phase-item"><div class="phase-item-icon c4">🗺️</div><span>视觉化觉察创伤在身体中的留存印记</span></div>
+        <div class="phase-item"><div class="phase-item-icon c4">💨</div><span>释放躯体化情绪，缓解身心症状</span></div>
+      </div>
+      <div class="phase-goal c4"><span class="goal-label">🎯 核心目标</span>通过身体地图的视觉化表达，帮助居民觉察并释放创伤在身体中的印记</div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 5 -->
+<section class="phase-section" id="week5">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c5">第5周</div>
+      <h2 class="phase-title">团体叙事剧场</h2>
+      <div class="phase-theme c5">Group Narrative Theater</div>
+      <p class="phase-desc">以轻度角色扮演、情景演绎的戏剧治疗形式，温和重现灾后经历与互助片段。在安全的团体氛围中重构创伤叙事，弱化灾难的恐惧冲击力，通过团体共鸣消解孤独感，完成集体创伤的梳理与和解。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c5">🎭</div><span>轻度角色扮演与情景演绎</span></div>
+        <div class="phase-item"><div class="phase-item-icon c5">🔄</div><span>重构创伤叙事，弱化恐惧冲击力</span></div>
+        <div class="phase-item"><div class="phase-item-icon c5">🤝</div><span>团体共鸣消解孤独感</span></div>
+      </div>
+      <div class="phase-goal c5"><span class="goal-label">🎯 核心目标</span>在安全团体氛围中重构创伤叙事，完成集体创伤的梳理与和解</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c5"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <rect x="40" y="300" width="360" height="8" rx="4" fill="#E8D8C8"/>
+        <path d="M40 308 L60 380 L380 380 L400 308" fill="#F5F0E1" opacity="0.5"/>
+        <path d="M40 40 Q55 200 40 310" stroke="#C47860" stroke-width="3" fill="none" opacity="0.3"/>
+        <path d="M400 40 Q385 200 400 310" stroke="#C47860" stroke-width="3" fill="none" opacity="0.3"/>
+        <path d="M40 40 Q80 50 60 80 Q50 120 55 160 Q48 200 52 250 Q46 280 40 310" fill="#C47860" opacity="0.08"/>
+        <path d="M400 40 Q360 50 380 80 Q390 120 385 160 Q392 200 388 250 Q394 280 400 310" fill="#C47860" opacity="0.08"/>
+        <g class="svg-glow"><polygon points="220,20 180,120 260,120" fill="#F5EDCF" opacity="0.15"/></g>
+        <circle cx="220" cy="20" r="8" fill="#C9A84C" opacity="0.3"/>
+        <g class="svg-breathe">
+          <circle cx="160" cy="220" r="20" fill="#F5D9D3"/><path d="M140 216 Q144 198 160 195 Q176 198 180 216" fill="#5A5466" opacity="0.3"/>
+          <path d="M152 222 Q156 219 160 222" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M160 222 Q164 219 168 222" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M155 232 Q160 235 165 232" stroke="#D97A6A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M144 236 Q140 265 142 295 L178 295 Q180 265 176 236 Q160 230 144 236Z" fill="#C47860" opacity="0.35"/>
+          <path d="M176 250 Q200 240 215 235" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-float"><rect x="195" y="175" width="70" height="35" rx="12" fill="#fff" stroke="#E8D8C8" stroke-width="1" opacity="0.8"/><text x="230" y="195" text-anchor="middle" font-size="9" fill="#5A5466">我们的故事…</text><polygon points="200,210 210,210 195,220" fill="#fff" stroke="#E8D8C8" stroke-width="1" opacity="0.8"/></g>
+        <g class="svg-breathe" style="animation-delay:.5s">
+          <circle cx="300" cy="225" r="18" fill="#F5D9D3"/><path d="M282 221 Q286 205 300 202 Q314 205 318 221" fill="#5A5466" opacity="0.3"/>
+          <path d="M293 227 Q297 224 301 227" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M301 227 Q305 224 309 227" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M286 240 Q283 265 285 295 L315 295 Q317 265 314 240 Q300 234 286 240Z" fill="#967BA5" opacity="0.35"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:1s">
+          <circle cx="360" cy="235" r="16" fill="#F5D9D3"/><path d="M344 231 Q348 217 360 214 Q372 217 376 231" fill="#5A5466" opacity="0.3"/>
+          <path d="M354 237 Q357 234 360 237" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M360 237 Q363 234 366 237" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M348 248 Q345 270 347 295 L373 295 Q375 270 372 248 Q360 242 348 248Z" fill="#5A988C" opacity="0.35"/>
+        </g>
+        <path d="M318 260 Q340 255 352 258" stroke="#C47888" stroke-width="1" stroke-dasharray="3,3" opacity="0.2"/>
+        <g class="svg-float-d" opacity="0.3"><circle cx="80" cy="80" r="18" fill="#F5DDD3" opacity="0.5"/><text x="80" y="86" text-anchor="middle" font-size="18">😊</text></g>
+        <g class="svg-float-d2" opacity="0.3"><circle cx="360" cy="80" r="18" fill="#EDE0F3" opacity="0.5"/><text x="360" y="86" text-anchor="middle" font-size="18">🎭</text></g>
+        <g class="svg-float"><text x="250" y="270" font-size="12" opacity="0.3">💗</text></g>
+        <g class="svg-float-d2"><text x="330" y="275" font-size="10" opacity="0.25">💗</text></g>
+        <circle cx="130" cy="140" r="2" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="310" cy="130" r="2.5" fill="#C47860" opacity="0.3" class="svg-pulse"/>
+        <circle cx="250" cy="100" r="2" fill="#5A988C" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 3 HEADER -->
+<div class="phase-header ph3" id="phase3">
+  <div class="reveal">
+    <div class="phase-header-icon ph3">🌱</div>
+    <div class="phase-header-tag ph3">第三阶段 · 第6-8周</div>
+    <h2 class="phase-header-title">重建与联结</h2>
+    <p class="phase-header-sub">增强社区凝聚力，重建社会支持网络，促进意义重构与未来展望。</p>
+  </div>
+</div>
+
+<!-- WEEK 6 -->
+<section class="phase-section" id="week6">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c6">第6周</div>
+      <h2 class="phase-title">社区记忆墙</h2>
+      <div class="phase-theme c6">Community Memory Wall</div>
+      <p class="phase-desc">全体居民共同创作一面大型壁画，记录灾难经历与社区恢复历程，作为集体记忆与韧性的象征。通过共同创作过程，将个体创伤转化为集体力量。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c6">🖼️</div><span>共同创作大型壁画</span></div>
+        <div class="phase-item"><div class="phase-item-icon c6">📖</div><span>记录灾难经历与社区恢复历程</span></div>
+        <div class="phase-item"><div class="phase-item-icon c6">💪</div><span>集体记忆与韧性的象征</span></div>
+      </div>
+      <div class="phase-goal c6"><span class="goal-label">🎯 核心目标</span>将个体创伤转化为集体力量，增强社区凝聚力与归属感</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c6"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <rect x="40" y="40" width="360" height="300" rx="8" fill="#FAF8F2" stroke="#E8D8C8" stroke-width="1.5"/>
+        <g opacity="0.06"><line x1="40" y1="80" x2="400" y2="80" stroke="#C4B8A8" stroke-width="1"/><line x1="40" y1="120" x2="400" y2="120" stroke="#C4B8A8" stroke-width="1"/><line x1="40" y1="160" x2="400" y2="160" stroke="#C4B8A8" stroke-width="1"/><line x1="40" y1="200" x2="400" y2="200" stroke="#C4B8A8" stroke-width="1"/><line x1="40" y1="240" x2="400" y2="240" stroke="#C4B8A8" stroke-width="1"/><line x1="40" y1="280" x2="400" y2="280" stroke="#C4B8A8" stroke-width="1"/><line x1="40" y1="320" x2="400" y2="320" stroke="#C4B8A8" stroke-width="1"/></g>
+        <g class="svg-fade-in"><rect x="60" y="60" width="100" height="80" rx="6" fill="#D6E6F2" opacity="0.5"/><circle cx="90" cy="85" r="15" fill="#967BA5" opacity="0.3"/><circle cx="120" cy="82" r="18" fill="#967BA5" opacity="0.25"/><circle cx="140" cy="88" r="12" fill="#967BA5" opacity="0.2"/><line x1="80" y1="105" x2="78" y2="118" stroke="#5A8FB5" stroke-width="1" opacity="0.3"/><line x1="100" y1="108" x2="98" y2="121" stroke="#5A8FB5" stroke-width="1" opacity="0.3"/><line x1="120" y1="105" x2="118" y2="118" stroke="#5A8FB5" stroke-width="1" opacity="0.3"/><line x1="140" y1="108" x2="138" y2="121" stroke="#5A8FB5" stroke-width="1" opacity="0.3"/><rect x="85" y="120" width="30" height="15" rx="2" fill="#C4B8A8" opacity="0.4"/><polygon points="80,120 100,108 120,120" fill="#C47860" opacity="0.3"/><text x="110" y="155" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">灾难来临</text></g>
+        <g class="svg-fade-in-d"><rect x="175" y="60" width="100" height="80" rx="6" fill="#D9F0E4" opacity="0.5"/><path d="M195 110 Q210 95 225 100" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M255 110 Q240 95 225 100" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="225" cy="100" r="8" fill="#6BB898" opacity="0.3"/><circle cx="200" cy="80" r="8" fill="#F5D9D3" opacity="0.6"/><circle cx="250" cy="80" r="8" fill="#F5D9D3" opacity="0.6"/><text x="225" y="155" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">互助救援</text></g>
+        <g class="svg-fade-in-d2"><rect x="290" y="60" width="100" height="80" rx="6" fill="#F5EDCF" opacity="0.5"/><rect x="335" y="105" width="6" height="25" rx="2" fill="#7B8A5B" opacity="0.4"/><circle cx="338" cy="95" r="18" fill="#6BB898" opacity="0.35"/><circle cx="328" cy="100" r="12" fill="#5A988C" opacity="0.25"/><circle cx="310" cy="78" r="10" fill="#C9A84C" opacity="0.3"/><text x="340" y="155" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">恢复成长</text></g>
+        <g class="svg-fade-in-d3"><rect x="60" y="165" width="160" height="80" rx="6" fill="#F5DDD3" opacity="0.4"/><circle cx="100" cy="200" r="10" fill="#F5D9D3" opacity="0.6"/><path d="M88 208 Q86 220 88 235 L112 235 Q114 220 112 208 Q100 204 88 208Z" fill="#C47860" opacity="0.3"/><circle cx="140" cy="200" r="10" fill="#F5D9D3" opacity="0.6"/><path d="M128 208 Q126 220 128 235 L152 235 Q154 220 152 208 Q140 204 128 208Z" fill="#5A988C" opacity="0.3"/><circle cx="180" cy="200" r="10" fill="#F5D9D3" opacity="0.6"/><path d="M168 208 Q166 220 168 235 L192 235 Q194 220 192 208 Q180 204 168 208Z" fill="#967BA5" opacity="0.3"/><text x="120" y="195" font-size="8" opacity="0.3">❤</text><text x="160" y="195" font-size="8" opacity="0.3">❤</text><text x="140" y="250" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">社区团结</text></g>
+        <g class="svg-fade-in-d4"><rect x="235" y="165" width="155" height="80" rx="6" fill="#EDE0F3" opacity="0.3"/><path d="M260 220 Q312 180 365 220" stroke="#C47860" stroke-width="3" fill="none" opacity="0.3"/><path d="M265 220 Q312 185 360 220" stroke="#C9A84C" stroke-width="3" fill="none" opacity="0.3"/><path d="M270 220 Q312 190 355 220" stroke="#5A988C" stroke-width="3" fill="none" opacity="0.3"/><path d="M275 220 Q312 195 350 220" stroke="#5A8FB5" stroke-width="3" fill="none" opacity="0.3"/><path d="M300 185 Q305 180 310 185" stroke="#5A5466" stroke-width="1" fill="none" opacity="0.3"/><path d="M320 178 Q325 173 330 178" stroke="#5A5466" stroke-width="1" fill="none" opacity="0.3"/><text x="312" y="250" text-anchor="middle" font-size="8" fill="#5A5466" opacity="0.5">希望未来</text></g>
+        <g class="svg-breathe"><circle cx="80" cy="370" r="12" fill="#F5D9D3"/><path d="M68 378 Q66 390 68 400 L92 400 Q94 390 92 378 Q80 374 68 378Z" fill="#C47860" opacity="0.3"/><path d="M92 385 Q105 375 110 365" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-breathe" style="animation-delay:.5s"><circle cx="220" cy="375" r="12" fill="#F5D9D3"/><path d="M208 383 Q206 395 208 405 L232 405 Q234 395 232 383 Q220 379 208 383Z" fill="#967BA5" opacity="0.3"/><path d="M208 390 Q195 380 190 370" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-breathe" style="animation-delay:1s"><circle cx="360" cy="370" r="12" fill="#F5D9D3"/><path d="M348 378 Q346 390 348 400 L372 400 Q374 390 372 378 Q360 374 348 378Z" fill="#5A988C" opacity="0.3"/><path d="M372 385 Q385 375 390 365" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-float"><text x="108" y="360" font-size="12">🖌️</text></g>
+        <g class="svg-float-d"><text x="188" y="365" font-size="12">🎨</text></g>
+        <g class="svg-float-d2"><text x="388" y="360" font-size="12">🖌️</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 7 -->
+<section class="phase-section reverse" id="week7">
+  <div class="phase-container">
+    <div class="phase-visual reveal-left">
+      <div class="phase-decoration c7"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <ellipse cx="220" cy="380" rx="160" ry="25" fill="#E2E8D6" opacity="0.4"/>
+        <g class="svg-sway"><rect x="205" y="200" width="30" height="160" rx="8" fill="#7B8A5B" opacity="0.4"/><path d="M220 250 Q180 220 140 230" stroke="#7B8A5B" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.3"/><path d="M220 230 Q260 200 300 210" stroke="#7B8A5B" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.3"/><path d="M220 270 Q170 260 130 275" stroke="#7B8A5B" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.25"/><path d="M220 260 Q280 240 320 255" stroke="#7B8A5B" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.25"/></g>
+        <g class="svg-breathe"><circle cx="220" cy="170" r="55" fill="#6BB898" opacity="0.2"/><circle cx="190" cy="180" r="40" fill="#5A988C" opacity="0.2"/><circle cx="250" cy="175" r="42" fill="#6BB898" opacity="0.18"/><circle cx="220" cy="145" r="35" fill="#D9F0E4" opacity="0.3"/></g>
+        <g class="svg-float"><rect x="110" y="225" width="45" height="28" rx="14" fill="#F5DDD3" opacity="0.8"/><text x="132" y="243" text-anchor="middle" font-size="8" fill="#C47860">谢谢邻居</text><line x1="132" y1="225" x2="140" y2="230" stroke="#7B8A5B" stroke-width="1" opacity="0.3"/></g>
+        <g class="svg-float-d"><rect x="280" y="205" width="50" height="28" rx="14" fill="#D4EDE8" opacity="0.8"/><text x="305" y="223" text-anchor="middle" font-size="8" fill="#5A988C">感恩志愿者</text><line x1="305" y1="205" x2="300" y2="210" stroke="#7B8A5B" stroke-width="1" opacity="0.3"/></g>
+        <g class="svg-float-d2"><rect x="90" y="270" width="48" height="28" rx="14" fill="#F5EDCF" opacity="0.8"/><text x="114" y="288" text-anchor="middle" font-size="8" fill="#C9A84C">感谢医生</text><line x1="114" y1="270" x2="130" y2="275" stroke="#7B8A5B" stroke-width="1" opacity="0.3"/></g>
+        <g class="svg-float"><rect x="290" y="250" width="52" height="28" rx="14" fill="#EDE0F3" opacity="0.8"/><text x="316" y="268" text-anchor="middle" font-size="8" fill="#967BA5">谢谢家人</text><line x1="316" y1="250" x2="320" y2="255" stroke="#7B8A5B" stroke-width="1" opacity="0.3"/></g>
+        <g class="svg-float-d3"><rect x="175" y="130" width="48" height="28" rx="14" fill="#F2DDE2" opacity="0.8"/><text x="199" y="148" text-anchor="middle" font-size="8" fill="#C47888">感恩社区</text><line x1="199" y1="158" x2="210" y2="165" stroke="#7B8A5B" stroke-width="1" opacity="0.3"/></g>
+        <g class="svg-float-d2"><rect x="240" y="140" width="52" height="28" rx="14" fill="#D6E6F2" opacity="0.8"/><text x="266" y="158" text-anchor="middle" font-size="8" fill="#5A8FB5">感谢朋友</text><line x1="266" y1="168" x2="255" y2="175" stroke="#7B8A5B" stroke-width="1" opacity="0.3"/></g>
+        <g class="svg-breathe"><circle cx="220" cy="340" r="14" fill="#F5D9D3"/><path d="M206 352 Q204 365 206 378 L234 378 Q236 365 234 352 Q220 347 206 352Z" fill="#967BA5" opacity="0.3"/><path d="M206 376 Q195 385 190 395" stroke="#5A5466" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.2"/><path d="M234 376 Q245 385 250 395" stroke="#5A5466" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.2"/></g>
+        <circle cx="220" cy="350" r="35" fill="#967BA5" opacity="0.04" class="svg-pulse"/>
+        <circle cx="220" cy="350" r="50" fill="#967BA5" opacity="0.02" class="svg-pulse"/>
+        <g class="svg-fall"><text x="160" y="100" font-size="10" opacity="0.3">💗</text></g>
+        <g class="svg-fall-d"><text x="280" y="90" font-size="10" opacity="0.3">💗</text></g>
+        <g class="svg-fall-d2"><text x="220" y="80" font-size="12" opacity="0.25">💛</text></g>
+      </svg>
+    </div>
+    <div class="phase-text reveal-right">
+      <div class="phase-week c7">第7周</div>
+      <h2 class="phase-title">感恩与联结</h2>
+      <div class="phase-theme c7">Gratitude & Connection</div>
+      <p class="phase-desc">开展慈悲冥想团体练习，引导居民对帮助过自己的人表达感恩，对社区邻里发送善意。配合"感恩树"艺术活动——在树上挂满写有感恩内容的叶子。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c7">🧘</div><span>慈悲冥想团体练习</span></div>
+        <div class="phase-item"><div class="phase-item-icon c7">🌳</div><span>"感恩树"艺术活动</span></div>
+        <div class="phase-item"><div class="phase-item-icon c7">💌</div><span>对帮助过自己的人表达感恩与善意</span></div>
+      </div>
+      <div class="phase-goal c7"><span class="goal-label">🎯 核心目标</span>通过感恩表达与慈悲冥想，重建社区联结与社会支持网络</div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 8 -->
+<section class="phase-section" id="week8">
+  <div class="phase-container">
+    <div class="phase-text reveal-left">
+      <div class="phase-week c8">第8周</div>
+      <h2 class="phase-title">未来愿景</h2>
+      <div class="phase-theme c8">Future Vision</div>
+      <p class="phase-desc">每位居民创作"我的未来家园"主题作品，并进行团体分享。举行闭幕仪式，颁发参与证书，提供后续心理支持资源信息。</p>
+      <div class="phase-items">
+        <div class="phase-item"><div class="phase-item-icon c8">🏡</div><span>创作"我的未来家园"主题作品</span></div>
+        <div class="phase-item"><div class="phase-item-icon c8">🗣️</div><span>团体分享与闭幕仪式</span></div>
+        <div class="phase-item"><div class="phase-item-icon c8">📋</div><span>颁发参与证书，提供后续支持资源</span></div>
+      </div>
+      <div class="phase-goal c8"><span class="goal-label">🎯 核心目标</span>促进意义重构与未来展望，完成从创伤到希望的完整转变</div>
+    </div>
+    <div class="phase-visual reveal-right">
+      <div class="phase-decoration c8"></div>
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <rect x="0" y="0" width="440" height="250" rx="20" fill="url(#skyGrad)" opacity="0.3"/>
+        <defs><linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="250"><stop offset="0%" stop-color="#D6E6F2"/><stop offset="100%" stop-color="#F5EDCF"/></linearGradient></defs>
+        <g class="svg-rotate"><circle cx="350" cy="80" r="30" fill="#F5EDCF" opacity="0.4"/><circle cx="350" cy="80" r="20" fill="#C9A84C" opacity="0.25"/></g>
+        <g opacity="0.1"><line x1="350" y1="40" x2="350" y2="28" stroke="#C9A84C" stroke-width="2"/><line x1="380" y1="55" x2="390" y2="48" stroke="#C9A84C" stroke-width="2"/><line x1="390" y1="80" x2="402" y2="80" stroke="#C9A84C" stroke-width="2"/><line x1="380" y1="105" x2="390" y2="112" stroke="#C9A84C" stroke-width="2"/></g>
+        <g class="svg-breathe">
+          <rect x="160" y="180" width="120" height="90" rx="6" fill="#F5DDD3" opacity="0.7"/>
+          <polygon points="150,180 220,120 290,180" fill="#C47860" opacity="0.4"/>
+          <rect x="205" y="225" width="30" height="45" rx="3" fill="#C9A84C" opacity="0.4"/><circle cx="230" cy="250" r="2" fill="#C9A84C" opacity="0.6"/>
+          <rect x="170" y="200" width="25" height="20" rx="3" fill="#D6E6F2" opacity="0.6"/>
+          <rect x="245" y="200" width="25" height="20" rx="3" fill="#D6E6F2" opacity="0.6"/>
+          <rect x="172" y="202" width="21" height="16" rx="2" fill="#F5EDCF" opacity="0.3" class="svg-glow"/>
+          <rect x="247" y="202" width="21" height="16" rx="2" fill="#F5EDCF" opacity="0.3" class="svg-glow"/>
+          <rect x="255" y="130" width="15" height="35" rx="2" fill="#E8D8C8" opacity="0.5"/>
+        </g>
+        <g class="svg-sway"><circle cx="140" cy="270" r="12" fill="#6BB898" opacity="0.3"/><circle cx="155" cy="275" r="10" fill="#5A988C" opacity="0.25"/><line x1="145" y1="275" x2="145" y2="295" stroke="#7B8A5B" stroke-width="2" opacity="0.3"/></g>
+        <g class="svg-sway-slow"><circle cx="300" cy="268" r="14" fill="#6BB898" opacity="0.3"/><circle cx="315" cy="272" r="10" fill="#D9F0E4" opacity="0.3"/><line x1="305" y1="275" x2="305" y2="295" stroke="#7B8A5B" stroke-width="2" opacity="0.3"/></g>
+        <g class="svg-float"><circle cx="120" cy="290" r="5" fill="#D97A6A" opacity="0.4"/><circle cx="120" cy="290" r="2" fill="#F5DDD3"/></g>
+        <g class="svg-float-d"><circle cx="320" cy="288" r="4" fill="#C9A84C" opacity="0.4"/><circle cx="320" cy="288" r="1.5" fill="#FBF4D6"/></g>
+        <path d="M220 270 Q220 310 220 350" stroke="#E8D8C8" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.3"/>
+        <g class="svg-breathe"><circle cx="200" cy="340" r="10" fill="#F5D9D3"/><path d="M190 348 Q188 360 190 375 L210 375 Q212 360 210 348 Q200 344 190 348Z" fill="#5A988C" opacity="0.35"/><path d="M190 355 Q180 360 178 370" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M210 355 Q220 360 222 370" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-breathe" style="animation-delay:.5s"><circle cx="240" cy="345" r="8" fill="#F5D9D3"/><path d="M232 351 Q230 362 232 375 L248 375 Q250 362 248 351 Q240 348 232 351Z" fill="#C47860" opacity="0.3"/></g>
+        <g class="svg-float-d2"><rect x="340" y="200" width="55" height="40" rx="6" fill="#fff" stroke="#C9A84C" stroke-width="1.5" opacity="0.7"/><text x="367" y="218" text-anchor="middle" font-size="8" fill="#C9A84C">🏆</text><text x="367" y="232" text-anchor="middle" font-size="7" fill="#5A5466">参与证书</text></g>
+        <g class="svg-float"><path d="M80 100 Q88 92 96 100" stroke="#5A5466" stroke-width="1.5" fill="none" opacity="0.2"/></g>
+        <g class="svg-float-d"><path d="M110 85 Q118 77 126 85" stroke="#5A5466" stroke-width="1.5" fill="none" opacity="0.15"/></g>
+        <path d="M50 180 Q100 130 150 180" stroke="#C47860" stroke-width="2" fill="none" opacity="0.1" class="svg-draw"/>
+        <path d="M55 180 Q100 135 145 180" stroke="#C9A84C" stroke-width="2" fill="none" opacity="0.1" class="svg-draw"/>
+        <path d="M60 180 Q100 140 140 180" stroke="#5A988C" stroke-width="2" fill="none" opacity="0.1" class="svg-draw"/>
+        <circle cx="80" cy="60" r="2" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="150" cy="50" r="2.5" fill="#C47860" opacity="0.25" class="svg-pulse"/>
+        <circle cx="280" cy="60" r="2" fill="#5A988C" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ASSESSMENT -->
+<section class="assess-section" id="assess">
+  <div class="assess-container">
+    <div class="section-header reveal">
+      <div class="section-tag assess">📈 评估指标</div>
+      <h2 class="section-title">科学的评估体系</h2>
+      <p class="section-subtitle">通过量化指标全面评估干预效果</p>
+    </div>
+    <div class="assess-illustration reveal-scale">
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#FAF8F2"/>
+        <g class="svg-grow"><rect x="80" y="120" width="40" height="50" rx="6" fill="#C47860" opacity="0.3"/><text x="100" y="145" text-anchor="middle" font-size="10" fill="#C47860">出勤率</text></g>
+        <g class="svg-grow-d"><rect x="180" y="90" width="40" height="80" rx="6" fill="#C9A84C" opacity="0.3"/><text x="200" y="135" text-anchor="middle" font-size="10" fill="#C9A84C">参与度</text></g>
+        <g class="svg-grow-d2"><rect x="280" y="60" width="40" height="110" rx="6" fill="#5A988C" opacity="0.3"/><text x="300" y="120" text-anchor="middle" font-size="10" fill="#5A988C">韧性</text></g>
+        <g class="svg-grow" style="animation-delay:.9s"><rect x="380" y="80" width="40" height="90" rx="6" fill="#5A8FB5" opacity="0.3"/><text x="400" y="130" text-anchor="middle" font-size="10" fill="#5A8FB5">满意度</text></g>
+        <g class="svg-grow" style="animation-delay:1.2s"><rect x="480" y="100" width="40" height="70" rx="6" fill="#967BA5" opacity="0.3"/><text x="500" y="140" text-anchor="middle" font-size="10" fill="#967BA5">持续性</text></g>
+        <path d="M100 115 Q200 85 300 55 Q400 75 500 95" stroke="#C47860" stroke-width="2" fill="none" stroke-dasharray="6,3" opacity="0.3" class="svg-draw"/>
+        <g class="svg-float"><polygon points="520,90 530,75 540,90" fill="#5A988C" opacity="0.3"/></g>
+      </svg>
+    </div>
+    <div class="assess-grid stagger">
+      <div class="assess-card reveal" style="--i:0"><div class="assess-card-icon a1">📊</div><h3>社区参与率</h3><p>统计活动出勤、持续参与情况，评估项目普及度与居民接纳度</p></div>
+      <div class="assess-card reveal" style="--i:1"><div class="assess-card-icon a2">💪</div><h3>社区韧性指数</h3><p>通过CD-RISC心理韧性量表前后测，评价居民与社区整体复原能力</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADAPTATION -->
+<section class="adapt-section" id="adapt">
+  <div class="adapt-container">
+    <div class="section-header reveal">
+      <div class="section-tag adapt">⚙️ 实施适配</div>
+      <h2 class="section-title">以人为本的实施策略</h2>
+      <p class="section-subtitle">尊重差异、文化适切、包容参与</p>
+    </div>
+    <div class="adapt-grid stagger">
+      <div class="adapt-card reveal" style="--i:0"><div class="adapt-card-icon d1">🤲</div><div><h3>自愿参与原则</h3><p>结合灾后居民身心脆弱性与个体差异，活动以自愿参与为原则，避免创伤强制暴露</p></div></div>
+      <div class="adapt-card reveal" style="--i:1"><div class="adapt-card-icon d2">🎭</div><div><h3>本土文化融合</h3><p>融入本土文化与传统艺术形式，提供方言适配支持，保障干预的文化适切性</p></div></div>
+      <div class="adapt-card reveal" style="--i:2"><div class="adapt-card-icon d3">🤝</div><div><h3>社区联动</h3><p>联动社区骨干与本地心理机构开展服务，兼顾老人、儿童、残障人群的参与需求</p></div></div>
+      <div class="adapt-card reveal" style="--i:3"><div class="adapt-card-icon d4">🛡️</div><div><h3>包容性保障</h3><p>保障干预的文化适切性与包容性，让每位居民都能在安全环境中参与疗愈</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LONG-TERM -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">🔄 长效保障</div>
+      <h2 class="section-title">可持续的长效保障机制</h2>
+      <p class="section-subtitle">从空间建设到工具包整合，构建自我运转的社区心理应急帮扶体系</p>
+    </div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0"><div class="longterm-card-icon l1">🏠</div><h3>常设艺术疗愈空间</h3><p>依托社区打造常设艺术疗愈空间，培育本土同伴支持队伍，为居民提供持续的心理支持</p></div>
+      <div class="longterm-card reveal" style="--i:1"><div class="longterm-card-icon l2">📦</div><h3>灾后心理恢复工具包</h3><p>将本次干预内容整合为灾后心理恢复工具包，纳入地方灾后重建规划，形成可复用资源</p></div>
+    </div>
+    <div class="longterm-illustration reveal-scale">
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#F0ECE4"/>
+        <circle cx="300" cy="100" r="60" stroke="#E8D8C8" stroke-width="2" fill="none" stroke-dasharray="8,4"/>
+        <circle cx="300" cy="100" r="30" fill="#EDE0F3" opacity="0.3"/>
+        <text x="300" y="96" text-anchor="middle" font-size="18">♻️</text>
+        <text x="300" y="112" text-anchor="middle" font-size="9" fill="#5A5466" font-weight="500">可持续循环</text>
+        <g class="svg-float"><circle cx="300" cy="30" r="16" fill="#EDE0F3" opacity="0.8"/><text x="300" y="35" text-anchor="middle" font-size="14">🏠</text></g>
+        <g class="svg-float-d"><circle cx="380" cy="55" r="16" fill="#F5DDD3" opacity="0.8"/><text x="380" y="60" text-anchor="middle" font-size="14">👥</text></g>
+        <g class="svg-float"><circle cx="380" cy="145" r="16" fill="#D9F0E4" opacity="0.8"/><text x="380" y="150" text-anchor="middle" font-size="14">📦</text></g>
+        <g class="svg-float-d"><circle cx="220" cy="145" r="16" fill="#F5EDCF" opacity="0.8"/><text x="220" y="150" text-anchor="middle" font-size="14">📋</text></g>
+        <g class="svg-float"><circle cx="220" cy="55" r="16" fill="#D6E6F2" opacity="0.8"/><text x="220" y="60" text-anchor="middle" font-size="14">📊</text></g>
+        <path d="M315 35 Q340 40 360 50" stroke="#967BA5" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M395 70 Q400 105 395 135" stroke="#967BA5" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M365 155 Q300 175 235 155" stroke="#C47860" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M210 135 Q205 105 210 70" stroke="#C47860" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M235 50 Q260 35 285 30" stroke="#5A988C" stroke-width="1.5" fill="none" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SDGs -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">🎯 SDGs 目标融合</div>
+      <h2 class="section-title">联合国可持续发展目标</h2>
+      <p class="section-subtitle">将灾后社区心理干预与全球可持续发展目标深度结合</p>
+    </div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0"><div class="sdg-num">03</div><div class="sdg-title">良好健康与福祉</div><p class="sdg-desc">缓解灾后创伤症状，修复居民心理健康，提升整体身心福祉水平</p></div>
+      <div class="sdg-card reveal" style="--i:1"><div class="sdg-num">11</div><div class="sdg-title">可持续社区</div><p class="sdg-desc">重塑邻里联结，提升社区抗灾韧性与凝聚力，建设更具恢复力的社区</p></div>
+      <div class="sdg-card reveal" style="--i:2"><div class="sdg-num">13</div><div class="sdg-title">气候行动</div><p class="sdg-desc">强化社区应对气候灾害的心理储备，提升防灾减灾的心理韧性</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用艺术点亮希望 🌿</h2>
+    <p class="footer-text">每一笔色彩都是勇气的表达，每一幅作品都是重生的见证。让艺术疗愈陪伴社区走出创伤，迎接新的曙光。</p>
+    <div class="footer-hearts">🎨 🤝 💛 🌱</div>
+  </div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d*100)+'%'});
+const dots=document.querySelectorAll('.nav-dot');
+const sections=['hero','phase1','week1','week2','phase2','week3','week4','week5','phase3','week6','week7','week8','assess','adapt','longterm','sdgs'];
+dots.forEach(d=>{d.addEventListener('click',()=>{document.getElementById(d.getAttribute('data-target')).scrollIntoView({behavior:'smooth'})})});
+const sEls=sections.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sEls.forEach((el,i)=>{if(el.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((d,i)=>{d.classList.toggle('active',i===c)})});
+const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+const rObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:0.15,rootMargin:'0px 0px -50px 0px'});
+revealEls.forEach(el=>rObs.observe(el));
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(0.03+i*0.02)}px)`})});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

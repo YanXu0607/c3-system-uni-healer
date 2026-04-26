@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物流企业员工情绪健康ESG配套方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --sky:#5B8FA8;--sky-light:#D6E8F0;--sky-pale:#EBF3F8;
+    --sage:#7BA89C;--sage-light:#D6E8E0;
+    --mint:#6EC4B8;--mint-light:#D4EDE8;
+    --lavender:#9B8FA8;--lavender-light:#E8E3EE;
+    --warm:#E8C89E;--warm-light:#FBF2E4;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --peach:#F5E0D0;--deep:#3D3D3D;--soft:#6B6B6B;--surface:#F0ECE4;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.6}
+
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--sky),var(--mint),var(--sage));width:0%;transition:width .1s linear}
+
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+  .nav-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--sky);transform:scale(1.4);box-shadow:0 0 12px rgba(91,143,168,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:22px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  /* Hero */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--sky-pale) 0%,var(--cream) 40%,var(--lavender-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.1}
+  .hero-shape:nth-child(1){width:400px;height:400px;background:var(--sky);top:-100px;right:-80px;animation:floatShape 8s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:300px;height:300px;background:var(--mint);bottom:-60px;left:-60px;animation:floatShape 10s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--sage);top:30%;left:10%;animation:floatShape 12s ease-in-out infinite}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:40px 24px;width:100%}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(91,143,168,.1);border-radius:20px;font-size:13px;color:var(--sky);font-weight:500;letter-spacing:2px;margin-bottom:20px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4.5vw,44px);font-weight:700;line-height:1.4;margin-bottom:12px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--sky)}
+  .hero-sub{font-size:14px;color:var(--soft);font-weight:300;margin-bottom:24px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-illustration{opacity:0;animation:fadeUp 1s .8s forwards;width:100%}
+  .hero-illustration svg{width:100%;height:auto;display:block}
+  .scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:scrollHintIn 1s 1.2s forwards}
+  .scroll-hint-text{font-size:11px;letter-spacing:2px;color:var(--soft);opacity:.6}
+  .scroll-hint-arrow-wrap{width:20px;height:40px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+  .scroll-hint-arrow-wrap::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:linear-gradient(to bottom,transparent 0%,var(--sky) 100%);border-radius:1px;animation:arrowPulse 2s ease-in-out infinite}
+  .scroll-hint-arrow-wrap::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%) rotate(-45deg);width:8px;height:8px;border-left:2px solid var(--sky);border-bottom:2px solid var(--sky);animation:arrowPulse 2s ease-in-out infinite}
+  @keyframes arrowPulse{0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)}50%{opacity:.8;transform:translateX(-50%) translateY(4px)}}
+  @keyframes scrollHintIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+  /* Visual sections */
+  .visual-section{padding:60px 24px;position:relative}
+  .visual-section:nth-child(odd){background:var(--cream-pale)}
+  .visual-section:nth-child(even){background:var(--surface)}
+  .visual-container{max-width:900px;margin:0 auto}
+  .section-label{text-align:center;margin-bottom:32px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500}
+  .section-tag.collect{background:rgba(91,143,168,.1);color:var(--sky)}
+  .section-tag.feedback{background:rgba(110,196,184,.1);color:var(--mint)}
+  .section-tag.evaluate{background:rgba(155,143,168,.1);color:var(--lavender)}
+  .section-tag.adapt{background:rgba(123,168,156,.1);color:var(--sage)}
+  .section-tag.sdgs{background:rgba(232,200,158,.15);color:#A08050}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.5vw,32px);font-weight:700;margin-top:10px}
+
+  .svg-panel{width:100%;margin:0 auto}
+  .svg-panel svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 8px 30px rgba(0,0,0,.04))}
+
+  .footer{padding:50px 24px;text-align:center;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;margin-bottom:8px}
+  .footer-text{font-size:13px;color:var(--soft);max-width:500px;margin:0 auto}
+
+  /* Scroll Reveal */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ===== SVG ANIMATIONS ===== */
+  .svg-float{opacity:1}.svg-float.anim-active{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d.anim-active{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2.anim-active{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3.anim-active{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{opacity:0}.svg-pulse.anim-active{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{opacity:1}.svg-breathe.anim-active{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-sway{opacity:1}.svg-sway.anim-active{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{opacity:0}.svg-glow.anim-active{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:1000;stroke-dashoffset:1000;opacity:1}.svg-draw.anim-active{animation:svgDraw 3s ease forwards}
+  .svg-draw-slow{stroke-dasharray:2000;stroke-dashoffset:2000;opacity:1}.svg-draw-slow.anim-active{animation:svgDraw 5s ease forwards}
+  .svg-fade-in{opacity:0}.svg-fade-in.anim-active{animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0}.svg-fade-in-d.anim-active{animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0}.svg-fade-in-d2.anim-active{animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0}.svg-fade-in-d3.anim-active{animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-fade-in-d4{opacity:0}.svg-fade-in-d4.anim-active{animation:svgFadeIn 1.2s 1.6s ease forwards}
+  .svg-fade-in-d5{opacity:0}.svg-fade-in-d5.anim-active{animation:svgFadeIn 1.2s 2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0}.svg-scale-in.anim-active{animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0}.svg-ripple.anim-active{animation:svgRipple 2.5s ease-out forwards}
+  .svg-particle{opacity:0}.svg-particle.anim-active{animation:svgParticle 4s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px)}.svg-rise.anim-active{animation:svgRise 1.5s ease forwards}
+  .svg-shimmer{opacity:0}.svg-shimmer.anim-active{animation:svgShimmer 3s ease-in-out infinite}
+  .svg-drop{opacity:0;transform:translateY(-30px)}.svg-drop.anim-active{animation:svgDrop 2.5s ease-in infinite}
+  .svg-drop-d.anim-active{animation:svgDrop 2.5s ease-in .8s infinite}
+  .svg-drop-d2.anim-active{animation:svgDrop 2.5s ease-in 1.6s infinite}
+  .svg-drop-d3.anim-active{animation:svgDrop 2.5s ease-in 2.4s infinite}
+  .svg-swing{opacity:1;transform-origin:top center}.svg-swing.anim-active{animation:svgSwing 4s ease-in-out infinite}
+  .svg-ring{transform:scale(0);opacity:0}.svg-ring.anim-active{animation:svgRing 3s ease-out infinite}
+  .svg-ring-d.anim-active{animation:svgRing 3s ease-out 1s infinite}
+  .svg-ring-d2.anim-active{animation:svgRing 3s ease-out 2s infinite}
+  .svg-slide-l{opacity:0;transform:translateX(-40px)}.svg-slide-l.anim-active{animation:svgSlideL 1s ease forwards}
+  .svg-slide-r{opacity:0;transform:translateX(40px)}.svg-slide-r.anim-active{animation:svgSlideR 1s ease forwards}
+
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.15);opacity:.8}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.08}50%{opacity:.25}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgParticle{0%{opacity:0;transform:translateY(0) translateX(0)}25%{opacity:.5}50%{opacity:.3;transform:translateY(-12px) translateX(6px)}75%{opacity:.15}100%{opacity:0;transform:translateY(-24px) translateX(-4px)}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.6}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-30px)}15%{opacity:.7}60%{opacity:.5;transform:translateY(40px)}80%{opacity:0;transform:translateY(50px)}100%{opacity:0;transform:translateY(50px)}}
+  @keyframes svgSwing{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2);opacity:0}}
+  @keyframes svgSlideL{to{opacity:1;transform:translateX(0)}}
+  @keyframes svgSlideR{to{opacity:1;transform:translateX(0)}}
+
+  @media(max-width:768px){
+    .nav-dots{right:12px;gap:10px}
+    .nav-dot{width:8px;height:8px}
+    .nav-dot .tooltip{display:none}
+  }
+</style>
+
+<style>
+.plan-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #5A5265;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.2s;
+}
+.plan-back-btn:hover {
+    background: rgba(255,255,255,0.98);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+.plan-back-btn .back-arrow { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="collect"><span class="tooltip">数据采集</span></div>
+  <div class="nav-dot" data-target="feedback"><span class="tooltip">反馈机制</span></div>
+  <div class="nav-dot" data-target="evaluate"><span class="tooltip">评估指标</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">ESG配套方案</div>
+    <h1 class="hero-title">物流企业员工<span class="accent">情绪健康</span>ESG配套方案</h1>
+    <p class="hero-sub">数据驱动 · 温暖治理 · 可持续发展</p>
+    <div class="hero-illustration svg-anim-group">
+      <svg viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="480" rx="20" fill="#FAF8F2"/>
+        <defs>
+          <radialGradient id="hGlow1" cx="50%" cy="45%" r="40%"><stop offset="0%" stop-color="#5B8FA8" stop-opacity=".2"/><stop offset="100%" stop-color="#5B8FA8" stop-opacity="0"/></radialGradient>
+          <radialGradient id="hGlow2" cx="50%" cy="45%" r="35%"><stop offset="0%" stop-color="#6EC4B8" stop-opacity=".18"/><stop offset="100%" stop-color="#6EC4B8" stop-opacity="0"/></radialGradient>
+          <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EBF3F8" stop-opacity=".5"/><stop offset="100%" stop-color="#FAF8F2" stop-opacity="0"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="800" height="240" rx="20" fill="url(#hSky)"/>
+
+        <!-- Sun -->
+        <g class="svg-sway" style="transform-origin:680px 60px">
+          <circle cx="680" cy="60" r="30" fill="#E8C89E" opacity=".55"/>
+          <circle cx="680" cy="60" r="18" fill="#E8C89E" opacity=".7"/>
+          <circle cx="680" cy="60" r="10" fill="#F4E4A6" opacity=".85"/>
+          <line x1="680" y1="22" x2="680" y2="12" stroke="#E8C89E" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+          <line x1="708" y1="32" x2="716" y2="24" stroke="#E8C89E" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+          <line x1="720" y1="60" x2="730" y2="60" stroke="#E8C89E" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+          <line x1="708" y1="88" x2="716" y2="96" stroke="#E8C89E" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+          <line x1="652" y1="32" x2="644" y2="24" stroke="#E8C89E" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+          <line x1="640" y1="60" x2="630" y2="60" stroke="#E8C89E" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+          <line x1="652" y1="88" x2="644" y2="96" stroke="#E8C89E" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+        </g>
+
+        <!-- Clouds -->
+        <g class="svg-float"><ellipse cx="130" cy="45" rx="45" ry="16" fill="#fff" opacity=".85"/><ellipse cx="160" cy="36" rx="32" ry="13" fill="#fff" opacity=".75"/><ellipse cx="100" cy="40" rx="22" ry="10" fill="#fff" opacity=".65"/></g>
+        <g class="svg-float-d"><ellipse cx="440" cy="35" rx="35" ry="14" fill="#fff" opacity=".75"/><ellipse cx="465" cy="26" rx="26" ry="11" fill="#fff" opacity=".65"/></g>
+        <g class="svg-float-d2"><ellipse cx="300" cy="60" rx="28" ry="11" fill="#fff" opacity=".6"/></g>
+
+        <!-- Birds -->
+        <g class="svg-float" style="animation-delay:.3s"><path d="M175 72 Q181 64 187 72" stroke="#7A7486" stroke-width="1.5" fill="none" opacity=".55"/><path d="M197 65 Q203 57 209 65" stroke="#7A7486" stroke-width="1.5" fill="none" opacity=".45"/></g>
+
+        <!-- Mountains -->
+        <g class="svg-fade-in"><path d="M0 210 Q80 160 160 185 Q240 135 320 170 Q400 120 480 160 Q560 130 640 165 Q720 125 800 170 L800 240 L0 240Z" fill="#D6E8E0" opacity=".45"/></g>
+        <g class="svg-fade-in-d"><path d="M0 230 Q100 195 200 220 Q300 180 400 210 Q500 175 600 205 Q700 180 800 210 L800 240 L0 240Z" fill="#D6E8E0" opacity=".3"/></g>
+
+        <!-- Ground -->
+        <path d="M0 250 Q120 240 240 246 Q360 254 480 244 Q600 234 800 248 L800 480 L0 480Z" fill="#D6E8E0" opacity=".4"/>
+        <path d="M0 275 Q200 266 400 272 Q600 280 800 270 L800 480 L0 480Z" fill="#D6E8E0" opacity=".28"/>
+
+        <!-- Left tree -->
+        <g class="svg-sway" style="transform-origin:90px 215px">
+          <rect x="84" y="215" width="12" height="70" rx="4" fill="#A0937D" opacity=".6"/>
+          <circle cx="90" cy="182" r="38" fill="#7BA89C" opacity=".5"/>
+          <circle cx="74" cy="196" r="26" fill="#6EC4B8" opacity=".42"/>
+          <circle cx="106" cy="190" r="24" fill="#7BA89C" opacity=".46"/>
+          <circle cx="90" cy="170" r="20" fill="#6EC4B8" opacity=".35"/>
+        </g>
+
+        <!-- Right tree -->
+        <g class="svg-sway" style="transform-origin:715px 210px;animation-delay:1.2s">
+          <rect x="709" y="210" width="12" height="72" rx="4" fill="#A0937D" opacity=".6"/>
+          <circle cx="715" cy="175" r="40" fill="#7BA89C" opacity=".45"/>
+          <circle cx="699" cy="190" r="28" fill="#6EC4B8" opacity=".38"/>
+          <circle cx="731" cy="183" r="26" fill="#7BA89C" opacity=".42"/>
+          <circle cx="715" cy="163" r="22" fill="#6EC4B8" opacity=".32"/>
+        </g>
+
+        <!-- Glow zones -->
+        <circle cx="260" cy="230" r="120" fill="url(#hGlow1)" class="svg-glow"/>
+        <circle cx="540" cy="230" r="120" fill="url(#hGlow2)" class="svg-glow" style="animation-delay:1s"/>
+
+        <!-- Logistics truck -->
+        <g class="svg-float-d">
+          <rect x="320" y="240" width="80" height="45" rx="6" fill="#5B8FA8" opacity=".35"/>
+          <rect x="400" y="252" width="40" height="33" rx="4" fill="#5B8FA8" opacity=".28"/>
+          <circle cx="345" cy="290" r="10" fill="#A0937D" opacity=".55"/>
+          <circle cx="345" cy="290" r="5" fill="#FAF8F2" opacity=".7"/>
+          <circle cx="415" cy="290" r="10" fill="#A0937D" opacity=".55"/>
+          <circle cx="415" cy="290" r="5" fill="#FAF8F2" opacity=".7"/>
+          <rect x="330" y="248" width="30" height="18" rx="3" fill="#D6E8F0" opacity=".55"/>
+          <text x="345" y="261" text-anchor="middle" font-size="8" fill="#5B8FA8" opacity=".7">ESG</text>
+        </g>
+
+        <!-- People group - left -->
+        <g class="svg-breathe">
+          <circle cx="200" cy="240" r="16" fill="#D6E8F0" opacity=".75"/>
+          <path d="M186 238 Q190 224 200 222 Q210 224 214 238" fill="#7A7486" opacity=".5"/>
+          <path d="M188 248 Q186 268 187 290 L213 290 Q214 268 212 248 Q200 242 188 248Z" fill="#6EC4B8" opacity=".5"/>
+          <path d="M195 245 Q200 250 205 245" stroke="#7A7486" stroke-width="1.2" fill="none" opacity=".5"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:.5s">
+          <circle cx="240" cy="244" r="13" fill="#D4EDE8" opacity=".7"/>
+          <path d="M229 242 Q232 232 240 230 Q248 232 251 242" fill="#7A7486" opacity=".45"/>
+          <path d="M231 250 Q229 266 230 284 L250 284 Q251 266 249 250 Q240 245 231 250Z" fill="#7BA89C" opacity=".45"/>
+        </g>
+
+        <!-- People group - right -->
+        <g class="svg-breathe" style="animation-delay:.8s">
+          <circle cx="560" cy="240" r="16" fill="#D4EDE8" opacity=".75"/>
+          <path d="M546 238 Q550 224 560 222 Q570 224 574 238" fill="#7A7486" opacity=".5"/>
+          <path d="M548 248 Q546 268 547 290 L573 290 Q574 268 572 248 Q560 242 548 248Z" fill="#6EC4B8" opacity=".5"/>
+          <path d="M555 245 Q560 250 565 245" stroke="#7A7486" stroke-width="1.2" fill="none" opacity=".5"/>
+        </g>
+        <g class="svg-breathe" style="animation-delay:1.2s">
+          <circle cx="600" cy="244" r="13" fill="#D6E8E0" opacity=".7"/>
+          <path d="M589 242 Q592 232 600 230 Q608 232 611 242" fill="#7A7486" opacity=".45"/>
+          <path d="M591 250 Q589 266 590 284 L610 284 Q611 266 609 250 Q600 245 591 250Z" fill="#7BA89C" opacity=".45"/>
+        </g>
+
+        <!-- Heart connection -->
+        <g class="svg-scale-in" style="animation-delay:1.5s">
+          <path d="M395 195 Q395 185 402 185 Q409 185 409 195 Q409 205 395 212 Q381 205 381 195 Q381 185 388 185 Q395 185 395 195Z" fill="#D4896A" opacity=".35"/>
+          <circle cx="395" cy="198" r="12" fill="none" stroke="#D4896A" stroke-width="1" opacity=".2" class="svg-ring"/>
+          <circle cx="395" cy="198" r="12" fill="none" stroke="#D4896A" stroke-width="1" opacity=".2" class="svg-ring-d"/>
+        </g>
+
+        <!-- Flowers -->
+        <g class="svg-scale-in" style="animation-delay:.6s"><circle cx="170" cy="320" r="6" fill="#E8C89E" opacity=".7"/><circle cx="170" cy="320" r="2.5" fill="#F4E4A6" opacity=".85"/></g>
+        <g class="svg-scale-in" style="animation-delay:.9s"><circle cx="630" cy="315" r="5.5" fill="#9B8FA8" opacity=".65"/><circle cx="630" cy="315" r="2" fill="#E8E3EE" opacity=".8"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.2s"><circle cx="400" cy="330" r="5" fill="#6EC4B8" opacity=".6"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.5s"><circle cx="140" cy="330" r="4.5" fill="#5B8FA8" opacity=".6"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.8s"><circle cx="660" cy="325" r="5" fill="#7BA89C" opacity=".6"/></g>
+
+        <!-- Grass -->
+        <g class="svg-sway" style="transform-origin:200px 310px;animation-delay:.3s">
+          <line x1="196" y1="313" x2="193" y2="298" stroke="#6EC4B8" stroke-width="1.8" opacity=".55" stroke-linecap="round"/>
+          <line x1="200" y1="313" x2="200" y2="294" stroke="#7BA89C" stroke-width="1.8" opacity=".55" stroke-linecap="round"/>
+          <line x1="204" y1="313" x2="207" y2="298" stroke="#6EC4B8" stroke-width="1.8" opacity=".55" stroke-linecap="round"/>
+        </g>
+        <g class="svg-sway" style="transform-origin:600px 305px;animation-delay:.9s">
+          <line x1="596" y1="308" x2="593" y2="293" stroke="#6EC4B8" stroke-width="1.8" opacity=".5" stroke-linecap="round"/>
+          <line x1="600" y1="308" x2="600" y2="289" stroke="#7BA89C" stroke-width="1.8" opacity=".5" stroke-linecap="round"/>
+          <line x1="604" y1="308" x2="607" y2="293" stroke="#6EC4B8" stroke-width="1.8" opacity=".5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Water drops -->
+        <g class="svg-drop" style="animation-delay:.5s"><path d="M392 175 Q394 167 396 175 Q394 181 392 175Z" fill="#5B8FA8" opacity=".5"/></g>
+        <g class="svg-drop-d" style="animation-delay:1.2s"><path d="M400 170 Q402 162 404 170 Q402 176 400 170Z" fill="#6EC4B8" opacity=".45"/></g>
+
+        <!-- Journey badges -->
+        <g class="svg-rise" style="animation-delay:2s"><rect x="30" y="420" width="100" height="28" rx="14" fill="#D6E8F0" opacity=".65"/><text x="80" y="439" text-anchor="middle" font-size="10" fill="#5B8FA8" font-weight="500">数据采集</text></g>
+        <g class="svg-rise" style="animation-delay:2.2s"><rect x="145" y="420" width="100" height="28" rx="14" fill="#D4EDE8" opacity=".65"/><text x="195" y="439" text-anchor="middle" font-size="10" fill="#6EC4B8" font-weight="500">反馈机制</text></g>
+        <g class="svg-rise" style="animation-delay:2.4s"><rect x="260" y="420" width="100" height="28" rx="14" fill="#E8E3EE" opacity=".65"/><text x="310" y="439" text-anchor="middle" font-size="10" fill="#9B8FA8" font-weight="500">评估指标</text></g>
+        <g class="svg-rise" style="animation-delay:2.6s"><rect x="375" y="420" width="100" height="28" rx="14" fill="#D6E8E0" opacity=".65"/><text x="425" y="439" text-anchor="middle" font-size="10" fill="#7BA89C" font-weight="500">实施适配</text></g>
+        <g class="svg-rise" style="animation-delay:2.8s"><rect x="490" y="420" width="100" height="28" rx="14" fill="#FBF2E4" opacity=".65"/><text x="540" y="439" text-anchor="middle" font-size="10" fill="#A08050" font-weight="500">SDGs</text></g>
+        <g class="svg-rise" style="animation-delay:3s"><rect x="605" y="420" width="100" height="28" rx="14" fill="#F5DDD0" opacity=".65"/><text x="655" y="439" text-anchor="middle" font-size="10" fill="#D4896A" font-weight="500">ESG报告</text></g>
+
+        <!-- Sparkles -->
+        <circle cx="200" cy="90" r="2.5" fill="#5B8FA8" opacity=".65" class="svg-pulse"/>
+        <circle cx="590" cy="80" r="2.5" fill="#6EC4B8" opacity=".65" class="svg-pulse" style="animation-delay:1s"/>
+        <circle cx="400" cy="55" r="2" fill="#E8C89E" opacity=".6" class="svg-shimmer"/>
+        <circle cx="350" cy="100" r="2" fill="#6EC4B8" opacity=".55" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="465" cy="95" r="2" fill="#9B8FA8" opacity=".55" class="svg-shimmer" style="animation-delay:2s"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">向下滚动探索</span>
+    <div class="scroll-hint-arrow-wrap"></div>
+  </div>
+</section>
+
+<!-- ===== DATA COLLECTION: Three Pillars ===== -->
+<section class="visual-section" id="collect">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag collect">数据采集</div><h2 class="section-title">三维数据采集体系</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="560" rx="20" fill="#FAF8F2"/>
+
+        <!-- Three data pillars -->
+        <!-- Pillar 1: Subjective -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="25" y="25" width="240" height="510" rx="18" fill="#D6E8F0" opacity=".35"/>
+          <!-- Questionnaire icon -->
+          <g class="svg-breathe">
+            <rect x="90" y="55" width="110" height="80" rx="10" fill="#fff" opacity=".75" stroke="#D6E8F0" stroke-width="1.5"/>
+            <rect x="108" y="72" width="10" height="10" rx="2" fill="none" stroke="#5B8FA8" stroke-width="1.5" opacity=".6"/>
+            <line x1="125" y1="78" x2="185" y2="78" stroke="#5B8FA8" stroke-width="1.5" opacity=".55"/>
+            <rect x="108" y="88" width="10" height="10" rx="2" fill="none" stroke="#5B8FA8" stroke-width="1.5" opacity=".55"/>
+            <line x1="125" y1="94" x2="180" y2="94" stroke="#5B8FA8" stroke-width="1.5" opacity=".5"/>
+            <rect x="108" y="104" width="10" height="10" rx="2" fill="#5B8FA8" opacity=".45"/>
+            <line x1="125" y1="110" x2="175" y2="110" stroke="#5B8FA8" stroke-width="1.5" opacity=".45"/>
+          </g>
+          <text x="145" y="165" text-anchor="middle" font-size="15" fill="#5B8FA8" opacity=".8" font-weight="700">主观数据</text>
+          <text x="145" y="182" text-anchor="middle" font-size="11" fill="#5B8FA8" opacity=".55">每季度</text>
+
+          <!-- Scale labels -->
+          <g class="svg-fade-in" style="animation-delay:.8s">
+            <rect x="50" y="200" width="80" height="30" rx="10" fill="#fff" opacity=".6" stroke="#D6E8F0" stroke-width="1"/>
+            <text x="90" y="220" text-anchor="middle" font-size="12" fill="#5B8FA8" opacity=".75" font-weight="600">PHQ-9</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <rect x="50" y="240" width="80" height="30" rx="10" fill="#fff" opacity=".6" stroke="#D6E8F0" stroke-width="1"/>
+            <text x="90" y="260" text-anchor="middle" font-size="12" fill="#5B8FA8" opacity=".75" font-weight="600">GAD-7</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="50" y="280" width="80" height="30" rx="10" fill="#fff" opacity=".6" stroke="#D6E8F0" stroke-width="1"/>
+            <text x="90" y="300" text-anchor="middle" font-size="12" fill="#5B8FA8" opacity=".75" font-weight="600">PSS-10</text>
+          </g>
+
+          <!-- Anonymous badge -->
+          <g class="svg-scale-in" style="animation-delay:1.5s">
+            <circle cx="145" cy="380" r="22" fill="#D6E8F0" opacity=".5"/>
+            <text x="145" y="387" text-anchor="middle" font-size="16">🔒</text>
+          </g>
+          <text x="145" y="415" text-anchor="middle" font-size="12" fill="#5B8FA8" opacity=".7">匿名测评</text>
+          <text x="145" y="432" text-anchor="middle" font-size="10" fill="#5B8FA8" opacity=".5">全员参与 · 消除顾虑</text>
+
+          <!-- Water drops -->
+          <g class="svg-drop" style="animation-delay:1s"><path d="M120 195 Q122 187 124 195 Q122 201 120 195Z" fill="#5B8FA8" opacity=".45"/></g>
+          <g class="svg-drop-d" style="animation-delay:2s"><path d="M160 195 Q162 187 164 195 Q162 201 160 195Z" fill="#5B8FA8" opacity=".4"/></g>
+        </g>
+
+        <!-- Pillar 2: Objective -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <rect x="280" y="25" width="240" height="510" rx="18" fill="#D4EDE8" opacity=".35"/>
+          <!-- Bar chart icon -->
+          <g class="svg-breathe" style="animation-delay:.3s">
+            <rect x="340" y="55" width="120" height="80" rx="10" fill="#fff" opacity=".75" stroke="#D4EDE8" stroke-width="1.5"/>
+            <rect x="358" y="100" width="16" height="24" rx="3" fill="#6EC4B8" opacity=".55"/>
+            <rect x="380" y="88" width="16" height="36" rx="3" fill="#6EC4B8" opacity=".5"/>
+            <rect x="402" y="78" width="16" height="46" rx="3" fill="#6EC4B8" opacity=".45"/>
+            <rect x="424" y="92" width="16" height="32" rx="3" fill="#6EC4B8" opacity=".4"/>
+          </g>
+          <text x="400" y="165" text-anchor="middle" font-size="15" fill="#6EC4B8" opacity=".8" font-weight="700">客观数据</text>
+          <text x="400" y="182" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".55">每月</text>
+
+          <!-- HR metrics -->
+          <g class="svg-fade-in" style="animation-delay:.9s">
+            <rect x="300" y="200" width="200" height="30" rx="10" fill="#fff" opacity=".6" stroke="#D4EDE8" stroke-width="1"/>
+            <circle cx="320" cy="215" r="5" fill="#6EC4B8" opacity=".6"/>
+            <text x="335" y="220" font-size="12" fill="#6EC4B8" opacity=".75">服务参与人次</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.1s">
+            <rect x="300" y="240" width="200" height="30" rx="10" fill="#fff" opacity=".6" stroke="#D4EDE8" stroke-width="1"/>
+            <circle cx="320" cy="255" r="5" fill="#6EC4B8" opacity=".55"/>
+            <text x="335" y="260" font-size="12" fill="#6EC4B8" opacity=".75">病假天数</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.3s">
+            <rect x="300" y="280" width="200" height="30" rx="10" fill="#fff" opacity=".6" stroke="#D4EDE8" stroke-width="1"/>
+            <circle cx="320" cy="295" r="5" fill="#6EC4B8" opacity=".5"/>
+            <text x="335" y="300" font-size="12" fill="#6EC4B8" opacity=".75">工伤发生率</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.5s">
+            <rect x="300" y="320" width="200" height="30" rx="10" fill="#fff" opacity=".6" stroke="#D4EDE8" stroke-width="1"/>
+            <circle cx="320" cy="335" r="5" fill="#6EC4B8" opacity=".45"/>
+            <text x="335" y="340" font-size="12" fill="#6EC4B8" opacity=".75">医保使用率</text>
+          </g>
+
+          <g class="svg-scale-in" style="animation-delay:1.8s">
+            <circle cx="400" cy="400" r="22" fill="#D4EDE8" opacity=".5"/>
+            <text x="400" y="407" text-anchor="middle" font-size="16">📈</text>
+          </g>
+          <text x="400" y="435" text-anchor="middle" font-size="12" fill="#6EC4B8" opacity=".7">月度统计</text>
+          <text x="400" y="452" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity=".5">HR常态化采集</text>
+        </g>
+
+        <!-- Pillar 3: Qualitative -->
+        <g class="svg-fade-in" style="animation-delay:.7s">
+          <rect x="535" y="25" width="240" height="510" rx="18" fill="#E8E3EE" opacity=".35"/>
+          <!-- Focus group icon -->
+          <g class="svg-breathe" style="animation-delay:.6s">
+            <circle cx="655" cy="90" r="30" fill="#fff" opacity=".7" stroke="#E8E3EE" stroke-width="1.5"/>
+            <circle cx="655" cy="80" r="7" fill="#D6E8F0" opacity=".7"/>
+            <circle cx="640" cy="95" r="6" fill="#D4EDE8" opacity=".65"/>
+            <circle cx="670" cy="95" r="6" fill="#E8E3EE" opacity=".65"/>
+            <circle cx="645" cy="105" r="5.5" fill="#D6E8F0" opacity=".6"/>
+            <circle cx="665" cy="105" r="5.5" fill="#D4EDE8" opacity=".6"/>
+          </g>
+          <text x="655" y="145" text-anchor="middle" font-size="15" fill="#9B8FA8" opacity=".8" font-weight="700">定性数据</text>
+          <text x="655" y="162" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".55">每半年</text>
+
+          <!-- Speech bubbles -->
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="565" y="185" width="180" height="40" rx="10" fill="#fff" opacity=".6" stroke="#E8E3EE" stroke-width="1"/>
+            <line x1="580" y1="200" x2="720" y2="200" stroke="#9B8FA8" stroke-width="1.2" opacity=".45"/>
+            <line x1="580" y1="210" x2="700" y2="210" stroke="#9B8FA8" stroke-width="1.2" opacity=".4"/>
+          </g>
+
+          <!-- Feedback tags -->
+          <g class="svg-fade-in" style="animation-delay:1.4s">
+            <rect x="565" y="240" width="70" height="26" rx="10" fill="#9B8FA8" opacity=".25"/>
+            <text x="600" y="258" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".75">体验</text>
+            <rect x="645" y="240" width="70" height="26" rx="10" fill="#9B8FA8" opacity=".2"/>
+            <text x="680" y="258" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".75">诉求</text>
+            <rect x="565" y="276" width="70" height="26" rx="10" fill="#9B8FA8" opacity=".18"/>
+            <text x="600" y="294" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".75">建议</text>
+            <rect x="645" y="276" width="70" height="26" rx="10" fill="#9B8FA8" opacity=".15"/>
+            <text x="680" y="294" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".75">优化</text>
+          </g>
+
+          <g class="svg-scale-in" style="animation-delay:2s">
+            <circle cx="655" cy="380" r="22" fill="#E8E3EE" opacity=".5"/>
+            <text x="655" y="387" text-anchor="middle" font-size="16">💬</text>
+          </g>
+          <text x="655" y="415" text-anchor="middle" font-size="12" fill="#9B8FA8" opacity=".7">焦点访谈</text>
+          <text x="655" y="432" text-anchor="middle" font-size="10" fill="#9B8FA8" opacity=".5">深入一线 · 弥补盲区</text>
+        </g>
+
+        <!-- Connection arrows -->
+        <path d="M268 280 L280 280" stroke="#5B8FA8" stroke-width="2.5" opacity=".45"/>
+        <polygon points="278,276 286,280 278,284" fill="#5B8FA8" opacity=".45"/>
+        <path d="M523 280 L535 280" stroke="#6EC4B8" stroke-width="2.5" opacity=".45"/>
+        <polygon points="533,276 541,280 533,284" fill="#6EC4B8" opacity=".45"/>
+
+        <!-- Particles -->
+        <circle cx="145" cy="45" r="2.5" fill="#5B8FA8" opacity=".6" class="svg-shimmer"/>
+        <circle cx="400" cy="45" r="2.5" fill="#6EC4B8" opacity=".6" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="655" cy="45" r="2.5" fill="#9B8FA8" opacity=".6" class="svg-shimmer" style="animation-delay:2s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEEDBACK: Dashboard Loop ===== -->
+<section class="visual-section" id="feedback">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag feedback">反馈机制</div><h2 class="section-title">数据闭环反馈</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 580" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="580" rx="20" fill="#FAF8F2"/>
+
+        <!-- Central dashboard screen -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="100" y="30" width="600" height="340" rx="16" fill="#fff" opacity=".65" stroke="#D6E8F0" stroke-width="1.5"/>
+          <!-- Header bar -->
+          <rect x="100" y="30" width="600" height="38" rx="16" fill="#5B8FA8" opacity=".18"/>
+          <rect x="100" y="56" width="600" height="12" fill="#5B8FA8" opacity=".18"/>
+          <circle cx="125" cy="49" r="5" fill="#5B8FA8" opacity=".55"/>
+          <circle cx="142" cy="49" r="5" fill="#6EC4B8" opacity=".55"/>
+          <circle cx="159" cy="49" r="5" fill="#7BA89C" opacity=".55"/>
+          <text x="400" y="54" text-anchor="middle" font-size="13" fill="#5B8FA8" opacity=".75" font-weight="600">情绪健康可视化看板</text>
+        </g>
+
+        <!-- Mini bar chart -->
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <rect x="125" y="85" width="170" height="100" rx="10" fill="#D6E8F0" opacity=".25"/>
+          <text x="210" y="105" text-anchor="middle" font-size="12" fill="#5B8FA8" opacity=".7" font-weight="600">情绪趋势</text>
+          <rect x="148" y="150" width="18" height="24" rx="3" fill="#5B8FA8" opacity=".5"/>
+          <rect x="172" y="138" width="18" height="36" rx="3" fill="#5B8FA8" opacity=".55"/>
+          <rect x="196" y="130" width="18" height="44" rx="3" fill="#6EC4B8" opacity=".5"/>
+          <rect x="220" y="142" width="18" height="32" rx="3" fill="#6EC4B8" opacity=".45"/>
+          <rect x="244" y="125" width="18" height="49" rx="3" fill="#7BA89C" opacity=".5"/>
+        </g>
+
+        <!-- Donut chart -->
+        <g class="svg-fade-in" style="animation-delay:.9s">
+          <rect x="310" y="85" width="170" height="100" rx="10" fill="#D4EDE8" opacity=".25"/>
+          <text x="395" y="105" text-anchor="middle" font-size="12" fill="#6EC4B8" opacity=".7" font-weight="600">服务利用率</text>
+          <circle cx="395" cy="152" r="22" fill="none" stroke="#D4EDE8" stroke-width="8" opacity=".45"/>
+          <circle cx="395" cy="152" r="22" fill="none" stroke="#6EC4B8" stroke-width="8" opacity=".6" class="svg-draw" stroke-dasharray="138" stroke-dashoffset="138" style="animation-delay:1.2s"/>
+          <text x="395" y="157" text-anchor="middle" font-size="13" fill="#6EC4B8" opacity=".85" font-weight="700">65%</text>
+        </g>
+
+        <!-- Risk alert -->
+        <g class="svg-fade-in" style="animation-delay:1.2s">
+          <rect x="495" y="85" width="180" height="100" rx="10" fill="#E8E3EE" opacity=".25"/>
+          <text x="585" y="105" text-anchor="middle" font-size="12" fill="#9B8FA8" opacity=".7" font-weight="600">风险预警</text>
+          <circle cx="545" cy="145" r="10" fill="#E8C89E" opacity=".55"/>
+          <text x="545" y="149" text-anchor="middle" font-size="10" fill="#A08050" opacity=".8">⚠️</text>
+          <circle cx="585" cy="145" r="10" fill="#6EC4B8" opacity=".55"/>
+          <text x="585" y="149" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity=".8">✓</text>
+          <circle cx="625" cy="145" r="10" fill="#6EC4B8" opacity=".55"/>
+          <text x="625" y="149" text-anchor="middle" font-size="10" fill="#6EC4B8" opacity=".8">✓</text>
+        </g>
+
+        <!-- Bottom KPI row -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <rect x="125" y="200" width="140" height="70" rx="10" fill="#D6E8F0" opacity=".2"/>
+          <text x="195" y="222" text-anchor="middle" font-size="11" fill="#5B8FA8" opacity=".7">筛查覆盖率</text>
+          <text x="195" y="252" text-anchor="middle" font-size="22" fill="#5B8FA8" opacity=".8" font-weight="700">92%</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.7s">
+          <rect x="280" y="200" width="140" height="70" rx="10" fill="#D4EDE8" opacity=".2"/>
+          <text x="350" y="222" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".7">情绪改善率</text>
+          <text x="350" y="252" text-anchor="middle" font-size="22" fill="#6EC4B8" opacity=".8" font-weight="700">78%</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.9s">
+          <rect x="435" y="200" width="140" height="70" rx="10" fill="#D6E8E0" opacity=".2"/>
+          <text x="505" y="222" text-anchor="middle" font-size="11" fill="#7BA89C" opacity=".7">缺勤降幅</text>
+          <text x="505" y="252" text-anchor="middle" font-size="22" fill="#7BA89C" opacity=".8" font-weight="700">35%</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:2.1s">
+          <rect x="590" y="200" width="85" height="70" rx="10" fill="#E8E3EE" opacity=".2"/>
+          <text x="632" y="222" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".7">工伤</text>
+          <text x="632" y="252" text-anchor="middle" font-size="22" fill="#9B8FA8" opacity=".8" font-weight="700">↓</text>
+        </g>
+
+        <!-- Flow arrows -->
+        <g class="svg-fade-in" style="animation-delay:2.3s">
+          <path d="M120 420 L200 420" stroke="#5B8FA8" stroke-width="2.5" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="85" stroke-dashoffset="85" style="animation-delay:2.5s"/>
+          <polygon points="198,416 206,420 198,424" fill="#5B8FA8" opacity=".5"/>
+          <rect x="120" y="395" width="80" height="20" rx="10" fill="#D6E8F0" opacity=".45"/>
+          <text x="160" y="409" text-anchor="middle" font-size="11" fill="#5B8FA8" opacity=".7" font-weight="500">📅 月度看板</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:2.6s">
+          <path d="M280 420 L360 420" stroke="#6EC4B8" stroke-width="2.5" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="85" stroke-dashoffset="85" style="animation-delay:2.8s"/>
+          <polygon points="358,416 366,420 358,424" fill="#6EC4B8" opacity=".5"/>
+          <rect x="280" y="395" width="80" height="20" rx="10" fill="#D4EDE8" opacity=".45"/>
+          <text x="320" y="409" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".7" font-weight="500">📊 季度报送</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:2.9s">
+          <path d="M440 420 L520 420" stroke="#7BA89C" stroke-width="2.5" fill="none" opacity=".5" class="svg-draw" stroke-dasharray="85" stroke-dashoffset="85" style="animation-delay:3.1s"/>
+          <polygon points="518,416 526,420 518,424" fill="#7BA89C" opacity=".5"/>
+          <rect x="440" y="395" width="80" height="20" rx="10" fill="#D6E8E0" opacity=".45"/>
+          <text x="480" y="409" text-anchor="middle" font-size="11" fill="#7BA89C" opacity=".7" font-weight="500">📈 年度对标</text>
+        </g>
+
+        <!-- Loop arrow back -->
+        <g class="svg-fade-in" style="animation-delay:3.2s">
+          <path d="M540 440 Q540 470 400 470 Q260 470 260 440" stroke="#9B8FA8" stroke-width="1.8" fill="none" opacity=".35" class="svg-draw-slow" stroke-dasharray="300" stroke-dashoffset="300" style="animation-delay:3.4s"/>
+          <polygon points="256,444 260,436 264,444" fill="#9B8FA8" opacity=".35"/>
+          <rect x="355" y="460" width="90" height="22" rx="8" fill="#FAF8F2" opacity=".85"/>
+          <text x="400" y="476" text-anchor="middle" font-size="10" fill="#9B8FA8" opacity=".6" font-weight="500">持续优化闭环</text>
+        </g>
+
+        <!-- Water drops -->
+        <g class="svg-drop" style="animation-delay:1.5s"><path d="M390 300 Q392 292 394 300 Q392 306 390 300Z" fill="#5B8FA8" opacity=".4"/></g>
+        <g class="svg-drop-d" style="animation-delay:2.5s"><path d="M410 295 Q412 287 414 295 Q412 301 410 295Z" fill="#6EC4B8" opacity=".35"/></g>
+
+        <!-- Particles -->
+        <circle cx="210" cy="75" r="2" fill="#5B8FA8" opacity=".55" class="svg-shimmer"/>
+        <circle cx="395" cy="75" r="2" fill="#6EC4B8" opacity=".55" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="585" cy="75" r="2" fill="#9B8FA8" opacity=".55" class="svg-shimmer" style="animation-delay:2s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EVALUATION: Gauge + Tracking ===== -->
+<section class="visual-section" id="evaluate">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag evaluate">评估指标</div><h2 class="section-title">分层量化成效评价</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="560" rx="20" fill="#FAF8F2"/>
+
+        <!-- Central gauge -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <path d="M200 320 A120 120 0 0 1 520 320" fill="none" stroke="#E8E3EE" stroke-width="16" stroke-linecap="round" opacity=".45"/>
+          <path d="M200 320 A120 120 0 0 1 440 215" fill="none" stroke="#5B8FA8" stroke-width="16" stroke-linecap="round" opacity=".6" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:.6s"/>
+          <text x="360" y="310" text-anchor="middle" font-size="36" fill="#5B8FA8" opacity=".85" font-weight="700">78%</text>
+          <text x="360" y="340" text-anchor="middle" font-size="14" fill="#5B8FA8" opacity=".65">综合改善率</text>
+        </g>
+
+        <!-- Individual tracking - left -->
+        <g class="svg-slide-l" style="animation-delay:.8s">
+          <rect x="30" y="30" width="220" height="180" rx="16" fill="#D6E8F0" opacity=".25"/>
+          <text x="140" y="60" text-anchor="middle" font-size="14" fill="#5B8FA8" opacity=".8" font-weight="700">👤 个体追踪</text>
+          <text x="140" y="78" text-anchor="middle" font-size="11" fill="#5B8FA8" opacity=".55">每月</text>
+          <!-- Mini line chart -->
+          <path d="M55 140 Q80 110 110 125 Q140 140 170 115 Q195 100 220 110" stroke="#5B8FA8" stroke-width="2.5" fill="none" opacity=".55" class="svg-draw" stroke-dasharray="180" stroke-dashoffset="180" style="animation-delay:1.2s"/>
+          <circle cx="55" cy="140" r="3.5" fill="#5B8FA8" opacity=".6"/>
+          <circle cx="110" cy="125" r="3.5" fill="#5B8FA8" opacity=".6"/>
+          <circle cx="170" cy="115" r="3.5" fill="#6EC4B8" opacity=".6"/>
+          <circle cx="220" cy="110" r="3.5" fill="#6EC4B8" opacity=".6"/>
+          <!-- Labels -->
+          <text x="55" y="158" text-anchor="middle" font-size="9" fill="#5B8FA8" opacity=".5">1月</text>
+          <text x="110" y="158" text-anchor="middle" font-size="9" fill="#5B8FA8" opacity=".5">3月</text>
+          <text x="170" y="158" text-anchor="middle" font-size="9" fill="#6EC4B8" opacity=".5">6月</text>
+          <text x="220" y="158" text-anchor="middle" font-size="9" fill="#6EC4B8" opacity=".5">9月</text>
+        </g>
+
+        <!-- Group AI analysis - right -->
+        <g class="svg-slide-r" style="animation-delay:1s">
+          <rect x="550" y="30" width="220" height="180" rx="16" fill="#D4EDE8" opacity=".25"/>
+          <text x="660" y="60" text-anchor="middle" font-size="14" fill="#6EC4B8" opacity=".8" font-weight="700">🤖 团体AI分析</text>
+          <text x="660" y="78" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".55">每月</text>
+          <!-- Heatmap -->
+          <rect x="575" y="95" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".3"/>
+          <rect x="603" y="95" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".5"/>
+          <rect x="631" y="95" width="22" height="22" rx="4" fill="#E8C89E" opacity=".65"/>
+          <rect x="659" y="95" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".4"/>
+          <rect x="687" y="95" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".3"/>
+          <rect x="715" y="95" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".25"/>
+          <rect x="575" y="123" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".4"/>
+          <rect x="603" y="123" width="22" height="22" rx="4" fill="#E8C89E" opacity=".6"/>
+          <rect x="631" y="123" width="22" height="22" rx="4" fill="#D4896A" opacity=".7"/>
+          <rect x="659" y="123" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".45"/>
+          <rect x="687" y="123" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".35"/>
+          <rect x="715" y="123" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".3"/>
+          <rect x="575" y="151" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".25"/>
+          <rect x="603" y="151" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".35"/>
+          <rect x="631" y="151" width="22" height="22" rx="4" fill="#E8C89E" opacity=".5"/>
+          <rect x="659" y="151" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".3"/>
+          <rect x="687" y="151" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".25"/>
+          <rect x="715" y="151" width="22" height="22" rx="4" fill="#6EC4B8" opacity=".2"/>
+          <!-- Legend -->
+          <rect x="575" y="185" width="10" height="10" rx="2" fill="#6EC4B8" opacity=".5"/>
+          <text x="590" y="194" font-size="9" fill="#6EC4B8" opacity=".6">低风险</text>
+          <rect x="635" y="185" width="10" height="10" rx="2" fill="#E8C89E" opacity=".6"/>
+          <text x="650" y="194" font-size="9" fill="#E8C89E" opacity=".6">中风险</text>
+          <rect x="695" y="185" width="10" height="10" rx="2" fill="#D4896A" opacity=".6"/>
+          <text x="710" y="194" font-size="9" fill="#D4896A" opacity=".6">高风险</text>
+        </g>
+
+        <!-- Bottom KPI bars -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <rect x="30" y="380" width="740" height="55" rx="14" fill="#fff" opacity=".55" stroke="#D6E8F0" stroke-width="1"/>
+          <!-- KPI 1 -->
+          <text x="60" y="412" font-size="12" fill="#5B8FA8" opacity=".75">筛查覆盖</text>
+          <rect x="130" y="402" width="100" height="12" rx="6" fill="#5B8FA8" opacity=".25"/>
+          <rect x="130" y="402" width="85" height="12" rx="6" fill="#5B8FA8" opacity=".55" class="svg-draw" stroke-dasharray="85" stroke-dashoffset="85" style="animation-delay:2s"/>
+          <!-- KPI 2 -->
+          <text x="255" y="412" font-size="12" fill="#6EC4B8" opacity=".75">参与率</text>
+          <rect x="305" y="402" width="100" height="12" rx="6" fill="#6EC4B8" opacity=".25"/>
+          <rect x="305" y="402" width="72" height="12" rx="6" fill="#6EC4B8" opacity=".55" class="svg-draw" stroke-dasharray="72" stroke-dashoffset="72" style="animation-delay:2.2s"/>
+          <!-- KPI 3 -->
+          <text x="430" y="412" font-size="12" fill="#7BA89C" opacity=".75">缺勤↓</text>
+          <rect x="480" y="402" width="100" height="12" rx="6" fill="#7BA89C" opacity=".25"/>
+          <rect x="480" y="402" width="55" height="12" rx="6" fill="#7BA89C" opacity=".55" class="svg-draw" stroke-dasharray="55" stroke-dashoffset="55" style="animation-delay:2.4s"/>
+          <!-- KPI 4 -->
+          <text x="600" y="412" font-size="12" fill="#9B8FA8" opacity=".75">工伤↓</text>
+          <rect x="650" y="402" width="100" height="12" rx="6" fill="#9B8FA8" opacity=".25"/>
+          <rect x="650" y="402" width="40" height="12" rx="6" fill="#9B8FA8" opacity=".55" class="svg-draw" stroke-dasharray="40" stroke-dashoffset="40" style="animation-delay:2.6s"/>
+        </g>
+
+        <!-- Quarterly label -->
+        <g class="svg-rise" style="animation-delay:2.8s">
+          <rect x="280" y="460" width="240" height="32" rx="14" fill="#D6E8F0" opacity=".4"/>
+          <text x="400" y="481" text-anchor="middle" font-size="12" fill="#5B8FA8" opacity=".7" font-weight="500">📊 季度核心维度量化考核</text>
+        </g>
+
+        <!-- Water drops -->
+        <g class="svg-drop" style="animation-delay:1.5s"><path d="M350 200 Q352 192 354 200 Q352 206 350 200Z" fill="#5B8FA8" opacity=".4"/></g>
+        <g class="svg-drop-d" style="animation-delay:2.5s"><path d="M370 195 Q372 187 374 195 Q372 201 370 195Z" fill="#6EC4B8" opacity=".35"/></g>
+
+        <!-- Particles -->
+        <circle cx="140" cy="25" r="2" fill="#5B8FA8" opacity=".55" class="svg-shimmer"/>
+        <circle cx="660" cy="25" r="2" fill="#6EC4B8" opacity=".55" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="360" cy="360" r="2" fill="#9B8FA8" opacity=".55" class="svg-shimmer" style="animation-delay:2s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPLEMENTATION ADAPTATION: Three Pillars ===== -->
+<section class="visual-section" id="adapt">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag adapt">实施适配</div><h2 class="section-title">物流行业专属适配</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="560" rx="20" fill="#FAF8F2"/>
+
+        <!-- Pillar 1: Mobile -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="25" y="25" width="240" height="510" rx="18" fill="#D6E8F0" opacity=".35"/>
+          <!-- Phone icon -->
+          <g class="svg-breathe">
+            <rect x="100" y="50" width="90" height="130" rx="12" fill="#fff" opacity=".75" stroke="#D6E8F0" stroke-width="1.5"/>
+            <rect x="110" y="65" width="70" height="90" rx="4" fill="#D6E8F0" opacity=".3"/>
+            <!-- App interface -->
+            <line x1="120" y1="78" x2="170" y2="78" stroke="#5B8FA8" stroke-width="1.5" opacity=".55"/>
+            <line x1="120" y1="88" x2="160" y2="88" stroke="#5B8FA8" stroke-width="1.5" opacity=".5"/>
+            <line x1="120" y1="98" x2="165" y2="98" stroke="#5B8FA8" stroke-width="1.5" opacity=".45"/>
+            <rect x="120" y="108" width="40" height="22" rx="5" fill="#5B8FA8" opacity=".2"/>
+            <rect x="120" y="108" width="40" height="22" rx="5" fill="none" stroke="#5B8FA8" stroke-width="1" opacity=".4"/>
+            <text x="140" y="123" text-anchor="middle" font-size="8" fill="#5B8FA8" opacity=".6">测评</text>
+            <circle cx="145" cy="162" r="5" fill="#D6E8F0" opacity=".6"/>
+          </g>
+          <text x="145" y="210" text-anchor="middle" font-size="15" fill="#5B8FA8" opacity=".8" font-weight="700">移动端轻量化</text>
+          <text x="145" y="228" text-anchor="middle" font-size="11" fill="#5B8FA8" opacity=".55">APP / 小程序嵌入</text>
+
+          <!-- App icons -->
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <rect x="45" y="255" width="55" height="55" rx="12" fill="#fff" opacity=".6" stroke="#D6E8F0" stroke-width="1"/>
+            <text x="72" y="289" text-anchor="middle" font-size="22">📱</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="110" y="255" width="55" height="55" rx="12" fill="#fff" opacity=".6" stroke="#D4EDE8" stroke-width="1"/>
+            <text x="137" y="289" text-anchor="middle" font-size="22">💬</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.4s">
+            <rect x="175" y="255" width="55" height="55" rx="12" fill="#fff" opacity=".6" stroke="#E8E3EE" stroke-width="1"/>
+            <text x="202" y="289" text-anchor="middle" font-size="22">📊</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.6s">
+            <rect x="45" y="320" width="55" height="55" rx="12" fill="#fff" opacity=".6" stroke="#D6E8E0" stroke-width="1"/>
+            <text x="72" y="354" text-anchor="middle" font-size="22">🧘</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.8s">
+            <rect x="110" y="320" width="55" height="55" rx="12" fill="#fff" opacity=".6" stroke="#FBF2E4" stroke-width="1"/>
+            <text x="137" y="354" text-anchor="middle" font-size="22">🔔</text>
+          </g>
+
+          <text x="145" y="410" text-anchor="middle" font-size="11" fill="#5B8FA8" opacity=".6">适配分散流动的工作特点</text>
+        </g>
+
+        <!-- Pillar 2: Multi-language -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <rect x="280" y="25" width="240" height="510" rx="18" fill="#D4EDE8" opacity=".35"/>
+          <!-- Globe icon -->
+          <g class="svg-breathe" style="animation-delay:.3s">
+            <circle cx="400" cy="100" r="40" fill="#fff" opacity=".7" stroke="#D4EDE8" stroke-width="1.5"/>
+            <ellipse cx="400" cy="100" rx="18" ry="40" fill="none" stroke="#6EC4B8" stroke-width="1.5" opacity=".55"/>
+            <line x1="360" y1="100" x2="440" y2="100" stroke="#6EC4B8" stroke-width="1.5" opacity=".5"/>
+            <path d="M365 82 Q400 78 435 82" stroke="#6EC4B8" stroke-width="1.2" fill="none" opacity=".45"/>
+            <path d="M365 118 Q400 122 435 118" stroke="#6EC4B8" stroke-width="1.2" fill="none" opacity=".45"/>
+          </g>
+          <text x="400" y="165" text-anchor="middle" font-size="15" fill="#6EC4B8" opacity=".8" font-weight="700">多语言用工</text>
+          <text x="400" y="183" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".55">多元化用工适配</text>
+
+          <!-- Language tags -->
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <rect x="305" y="205" width="80" height="30" rx="12" fill="#6EC4B8" opacity=".25"/>
+            <text x="345" y="225" text-anchor="middle" font-size="13" fill="#6EC4B8" opacity=".8" font-weight="500">中文</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="395" y="205" width="80" height="30" rx="12" fill="#6EC4B8" opacity=".2"/>
+            <text x="435" y="225" text-anchor="middle" font-size="13" fill="#6EC4B8" opacity=".8" font-weight="500">English</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.4s">
+            <rect x="305" y="245" width="80" height="30" rx="12" fill="#6EC4B8" opacity=".18"/>
+            <text x="345" y="265" text-anchor="middle" font-size="13" fill="#6EC4B8" opacity=".8" font-weight="500">日本語</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.6s">
+            <rect x="395" y="245" width="80" height="30" rx="12" fill="#6EC4B8" opacity=".15"/>
+            <text x="435" y="265" text-anchor="middle" font-size="13" fill="#6EC4B8" opacity=".8" font-weight="500">ไทย</text>
+          </g>
+
+          <!-- Diverse people -->
+          <g class="svg-fade-in" style="animation-delay:1.8s">
+            <circle cx="355" cy="330" r="10" fill="#D6E8F0" opacity=".7"/>
+            <path d="M347 327 Q350 321 355 320 Q360 321 363 327" fill="#7A7486" opacity=".5"/>
+            <circle cx="400" cy="326" r="10" fill="#D4EDE8" opacity=".7"/>
+            <path d="M392 323 Q395 317 400 316 Q405 317 408 323" fill="#7A7486" opacity=".5"/>
+            <circle cx="445" cy="330" r="10" fill="#E8E3EE" opacity=".7"/>
+            <path d="M437 327 Q440 321 445 320 Q450 321 453 327" fill="#7A7486" opacity=".5"/>
+          </g>
+          <text x="400" y="370" text-anchor="middle" font-size="11" fill="#6EC4B8" opacity=".6">满足多元化语言需求</text>
+        </g>
+
+        <!-- Pillar 3: Privacy -->
+        <g class="svg-fade-in" style="animation-delay:.7s">
+          <rect x="535" y="25" width="240" height="510" rx="18" fill="#E8E3EE" opacity=".35"/>
+          <!-- Shield icon -->
+          <g class="svg-breathe" style="animation-delay:.6s">
+            <path d="M655 50 L620 70 L620 115 Q620 150 655 165 Q690 150 690 115 L690 70 Z" fill="#fff" opacity=".7" stroke="#E8E3EE" stroke-width="1.5"/>
+            <path d="M640 105 L648 113 L668 90" stroke="#7BA89C" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text x="655" y="195" text-anchor="middle" font-size="15" fill="#9B8FA8" opacity=".8" font-weight="700">全程脱敏</text>
+          <text x="655" y="213" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".55">隐私安全保障</text>
+
+          <!-- Data flow -->
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="570" y="240" width="170" height="35" rx="8" fill="#fff" opacity=".6" stroke="#E8E3EE" stroke-width="1"/>
+            <line x1="585" y1="252" x2="720" y2="252" stroke="#9B8FA8" stroke-width="1.2" opacity=".4"/>
+            <line x1="585" y1="262" x2="710" y2="262" stroke="#9B8FA8" stroke-width="1.2" opacity=".35"/>
+            <text x="655" y="258" text-anchor="middle" font-size="10" fill="#9B8FA8" opacity=".5">个人数据</text>
+          </g>
+
+          <!-- Lock -->
+          <g class="svg-scale-in" style="animation-delay:1.5s">
+            <rect x="640" y="295" width="30" height="22" rx="4" fill="#7BA89C" opacity=".5"/>
+            <path d="M646 295 L646 286 Q646 278 655 278 Q664 278 664 286 L664 295" fill="none" stroke="#7BA89C" stroke-width="2.5" opacity=".5"/>
+            <text x="655" y="335" text-anchor="middle" font-size="10" fill="#7BA89C" opacity=".6">加密脱敏</text>
+          </g>
+
+          <!-- Arrow down -->
+          <g class="svg-fade-in" style="animation-delay:1.8s">
+            <path d="M655 350 L655 375" stroke="#9B8FA8" stroke-width="2.5" fill="none" opacity=".5"/>
+            <polygon points="649,373 655,383 661,373" fill="#9B8FA8" opacity=".5"/>
+          </g>
+
+          <!-- Aggregation -->
+          <g class="svg-fade-in" style="animation-delay:2s">
+            <rect x="590" y="390" width="130" height="35" rx="8" fill="#fff" opacity=".6" stroke="#E8E3EE" stroke-width="1"/>
+            <text x="655" y="412" text-anchor="middle" font-size="12" fill="#9B8FA8" opacity=".7" font-weight="500">群体聚合分析</text>
+          </g>
+
+          <text x="655" y="460" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".6">仅以群体形式呈现</text>
+          <text x="655" y="478" text-anchor="middle" font-size="11" fill="#9B8FA8" opacity=".6">符合数据安全法规</text>
+        </g>
+
+        <!-- Connection arrows -->
+        <path d="M268 280 L280 280" stroke="#5B8FA8" stroke-width="2.5" opacity=".45"/>
+        <polygon points="278,276 286,280 278,284" fill="#5B8FA8" opacity=".45"/>
+        <path d="M523 280 L535 280" stroke="#6EC4B8" stroke-width="2.5" opacity=".45"/>
+        <polygon points="533,276 541,280 533,284" fill="#6EC4B8" opacity=".45"/>
+
+        <!-- Particles -->
+        <circle cx="145" cy="45" r="2.5" fill="#5B8FA8" opacity=".6" class="svg-shimmer"/>
+        <circle cx="400" cy="45" r="2.5" fill="#6EC4B8" opacity=".6" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="655" cy="45" r="2.5" fill="#9B8FA8" opacity=".6" class="svg-shimmer" style="animation-delay:2s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs: Dual Cards ===== -->
+<section class="visual-section" id="sdgs">
+  <div class="visual-container">
+    <div class="section-label reveal"><div class="section-tag sdgs">可持续发展</div><h2 class="section-title">SDGs & ESG 目标融合</h2></div>
+    <div class="svg-panel reveal svg-anim-group">
+      <svg viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="800" height="480" rx="20" fill="#FAF8F2"/>
+
+        <!-- SDG 3 -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="25" y="25" width="365" height="430" rx="20" fill="#fff" opacity=".55" stroke="#D6E8F0" stroke-width="1.5"/>
+          <text x="75" y="140" font-family="'Noto Serif SC',serif" font-size="90" fill="#5B8FA8" opacity=".15" font-weight="700">03</text>
+          <!-- Health illustration -->
+          <g class="svg-breathe">
+            <circle cx="310" cy="95" r="35" fill="#D6E8F0" opacity=".3"/>
+            <circle cx="310" cy="82" r="12" fill="#D6E8F0" opacity=".65"/>
+            <path d="M296 98 Q303 110 310 98 Q317 110 324 98" stroke="#5B8FA8" stroke-width="2" fill="none" opacity=".5"/>
+          </g>
+          <!-- Heart pulse -->
+          <g class="svg-pulse" style="animation-delay:.5s">
+            <path d="M285 150 Q285 135 298 135 Q311 135 311 150 Q311 170 285 185 Q259 170 259 150 Q259 135 272 135 Q285 135 285 150Z" fill="#D4896A" opacity=".22"/>
+          </g>
+          <circle cx="285" cy="160" r="14" fill="none" stroke="#D4896A" stroke-width="1" opacity=".2" class="svg-ring"/>
+          <circle cx="285" cy="160" r="14" fill="none" stroke="#D4896A" stroke-width="1" opacity=".2" class="svg-ring-d"/>
+          <text x="207" y="60" text-anchor="middle" font-size="16" fill="#5B8FA8" opacity=".8" font-weight="700">良好健康与福祉</text>
+
+          <!-- KPI bars -->
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <rect x="50" y="220" width="320" height="48" rx="12" fill="#D6E8F0" opacity=".18"/>
+            <text x="75" y="249" font-size="12" fill="#5B8FA8" opacity=".7">焦虑缓解率</text>
+            <rect x="185" y="238" width="100" height="12" rx="6" fill="#5B8FA8" opacity=".3"/>
+            <rect x="185" y="238" width="70" height="12" rx="6" fill="#5B8FA8" opacity=".6" class="svg-draw" stroke-dasharray="70" stroke-dashoffset="70" style="animation-delay:1.5s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.2s">
+            <rect x="50" y="280" width="320" height="48" rx="12" fill="#D4EDE8" opacity=".18"/>
+            <text x="75" y="309" font-size="12" fill="#6EC4B8" opacity=".7">职业倦怠降幅</text>
+            <rect x="185" y="298" width="100" height="12" rx="6" fill="#6EC4B8" opacity=".3"/>
+            <rect x="185" y="298" width="60" height="12" rx="6" fill="#6EC4B8" opacity=".6" class="svg-draw" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay:1.8s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.4s">
+            <rect x="50" y="340" width="320" height="48" rx="12" fill="#D6E8E0" opacity=".18"/>
+            <text x="75" y="369" font-size="12" fill="#7BA89C" opacity=".7">身心健康提升</text>
+            <rect x="185" y="358" width="100" height="12" rx="6" fill="#7BA89C" opacity=".3"/>
+            <rect x="185" y="358" width="78" height="12" rx="6" fill="#7BA89C" opacity=".6" class="svg-draw" stroke-dasharray="78" stroke-dashoffset="78" style="animation-delay:2.1s"/>
+          </g>
+
+          <!-- Water drops -->
+          <g class="svg-drop" style="animation-delay:2s"><path d="M280 215 Q282 207 284 215 Q282 221 280 215Z" fill="#5B8FA8" opacity=".4"/></g>
+          <g class="svg-drop-d" style="animation-delay:3s"><path d="M300 275 Q302 267 304 275 Q302 281 300 275Z" fill="#6EC4B8" opacity=".35"/></g>
+        </g>
+
+        <!-- SDG 8 -->
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <rect x="410" y="25" width="365" height="430" rx="20" fill="#fff" opacity=".55" stroke="#D6E8E0" stroke-width="1.5"/>
+          <text x="460" y="140" font-family="'Noto Serif SC',serif" font-size="90" fill="#7BA89C" opacity=".15" font-weight="700">08</text>
+          <g class="svg-breathe" style="animation-delay:.3s">
+            <circle cx="695" cy="95" r="35" fill="#D6E8E0" opacity=".3"/>
+            <rect x="678" y="82" width="34" height="26" rx="5" fill="#7BA89C" opacity=".4"/>
+            <line x1="695" y1="82" x2="695" y2="72" stroke="#7BA89C" stroke-width="2.5" opacity=".5"/>
+            <rect x="687" y="68" width="16" height="6" rx="3" fill="#7BA89C" opacity=".35"/>
+          </g>
+          <!-- Growth arrows -->
+          <g class="svg-fade-in" style="animation-delay:1s">
+            <path d="M670 145 L670 175 L645 175" stroke="#7BA89C" stroke-width="2" fill="none" opacity=".45"/>
+            <path d="M695 155 L695 135 L720 135" stroke="#6EC4B8" stroke-width="2" fill="none" opacity=".45"/>
+            <polygon points="718,131 726,135 718,139" fill="#6EC4B8" opacity=".45"/>
+          </g>
+          <text x="592" y="60" text-anchor="middle" font-size="16" fill="#7BA89C" opacity=".8" font-weight="700">体面工作和经济增长</text>
+
+          <!-- KPI bars -->
+          <g class="svg-fade-in" style="animation-delay:1.1s">
+            <rect x="435" y="220" width="320" height="48" rx="12" fill="#D6E8E0" opacity=".18"/>
+            <text x="460" y="249" font-size="12" fill="#7BA89C" opacity=".7">正念覆盖率</text>
+            <rect x="570" y="238" width="100" height="12" rx="6" fill="#7BA89C" opacity=".3"/>
+            <rect x="570" y="238" width="75" height="12" rx="6" fill="#7BA89C" opacity=".6" class="svg-draw" stroke-dasharray="75" stroke-dashoffset="75" style="animation-delay:1.6s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.3s">
+            <rect x="435" y="280" width="320" height="48" rx="12" fill="#D4EDE8" opacity=".18"/>
+            <text x="460" y="309" font-size="12" fill="#6EC4B8" opacity=".7">员工留任率</text>
+            <rect x="570" y="298" width="100" height="12" rx="6" fill="#6EC4B8" opacity=".3"/>
+            <rect x="570" y="298" width="82" height="12" rx="6" fill="#6EC4B8" opacity=".6" class="svg-draw" stroke-dasharray="82" stroke-dashoffset="82" style="animation-delay:1.9s"/>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.5s">
+            <rect x="435" y="340" width="320" height="48" rx="12" fill="#E8E3EE" opacity=".18"/>
+            <text x="460" y="369" font-size="12" fill="#9B8FA8" opacity=".7">正念领导力评分</text>
+            <rect x="570" y="358" width="100" height="12" rx="6" fill="#9B8FA8" opacity=".3"/>
+            <rect x="570" y="358" width="62" height="12" rx="6" fill="#9B8FA8" opacity=".6" class="svg-draw" stroke-dasharray="62" stroke-dashoffset="62" style="animation-delay:2.2s"/>
+          </g>
+
+          <!-- Water drops -->
+          <g class="svg-drop" style="animation-delay:2.2s"><path d="M665 215 Q667 207 669 215 Q667 221 665 215Z" fill="#7BA89C" opacity=".4"/></g>
+          <g class="svg-drop-d" style="animation-delay:3.2s"><path d="M685 275 Q687 267 689 275 Q687 281 685 275Z" fill="#6EC4B8" opacity=".35"/></g>
+        </g>
+
+        <!-- ESG bridge -->
+        <g class="svg-fade-in" style="animation-delay:2s">
+          <rect x="335" y="200" width="130" height="50" rx="16" fill="#FBF2E4" opacity=".45"/>
+          <text x="400" y="230" text-anchor="middle" font-size="13" fill="#A08050" opacity=".75" font-weight="600">ESG 量化KPI</text>
+        </g>
+        <path d="M385 200 L365 170" stroke="#A08050" stroke-width="1.5" fill="none" opacity=".35" stroke-dasharray="4,3" class="svg-draw" stroke-dasharray="40" stroke-dashoffset="40" style="animation-delay:2.3s"/>
+        <path d="M415 200 L435 170" stroke="#A08050" stroke-width="1.5" fill="none" opacity=".35" stroke-dasharray="4,3" class="svg-draw" stroke-dasharray="40" stroke-dashoffset="40" style="animation-delay:2.5s"/>
+
+        <!-- Shimmer -->
+        <circle cx="400" cy="225" r="2.5" fill="#A08050" opacity=".55" class="svg-shimmer"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal"><h2 class="footer-title">数据驱动 · 温暖治理 📊</h2><p class="footer-text">以科学的数据采集与反馈机制，守护每一位物流从业者的情绪健康</p></div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d)*100+'%'});
+
+const dots=document.querySelectorAll('.nav-dot');
+const sections=['hero','collect','feedback','evaluate','adapt','sdgs'];
+dots.forEach(dot=>{dot.addEventListener('click',()=>{document.getElementById(dot.getAttribute('data-target')).scrollIntoView({behavior:'smooth'})})});
+const sectionEls=sections.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sectionEls.forEach((el,i)=>{if(el.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((dot,i)=>{dot.classList.toggle('active',i===c)})});
+
+const revealElements=document.querySelectorAll('.reveal');
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+revealElements.forEach(el=>revealObserver.observe(el));
+
+const svgAnimGroups=document.querySelectorAll('.svg-anim-group');
+const svgAnimObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){const els=entry.target.querySelectorAll('.svg-float,.svg-float-d,.svg-float-d2,.svg-float-d3,.svg-pulse,.svg-breathe,.svg-sway,.svg-swing,.svg-glow,.svg-draw,.svg-draw-slow,.svg-fade-in,.svg-fade-in-d,.svg-fade-in-d2,.svg-fade-in-d3,.svg-fade-in-d4,.svg-fade-in-d5,.svg-scale-in,.svg-ripple,.svg-particle,.svg-rise,.svg-shimmer,.svg-drop,.svg-drop-d,.svg-drop-d2,.svg-drop-d3,.svg-ring,.svg-ring-d,.svg-ring-d2,.svg-slide-l,.svg-slide-r');els.forEach(el=>el.classList.add('anim-active'));svgAnimObserver.unobserve(entry.target)}})},{threshold:.12,rootMargin:'0px 0px -20px 0px'});
+svgAnimGroups.forEach(group=>svgAnimObserver.observe(group));
+
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((shape,i)=>{shape.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
+</script>
+
+<script>
+(function() {
+    var source = sessionStorage.getItem('plan_source') || 'home';
+    var mainPage = 'index.html';
+    var btn = document.createElement('a');
+    btn.className = 'plan-back-btn';
+    btn.href = mainPage;
+    var label = source === 'cap' ? '返回校园CAP' : source === 'eap' ? '返回企业EAP' : '返回首页';
+    btn.innerHTML = '<span class="back-arrow">←</span> ' + label;
+    // Add hash to indicate which page to switch to
+    if (source === 'cap') btn.href += '#page-cap';
+    else if (source === 'eap') btn.href += '#page-eap';
+    document.body.appendChild(btn);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>"重奏"——失业职场人音乐疗愈与职业韧性支持小组</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --warm:#C47860;--warm-light:#F5DDD3;--coral:#D97A6A;--coral-light:#F5D9D3;
+    --amber:#B89840;--amber-light:#F5EDCF;--gold:#C9A84C;--gold-light:#FBF4D6;
+    --peach:#F5E0D0;--cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --sage:#5A988C;--sage-light:#D4E8E2;--teal:#5BA89C;--teal-light:#D4EDE8;
+    --mint:#6BB898;--mint-light:#D9F0E4;--blue:#5A8FB5;--blue-light:#D6E6F2;
+    --rose:#C47888;--rose-light:#F2DDE2;--lavender:#967BA5;--lavender-light:#EDE0F3;
+    --plum:#8A6B9A;--plum-light:#E8D8F0;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+    --olive:#7B8A5B;--olive-light:#E2E8D6;
+    --sky:#6AA5C6;--sky-light:#DCEEF8;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--warm),var(--amber),var(--sage),var(--lavender));width:0%;transition:width .1s linear}
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.15);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--warm);transform:scale(1.5);box-shadow:0 0 10px rgba(196,120,96,.5)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--peach) 0%,var(--cream) 30%,var(--warm-light) 65%,var(--gold-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.15}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--warm);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--amber);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--sage);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--gold);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(196,120,96,.18);border-radius:20px;font-size:13px;color:var(--warm);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,4.5vw,48px);font-weight:700;line-height:1.35;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--warm)}
+  .hero-title .accent2{color:var(--amber)}
+  .hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .hero-meta-icon.pink{background:rgba(196,120,96,.12)}
+  .hero-meta-icon.gold{background:rgba(184,152,64,.15)}
+  .hero-meta-icon.green{background:rgba(90,152,140,.12)}
+  .hero-meta-icon.purple{background:rgba(150,123,165,.12)}
+  .hero-illustration{margin-top:40px;opacity:0;animation:fadeUp 1s 1s forwards}
+  .hero-illustration svg{width:100%;max-width:720px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 16px 48px rgba(0,0,0,.06))}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+  .hero-badge,.hero-title,.hero-subtitle,.hero-meta,.hero-illustration{transform:translateY(20px)}
+  .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeUp .8s 1.4s forwards}
+  .scroll-hint span{font-size:11px;color:var(--soft);letter-spacing:1px}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--warm);border-bottom:2px solid var(--warm);transform:rotate(45deg);animation:scrollBounce 2s ease-in-out infinite}
+  @keyframes scrollBounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+  .week-section{min-height:100vh;display:flex;align-items:center;padding:80px 24px;position:relative}
+  .week-section:nth-child(odd){background:var(--cream-pale)}
+  .week-section:nth-child(even){background:var(--surface)}
+  .week-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .week-section.reverse .week-container{direction:rtl}
+  .week-section.reverse .week-container>*{direction:ltr}
+  .week-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+  .week-num-badge{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#fff}
+  .week-num-badge.w1{background:linear-gradient(135deg,#C47860,#E8A890)}
+  .week-num-badge.w2{background:linear-gradient(135deg,#5A8FB5,#8BB8D8)}
+  .week-num-badge.w3{background:linear-gradient(135deg,#C9A84C,#E0C878)}
+  .week-num-badge.w4{background:linear-gradient(135deg,#5A988C,#8CC4B8)}
+  .week-num-badge.w5{background:linear-gradient(135deg,#967BA5,#BFA8CC)}
+  .week-num-badge.w6{background:linear-gradient(135deg,#C47888,#E0A0B0)}
+  .week-num-badge.w7{background:linear-gradient(135deg,#6AA5C6,#98C4DE)}
+  .week-num-badge.w8{background:linear-gradient(135deg,#B89840,#D8C070)}
+  .week-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+  .week-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.2vw,34px);font-weight:700;margin-bottom:4px;line-height:1.4}
+  .week-theme{font-size:14px;font-weight:500;margin-bottom:14px}
+  .week-theme.w1{color:var(--warm)}.week-theme.w2{color:var(--blue)}
+  .week-theme.w3{color:var(--amber)}.week-theme.w4{color:var(--sage)}
+  .week-theme.w5{color:var(--lavender)}.week-theme.w6{color:var(--rose)}
+  .week-theme.w7{color:var(--sky)}.week-theme.w8{color:var(--gold)}
+  .week-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:16px}
+  .week-table{width:100%;border-collapse:separate;border-spacing:0;margin-bottom:16px;border-radius:12px;overflow:hidden;font-size:13px}
+  .week-table thead th{background:rgba(196,120,96,.08);padding:10px 12px;text-align:left;font-weight:600;font-size:12px;letter-spacing:1px;color:var(--deep)}
+  .week-table tbody td{padding:10px 12px;border-bottom:1px solid rgba(0,0,0,.04);color:var(--soft);vertical-align:top}
+  .week-table tbody tr:last-child td{border-bottom:none}
+  .week-table tbody tr:hover{background:rgba(196,120,96,.03)}
+  .week-table .t-activity{font-weight:500;color:var(--deep);white-space:nowrap;width:70px}
+  .week-table .t-time{white-space:nowrap;width:55px;color:var(--warm);font-weight:500}
+  .week-visual{position:relative}
+  .week-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.06))}
+  .impl-section{padding:100px 24px;background:linear-gradient(180deg,var(--surface) 0%,var(--cream-pale) 100%)}
+  .impl-container{max-width:1000px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.impl{background:rgba(90,152,140,.12);color:var(--sage)}
+  .section-tag.longterm{background:rgba(150,123,165,.12);color:var(--lavender)}
+  .section-tag.sdgs{background:rgba(184,152,64,.15);color:var(--amber)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+  .impl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .impl-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(150,123,165,.06);transition:transform .3s,box-shadow .3s}
+  .impl-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .impl-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .impl-card-icon.c1{background:rgba(196,120,96,.1)}.impl-card-icon.c2{background:rgba(90,152,140,.1)}
+  .impl-card-icon.c3{background:rgba(150,123,165,.1)}.impl-card-icon.c4{background:rgba(184,152,64,.12)}
+  .impl-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .impl-card p{font-size:14px;color:var(--soft);line-height:1.7}
+  .impl-illustration{max-width:600px;margin:0 auto 40px;border-radius:20px;overflow:hidden}
+  .impl-illustration svg{width:100%;height:auto;display:block}
+  .longterm-section{padding:100px 24px;background:var(--cream-pale)}
+  .longterm-container{max-width:1000px;margin:0 auto}
+  .longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(150,123,165,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .longterm-card-icon.l1{background:rgba(90,152,140,.1)}.longterm-card-icon.l2{background:rgba(196,120,96,.1)}
+  .longterm-card-icon.l3{background:rgba(150,123,165,.1)}.longterm-card-icon.l4{background:rgba(184,152,64,.15)}
+  .longterm-card-icon.l5{background:rgba(90,143,181,.1)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+  .longterm-illustration{max-width:600px;margin:0 auto;border-radius:20px;overflow:hidden}
+  .longterm-illustration svg{width:100%;height:auto;display:block}
+  .sdgs-section{padding:100px 24px;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .sdgs-container{max-width:1000px;margin:0 auto}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:50px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(196,120,96,.08),rgba(196,120,96,.02));border:1px solid rgba(196,120,96,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(90,152,140,.08),rgba(90,152,140,.02));border:1px solid rgba(90,152,140,.1)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(184,152,64,.1),rgba(184,152,64,.02));border:1px solid rgba(184,152,64,.12)}
+  .sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(150,123,165,.08),rgba(150,123,165,.02));border:1px solid rgba(150,123,165,.1)}
+  .sdg-card:nth-child(5){background:linear-gradient(135deg,rgba(90,143,181,.08),rgba(90,143,181,.02));border:1px solid rgba(90,143,181,.1)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--warm)}.sdg-card:nth-child(2) .sdg-num{color:var(--sage)}
+  .sdg-card:nth-child(3) .sdg-num{color:var(--amber)}.sdg-card:nth-child(4) .sdg-num{color:var(--lavender)}
+  .sdg-card:nth-child(5) .sdg-num{color:var(--blue)}
+  .sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}
+  .sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+  .esg-box{padding:28px 32px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(150,123,165,.08);margin-bottom:40px}
+  .esg-box h3{font-size:16px;font-weight:600;margin-bottom:16px;text-align:center}
+  .esg-items{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+  .esg-item{padding:10px 20px;border-radius:24px;font-size:13px;font-weight:500;background:var(--surface);color:var(--soft);transition:transform .3s,background .3s}
+  .esg-item:hover{transform:scale(1.05);background:var(--gold-light)}
+  .sdgs-illustration{max-width:600px;margin:0 auto;border-radius:20px;overflow:hidden}
+  .sdgs-illustration svg{width:100%;height:auto;display:block}
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;margin-bottom:10px}
+  .footer-text{font-size:13px;color:var(--soft);max-width:480px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-rotate{animation:svgRotate 12s linear infinite}
+  .svg-sway{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:600;stroke-dashoffset:600;animation:svgDraw 3s ease forwards}
+  .svg-note{animation:svgNote 4s ease-in-out infinite}
+  .svg-note-d{animation:svgNote 4s ease-in-out 1.3s infinite}
+  .svg-note-d2{animation:svgNote 4s ease-in-out 2.6s infinite}
+  .svg-beat{animation:svgBeat 1.5s ease-in-out infinite}
+  .svg-beat-d{animation:svgBeat 1.5s ease-in-out .5s infinite}
+  .svg-beat-d2{animation:svgBeat 1.5s ease-in-out 1s infinite}
+  .svg-wave{animation:svgWave 3s ease-in-out infinite}
+  .svg-drop{opacity:0;transform:translateY(-20px);animation:svgDrop 2.5s ease infinite}
+  .svg-drop-d{animation:svgDrop 2.5s ease .8s infinite}
+  .svg-drop-d2{animation:svgDrop 2.5s ease 1.6s infinite}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}
+  .svg-ring-d{animation:svgRing 3s ease-out 1s infinite}
+  .svg-ring-d2{animation:svgRing 3s ease-out 2s infinite}
+  .svg-spin-slow{animation:svgRotate 20s linear infinite}
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.1}50%{opacity:.28}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgNote{0%{opacity:0;transform:translateY(0) rotate(0deg)}20%{opacity:.7}80%{opacity:.3}100%{opacity:0;transform:translateY(-40px) rotate(15deg)}}
+  @keyframes svgBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+  @keyframes svgWave{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.8}60%{opacity:.5;transform:translateY(30px)}80%{opacity:0;transform:translateY(40px)}100%{opacity:0;transform:translateY(40px)}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+  @media(max-width:900px){
+    .week-container,.impl-grid,.sdgs-grid,.longterm-grid{grid-template-columns:1fr;gap:30px}
+    .week-section,.impl-section,.longterm-section,.sdgs-section{padding:60px 20px}
+    .week-section.reverse .week-container{direction:ltr}
+    .nav-dots{right:12px;gap:8px}
+    .nav-dot{width:7px;height:7px}
+    .nav-dot .tooltip{display:none}
+    .hero-meta{gap:14px}
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周·序曲</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周·低音</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周·变奏</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周·和声</span></div>
+  <div class="nav-dot" data-target="week5"><span class="tooltip">第5周·间奏</span></div>
+  <div class="nav-dot" data-target="week6"><span class="tooltip">第6周·转调</span></div>
+  <div class="nav-dot" data-target="week7"><span class="tooltip">第7周·协奏</span></div>
+  <div class="nav-dot" data-target="week8"><span class="tooltip">第8周·终曲</span></div>
+  <div class="nav-dot" data-target="impl"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs目标</span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">音乐疗愈 × 职业韧性 · 8周封闭式小组</div>
+    <h1 class="hero-title"><span class="accent">"重奏"</span>——用音乐<br>重建<span class="accent2">职业韧性</span></h1>
+    <p class="hero-subtitle">为失业职场人量身打造的音乐疗愈与职业韧性支持小组，在旋律中找回力量，在团体中重建信心</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon pink">🎵</div><span>音乐疗愈</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon gold">💼</div><span>职业辅导</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon green">👥</div><span>8-12人小组</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon purple">📅</div><span>8周旅程</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 720 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="720" height="340" rx="20" fill="#FAF8F2"/>
+        <ellipse cx="360" cy="300" rx="300" ry="30" fill="#F5E0D0" opacity=".3"/>
+        <g class="svg-breathe"><circle cx="200" cy="200" r="22" fill="#F5D9D3"/><path d="M178 196 Q182 176 200 173 Q218 176 222 196" fill="#7A7486" opacity=".4"/><circle cx="193" cy="198" r="2" fill="#3A3448"/><circle cx="207" cy="198" r="2" fill="#3A3448"/><path d="M195 208 Q200 212 205 208" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M182 218 Q178 245 180 270 L220 270 Q222 245 218 218 Q200 212 182 218Z" fill="#C47860" opacity=".3"/><ellipse cx="235" cy="240" rx="16" ry="20" fill="#D4A050" opacity=".6"/><rect x="233" y="210" width="4" height="30" fill="#B8903A" opacity=".5"/></g>
+        <g class="svg-breathe" style="animation-delay:.5s"><circle cx="360" cy="180" r="22" fill="#F5D9D3"/><path d="M338 176 Q342 156 360 153 Q378 156 382 176" fill="#5A5466" opacity=".4"/><circle cx="353" cy="178" r="2" fill="#3A3448"/><circle cx="367" cy="178" r="2" fill="#3A3448"/><path d="M355 188 Q360 192 365 188" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M342 198 Q338 225 340 255 L380 255 Q382 225 378 198 Q360 192 342 198Z" fill="#5A988C" opacity=".3"/><ellipse cx="360" cy="255" rx="22" ry="8" fill="#C47860" opacity=".4"/><rect x="338" y="247" width="44" height="8" rx="2" fill="#C47860" opacity=".3"/><ellipse cx="360" cy="247" rx="22" ry="8" fill="#E8A890" opacity=".5"/></g>
+        <g class="svg-breathe" style="animation-delay:1s"><circle cx="520" cy="200" r="22" fill="#F5D9D3"/><path d="M498 196 Q502 176 520 173 Q538 176 542 196" fill="#8A6B5A" opacity=".4"/><circle cx="513" cy="198" r="2" fill="#3A3448"/><circle cx="527" cy="198" r="2" fill="#3A3448"/><path d="M515 208 Q520 212 525 208" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M502 218 Q498 245 500 270 L540 270 Q542 245 538 218 Q520 212 502 218Z" fill="#967BA5" opacity=".3"/><circle cx="490" cy="230" r="14" fill="#F4E4A6" opacity=".5" stroke="#C9A84C" stroke-width="1.5"/><circle cx="484" cy="224" r="2" fill="#C9A84C" opacity=".4"/><circle cx="496" cy="222" r="2" fill="#C9A84C" opacity=".4"/><circle cx="490" cy="236" r="2" fill="#C9A84C" opacity=".4"/></g>
+        <g class="svg-breathe" style="animation-delay:1.5s"><circle cx="280" cy="250" r="20" fill="#F5D9D3"/><path d="M260 246 Q264 228 280 225 Q296 228 300 246" fill="#967BA5" opacity=".35"/><circle cx="274" cy="248" r="2" fill="#3A3448"/><circle cx="286" cy="248" r="2" fill="#3A3448"/><path d="M276 258 Q280 261 284 258" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M264 266 Q260 285 262 300 L298 300 Q300 285 296 266 Q280 260 264 266Z" fill="#C9A84C" opacity=".25"/></g>
+        <g class="svg-breathe" style="animation-delay:2s"><circle cx="440" cy="250" r="20" fill="#F5D9D3"/><path d="M420 246 Q424 228 440 225 Q456 228 460 246" fill="#5A5466" opacity=".35"/><circle cx="434" cy="248" r="2" fill="#3A3448"/><circle cx="446" cy="248" r="2" fill="#3A3448"/><path d="M436 258 Q440 261 444 258" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M424 266 Q420 285 422 300 L458 300 Q460 285 456 266 Q440 260 424 266Z" fill="#5A8FB5" opacity=".25"/></g>
+        <g class="svg-note"><text x="160" y="150" font-size="24" fill="#C47860" opacity=".5">♪</text></g>
+        <g class="svg-note-d"><text x="420" y="130" font-size="20" fill="#C9A84C" opacity=".5">♫</text></g>
+        <g class="svg-note-d2"><text x="560" y="160" font-size="22" fill="#967BA5" opacity=".5">♪</text></g>
+        <g class="svg-note" style="animation-delay:.8s"><text x="300" y="120" font-size="18" fill="#5A988C" opacity=".4">♩</text></g>
+        <circle cx="360" cy="220" r="60" stroke="#C47860" stroke-width="1" fill="none" opacity=".08" class="svg-ring"/>
+        <circle cx="360" cy="220" r="60" stroke="#C9A84C" stroke-width="1" fill="none" opacity=".08" class="svg-ring-d"/>
+        <circle cx="360" cy="220" r="60" stroke="#5A988C" stroke-width="1" fill="none" opacity=".08" class="svg-ring-d2"/>
+        <circle cx="140" cy="100" r="3" fill="#C47860" opacity=".3" class="svg-pulse"/><circle cx="580" cy="110" r="2.5" fill="#C9A84C" opacity=".3" class="svg-pulse"/><circle cx="350" cy="80" r="2" fill="#5A988C" opacity=".3" class="svg-pulse"/><circle cx="500" cy="90" r="2" fill="#967BA5" opacity=".3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索8周旅程</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- WEEK 1 -->
+<section class="week-section" id="week1">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w1">1</div><span class="week-label">第一周</span></div>
+      <h2 class="week-title">"序曲"——安全空间与团体建立</h2>
+      <div class="week-theme w1">用音乐打开心扉，在团体中找到归属</div>
+      <p class="week-desc">通过音乐作为自我介绍媒介降低社交焦虑，建立安全信任的团体框架，开启8周疗愈之旅。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">开场</td><td>"名字之歌"——每人选择一首代表自己当前状态的歌曲片段播放，分享选择原因</td><td class="t-time">30min</td></tr>
+        <tr><td class="t-activity">音乐疗愈</td><td>"团体即兴"——使用简单打击乐器（非洲鼓、沙锤、铃铛），引导者给出节奏主题，成员自由加入</td><td class="t-time">30min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>"我的职业故事线"——在纸上画出职业生涯的时间线，标注高峰与低谷</td><td class="t-time">30min</td></tr>
+        <tr><td class="t-activity">收尾</td><td>制定团体契约（保密、尊重、不评判）；集体演唱一首温暖的歌曲</td><td class="t-time">30min</td></tr>
+      </tbody></table>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <ellipse cx="220" cy="320" rx="160" ry="20" fill="#F5E0D0" opacity=".2"/>
+        <circle cx="220" cy="210" r="130" stroke="#C47860" stroke-width="1.5" fill="none" opacity=".1" stroke-dasharray="8,6" class="svg-rotate"/>
+        <circle cx="220" cy="210" r="110" stroke="#C9A84C" stroke-width="1" fill="none" opacity=".08" stroke-dasharray="6,8" class="svg-rotate" style="animation-direction:reverse"/>
+        <g class="svg-breathe"><circle cx="220" cy="100" r="18" fill="#F5D9D3"/><path d="M202 97 Q206 80 220 77 Q234 80 238 97" fill="#7A7486" opacity=".4"/><path d="M206 114 Q202 140 204 165 L236 165 Q238 140 234 114 Q220 108 206 114Z" fill="#C47860" opacity=".3"/><rect x="210" y="130" width="20" height="30" rx="4" fill="#5A5466" opacity=".15"/><rect x="212" y="133" width="16" height="22" rx="2" fill="#C47860" opacity=".2"/></g>
+        <g class="svg-breathe" style="animation-delay:.4s"><circle cx="130" cy="170" r="18" fill="#F5D9D3"/><path d="M112 167 Q116 150 130 147 Q144 150 148 167" fill="#5A5466" opacity=".4"/><path d="M116 184 Q112 210 114 235 L146 235 Q148 210 144 184 Q130 178 116 184Z" fill="#5A988C" opacity=".3"/><ellipse cx="100" cy="230" rx="18" ry="7" fill="#C47860" opacity=".35"/><rect x="82" y="223" width="36" height="7" rx="2" fill="#C47860" opacity=".25"/></g>
+        <g class="svg-breathe" style="animation-delay:.8s"><circle cx="310" cy="170" r="18" fill="#F5D9D3"/><path d="M292 167 Q296 150 310 147 Q324 150 328 167" fill="#8A6B5A" opacity=".4"/><path d="M296 184 Q292 210 294 235 L326 235 Q328 210 324 184 Q310 178 296 184Z" fill="#967BA5" opacity=".3"/><ellipse cx="340" cy="210" rx="8" ry="14" fill="#F4E4A6" opacity=".5"/><rect x="336" y="196" width="8" height="6" rx="2" fill="#C9A84C" opacity=".4"/></g>
+        <g class="svg-breathe" style="animation-delay:1.2s"><circle cx="170" cy="290" r="18" fill="#F5D9D3"/><path d="M152 287 Q156 270 170 267 Q184 270 188 287" fill="#967BA5" opacity=".35"/><path d="M156 304 Q152 325 154 345 L186 345 Q188 325 184 304 Q170 298 156 304Z" fill="#C9A84C" opacity=".25"/></g>
+        <g class="svg-breathe" style="animation-delay:1.6s"><circle cx="270" cy="290" r="18" fill="#F5D9D3"/><path d="M252 287 Q256 270 270 267 Q284 270 288 287" fill="#5A5466" opacity=".35"/><path d="M256 304 Q252 325 254 345 L286 345 Q288 325 284 304 Q270 298 256 304Z" fill="#5A8FB5" opacity=".25"/></g>
+        <path d="M220 118 Q160 130 135 155" stroke="#C47860" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <path d="M220 118 Q280 130 305 155" stroke="#C47860" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <path d="M140 235 Q150 270 165 280" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <path d="M300 235 Q290 270 275 280" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <text x="80" y="120" font-size="18" fill="#C47860" opacity=".4" class="svg-note">♪</text>
+        <text x="340" y="110" font-size="16" fill="#C9A84C" opacity=".4" class="svg-note-d">♫</text>
+        <text x="60" y="250" font-size="14" fill="#5A988C" opacity=".3" class="svg-note-d2">♩</text>
+        <circle cx="220" cy="210" r="28" fill="#FAF8F2" opacity=".9"/>
+        <text x="220" y="206" text-anchor="middle" font-size="20">🤝</text>
+        <text x="220" y="222" text-anchor="middle" font-size="9" fill="#C47860" font-weight="500">安全契约</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 2 -->
+<section class="week-section reverse" id="week2">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <g class="svg-drop" opacity=".3"><line x1="60" y1="60" x2="58" y2="80" stroke="#5A8FB5" stroke-width="2" stroke-linecap="round"/></g>
+        <g class="svg-drop-d" opacity=".25"><line x1="120" y1="40" x2="118" y2="60" stroke="#5A8FB5" stroke-width="2" stroke-linecap="round"/></g>
+        <g class="svg-drop-d2" opacity=".2"><line x1="340" y1="50" x2="338" y2="70" stroke="#5A8FB5" stroke-width="2" stroke-linecap="round"/></g>
+        <g class="svg-drop" opacity=".25"><line x1="390" y1="70" x2="388" y2="90" stroke="#5A8FB5" stroke-width="2" stroke-linecap="round"/></g>
+        <g class="svg-drop-d" opacity=".2"><line x1="180" y1="30" x2="178" y2="50" stroke="#5A8FB5" stroke-width="1.5" stroke-linecap="round"/></g>
+        <g class="svg-drop-d2" opacity=".2"><line x1="280" y1="35" x2="278" y2="55" stroke="#5A8FB5" stroke-width="1.5" stroke-linecap="round"/></g>
+        <g class="svg-breathe"><circle cx="220" cy="180" r="26" fill="#F5D9D3"/><path d="M194 176 Q198 152 220 148 Q242 152 246 176" fill="#5A5466" opacity=".4"/><path d="M210 180 Q214 177 218 180" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M222 180 Q226 177 230 180" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M214 192 Q220 189 226 192" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M198 202 Q194 235 196 270 L244 270 Q246 235 242 202 Q220 195 198 202Z" fill="#5A8FB5" opacity=".25"/><path d="M198 220 Q180 240 185 260" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M242 220 Q260 240 255 260" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-pulse"><path d="M220 250 Q210 240 210 248 Q210 256 220 264 Q230 256 230 248 Q230 240 220 250Z" fill="#C47860" opacity=".3"/></g>
+        <g class="svg-float"><rect x="60" y="280" width="120" height="80" rx="14" fill="#FAF8F2" stroke="#5A8FB5" stroke-width="1" opacity=".6"/><text x="120" y="300" text-anchor="middle" font-size="11" fill="#5A8FB5" font-weight="500">情绪地图</text><circle cx="85" cy="325" r="8" fill="#5A8FB5" opacity=".3"/><circle cx="108" cy="330" r="8" fill="#C47860" opacity=".3"/><circle cx="131" cy="322" r="8" fill="#C9A84C" opacity=".3"/><circle cx="152" cy="335" r="6" fill="#967BA5" opacity=".3"/></g>
+        <g class="svg-float-d"><rect x="280" y="290" width="110" height="70" rx="14" fill="#FAF8F2" stroke="#C47860" stroke-width="1" opacity=".6"/><text x="335" y="310" text-anchor="middle" font-size="11" fill="#C47860" font-weight="500">歌词共鸣</text><text x="335" y="330" text-anchor="middle" font-size="18" opacity=".5">🎵</text><text x="335" y="348" text-anchor="middle" font-size="9" fill="#5A5466">You've Got a Friend</text></g>
+        <path d="M100 180 Q220 130 340 180" stroke="#5A8FB5" stroke-width="1.5" fill="none" stroke-dasharray="6,4" opacity=".2" class="svg-draw"/>
+        <text x="130" y="165" font-size="9" fill="#5A8FB5" opacity=".4">否认</text><text x="200" y="150" font-size="9" fill="#5A8FB5" opacity=".4">愤怒</text><text x="270" y="150" font-size="9" fill="#5A8FB5" opacity=".4">讨价还价</text><text x="320" y="165" font-size="9" fill="#5A8FB5" opacity=".4">抑郁→接受</text>
+        <circle cx="220" cy="210" r="80" fill="#C47860" opacity=".03" class="svg-glow"/>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w2">2</div><span class="week-label">第二周</span></div>
+      <h2 class="week-title">"低音"——允许悲伤</h2>
+      <div class="week-theme w2">在音乐中安全地接触悲伤，让情绪自然流淌</div>
+      <p class="week-desc">通过聆听关于失落与坚韧的歌曲，帮助成员安全地接触悲伤情绪，用颜色和图形将情绪外化，理解哀伤反应的正常化。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">音乐疗愈</td><td>"歌词共鸣"——聆听3首关于失落与坚韧的歌曲，讨论歌词中触动自己的句子</td><td class="t-time">40min</td></tr>
+        <tr><td class="t-activity">表达练习</td><td>"失业情绪地图"——用颜色和图形画出失业以来体验到的各种情绪</td><td class="t-time">25min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>介绍哀伤五阶段理论，帮助成员识别自己当前所处的阶段</td><td class="t-time">25min</td></tr>
+        <tr><td class="t-activity">收尾</td><td>"安慰歌"——每人推荐一首在困难时期给自己力量的歌曲，建立小组"歌单"</td><td class="t-time">30min</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 3 -->
+<section class="week-section" id="week3">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w3">3</div><span class="week-label">第三周</span></div>
+      <h2 class="week-title">"变奏"——挑战消极思维</h2>
+      <div class="week-theme w3">用音乐改写叙事，用认知重构找回力量</div>
+      <p class="week-desc">通过歌曲改写将消极歌词转化为积极版本，结合CBT思维记录表，练习识别和反驳自动化消极思维。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">音乐疗愈</td><td>"歌曲改写"——选择一首熟悉的歌曲，将消极歌词改写为积极版本并演唱</td><td class="t-time">35min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>CBT思维记录表——识别与失业相关的自动化消极思维，练习寻找替代性想法</td><td class="t-time">35min</td></tr>
+        <tr><td class="t-activity">互动练习</td><td>"思维辩论赛"——两人一组，一人扮演"批评者"，一人扮演"辩护者"</td><td class="t-time">25min</td></tr>
+        <tr><td class="t-activity">收尾</td><td>分享本周"思维转变"的一个小例子</td><td class="t-time">25min</td></tr>
+      </tbody></table>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <defs><linearGradient id="tGrad" x1="0" y1="0" x2="440" y2="0"><stop offset="0%" stop-color="#5A5466" stop-opacity=".15"/><stop offset="50%" stop-color="#C9A84C" stop-opacity=".1"/><stop offset="100%" stop-color="#C9A84C" stop-opacity=".05"/></linearGradient></defs>
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="url(#tGrad)"/>
+        <g class="svg-float" opacity=".6"><ellipse cx="100" cy="120" rx="50" ry="30" fill="#5A5466" opacity=".15"/><ellipse cx="80" cy="130" rx="35" ry="25" fill="#5A5466" opacity=".12"/><ellipse cx="120" cy="135" rx="30" ry="20" fill="#5A5466" opacity=".1"/><text x="100" y="128" text-anchor="middle" font-size="11" fill="#5A5466" opacity=".6">消极思维</text></g>
+        <g><path d="M160 120 L280 120" stroke="#C9A84C" stroke-width="2" fill="none" stroke-dasharray="8,4" class="svg-draw"/><polygon points="280,115 295,120 280,125" fill="#C9A84C" opacity=".5"/><text x="220" y="110" text-anchor="middle" font-size="10" fill="#C9A84C" font-weight="500">认知重构</text></g>
+        <g class="svg-float-d" opacity=".7"><circle cx="350" cy="110" r="30" fill="#F4E4A6" opacity=".4"/><g class="svg-rotate" style="transform-origin:350px 110px"><line x1="350" y1="72" x2="350" y2="78" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/><line x1="350" y1="142" x2="350" y2="148" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/><line x1="312" y1="110" x2="318" y2="110" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/><line x1="382" y1="110" x2="388" y2="110" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/></g><text x="350" y="115" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="500">积极想法</text></g>
+        <g class="svg-float-d2"><rect x="40" y="180" width="170" height="80" rx="12" fill="#F0ECE4" opacity=".8"/><text x="125" y="200" text-anchor="middle" font-size="10" fill="#5A5466" font-weight="500">原歌词 ✗</text><line x1="60" y1="215" x2="190" y2="215" stroke="#5A5466" stroke-width="1" opacity=".2"/><line x1="60" y1="228" x2="180" y2="228" stroke="#5A5466" stroke-width="1" opacity=".2"/><line x1="60" y1="241" x2="170" y2="241" stroke="#5A5466" stroke-width="1" opacity=".2"/><line x1="55" y1="215" x2="195" y2="215" stroke="#C47860" stroke-width="1.5" opacity=".4"/></g>
+        <g class="svg-float"><rect x="230" y="180" width="170" height="80" rx="12" fill="#FBF4D6" opacity=".8"/><text x="315" y="200" text-anchor="middle" font-size="10" fill="#C9A84C" font-weight="500">改写后 ✓</text><line x1="250" y1="215" x2="380" y2="215" stroke="#C9A84C" stroke-width="1" opacity=".3"/><line x1="250" y1="228" x2="370" y2="228" stroke="#C9A84C" stroke-width="1" opacity=".3"/><line x1="250" y1="241" x2="360" y2="241" stroke="#C9A84C" stroke-width="1" opacity=".3"/></g>
+        <g class="svg-float-d"><rect x="60" y="290" width="320" height="100" rx="14" fill="#FAF8F2" stroke="#C9A84C" stroke-width="1" opacity=".7"/><text x="220" y="312" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="600">CBT 思维记录表</text><rect x="80" y="322" width="130" height="24" rx="6" fill="#F0ECE4" opacity=".6"/><text x="145" y="338" text-anchor="middle" font-size="9" fill="#5A5466">自动化消极思维</text><rect x="230" y="322" width="130" height="24" rx="6" fill="#FBF4D6" opacity=".6"/><text x="295" y="338" text-anchor="middle" font-size="9" fill="#C9A84C">替代性想法</text><path d="M215 334 L225 334" stroke="#C9A84C" stroke-width="1.5" fill="none"/><polygon points="225,331 230,334 225,337" fill="#C9A84C" opacity=".5"/><text x="220" y="370" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">情境触发 → 情绪反应 → 思维记录 → 认知重构</text></g>
+        <g class="svg-beat" opacity=".5"><circle cx="40" cy="340" r="16" fill="#C47860" opacity=".15"/><text x="40" y="345" text-anchor="middle" font-size="14">⚡</text></g>
+        <g class="svg-beat-d" opacity=".5"><circle cx="400" cy="340" r="16" fill="#C9A84C" opacity=".15"/><text x="400" y="345" text-anchor="middle" font-size="14">💡</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 4 -->
+<section class="week-section reverse" id="week4">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <circle cx="220" cy="200" r="140" stroke="#5A988C" stroke-width="1" fill="none" opacity=".08"/>
+        <circle cx="220" cy="200" r="100" stroke="#5A988C" stroke-width="1" fill="none" opacity=".06"/>
+        <circle cx="220" cy="200" r="60" stroke="#5A988C" stroke-width="1" fill="none" opacity=".04"/>
+        <g class="svg-rotate" style="transform-origin:220px 200px"><line x1="220" y1="60" x2="220" y2="340" stroke="#5A988C" stroke-width=".5" opacity=".1"/><line x1="80" y1="200" x2="360" y2="200" stroke="#5A988C" stroke-width=".5" opacity=".1"/><line x1="120" y1="100" x2="320" y2="300" stroke="#5A988C" stroke-width=".5" opacity=".06"/><line x1="320" y1="100" x2="120" y2="300" stroke="#5A988C" stroke-width=".5" opacity=".06"/></g>
+        <g class="svg-breathe"><circle cx="220" cy="170" r="24" fill="#F5D9D3"/><path d="M196 166 Q200 144 220 140 Q240 144 244 166" fill="#7A7486" opacity=".4"/><circle cx="212" cy="168" r="2" fill="#3A3448"/><circle cx="228" cy="168" r="2" fill="#3A3448"/><path d="M214 180 Q220 184 226 180" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M200 190 Q196 220 198 250 L242 250 Q244 220 240 190 Q220 184 200 190Z" fill="#5A988C" opacity=".3"/><circle cx="260" cy="220" r="8" fill="#5A5466" opacity=".2"/><rect x="257" y="228" width="6" height="15" rx="2" fill="#5A5466" opacity=".15"/></g>
+        <g class="svg-float"><rect x="160" y="260" width="120" height="36" rx="18" fill="#D4E8E2" opacity=".6"/><text x="220" y="282" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="500">🎵 我的主题曲</text></g>
+        <g class="svg-float-d"><circle cx="220" cy="80" r="20" fill="#FBF4D6" opacity=".7"/><text x="220" y="76" text-anchor="middle" font-size="14">🎯</text><text x="220" y="92" text-anchor="middle" font-size="8" fill="#C9A84C" font-weight="500">领导力</text></g>
+        <g class="svg-float-d2"><circle cx="340" cy="150" r="20" fill="#F2DDE2" opacity=".7"/><text x="340" y="146" text-anchor="middle" font-size="14">💬</text><text x="340" y="162" text-anchor="middle" font-size="8" fill="#C47888" font-weight="500">沟通力</text></g>
+        <g class="svg-float"><circle cx="340" cy="260" r="20" fill="#EDE0F3" opacity=".7"/><text x="340" y="256" text-anchor="middle" font-size="14">🔧</text><text x="340" y="272" text-anchor="middle" font-size="8" fill="#967BA5" font-weight="500">技术力</text></g>
+        <g class="svg-float-d"><circle cx="100" cy="260" r="20" fill="#D6E6F2" opacity=".7"/><text x="100" y="256" text-anchor="middle" font-size="14">📊</text><text x="100" y="272" text-anchor="middle" font-size="8" fill="#5A8FB5" font-weight="500">分析力</text></g>
+        <g class="svg-float-d2"><circle cx="100" cy="150" r="20" fill="#D4E8E2" opacity=".7"/><text x="100" y="146" text-anchor="middle" font-size="14">🤝</text><text x="100" y="162" text-anchor="middle" font-size="8" fill="#5A988C" font-weight="500">协作力</text></g>
+        <line x1="220" y1="145" x2="220" y2="100" stroke="#5A988C" stroke-width="1" stroke-dasharray="4,3" opacity=".2"/>
+        <line x1="244" y1="180" x2="320" y2="155" stroke="#C47888" stroke-width="1" stroke-dasharray="4,3" opacity=".2"/>
+        <line x1="244" y1="210" x2="320" y2="255" stroke="#967BA5" stroke-width="1" stroke-dasharray="4,3" opacity=".2"/>
+        <line x1="196" y1="210" x2="120" y2="255" stroke="#5A8FB5" stroke-width="1" stroke-dasharray="4,3" opacity=".2"/>
+        <line x1="196" y1="180" x2="120" y2="155" stroke="#5A988C" stroke-width="1" stroke-dasharray="4,3" opacity=".2"/>
+        <g class="svg-pulse"><path d="M150 310 Q220 340 290 310" stroke="#5A988C" stroke-width="1.5" fill="none" opacity=".3"/><text x="220" y="350" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="500">同伴互相补充优势</text></g>
+        <g class="svg-float-d"><rect x="140" y="370" width="160" height="30" rx="15" fill="#5A988C" opacity=".12"/><text x="220" y="390" text-anchor="middle" font-size="10" fill="#5A988C" font-weight="500">"我们比我们以为的更强大"</text></g>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w4">4</div><span class="week-label">第四周</span></div>
+      <h2 class="week-title">"和声"——重建自我价值</h2>
+      <div class="week-theme w4">用主题曲定义真实的自我，用能力罗盘发现可迁移技能</div>
+      <p class="week-desc">每人创作或选择代表"真实的我"的主题曲，识别可迁移技能，通过同伴反馈丰富自我认知，集体创作小组歌曲。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">音乐疗愈</td><td>"我的主题曲"——每人创作或选择一首代表"真实的我"的歌曲，在小组中播放并讲述</td><td class="t-time">40min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>"能力罗盘"——识别可迁移技能，将过往职业经验转化为通用能力陈述</td><td class="t-time">35min</td></tr>
+        <tr><td class="t-activity">同伴反馈</td><td>小组成员互相补充对方可能忽略的优势和能力</td><td class="t-time">20min</td></tr>
+        <tr><td class="t-activity">收尾</td><td>集体创作小组歌曲副歌——"我们比我们以为的更强大"</td><td class="t-time">25min</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 5 -->
+<section class="week-section" id="week5">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w5">5</div><span class="week-label">第五周</span></div>
+      <h2 class="week-title">"间奏"——自我关怀与压力管理</h2>
+      <div class="week-theme w5">在音乐中找到内心的安全之地，学会温柔对待自己</div>
+      <p class="week-desc">通过引导性音乐想象激活内在资源，配合渐进性肌肉放松释放躯体压力，制定每日自我关怀计划。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">音乐疗愈</td><td>引导性音乐想象（GIM简化版）——在舒缓音乐引导下想象一个安全、有力量的地方</td><td class="t-time">30min</td></tr>
+        <tr><td class="t-activity">身体练习</td><td>音乐配合的渐进性肌肉放松（PMR）</td><td class="t-time">20min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>"自我关怀计划"——制定每日自我关怀清单（如运动、音乐时间、社交联系）</td><td class="t-time">35min</td></tr>
+        <tr><td class="t-activity">收尾</td><td>"能量歌"——每人选一首让自己充满能量的歌曲，建立"能量歌单"</td><td class="t-time">35min</td></tr>
+      </tbody></table>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <rect x="20" y="20" width="400" height="200" rx="16" fill="#EDE0F3" opacity=".15"/>
+        <circle cx="350" cy="70" r="35" fill="#F4E4A6" opacity=".3" class="svg-glow"/><circle cx="350" cy="70" r="22" fill="#F4E4A6" opacity=".4"/>
+        <path d="M20 180 L120 80 L220 180Z" fill="#D4E8E2" opacity=".3"/><path d="M150 180 L280 60 L410 180Z" fill="#D4EDE8" opacity=".25"/>
+        <path d="M20 200 Q110 185 220 200 Q330 215 420 200 L420 220 L20 220Z" fill="#D6E6F2" opacity=".2"/>
+        <g class="svg-breathe"><circle cx="220" cy="170" r="20" fill="#F5D9D3"/><path d="M200 167 Q204 150 220 147 Q236 150 240 167" fill="#7A7486" opacity=".35"/><path d="M206 183 Q204 200 206 218 L234 218 Q236 200 234 183 Q220 178 206 183Z" fill="#967BA5" opacity=".25"/><path d="M206 216 Q195 228 190 240 Q200 244 215 240 Q218 235 220 230" fill="#7A7486" opacity=".2"/><path d="M234 216 Q245 228 250 240 Q240 244 225 240 Q222 235 220 230" fill="#7A7486" opacity=".2"/><path d="M206 200 Q192 210 188 225" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M234 200 Q248 210 252 225" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+        <circle cx="220" cy="200" r="60" fill="#967BA5" opacity=".04" class="svg-glow"/>
+        <g class="svg-wave" opacity=".2"><path d="M100 150 Q120 140 140 150 Q160 160 180 150" stroke="#967BA5" stroke-width="1.5" fill="none"/><path d="M260 150 Q280 140 300 150 Q320 160 340 150" stroke="#967BA5" stroke-width="1.5" fill="none"/></g>
+        <g class="svg-float-d" opacity=".5"><circle cx="260" cy="170" r="5" fill="#967BA5" class="svg-pulse"/><line x1="242" y1="172" x2="255" y2="171" stroke="#967BA5" stroke-width="1" stroke-dasharray="2,2"/><text x="272" y="174" font-size="9" fill="#967BA5">放松</text></g>
+        <g class="svg-float"><rect x="60" y="270" width="150" height="120" rx="14" fill="#EDE0F3" opacity=".3"/><text x="135" y="292" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="600">自我关怀清单</text><text x="80" y="314" font-size="10" fill="#5A5466" opacity=".6">🏃 运动</text><text x="80" y="332" font-size="10" fill="#5A5466" opacity=".6">🎵 音乐时间</text><text x="80" y="350" font-size="10" fill="#5A5466" opacity=".6">👥 社交联系</text><text x="80" y="368" font-size="10" fill="#5A5466" opacity=".6">📖 阅读冥想</text><text x="170" y="314" font-size="10" fill="#5A988C" opacity=".5">✓</text><text x="170" y="332" font-size="10" fill="#5A988C" opacity=".5">✓</text><text x="170" y="350" font-size="10" fill="#C9A84C" opacity=".5">○</text><text x="170" y="368" font-size="10" fill="#C9A84C" opacity=".5">○</text></g>
+        <g class="svg-float-d2"><rect x="240" y="280" width="140" height="100" rx="14" fill="#FBF4D6" opacity=".4"/><text x="310" y="302" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="600">⚡ 能量歌单</text><text x="260" y="324" font-size="10" fill="#5A5466" opacity=".5">♪ 充满希望的歌</text><text x="260" y="342" font-size="10" fill="#5A5466" opacity=".5">♪ 给我力量的歌</text><text x="260" y="360" font-size="10" fill="#5A5466" opacity=".5">♪ 让我微笑的歌</text></g>
+        <circle cx="80" cy="100" r="2" fill="#967BA5" opacity=".3" class="svg-pulse"/><circle cx="370" cy="130" r="2.5" fill="#C9A84C" opacity=".3" class="svg-pulse"/><circle cx="300" cy="50" r="2" fill="#5A988C" opacity=".3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 6 -->
+<section class="week-section reverse" id="week6">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#F0ECE4"/>
+        <circle cx="220" cy="200" r="40" fill="#C47888" opacity=".08"/><circle cx="220" cy="200" r="25" fill="#F2DDE2" opacity=".5"/><text x="220" y="196" text-anchor="middle" font-size="16">🎵</text><text x="220" y="212" text-anchor="middle" font-size="8" fill="#C47888" font-weight="500">转调</text>
+        <g class="svg-float"><path d="M220 160 L220 80" stroke="#967BA5" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity=".3"/><rect x="170" y="40" width="100" height="40" rx="12" fill="#EDE0F3" opacity=".6"/><text x="220" y="58" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="500">🎻 古典</text><text x="220" y="72" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">稳定·传承</text></g>
+        <g class="svg-float-d"><path d="M260 200 L360 200" stroke="#5A8FB5" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity=".3"/><rect x="360" y="180" width="60" height="40" rx="12" fill="#D6E6F2" opacity=".6"/><text x="390" y="198" text-anchor="middle" font-size="11" fill="#5A8FB5" font-weight="500">🎹 电子</text><text x="390" y="212" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">创新</text></g>
+        <g class="svg-float-d2"><path d="M245 230 L330 310" stroke="#C9A84C" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity=".3"/><rect x="300" y="310" width="80" height="40" rx="12" fill="#FBF4D6" opacity=".6"/><text x="340" y="328" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="500">🪕 民族</text><text x="340" y="342" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">文化</text></g>
+        <g class="svg-float"><path d="M195 230 L110 310" stroke="#C47860" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity=".3"/><rect x="50" y="310" width="80" height="40" rx="12" fill="#F5DDD3" opacity=".6"/><text x="90" y="328" text-anchor="middle" font-size="11" fill="#C47860" font-weight="500">🎷 爵士</text><text x="90" y="342" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">自由</text></g>
+        <g class="svg-float-d"><path d="M180 200 L80 200" stroke="#5A988C" stroke-width="2" fill="none" stroke-dasharray="6,4" opacity=".3"/><rect x="20" y="180" width="60" height="40" rx="12" fill="#D4E8E2" opacity=".6"/><text x="50" y="198" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="500">🎤 流行</text><text x="50" y="212" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">影响力</text></g>
+        <g class="svg-float-d2"><rect x="140" y="370" width="160" height="30" rx="15" fill="#C47888" opacity=".1"/><text x="220" y="390" text-anchor="middle" font-size="10" fill="#C47888" font-weight="500">职业价值观卡片排序 → 选出最重要的5个</text></g>
+        <g class="svg-beat" opacity=".5"><circle cx="380" cy="300" r="18" fill="#C47888" opacity=".12"/><text x="380" y="296" text-anchor="middle" font-size="12">🧪</text><text x="380" y="310" text-anchor="middle" font-size="7" fill="#C47888">小实验</text></g>
+        <g class="svg-breathe"><circle cx="220" cy="140" r="14" fill="#F5D9D3" opacity=".7"/><path d="M208 138 Q210 126 220 124 Q230 126 232 138" fill="#7A7486" opacity=".3"/></g>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w6">6</div><span class="week-label">第六周</span></div>
+      <h2 class="week-title">"转调"——探索新方向</h2>
+      <div class="week-theme w6">用音乐隐喻打开职业可能性，用价值观排序找到方向</div>
+      <p class="week-desc">聆听不同风格的音乐隐喻职业方向，通过价值观卡片排序澄清职业价值观，设计低风险的职业探索行动。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">音乐疗愈</td><td>"未来之声"——聆听不同风格的音乐，每种风格代表一种可能的职业方向</td><td class="t-time">30min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>"职业价值观卡片排序"——在20张价值观卡片中选出最重要的5个</td><td class="t-time">35min</td></tr>
+        <tr><td class="t-activity">行动练习</td><td>"小实验"——每人设计一个低风险的职业探索行动</td><td class="t-time">30min</td></tr>
+        <tr><td class="t-activity">收尾</td><td>分享"小实验"计划，小组给予鼓励</td><td class="t-time">25min</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 7 -->
+<section class="week-section" id="week7">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number"><div class="week-num-badge w7">7</div><span class="week-label">第七周</span></div>
+      <h2 class="week-title">"协奏"——整合与行动计划</h2>
+      <div class="week-theme w7">将过去、现在、未来编织成生命交响曲</div>
+      <p class="week-desc">用乐器即兴演奏代表"过去-现在-未来"的三段乐章，制定90天SMART行动计划，通过同伴教练深化行动方案。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">音乐疗愈</td><td>"生命交响曲"——每人用乐器即兴演奏代表自己"过去-现在-未来"的三段乐章</td><td class="t-time">35min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>"90天行动计划"——制定具体的求职或职业转型计划，包含SMART目标</td><td class="t-time">40min</td></tr>
+        <tr><td class="t-activity">同伴教练</td><td>两人一组进行"同伴教练"对话——轮流倾听和提问</td><td class="t-time">25min</td></tr>
+        <tr><td class="t-activity">收尾</td><td>"勇气之歌"——集体演唱一首关于勇气和希望的歌曲</td><td class="t-time">20min</td></tr>
+      </tbody></table>
+    </div>
+    <div class="week-visual reveal-right">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <g opacity=".15"><line x1="40" y1="100" x2="400" y2="100" stroke="#6AA5C6" stroke-width="1"/><line x1="40" y1="115" x2="400" y2="115" stroke="#6AA5C6" stroke-width="1"/><line x1="40" y1="130" x2="400" y2="130" stroke="#6AA5C6" stroke-width="1"/><line x1="40" y1="145" x2="400" y2="145" stroke="#6AA5C6" stroke-width="1"/><line x1="40" y1="160" x2="400" y2="160" stroke="#6AA5C6" stroke-width="1"/></g>
+        <g class="svg-float"><rect x="50" y="60" width="100" height="120" rx="14" fill="#F5DDD3" opacity=".4"/><text x="100" y="82" text-anchor="middle" font-size="11" fill="#C47860" font-weight="600">第一乐章</text><text x="100" y="98" text-anchor="middle" font-size="10" fill="#C47860">过去</text><text x="70" y="130" font-size="14" fill="#C47860" opacity=".4">♩</text><text x="90" y="120" font-size="14" fill="#C47860" opacity=".4">♪</text><text x="110" y="135" font-size="14" fill="#C47860" opacity=".4">♫</text><text x="130" y="125" font-size="14" fill="#C47860" opacity=".4">♩</text><text x="100" y="165" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">回忆·经验</text></g>
+        <g class="svg-float-d"><rect x="170" y="60" width="100" height="120" rx="14" fill="#D4E8E2" opacity=".4"/><text x="220" y="82" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="600">第二乐章</text><text x="220" y="98" text-anchor="middle" font-size="10" fill="#5A988C">现在</text><text x="190" y="130" font-size="14" fill="#5A988C" opacity=".4">♪</text><text x="210" y="120" font-size="14" fill="#5A988C" opacity=".4">♫</text><text x="230" y="135" font-size="14" fill="#5A988C" opacity=".4">♩</text><text x="250" y="125" font-size="14" fill="#5A988C" opacity=".4">♪</text><text x="220" y="165" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">觉察·成长</text></g>
+        <g class="svg-float-d2"><rect x="290" y="60" width="100" height="120" rx="14" fill="#DCEEF8" opacity=".4"/><text x="340" y="82" text-anchor="middle" font-size="11" fill="#6AA5C6" font-weight="600">第三乐章</text><text x="340" y="98" text-anchor="middle" font-size="10" fill="#6AA5C6">未来</text><text x="310" y="130" font-size="14" fill="#6AA5C6" opacity=".4">♫</text><text x="330" y="120" font-size="14" fill="#6AA5C6" opacity=".4">♩</text><text x="350" y="135" font-size="14" fill="#6AA5C6" opacity=".4">♪</text><text x="370" y="125" font-size="14" fill="#6AA5C6" opacity=".4">♫</text><text x="340" y="165" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">希望·行动</text></g>
+        <g class="svg-float"><rect x="40" y="210" width="360" height="90" rx="14" fill="#FAF8F2" stroke="#6AA5C6" stroke-width="1" opacity=".7"/><text x="220" y="232" text-anchor="middle" font-size="12" fill="#6AA5C6" font-weight="600">📋 90天行动计划 (SMART)</text><line x1="70" y1="260" x2="370" y2="260" stroke="#6AA5C6" stroke-width="1.5" opacity=".3"/><circle cx="70" cy="260" r="5" fill="#C47860" opacity=".5"/><text x="70" y="280" text-anchor="middle" font-size="8" fill="#5A5466">第1月</text><circle cx="170" cy="260" r="5" fill="#C9A84C" opacity=".5"/><text x="170" y="280" text-anchor="middle" font-size="8" fill="#5A5466">第2月</text><circle cx="270" cy="260" r="5" fill="#5A988C" opacity=".5"/><text x="270" y="280" text-anchor="middle" font-size="8" fill="#5A5466">第3月</text><circle cx="370" cy="260" r="5" fill="#6AA5C6" opacity=".5"/><text x="370" y="280" text-anchor="middle" font-size="8" fill="#5A5466">目标</text></g>
+        <g class="svg-float-d"><rect x="60" y="330" width="150" height="60" rx="14" fill="#DCEEF8" opacity=".4"/><text x="135" y="352" text-anchor="middle" font-size="11" fill="#6AA5C6" font-weight="500">🤝 同伴教练</text><text x="135" y="370" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">轮流倾听·互相提问</text></g>
+        <g class="svg-float-d2"><rect x="240" y="330" width="150" height="60" rx="14" fill="#F5DDD3" opacity=".4"/><text x="315" y="352" text-anchor="middle" font-size="11" fill="#C47860" font-weight="500">🎵 勇气之歌</text><text x="315" y="370" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">集体演唱·情感升华</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WEEK 8 -->
+<section class="week-section reverse" id="week8">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <svg viewBox="0 0 440 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <defs><linearGradient id="sunrise" x1="220" y1="280" x2="220" y2="80"><stop offset="0%" stop-color="#F4E4A6" stop-opacity=".3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity=".05"/></linearGradient></defs>
+        <rect x="20" y="80" width="400" height="200" rx="16" fill="url(#sunrise)"/>
+        <circle cx="220" cy="220" r="50" fill="#F4E4A6" opacity=".3" class="svg-glow"/><circle cx="220" cy="220" r="35" fill="#F4E4A6" opacity=".4" class="svg-pulse"/>
+        <g class="svg-rotate" style="transform-origin:220px 220px"><line x1="220" y1="175" x2="220" y2="165" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".3"/><line x1="220" y1="265" x2="220" y2="275" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".3"/><line x1="175" y1="220" x2="165" y2="220" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".3"/><line x1="265" y1="220" x2="275" y2="220" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".3"/><line x1="188" y1="188" x2="181" y2="181" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".2"/><line x1="252" y1="252" x2="259" y2="259" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".2"/><line x1="252" y1="188" x2="259" y2="181" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".2"/><line x1="188" y1="252" x2="181" y2="259" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity=".2"/></g>
+        <g class="svg-breathe"><circle cx="160" cy="200" r="16" fill="#F5D9D3"/><path d="M146 197 Q149 184 160 182 Q171 184 174 197" fill="#7A7486" opacity=".35"/><path d="M148 212 Q146 230 148 248 L172 248 Q174 230 172 212 Q160 207 148 212Z" fill="#C47860" opacity=".25"/><path d="M148 220 Q138 230 140 245" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-breathe" style="animation-delay:.3s"><circle cx="220" cy="190" r="16" fill="#F5D9D3"/><path d="M206 187 Q209 174 220 172 Q231 174 234 187" fill="#5A5466" opacity=".35"/><path d="M208 202 Q206 220 208 238 L232 238 Q234 220 232 202 Q220 197 208 202Z" fill="#5A988C" opacity=".25"/><path d="M208 210 Q198 195 195 185" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M232 210 Q242 195 245 185" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-breathe" style="animation-delay:.6s"><circle cx="280" cy="200" r="16" fill="#F5D9D3"/><path d="M266 197 Q269 184 280 182 Q291 184 294 197" fill="#8A6B5A" opacity=".35"/><path d="M268 212 Q266 230 268 248 L292 248 Q294 230 292 212 Q280 207 268 212Z" fill="#967BA5" opacity=".25"/><path d="M292 220 Q302 230 300 245" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <text x="130" y="170" font-size="18" fill="#C47860" opacity=".5" class="svg-note">♪</text><text x="300" y="165" font-size="16" fill="#C9A84C" opacity=".5" class="svg-note-d">♫</text><text x="250" y="150" font-size="14" fill="#5A988C" opacity=".4" class="svg-note-d2">♩</text><text x="180" y="155" font-size="16" fill="#967BA5" opacity=".4" class="svg-note">♪</text>
+        <g class="svg-float"><rect x="130" y="300" width="180" height="50" rx="12" fill="#FBF4D6" opacity=".6" stroke="#C9A84C" stroke-width="1"/><text x="220" y="320" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="600">🎓 参与证书</text><text x="220" y="338" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">8周音乐疗愈之旅完成</text></g>
+        <g class="svg-float-d"><rect x="50" y="310" width="60" height="40" rx="8" fill="#F2DDE2" opacity=".5"/><text x="80" y="328" text-anchor="middle" font-size="10">💌</text><text x="80" y="342" text-anchor="middle" font-size="8" fill="#C47888">祝福卡</text></g>
+        <g class="svg-float-d2"><rect x="330" y="310" width="60" height="40" rx="8" fill="#D4E8E2" opacity=".5"/><text x="360" y="328" text-anchor="middle" font-size="10">💬</text><text x="360" y="342" text-anchor="middle" font-size="8" fill="#5A988C">联络群</text></g>
+        <g class="svg-float"><rect x="100" y="370" width="240" height="30" rx="15" fill="#C9A84C" opacity=".1"/><text x="220" y="390" text-anchor="middle" font-size="10" fill="#C9A84C" font-weight="500">"我正在经历一次职业转型" ✨</text></g>
+        <circle cx="100" cy="100" r="3" fill="#C9A84C" opacity=".3" class="svg-pulse"/><circle cx="340" cy="90" r="2.5" fill="#C47860" opacity=".3" class="svg-pulse"/><circle cx="220" cy="70" r="2" fill="#5A988C" opacity=".3" class="svg-pulse"/>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number"><div class="week-num-badge w8">8</div><span class="week-label">第八周</span></div>
+      <h2 class="week-title">"终曲与新篇"——告别与展望</h2>
+      <div class="week-theme w8">回顾成长旅程，带着新叙事走向未来</div>
+      <p class="week-desc">回放第1周的歌曲片段感受8周变化，集体创作"重奏之歌"，书写新职业叙事，在温暖的告别仪式中开启新篇章。</p>
+      <table class="week-table"><thead><tr><th>环节</th><th>内容</th><th>时长</th></tr></thead><tbody>
+        <tr><td class="t-activity">回顾</td><td>播放第1周的"名字之歌"片段，每人分享8周来的变化</td><td class="t-time">30min</td></tr>
+        <tr><td class="t-activity">音乐疗愈</td><td>集体创作"重奏之歌"——将8周来的关键词和感受编成歌词，配上简单旋律</td><td class="t-time">40min</td></tr>
+        <tr><td class="t-activity">职业辅导</td><td>"我的新叙事"——从"我失业了"转向"我正在经历一次职业转型"</td><td class="t-time">20min</td></tr>
+        <tr><td class="t-activity">结业仪式</td><td>互相交换手写"祝福卡"；颁发参与证书；建立小组线上联络群</td><td class="t-time">30min</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- IMPLEMENTATION -->
+<section class="impl-section" id="impl">
+  <div class="impl-container">
+    <div class="section-header reveal"><div class="section-tag impl">⚙ 实施适配</div><h2 class="section-title">以人为本的实施策略</h2><p class="section-subtitle">零门槛参与、经济适配、多元包容、危机预案四位一体</p></div>
+    <div class="impl-illustration reveal-scale">
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#FAF8F2"/>
+        <g class="svg-float"><rect x="30" y="40" width="120" height="120" rx="16" fill="#F5DDD3" opacity=".4"/><text x="90" y="70" text-anchor="middle" font-size="22">🎵</text><text x="90" y="95" text-anchor="middle" font-size="11" fill="#C47860" font-weight="600">零门槛参与</text><text x="90" y="112" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">无需音乐基础</text><text x="90" y="126" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">体验而非表演</text><text x="90" y="140" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">尊重个体偏好</text></g>
+        <g class="svg-float-d"><rect x="170" y="40" width="120" height="120" rx="16" fill="#D4E8E2" opacity=".4"/><text x="230" y="70" text-anchor="middle" font-size="22">💰</text><text x="230" y="95" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="600">经济适配</text><text x="230" y="112" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">费用减免补贴</text><text x="230" y="126" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">交通便利选址</text><text x="230" y="140" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">社区中心合作</text></g>
+        <g class="svg-float-d2"><rect x="310" y="40" width="120" height="120" rx="16" fill="#EDE0F3" opacity=".4"/><text x="370" y="70" text-anchor="middle" font-size="22">🌈</text><text x="370" y="95" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="600">多样性适配</text><text x="370" y="112" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">不同行业背景</text><text x="370" y="126" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">年龄性别包容</text><text x="370" y="140" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">开放性设计</text></g>
+        <g class="svg-float"><rect x="450" y="40" width="120" height="120" rx="16" fill="#FBF4D6" opacity=".4"/><text x="510" y="70" text-anchor="middle" font-size="22">🛡️</text><text x="510" y="95" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="600">危机预案</text><text x="510" y="112" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">清晰干预流程</text><text x="510" y="126" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">专业转介机制</text><text x="510" y="140" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".6">精神卫生对接</text></g>
+        <line x1="90" y1="170" x2="510" y2="170" stroke="#C47860" stroke-width="1" stroke-dasharray="6,4" opacity=".15"/>
+        <circle cx="90" cy="170" r="4" fill="#C47860" opacity=".2"/><circle cx="230" cy="170" r="4" fill="#5A988C" opacity=".2"/><circle cx="370" cy="170" r="4" fill="#967BA5" opacity=".2"/><circle cx="510" cy="170" r="4" fill="#C9A84C" opacity=".2"/>
+      </svg>
+    </div>
+    <div class="impl-grid stagger">
+      <div class="impl-card reveal" style="--i:0"><div class="impl-card-icon c1">🎵</div><h3>参与门槛适配</h3><p>无需任何音乐基础，所有音乐活动均以参与体验而非表演水平为导向；打击乐器提供多种选择，尊重个体偏好。</p></div>
+      <div class="impl-card reveal" style="--i:1"><div class="impl-card-icon c2">💰</div><h3>经济适配</h3><p>对经济困难的参与者减免费用或提供补贴；活动地点选择交通便利的社区中心。</p></div>
+      <div class="impl-card reveal" style="--i:2"><div class="impl-card-icon c3">🌈</div><h3>多样性适配</h3><p>考虑不同行业、年龄、性别的失业者可能面临的差异化挑战，活动设计保持足够的开放性和包容性。</p></div>
+      <div class="impl-card reveal" style="--i:3"><div class="impl-card-icon c4">🛡️</div><h3>危机预案</h3><p>建立清晰的危机干预流程，对出现严重抑郁、自杀意念的成员及时转介至专业精神卫生服务。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LONG-TERM -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal"><div class="section-tag longterm">🔄 长效保障</div><h2 class="section-title">可持续的长效保障机制</h2><p class="section-subtitle">从校友网络到追踪评估，构建持续支持生态</p></div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0"><div class="longterm-card-icon l1">👥</div><div><h3>校友网络</h3><p>建立项目"校友"微信群，定期组织线上分享会和线下聚会，维持社会支持网络。</p></div></div>
+      <div class="longterm-card reveal" style="--i:1"><div class="longterm-card-icon l2">🤝</div><div><h3>同伴教练配对</h3><p>小组结束后，为有意愿的成员配对"同伴教练"伙伴，每周一次15分钟的互相 check-in。</p></div></div>
+      <div class="longterm-card reveal" style="--i:2"><div class="longterm-card-icon l3">🔗</div><div><h3>资源对接</h3><p>与当地就业服务中心、职业培训机构建立合作关系，为成员提供持续的职业发展资源。</p></div></div>
+      <div class="longterm-card reveal" style="--i:3"><div class="longterm-card-icon l4">🎓</div><div><h3>复训机制</h3><p>毕业成员可申请作为"学长/学姐"参与后续批次的小组活动，以助人者的身份巩固自身成长。</p></div></div>
+      <div class="longterm-card reveal" style="--i:4"><div class="longterm-card-icon l5">📊</div><div><h3>追踪评估</h3><p>小组结束后1个月、3个月、6个月进行追踪调查，评估就业状态、心理健康状况和社会功能恢复情况。</p></div></div>
+    </div>
+    <div class="longterm-illustration reveal-scale">
+      <svg viewBox="0 0 600 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="220" rx="20" fill="#F0ECE4"/>
+        <path d="M300 180 Q280 200 260 210" stroke="#967BA5" stroke-width="2" fill="none" opacity=".2"/><path d="M300 180 Q320 200 340 210" stroke="#967BA5" stroke-width="2" fill="none" opacity=".2"/><path d="M300 180 Q300 200 300 215" stroke="#967BA5" stroke-width="2" fill="none" opacity=".15"/>
+        <rect x="290" y="120" width="20" height="65" rx="6" fill="#C47860" opacity=".2"/>
+        <circle cx="300" cy="90" r="50" fill="#5A988C" opacity=".12"/><circle cx="270" cy="100" r="35" fill="#5A988C" opacity=".1"/><circle cx="330" cy="100" r="35" fill="#5A988C" opacity=".1"/><circle cx="300" cy="75" r="30" fill="#5A988C" opacity=".08"/>
+        <g class="svg-float"><circle cx="260" cy="70" r="16" fill="#F5DDD3" opacity=".8"/><text x="260" y="75" text-anchor="middle" font-size="14">👥</text></g>
+        <g class="svg-float-d"><circle cx="340" cy="70" r="16" fill="#D4E8E2" opacity=".8"/><text x="340" y="75" text-anchor="middle" font-size="14">🤝</text></g>
+        <g class="svg-float-d2"><circle cx="240" cy="110" r="16" fill="#FBF4D6" opacity=".8"/><text x="240" y="115" text-anchor="middle" font-size="14">🔗</text></g>
+        <g class="svg-float"><circle cx="360" cy="110" r="16" fill="#EDE0F3" opacity=".8"/><text x="360" y="115" text-anchor="middle" font-size="14">🎓</text></g>
+        <g class="svg-float-d"><circle cx="300" cy="55" r="16" fill="#D6E6F2" opacity=".8"/><text x="300" y="60" text-anchor="middle" font-size="14">📊</text></g>
+        <line x1="100" y1="195" x2="500" y2="195" stroke="#967BA5" stroke-width="1" stroke-dasharray="6,4" opacity=".2"/>
+        <circle cx="100" cy="195" r="4" fill="#C47860" opacity=".3"/><text x="100" y="212" text-anchor="middle" font-size="8" fill="#5A5466" opacity=".5">1个月</text>
+        <circle cx="250" cy="195" r="4" fill="#C9A84C" opacity=".3"/><text x="250" y="212" text-anchor="middle" font-size="8" fill="#5A5466" opacity=".5">3个月</text>
+        <circle cx="400" cy="195" r="4" fill="#5A988C" opacity=".3"/><text x="400" y="212" text-anchor="middle" font-size="8" fill="#5A5466" opacity=".5">6个月</text>
+        <circle cx="500" cy="195" r="4" fill="#967BA5" opacity=".3"/><text x="500" y="212" text-anchor="middle" font-size="8" fill="#5A5466" opacity=".5">持续</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SDGs -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal"><div class="section-tag sdgs">🌍 可持续发展</div><h2 class="section-title">SDGs & ESG 目标融合</h2><p class="section-subtitle">将失业者心理支持与联合国可持续发展目标深度结合</p></div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0"><div class="sdg-num">3.4</div><div class="sdg-title">良好健康与福祉</div><p class="sdg-desc">通过音乐疗愈和团体支持减少失业相关的心理健康问题</p></div>
+      <div class="sdg-card reveal" style="--i:1"><div class="sdg-num">8.5</div><div class="sdg-title">体面工作与经济增长</div><p class="sdg-desc">通过职业韧性辅导促进失业者的再就业能力和体面劳动</p></div>
+      <div class="sdg-card reveal" style="--i:2"><div class="sdg-num">8.6</div><div class="sdg-title">技能发展与职业转型</div><p class="sdg-desc">为失业或弱势群体提供技能发展和职业转型支持</p></div>
+      <div class="sdg-card reveal" style="--i:3"><div class="sdg-num">10.2</div><div class="sdg-title">减少不平等</div><p class="sdg-desc">关注经济弱势群体的心理健康和社会融入</p></div>
+      <div class="sdg-card reveal" style="--i:4"><div class="sdg-num">10.3</div><div class="sdg-title">消除歧视与污名</div><p class="sdg-desc">减少对失业者的社会歧视与污名化</p></div>
+    </div>
+    <div class="esg-box reveal">
+      <h3>📊 ESG 融合维度</h3>
+      <div class="esg-items">
+        <span class="esg-item">社会维度（S）——关注失业者心理健康</span>
+        <span class="esg-item">经济转型期弱势劳动者关怀</span>
+        <span class="esg-item">治理维度（G）——伦理框架</span>
+        <span class="esg-item">数据保护机制</span>
+        <span class="esg-item">参与者隐私安全保障</span>
+      </div>
+    </div>
+    <div class="sdgs-illustration reveal-scale">
+      <svg viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="180" rx="20" fill="#FAF8F2"/>
+        <circle cx="300" cy="90" r="60" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity=".15"/>
+        <ellipse cx="300" cy="90" rx="30" ry="60" stroke="#C9A84C" stroke-width="1" fill="none" opacity=".1"/>
+        <line x1="240" y1="90" x2="360" y2="90" stroke="#C9A84C" stroke-width="1" opacity=".1"/><line x1="300" y1="30" x2="300" y2="150" stroke="#C9A84C" stroke-width="1" opacity=".1"/>
+        <g class="svg-float"><circle cx="180" cy="50" r="18" fill="#F5DDD3" opacity=".7"/><text x="180" y="55" text-anchor="middle" font-size="14">❤️</text></g>
+        <g class="svg-float-d"><circle cx="420" cy="50" r="18" fill="#D4E8E2" opacity=".7"/><text x="420" y="55" text-anchor="middle" font-size="14">💼</text></g>
+        <g class="svg-float-d2"><circle cx="150" cy="130" r="18" fill="#FBF4D6" opacity=".7"/><text x="150" y="135" text-anchor="middle" font-size="14">📚</text></g>
+        <g class="svg-float"><circle cx="450" cy="130" r="18" fill="#EDE0F3" opacity=".7"/><text x="450" y="135" text-anchor="middle" font-size="14">🤝</text></g>
+        <g class="svg-float-d"><circle cx="300" cy="20" r="14" fill="#D6E6F2" opacity=".7"/><text x="300" y="25" text-anchor="middle" font-size="12">⚖️</text></g>
+        <line x1="198" y1="58" x2="260" y2="78" stroke="#C47860" stroke-width="1" stroke-dasharray="3,3" opacity=".15"/>
+        <line x1="402" y1="58" x2="340" y2="78" stroke="#5A988C" stroke-width="1" stroke-dasharray="3,3" opacity=".15"/>
+        <line x1="168" y1="122" x2="250" y2="100" stroke="#C9A84C" stroke-width="1" stroke-dasharray="3,3" opacity=".15"/>
+        <line x1="432" y1="122" x2="350" y2="100" stroke="#967BA5" stroke-width="1" stroke-dasharray="3,3" opacity=".15"/>
+        <line x1="300" y1="34" x2="300" y2="55" stroke="#5A8FB5" stroke-width="1" stroke-dasharray="3,3" opacity=".15"/>
+        <text x="300" y="88" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="600">SDGs</text>
+        <text x="300" y="102" text-anchor="middle" font-size="9" fill="#5A5466" opacity=".5">目标融合</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">在音乐中重奏，在团体中重生 🎵</h2>
+    <p class="footer-text">每一位失业的职场人都值得被温柔以待，让音乐成为重建力量与信心的桥梁</p>
+    <div class="footer-hearts">🎵 🎶 💛 🎵</div>
+  </div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d)*100+'%'});
+
+const dots=document.querySelectorAll('.nav-dot');
+const sections=['hero','week1','week2','week3','week4','week5','week6','week7','week8','impl','longterm','sdgs'];
+dots.forEach(dot=>{dot.addEventListener('click',()=>{document.getElementById(dot.getAttribute('data-target')).scrollIntoView({behavior:'smooth'})})});
+const sectionEls=sections.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sectionEls.forEach((el,i)=>{if(el.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((d,i)=>{d.classList.toggle('active',i===c)})});
+
+const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});
+revealEls.forEach(el=>obs.observe(el));
+
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

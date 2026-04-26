@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社区长者自然疗愈 · 8周健康管理计划</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --forest:#4A7C59;--forest-light:#D4E8DA;--forest-pale:#EAF5EE;
+    --sage:#8BA888;--sage-light:#E2EDE0;
+    --moss:#6B8F71;--moss-light:#C8DDD0;
+    --stone:#A0937D;--stone-light:#EDE8E0;
+    --water:#6BA3BE;--water-light:#D6EAF2;
+    --lavender:#9B8FA8;--lavender-light:#E8E3EE;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --warm:#E8C89E;--warm-light:#FBF2E4;
+    --deep:#3D3D3D;--soft:#6B6B6B;--surface:#F0ECE4;
+    --coral:#E08B7A;--coral-light:#F5D9D3;
+    --teal:#6EC4B8;--teal-light:#D4EDE8;
+    --yellow:#F4E4A6;--yellow-light:#FBF4D6;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+
+  /* Progress Bar */
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--forest),var(--water),var(--sage));width:0%;transition:width .1s linear}
+
+  /* Navigation Dots */
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+  .nav-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--forest);transform:scale(1.4);box-shadow:0 0 12px rgba(74,124,89,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:22px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  /* Hero Section */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--forest-pale) 0%,var(--cream) 40%,var(--water-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:400px;height:400px;background:var(--forest);top:-100px;right:-80px;animation:floatShape 8s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:300px;height:300px;background:var(--water);bottom:-60px;left:-60px;animation:floatShape 10s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--sage);top:30%;left:10%;animation:floatShape 12s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--warm);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(74,124,89,.1);border-radius:20px;font-size:13px;color:var(--forest);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(32px,5.5vw,58px);font-weight:700;line-height:1.3;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--forest)}
+  .hero-title .accent2{color:var(--water)}
+  .hero-subtitle{font-size:clamp(15px,2.2vw,19px);color:var(--soft);font-weight:300;margin-bottom:32px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .hero-meta-icon.green{background:rgba(74,124,89,.1)}
+  .hero-meta-icon.blue{background:rgba(107,163,190,.12)}
+  .hero-meta-icon.stone{background:rgba(160,147,125,.12)}
+  .hero-meta-icon.warm{background:rgba(232,200,158,.15)}
+  .hero-illustration{margin-top:40px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:620px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block}
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+  /* Week Sections */
+  .week-section{min-height:100vh;display:flex;align-items:center;padding:80px 24px;position:relative}
+  .week-section:nth-child(odd){background:var(--cream-pale)}
+  .week-section:nth-child(even){background:var(--surface)}
+  .week-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .week-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:16px}
+  .week-badge{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#fff}
+  .week-badge.w1{background:linear-gradient(135deg,#4A7C59,#6BAF7A)}
+  .week-badge.w2{background:linear-gradient(135deg,#6BA3BE,#8DC4D8)}
+  .week-badge.w3{background:linear-gradient(135deg,#8BA888,#B0D0AC)}
+  .week-badge.w4{background:linear-gradient(135deg,#6BA3BE,#7BA7CC)}
+  .week-badge.w5{background:linear-gradient(135deg,#A0937D,#C4B8A6)}
+  .week-badge.w6{background:linear-gradient(135deg,#E08B7A,#F0B89A)}
+  .week-badge.w7{background:linear-gradient(135deg,#9B8FA8,#C4BBD0)}
+  .week-badge.w8{background:linear-gradient(135deg,#6EC4B8,#A3D8D0)}
+  .week-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+  .week-title{font-family:'Noto Serif SC',serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;margin-bottom:8px;line-height:1.4}
+  .week-subtitle{font-size:14px;color:var(--forest);font-weight:500;margin-bottom:16px;display:inline-block;padding:4px 14px;background:rgba(74,124,89,.08);border-radius:16px}
+  .week-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:20px}
+  .activity-group{margin-bottom:24px}
+  .activity-title{font-size:15px;font-weight:600;color:var(--deep);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .activity-title::before{content:'';width:4px;height:18px;background:var(--forest);border-radius:2px;display:block}
+  .activity-items{display:flex;flex-direction:column;gap:8px;margin-left:12px}
+  .activity-item{font-size:14px;color:var(--soft);line-height:1.7;padding-left:16px;position:relative}
+  .activity-item::before{content:'•';position:absolute;left:0;color:var(--forest)}
+  .week-visual{position:relative}
+  .week-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+  .week-decoration{position:absolute;width:80px;height:80px;border-radius:50%;opacity:.1;z-index:-1}
+  .week-decoration.w1{background:var(--forest);top:-20px;right:-20px}
+  .week-decoration.w2{background:var(--water);bottom:-20px;left:-20px}
+  .week-decoration.w3{background:var(--sage);top:-20px;left:-20px}
+  .week-decoration.w4{background:var(--water);bottom:-20px;right:-20px}
+  .week-decoration.w5{background:var(--stone);top:-20px;right:-20px}
+  .week-decoration.w6{background:var(--coral);bottom:-20px;left:-20px}
+  .week-decoration.w7{background:var(--lavender);top:-20px;left:-20px}
+  .week-decoration.w8{background:var(--teal);bottom:-20px;right:-20px}
+
+  /* Phase Goals Section */
+  .phase-section{padding:100px 24px;position:relative;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .phase-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:60px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.phase{background:rgba(74,124,89,.1);color:var(--forest)}
+  .section-tag.safety{background:rgba(224,139,122,.1);color:var(--coral)}
+  .section-tag.longterm{background:rgba(107,163,190,.1);color:var(--water)}
+  .section-tag.sdgs{background:rgba(232,200,158,.15);color:#A08050}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+  .phase-illustration{max-width:700px;margin:0 auto 60px}
+  .phase-illustration svg{width:100%;height:auto;display:block;border-radius:20px}
+  .phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .phase-card{padding:32px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(74,124,89,.06);transition:transform .3s,box-shadow .3s}
+  .phase-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .phase-badge{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:16px}
+  .phase-badge.p1{background:linear-gradient(135deg,#4A7C59,#6BAF7A)}
+  .phase-badge.p2{background:linear-gradient(135deg,#8BA888,#B0D0AC)}
+  .phase-badge.p3{background:linear-gradient(135deg,#6BA3BE,#8DC4D8)}
+  .phase-card h3{font-size:17px;font-weight:600;margin-bottom:12px}
+  .phase-card p{font-size:14px;color:var(--soft);line-height:1.7}
+  .phase-time{display:inline-block;padding:4px 12px;background:rgba(74,124,89,.06);border-radius:12px;font-size:12px;color:var(--forest);font-weight:500;margin-bottom:8px}
+
+  /* Safety Section */
+  .safety-section{padding:100px 24px;background:var(--cream-pale)}
+  .safety-container{max-width:1100px;margin:0 auto}
+  .safety-illustration{max-width:600px;margin:0 auto 50px}
+  .safety-illustration svg{width:100%;height:auto;display:block;border-radius:20px}
+  .safety-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .safety-card{padding:24px;border-radius:14px;background:var(--surface);border:1px solid rgba(224,139,122,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:14px}
+  .safety-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.05)}
+  .safety-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(224,139,122,.1)}
+  .safety-card h4{font-size:14px;font-weight:600;margin-bottom:6px}
+  .safety-card p{font-size:13px;color:var(--soft);line-height:1.6}
+
+  /* Long-term Mechanism Section */
+  .longterm-section{padding:100px 24px;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .longterm-container{max-width:1100px;margin:0 auto}
+  .longterm-illustration{max-width:600px;margin:0 auto 50px}
+  .longterm-illustration svg{width:100%;height:auto;display:block;border-radius:20px}
+  .longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .longterm-card{padding:24px;border-radius:14px;background:var(--cream-pale);border:1px solid rgba(107,163,190,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:14px}
+  .longterm-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.05)}
+  .longterm-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(107,163,190,.1)}
+  .longterm-card h4{font-size:14px;font-weight:600;margin-bottom:6px}
+  .longterm-card p{font-size:13px;color:var(--soft);line-height:1.6}
+
+  /* SDGs Section */
+  .sdgs-section{padding:100px 24px;background:var(--surface)}
+  .sdgs-container{max-width:1100px;margin:0 auto}
+  .sdgs-illustration{max-width:600px;margin:0 auto 50px}
+  .sdgs-illustration svg{width:100%;height:auto;display:block;border-radius:20px}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(74,124,89,.08),rgba(74,124,89,.02));border:1px solid rgba(74,124,89,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(107,163,190,.08),rgba(107,163,190,.02));border:1px solid rgba(107,163,190,.1)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(139,143,168,.08),rgba(139,143,168,.02));border:1px solid rgba(139,143,168,.1)}
+  .sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(110,196,184,.08),rgba(110,196,184,.02));border:1px solid rgba(110,196,184,.1)}
+  .sdg-card:nth-child(5){background:linear-gradient(135deg,rgba(244,228,166,.1),rgba(244,228,166,.02));border:1px solid rgba(244,228,166,.12)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--forest)}
+  .sdg-card:nth-child(2) .sdg-num{color:var(--water)}
+  .sdg-card:nth-child(3) .sdg-num{color:var(--lavender)}
+  .sdg-card:nth-child(4) .sdg-num{color:var(--teal)}
+  .sdg-card:nth-child(5) .sdg-num{color:#A08050}
+  .sdg-title{font-size:14px;font-weight:600;margin-bottom:10px}
+  .sdg-desc{font-size:12px;color:var(--soft);line-height:1.7}
+  .kpi-box{padding:28px 32px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(155,143,168,.08)}
+  .kpi-box h3{font-size:16px;font-weight:600;margin-bottom:16px;text-align:center}
+  .kpi-items{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .kpi-item{padding:8px 18px;border-radius:24px;font-size:13px;font-weight:500;background:var(--surface);color:var(--soft);transition:transform .3s,background .3s}
+  .kpi-item:hover{transform:scale(1.05);background:var(--yellow-light)}
+
+  /* Footer */
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+
+  /* Scroll Reveal */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.9);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+
+  /* SVG Animation Classes */
+  .svg-float{opacity:1}.svg-float.anim-active{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d.anim-active{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2.anim-active{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-pulse{opacity:0}.svg-pulse.anim-active{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{opacity:1}.svg-breathe.anim-active{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-sway{opacity:1}.svg-sway.anim-active{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{opacity:0}.svg-glow.anim-active{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:1000;stroke-dashoffset:1000;opacity:1}.svg-draw.anim-active{animation:svgDraw 3s ease forwards}
+  .svg-fade-in{opacity:0}.svg-fade-in.anim-active{animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0}.svg-fade-in-d.anim-active{animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0}.svg-fade-in-d2.anim-active{animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0}.svg-fade-in-d3.anim-active{animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0}.svg-scale-in.anim-active{animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0}.svg-ripple.anim-active{animation:svgRipple 2s ease-out forwards}
+  .svg-particle{opacity:0}.svg-particle.anim-active{animation:svgParticle 4s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px)}.svg-rise.anim-active{animation:svgRise 1.5s ease forwards}
+  .svg-shimmer{opacity:0}.svg-shimmer.anim-active{animation:svgShimmer 3s ease-in-out infinite}
+  .svg-drip{opacity:0}.svg-drip.anim-active{animation:svgDrip 2s ease infinite}
+
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.15);opacity:.8}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.08}50%{opacity:.25}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgParticle{0%{opacity:0;transform:translateY(0) translateX(0)}25%{opacity:.5}50%{opacity:.3;transform:translateY(-12px) translateX(6px)}75%{opacity:.15}100%{opacity:0;transform:translateY(-24px) translateX(-4px)}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.6}}
+  @keyframes svgDrip{0%{opacity:0;transform:translateY(-8px)}30%{opacity:.5}100%{opacity:0;transform:translateY(16px)}}
+
+  @media(max-width:768px){
+    .week-container{grid-template-columns:1fr;gap:32px}
+    .week-section{padding:60px 20px}
+    .phase-grid,.safety-grid,.longterm-grid,.sdgs-grid{grid-template-columns:1fr}
+    .nav-dots{right:12px;gap:10px}
+    .nav-dot{width:8px;height:8px}
+    .nav-dot .tooltip{display:none}
+    .hero-meta{gap:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="week1"><span class="tooltip">第1周</span></div>
+  <div class="nav-dot" data-target="week2"><span class="tooltip">第2周</span></div>
+  <div class="nav-dot" data-target="week3"><span class="tooltip">第3周</span></div>
+  <div class="nav-dot" data-target="week4"><span class="tooltip">第4周</span></div>
+  <div class="nav-dot" data-target="week5"><span class="tooltip">第5周</span></div>
+  <div class="nav-dot" data-target="week6"><span class="tooltip">第6周</span></div>
+  <div class="nav-dot" data-target="week7"><span class="tooltip">第7周</span></div>
+  <div class="nav-dot" data-target="week8"><span class="tooltip">第8周</span></div>
+  <div class="nav-dot" data-target="phase"><span class="tooltip">阶段目标</span></div>
+  <div class="nav-dot" data-target="safety"><span class="tooltip">安全须知</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效机制</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs目标</span></div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">社区长者自然疗愈 · 8周健康管理计划</div>
+    <h1 class="hero-title">
+      用<span class="accent">自然</span>疗愈身心<br>用<span class="accent2">陪伴</span>守护健康
+    </h1>
+    <p class="hero-subtitle">融合自然体验、传统运动、园艺疗法与社交互动的综合性社区长者健康管理方案</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon green">🌿</div>
+        <span>自然疗愈</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon blue">🧘</div>
+        <span>传统运动</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon stone">🤝</div>
+        <span>社交互动</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon warm">📊</div>
+        <span>科学评估</span>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 620 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="620" height="360" rx="20" fill="#FAF8F2"/>
+        <!-- Garden background -->
+        <ellipse cx="310" cy="330" rx="280" ry="25" fill="#D4E8DA" opacity="0.4"/>
+        <!-- Trees -->
+        <g class="svg-sway">
+          <rect x="60" y="200" width="20" height="100" rx="3" fill="#8BA888" opacity="0.5"/>
+          <circle cx="70" cy="180" r="40" fill="#4A7C59" opacity="0.3"/>
+        </g>
+        <g class="svg-sway">
+          <rect x="540" y="190" width="18" height="110" rx="3" fill="#8BA888" opacity="0.5"/>
+          <circle cx="549" cy="170" r="35" fill="#4A7C59" opacity="0.3"/>
+        </g>
+        <!-- Flowers -->
+        <g class="svg-float">
+          <circle cx="120" cy="300" r="8" fill="#E08B7A" opacity="0.6"/>
+          <circle cx="120" cy="300" r="4" fill="#F4E4A6"/>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="500" cy="310" r="7" fill="#6BA3BE" opacity="0.6"/>
+          <circle cx="500" cy="310" r="3" fill="#F4E4A6"/>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="180" cy="290" r="6" fill="#8BA888" opacity="0.6"/>
+          <circle cx="180" cy="290" r="3" fill="#F4E4A6"/>
+        </g>
+        <!-- Elderly person in garden -->
+        <g class="svg-breathe">
+          <!-- Body -->
+          <ellipse cx="310" cy="240" rx="40" ry="50" fill="#6BA3BE" opacity="0.3"/>
+          <circle cx="310" cy="170" r="28" fill="#F5D9D3"/>
+          <!-- Hair -->
+          <path d="M282 165 Q286 140 310 136 Q334 140 338 165" fill="#A0937D" opacity="0.5"/>
+          <!-- Face -->
+          <path d="M300 178 Q304 175 308 178" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M312 178 Q316 175 320 178" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M304 188 Q310 192 316 188" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body/clothes -->
+          <path d="M288 192 Q283 230 286 280 L334 280 Q337 230 332 192 Q310 184 288 192Z" fill="#6BA3BE" opacity="0.6"/>
+          <!-- Arms -->
+          <path d="M288 208 Q260 235 265 265" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M332 208 Q360 235 355 265" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <!-- Legs -->
+          <path d="M300 278 Q295 305 290 325" stroke="#6B6B6B" stroke-width="11" fill="none" stroke-linecap="round"/>
+          <path d="M320 278 Q325 305 330 325" stroke="#6B6B6B" stroke-width="11" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Nature elements floating -->
+        <g class="svg-float">
+          <circle cx="450" cy="100" r="16" fill="#D4E8DA" opacity="0.6"/>
+          <text x="450" y="106" text-anchor="middle" font-size="16">🌿</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="170" cy="80" r="14" fill="#D6EAF2" opacity="0.6"/>
+          <text x="170" y="86" text-anchor="middle" font-size="14">🍃</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="520" cy="140" r="12" fill="#EDE8E0" opacity="0.6"/>
+          <text x="520" y="146" text-anchor="middle" font-size="12">🌸</text>
+        </g>
+        <!-- Sparkle dots -->
+        <circle cx="400" cy="60" r="3" fill="#8BA888" opacity="0.3" class="svg-pulse"/>
+        <circle cx="220" cy="70" r="2" fill="#6BA3BE" opacity="0.3" class="svg-pulse"/>
+        <circle cx="480" cy="110" r="2.5" fill="#E08B7A" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滚动探索</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- Week 1 -->
+<section class="week-section" id="week1">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-badge w1">1</div>
+        <span class="week-label">第一周</span>
+      </div>
+      <h2 class="week-title">健康评估与自然初体验</h2>
+      <div class="week-subtitle">建立基线 · 开启自然之旅</div>
+      <p class="week-desc">
+        通过全面的健康评估了解每位长者的身体状况，同时引导他们用五感深度体验自然，为后续8周的疗愈之旅打下坚实基础。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一：健康评估日</div>
+        <div class="activity-items">
+          <div class="activity-item">健康筛查：血压、心率、BMI测量，PAR-Q问卷评估运动风险</div>
+          <div class="activity-item">体能基线测试：30秒坐站测试、握力测试、Timed Up and Go测试（TUG）</div>
+          <div class="activity-item">健康档案建立：记录基线数据，签署知情同意书</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二：自然初体验</div>
+        <div class="activity-items">
+          <div class="activity-item">"五感花园漫步"40分钟：视觉（5种颜色）、听觉（3种声音）、嗅觉（花香）、触觉（树皮）、味觉（花草茶）</div>
+          <div class="activity-item">"自然名片"制作30分钟：收集落叶、花瓣等自然材料</div>
+          <div class="activity-item">分享与总结20分钟</div>
+        </div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w1"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Medical equipment -->
+        <rect x="60" y="120" width="80" height="100" rx="8" fill="#D4E8DA" opacity="0.6"/>
+        <rect x="70" y="130" width="60" height="80" rx="4" fill="#4A7C59" opacity="0.2"/>
+        <circle cx="100" cy="170" r="25" fill="#6BA3BE" opacity="0.3"/>
+        <text x="100" y="175" text-anchor="middle" font-size="20">❤️</text>
+        <!-- Blood pressure monitor -->
+        <rect x="160" y="140" width="50" height="60" rx="6" fill="#EDE8E0" opacity="0.8"/>
+        <rect x="168" y="148" width="34" height="25" rx="3" fill="#6BA3BE" opacity="0.4"/>
+        <text x="185" y="165" text-anchor="middle" font-size="12" fill="#3D3D3D">120/80</text>
+        <!-- Clipboard -->
+        <rect x="300" y="100" width="60" height="80" rx="4" fill="#F5D9D3" opacity="0.7"/>
+        <line x1="310" y1="115" x2="350" y2="115" stroke="#6B6B6B" stroke-width="1" opacity="0.3"/>
+        <line x1="310" y1="125" x2="350" y2="125" stroke="#6B6B6B" stroke-width="1" opacity="0.3"/>
+        <line x1="310" y1="135" x2="350" y2="135" stroke="#6B6B6B" stroke-width="1" opacity="0.3"/>
+        <line x1="310" y1="145" x2="340" y2="145" stroke="#6B6B6B" stroke-width="1" opacity="0.3"/>
+        <line x1="310" y1="155" x2="345" y2="155" stroke="#6B6B6B" stroke-width="1" opacity="0.3"/>
+        <!-- Person being measured -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="180" r="25" fill="#F5D9D3"/>
+          <path d="M195 176 Q199 152 220 148 Q241 152 245 176" fill="#A0937D" opacity="0.4"/>
+          <circle cx="212" cy="178" r="2" fill="#3D3D3D"/>
+          <circle cx="228" cy="178" r="2" fill="#3D3D3D"/>
+          <path d="M214 188 Q220 192 226 188" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M200 200 Q196 230 198 260 L242 260 Q244 230 240 200 Q220 194 200 200Z" fill="#8BA888" opacity="0.5"/>
+          <path d="M200 212 Q180 235 175 255" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M240 212 Q260 235 265 255" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M210 258 Q205 285 200 305" stroke="#6B6B6B" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <path d="M230 258 Q235 285 240 305" stroke="#6B6B6B" stroke-width="10" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Height measurement -->
+        <rect x="270" y="80" width="4" height="200" rx="2" fill="#A0937D" opacity="0.5"/>
+        <line x1="270" y1="150" x2="290" y2="150" stroke="#4A7C59" stroke-width="2"/>
+        <text x="295" y="154" font-size="11" fill="#4A7C59">165cm</text>
+        <!-- Nature elements -->
+        <g class="svg-float">
+          <circle cx="80" cy="280" r="10" fill="#8BA888" opacity="0.5"/>
+          <text x="80" y="286" text-anchor="middle" font-size="10">🍃</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="380" cy="290" r="9" fill="#E08B7A" opacity="0.5"/>
+          <text x="380" y="296" text-anchor="middle" font-size="9">🌸</text>
+        </g>
+        <!-- Data indicators -->
+        <circle cx="140" cy="100" r="4" fill="#4A7C59" class="svg-pulse"/>
+        <circle cx="320" cy="200" r="3" fill="#6BA3BE" class="svg-pulse"/>
+        <circle cx="180" cy="260" r="3" fill="#8BA888" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Week 2 -->
+<section class="week-section" id="week2">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w2"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#F0ECE4"/>
+        <!-- Tree -->
+        <rect x="320" y="180" width="25" height="120" rx="4" fill="#8BA888" opacity="0.5"/>
+        <circle cx="332" cy="150" r="50" fill="#4A7C59" opacity="0.3"/>
+        <circle cx="332" cy="150" r="35" fill="#6BAF7A" opacity="0.2"/>
+        <!-- Ground -->
+        <ellipse cx="220" cy="330" rx="200" ry="25" fill="#D4E8DA" opacity="0.4"/>
+        <!-- People doing Baduanjin -->
+        <g class="svg-breathe">
+          <!-- Person 1 - left -->
+          <circle cx="120" cy="180" r="22" fill="#F5D9D3"/>
+          <path d="M98 176 Q102 154 120 150 Q138 154 142 176" fill="#A0937D" opacity="0.4"/>
+          <path d="M104 182 Q108 179 112 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M128 182 Q132 179 136 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M114 192 Q120 196 126 192" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M102 202 Q98 230 100 260 L140 260 Q142 230 138 202 Q120 196 102 202Z" fill="#6BA3BE" opacity="0.5"/>
+          <!-- Arms raised (Baduanjin pose) -->
+          <path d="M102 210 Q80 190 70 170" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M138 210 Q160 190 170 170" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M110 258 Q105 285 100 305" stroke="#6B6B6B" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M130 258 Q135 285 140 305" stroke="#6B6B6B" stroke-width="9" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-breathe">
+          <!-- Person 2 - center -->
+          <circle cx="220" cy="175" r="24" fill="#F5D9D3"/>
+          <path d="M196 171 Q200 148 220 144 Q240 148 244 171" fill="#A0937D" opacity="0.4"/>
+          <path d="M208 177 Q212 174 216 177" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M224 177 Q228 174 232 177" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M214 187 Q220 191 226 187" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M200 197 Q196 225 198 255 L242 255 Q244 225 240 197 Q220 191 200 197Z" fill="#8BA888" opacity="0.5"/>
+          <!-- Arms in meditation pose -->
+          <path d="M200 210 Q180 225 175 250" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M240 210 Q260 225 265 250" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M210 253 Q205 280 200 300" stroke="#6B6B6B" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M230 253 Q235 280 240 300" stroke="#6B6B6B" stroke-width="9" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Breathing visualization -->
+        <g class="svg-pulse">
+          <circle cx="220" cy="80" r="30" stroke="#6BA3BE" stroke-width="2" fill="none" opacity="0.4"/>
+          <circle cx="220" cy="80" r="20" stroke="#6BA3BE" stroke-width="2" fill="none" opacity="0.5"/>
+          <circle cx="220" cy="80" r="10" fill="#6BA3BE" opacity="0.6"/>
+        </g>
+        <!-- Movement arrows -->
+        <g class="svg-float">
+          <path d="M80 140 L90 130 L100 140" stroke="#8BA888" stroke-width="2" fill="none"/>
+          <path d="M90 140 L90 120" stroke="#8BA888" stroke-width="2" fill="none"/>
+        </g>
+        <g class="svg-float-d">
+          <path d="M340 140 L350 130 L360 140" stroke="#8BA888" stroke-width="2" fill="none"/>
+          <path d="M350 140 L350 120" stroke="#8BA888" stroke-width="2" fill="none"/>
+        </g>
+        <!-- Leaves floating -->
+        <g class="svg-float-d2">
+          <path d="M60 280 Q70 270 80 280 Q70 290 60 280" fill="#8BA888" opacity="0.5"/>
+        </g>
+        <g class="svg-float">
+          <path d="M380 270 Q390 260 400 270 Q390 280 380 270" fill="#6BAF7A" opacity="0.5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-badge w2">2</div>
+        <span class="week-label">第二周</span>
+      </div>
+      <h2 class="week-title">基础运动与呼吸</h2>
+      <div class="week-subtitle">八段锦 · 冥想 · 散步疗法</div>
+      <p class="week-desc">
+        学习传统八段锦的基础动作，配合自然呼吸进行冥想练习，同时通过散步疗法建立有节奏的呼吸习惯。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一</div>
+        <div class="activity-items">
+          <div class="activity-item">"晨间八段锦"40分钟：学习前四式（双手托天理三焦、左右开弓似射雕、调理脾胃须单举、五劳七伤往后瞧）</div>
+          <div class="activity-item">"树下冥想"30分钟：在树下进行20分钟引导式冥想，配合自然声景</div>
+          <div class="activity-item">健康知识微课堂20分钟：运动与血压管理</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二</div>
+        <div class="activity-items">
+          <div class="activity-item">"散步疗法"40分钟：在社区绿道进行中等速度步行，配合呼吸节奏（三步一吸、三步一呼）</div>
+          <div class="activity-item">"自然拼贴画"30分钟：用收集的自然材料创作拼贴画</div>
+          <div class="activity-item">分享与总结20分钟</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Week 3 -->
+<section class="week-section" id="week3">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-badge w3">3</div>
+        <span class="week-label">第三周</span>
+      </div>
+      <h2 class="week-title">园艺疗法入门</h2>
+      <div class="week-subtitle">种植希望 · 芳香呼吸</div>
+      <p class="week-desc">
+        每位长者认领一盆绿植或香草，学习种植和养护知识，建立与植物的情感联结，体验园艺活动的疗愈力量。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一</div>
+        <div class="activity-items">
+          <div class="activity-item">"种植希望"50分钟：每人认领一盆绿植/香草，学习种植和养护知识</div>
+          <div class="activity-item">"芳香呼吸"20分钟：配合薄荷/薰衣草等天然芳香进行深呼吸练习</div>
+          <div class="activity-item">健康知识微课堂20分钟：园艺活动对身心健康的科学证据</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二</div>
+        <div class="activity-items">
+          <div class="activity-item">"太极步法"40分钟：学习太极基础步法和云手，强调重心转移和平衡训练</div>
+          <div class="activity-item">"植物观察日记"30分钟：学习观察和记录植物生长变化</div>
+          <div class="activity-item">分享与总结20分钟</div>
+        </div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w3"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Ground/table -->
+        <rect x="40" y="280" width="360" height="15" rx="4" fill="#D4E8DA" opacity="0.5"/>
+        <!-- Plant pots -->
+        <g class="svg-float">
+          <rect x="80" y="220" width="50" height="60" rx="6" fill="#EDE8E0" opacity="0.8"/>
+          <rect x="85" y="225" width="40" height="50" rx="4" fill="#8BA888" opacity="0.3"/>
+          <!-- Plant growing -->
+          <path d="M105 225 Q105 200 95 190" stroke="#6BAF7A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M105 225 Q105 195 115 185" stroke="#6BAF7A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="95" cy="185" r="8" fill="#6BAF7A" opacity="0.6"/>
+          <circle cx="115" cy="182" r="6" fill="#6BAF7A" opacity="0.5"/>
+        </g>
+        <g class="svg-float-d">
+          <rect x="195" y="210" width="55" height="70" rx="6" fill="#F5D9D3" opacity="0.8"/>
+          <rect x="200" y="215" width="45" height="60" rx="4" fill="#8BA888" opacity="0.3"/>
+          <!-- Herb plant -->
+          <path d="M222 215 Q222 180 210 170" stroke="#4A7C59" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M222 215 Q222 175 235 165" stroke="#4A7C59" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="210" cy="165" rx="12" ry="8" fill="#6BAF7A" opacity="0.6"/>
+          <ellipse cx="235" cy="162" rx="10" ry="7" fill="#6BAF7A" opacity="0.5"/>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="310" y="215" width="50" height="65" rx="6" fill="#D6EAF2" opacity="0.8"/>
+          <rect x="315" y="220" width="40" height="55" rx="4" fill="#8BA888" opacity="0.3"/>
+          <!-- Flower -->
+          <path d="M335 220 Q335 190 325 180" stroke="#E08B7A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="325" cy="175" r="10" fill="#E08B7A" opacity="0.6"/>
+          <circle cx="325" cy="175" r="5" fill="#F4E4A6"/>
+        </g>
+        <!-- Watering can -->
+        <g transform="translate(360, 180)">
+          <rect x="0" y="20" width="40" height="30" rx="4" fill="#6BA3BE" opacity="0.6"/>
+          <rect x="15" y="0" width="10" height="20" rx="2" fill="#6BA3BE" opacity="0.6"/>
+          <ellipse cx="20" cy="55" rx="8" ry="4" fill="#6BA3BE" opacity="0.4"/>
+          <!-- Water drops -->
+          <g class="svg-drip">
+            <ellipse cx="20" cy="65" rx="2" ry="4" fill="#6BA3BE" opacity="0.5"/>
+          </g>
+        </g>
+        <!-- Person gardening -->
+        <g class="svg-breathe">
+          <circle cx="280" cy="120" r="20" fill="#F5D9D3"/>
+          <path d="M260 117 Q263 98 280 95 Q297 98 300 117" fill="#A0937D" opacity="0.4"/>
+          <path d="M270 120 Q273 118 276 120" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M284 120 Q287 118 290 120" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M274 128 Q280 131 286 128" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M264 136 Q260 160 262 185 L298 185 Q300 160 296 136 Q280 131 264 136Z" fill="#8BA888" opacity="0.5"/>
+          <!-- Arms reaching to plant -->
+          <path d="M264 145 Q240 155 230 175" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M296 145 Q320 155 330 175" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M272 183 Q268 205 264 220" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M288 183 Q292 205 296 220" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Floating leaves -->
+        <g class="svg-float">
+          <path d="M60 100 Q70 90 80 100 Q70 110 60 100" fill="#6BAF7A" opacity="0.4"/>
+        </g>
+        <g class="svg-float-d">
+          <path d="M380 120 Q390 110 400 120 Q390 130 380 120" fill="#8BA888" opacity="0.4"/>
+        </g>
+        <!-- Sparkles -->
+        <circle cx="150" cy="140" r="2" fill="#6BAF7A" class="svg-pulse"/>
+        <circle cx="320" cy="100" r="2.5" fill="#4A7C59" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Week 4 -->
+<section class="week-section" id="week4">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w4"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#F0ECE4"/>
+        <!-- Water surface -->
+        <path d="M0 280 Q110 270 220 280 Q330 270 440 280 L440 380 L0 380 Z" fill="#D6EAF2" opacity="0.5"/>
+        <!-- Water waves -->
+        <g class="svg-sway">
+          <path d="M40 300 Q80 290 120 300 Q160 290 200 300" stroke="#6BA3BE" stroke-width="2" fill="none" opacity="0.4"/>
+          <path d="M240 300 Q280 290 320 300 Q360 290 400 300" stroke="#6BA3BE" stroke-width="2" fill="none" opacity="0.4"/>
+        </g>
+        <!-- Shore/ground -->
+        <path d="M0 260 Q110 250 220 260 Q330 250 440 260 L440 280 L0 280 Z" fill="#D4E8DA" opacity="0.4"/>
+        <!-- Trees on shore -->
+        <g class="svg-sway">
+          <rect x="30" y="180" width="18" height="80" rx="3" fill="#8BA888" opacity="0.5"/>
+          <circle cx="39" cy="160" r="30" fill="#4A7C59" opacity="0.3"/>
+        </g>
+        <g class="svg-sway">
+          <rect x="390" y="175" width="16" height="85" rx="3" fill="#8BA888" opacity="0.5"/>
+          <circle cx="398" cy="155" r="28" fill="#4A7C59" opacity="0.3"/>
+        </g>
+        <!-- Person by water -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="200" r="22" fill="#F5D9D3"/>
+          <path d="M198 196 Q202 174 220 170 Q238 174 242 196" fill="#A0937D" opacity="0.4"/>
+          <path d="M210 202 Q214 199 218 202" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M222 202 Q226 199 230 202" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M214 212 Q220 216 226 212" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M202 222 Q198 250 200 280 L240 280 Q242 250 238 222 Q220 216 202 222Z" fill="#6BA3BE" opacity="0.5"/>
+          <!-- Arms relaxed -->
+          <path d="M202 232 Q180 250 175 270" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M238 232 Q260 250 265 270" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M210 278 Q205 300 200 315" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M230 278 Q235 300 240 315" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Water ripples -->
+        <g class="svg-ripple">
+          <ellipse cx="300" cy="310" rx="20" ry="8" stroke="#6BA3BE" stroke-width="1" fill="none" opacity="0.3"/>
+        </g>
+        <g class="svg-ripple">
+          <ellipse cx="140" cy="320" rx="15" ry="6" stroke="#6BA3BE" stroke-width="1" fill="none" opacity="0.3"/>
+        </g>
+        <!-- Birds -->
+        <g class="svg-float">
+          <path d="M80 80 Q90 70 100 80" stroke="#4A7C59" stroke-width="2" fill="none"/>
+        </g>
+        <g class="svg-float-d">
+          <path d="M340 70 Q350 60 360 70" stroke="#4A7C59" stroke-width="2" fill="none"/>
+        </g>
+        <!-- Reflection -->
+        <ellipse cx="220" cy="340" rx="25" ry="8" fill="#6BA3BE" opacity="0.1"/>
+        <!-- Sun/moon -->
+        <circle cx="380" cy="50" r="25" fill="#F4E4A6" opacity="0.4" class="svg-glow"/>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-badge w4">4</div>
+        <span class="week-label">第四周</span>
+      </div>
+      <h2 class="week-title">水与自然疗愈</h2>
+      <div class="week-subtitle">滨水漫步 · 水声冥想</div>
+      <p class="week-desc">
+        利用水体的宁静效果促进身心放松，配合流水声进行引导式冥想，学习八段锦全套动作并进行水中手指操。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一</div>
+        <div class="activity-items">
+          <div class="activity-item">"滨水漫步"40分钟：在有水体的公园/社区进行滨水散步，利用水面的宁静效果促进放松</div>
+          <div class="activity-item">"水声冥想"30分钟：配合流水声进行引导式冥想</div>
+          <div class="activity-item">健康知识微课堂20分钟：水分摄入与肾脏健康</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二</div>
+        <div class="activity-items">
+          <div class="activity-item">"八段锦全式复习"40分钟：学习后四式，串联全套动作</div>
+          <div class="activity-item">"水中手指操"20分钟：利用水盆进行手部运动和水中按摩</div>
+          <div class="activity-item">"自然音乐会"30分钟：集体聆听自然声音，用简单打击乐器配合演奏</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Week 5 -->
+<section class="week-section" id="week5">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-badge w5">5</div>
+        <span class="week-label">第五周</span>
+      </div>
+      <h2 class="week-title">社交运动与团体协作</h2>
+      <div class="week-subtitle">自然寻宝 · 社区花园共建</div>
+      <p class="week-desc">
+        通过小组合作完成自然寻宝任务，促进社交互动；集体练习八段锦和太极，体验团体运动的同步感；共同建设社区花园。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一</div>
+        <div class="activity-items">
+          <div class="activity-item">"自然寻宝"40分钟：小组合作完成自然寻宝任务卡（如"找到一片心形叶子""听到鸟鸣"）</div>
+          <div class="activity-item">"团体太极"30分钟：集体练习全套八段锦和太极基础，体验团体运动的同步感</div>
+          <div class="activity-item">健康知识微课堂20分钟：社交活动对认知功能的保护作用</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二</div>
+        <div class="activity-items">
+          <div class="activity-item">"社区花园共建"50分钟：团队合作在社区花园进行种植/维护活动</div>
+          <div class="activity-item">"收获分享"20分钟：品尝之前种植的成果（如泡花草茶）</div>
+          <div class="activity-item">分享与总结20分钟</div>
+        </div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w5"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Garden background -->
+        <ellipse cx="220" cy="340" rx="200" ry="25" fill="#D4E8DA" opacity="0.4"/>
+        <!-- Garden beds -->
+        <rect x="60" y="280" width="100" height="50" rx="6" fill="#8BA888" opacity="0.3"/>
+        <rect x="280" y="280" width="100" height="50" rx="6" fill="#8BA888" opacity="0.3"/>
+        <!-- Plants in garden -->
+        <g class="svg-float">
+          <circle cx="90" cy="275" r="12" fill="#6BAF7A" opacity="0.6"/>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="130" cy="270" r="10" fill="#6BAF7A" opacity="0.5"/>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="310" cy="275" r="11" fill="#6BAF7A" opacity="0.55"/>
+        </g>
+        <g class="svg-float">
+          <circle cx="350" cy="270" r="9" fill="#6BAF7A" opacity="0.5"/>
+        </g>
+        <!-- Group of people -->
+        <g class="svg-breathe">
+          <!-- Person 1 -->
+          <circle cx="100" cy="180" r="18" fill="#F5D9D3"/>
+          <path d="M82 177 Q85 160 100 157 Q115 160 118 177" fill="#A0937D" opacity="0.4"/>
+          <path d="M88 182 Q91 180 94 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M106 182 Q109 180 112 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M94 190 Q100 193 106 190" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M86 198 Q83 220 85 245 L115 245 Q117 220 114 198 Q100 193 86 198Z" fill="#A0937D" opacity="0.4"/>
+          <path d="M86 205 Q70 220 65 240" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M114 205 Q130 220 135 240" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M92 243 Q88 265 84 280" stroke="#6B6B6B" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M108 243 Q112 265 116 280" stroke="#6B6B6B" stroke-width="7" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-breathe">
+          <!-- Person 2 -->
+          <circle cx="220" cy="175" r="20" fill="#F5D9D3"/>
+          <path d="M200 172 Q204 152 220 148 Q236 152 240 172" fill="#A0937D" opacity="0.4"/>
+          <path d="M210 178 Q214 175 218 178" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M222 178 Q226 175 230 178" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M212 188 Q220 192 228 188" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M202 196 Q198 220 200 245 L240 245 Q242 220 238 196 Q220 191 202 196Z" fill="#6BA3BE" opacity="0.5"/>
+          <path d="M202 205 Q180 225 175 245" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M238 205 Q260 225 265 245" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M210 243 Q205 265 200 280" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M230 243 Q235 265 240 280" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-breathe">
+          <!-- Person 3 -->
+          <circle cx="340" cy="180" r="18" fill="#F5D9D3"/>
+          <path d="M322 177 Q325 160 340 157 Q355 160 358 177" fill="#A0937D" opacity="0.4"/>
+          <path d="M328 182 Q331 180 334 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M346 182 Q349 180 352 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M334 190 Q340 193 346 190" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M326 198 Q323 220 325 245 L355 245 Q357 220 354 198 Q340 193 326 198Z" fill="#8BA888" opacity="0.5"/>
+          <path d="M326 205 Q310 220 305 240" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M354 205 Q370 220 375 240" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M332 243 Q328 265 324 280" stroke="#6B6B6B" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M348 243 Q352 265 356 280" stroke="#6B6B6B" stroke-width="7" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Treasure hunt items -->
+        <g class="svg-float">
+          <circle cx="160" cy="100" r="12" fill="#E08B7A" opacity="0.6"/>
+          <text x="160" y="106" text-anchor="middle" font-size="12">🍂</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="280" cy="90" r="10" fill="#8BA888" opacity="0.6"/>
+          <text x="280" y="96" text-anchor="middle" font-size="10">🌿</text>
+        </g>
+        <!-- Connection lines between people -->
+        <path d="M120 210 Q170 200 200 210" stroke="#A0937D" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+        <path d="M240 210 Q290 200 320 210" stroke="#A0937D" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+        <!-- Hearts indicating social connection -->
+        <circle cx="170" cy="190" r="3" fill="#E08B7A" class="svg-pulse"/>
+        <circle cx="270" cy="185" r="3" fill="#E08B7A" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Week 6 -->
+<section class="week-section" id="week6">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w6"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#F0ECE4"/>
+        <!-- Park ground -->
+        <ellipse cx="220" cy="340" rx="200" ry="25" fill="#D4E8DA" opacity="0.4"/>
+        <!-- Balance beam/path -->
+        <rect x="80" y="300" width="280" height="8" rx="4" fill="#A0937D" opacity="0.5"/>
+        <!-- Obstacles -->
+        <rect x="120" y="285" width="20" height="15" rx="3" fill="#8BA888" opacity="0.4"/>
+        <rect x="200" y="280" width="25" height="20" rx="3" fill="#8BA888" opacity="0.4"/>
+        <rect x="300" y="285" width="18" height="15" rx="3" fill="#8BA888" opacity="0.4"/>
+        <!-- Chair for support -->
+        <rect x="320" y="220" width="30" height="50" rx="4" fill="#EDE8E0" opacity="0.7"/>
+        <rect x="325" y="270" width="20" height="5" rx="2" fill="#A0937D" opacity="0.5"/>
+        <!-- Person doing balance exercise -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="180" r="24" fill="#F5D9D3"/>
+          <path d="M196 176 Q200 152 220 148 Q240 152 244 176" fill="#A0937D" opacity="0.4"/>
+          <path d="M210 182 Q214 179 218 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M222 182 Q226 179 230 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M212 192 Q220 196 228 192" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M200 202 Q196 235 198 275 L242 275 Q244 235 240 202 Q220 196 200 202Z" fill="#E08B7A" opacity="0.5"/>
+          <!-- Arms for balance -->
+          <path d="M200 215 Q175 230 170 255" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M240 215 Q265 230 270 255" stroke="#F5D9D3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <!-- Single leg stance -->
+          <path d="M210 273 Q205 295 200 310" stroke="#6B6B6B" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <path d="M230 273 Q235 285 240 295" stroke="#6B6B6B" stroke-width="10" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Balance indicators -->
+        <g class="svg-pulse">
+          <circle cx="220" cy="310" r="8" stroke="#E08B7A" stroke-width="2" fill="none" opacity="0.4"/>
+        </g>
+        <!-- Arrows showing movement -->
+        <g class="svg-float">
+          <path d="M140 270 L145 260 L150 270" stroke="#8BA888" stroke-width="2" fill="none"/>
+          <path d="M145 270 L145 250" stroke="#8BA888" stroke-width="2" fill="none"/>
+        </g>
+        <g class="svg-float-d">
+          <path d="M290 270 L295 260 L300 270" stroke="#8BA888" stroke-width="2" fill="none"/>
+          <path d="M295 270 L295 250" stroke="#8BA888" stroke-width="2" fill="none"/>
+        </g>
+        <!-- Safety shield -->
+        <g class="svg-glow">
+          <circle cx="350" cy="100" r="25" stroke="#E08B7A" stroke-width="2" fill="none" opacity="0.3"/>
+          <text x="350" y="106" text-anchor="middle" font-size="18">🛡️</text>
+        </g>
+        <!-- Leaves -->
+        <g class="svg-float-d2">
+          <path d="M60 200 Q70 190 80 200 Q70 210 60 200" fill="#8BA888" opacity="0.4"/>
+        </g>
+        <g class="svg-float">
+          <path d="M380 190 Q390 180 400 190 Q390 200 380 190" fill="#6BAF7A" opacity="0.4"/>
+        </g>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-badge w6">6</div>
+        <span class="week-label">第六周</span>
+      </div>
+      <h2 class="week-title">防跌倒专项训练</h2>
+      <div class="week-subtitle">平衡训练 · 正念行走</div>
+      <p class="week-desc">
+        专注于平衡能力训练，包括单脚站立、脚跟-脚尖行走等练习；利用公园地形进行功能性训练；进行极慢速的正念行走。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一</div>
+        <div class="activity-items">
+          <div class="activity-item">"平衡训练"40分钟：单脚站立（扶椅辅助）、脚跟-脚尖行走、侧向跨步等平衡练习</div>
+          <div class="activity-item">"自然障碍训练"30分钟：利用公园地形（台阶、坡道、不同地面）进行功能性训练</div>
+          <div class="activity-item">健康知识微课堂20分钟：居家防跌倒环境改造指南</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二</div>
+        <div class="activity-items">
+          <div class="activity-item">"正念行走"40分钟：在自然环境中进行极慢速的正念行走，关注每一步的身体感受</div>
+          <div class="activity-item">"自然曼陀罗"30分钟：用自然材料在地上创作圆形图案，体验专注与创造</div>
+          <div class="activity-item">分享与总结20分钟</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Week 7 -->
+<section class="week-section" id="week7">
+  <div class="week-container">
+    <div class="week-text reveal-left">
+      <div class="week-number">
+        <div class="week-badge w7">7</div>
+        <span class="week-label">第七周</span>
+      </div>
+      <h2 class="week-title">认知训练与自然</h2>
+      <div class="week-subtitle">记忆游戏 · 树叶辨识 · 生命故事</div>
+      <p class="week-desc">
+        通过自然记忆游戏和树叶分类辨识锻炼认知功能；围绕"我与自然的故事"主题分享个人经历；用手机拍摄自然中的平静画面。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一</div>
+        <div class="activity-items">
+          <div class="activity-item">"自然记忆游戏"30分钟：观察自然场景后回忆细节，锻炼工作记忆</div>
+          <div class="activity-item">"树叶分类与辨识"30分钟：学习辨识常见植物，分类整理，锻炼认知功能</div>
+          <div class="activity-item">"太极+呼吸"综合练习30分钟</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二</div>
+        <div class="activity-items">
+          <div class="activity-item">"生命故事分享"40分钟：围绕"我与自然的故事"主题，每位参与者分享个人经历</div>
+          <div class="activity-item">"自然摄影"30分钟：用手机拍摄自然中让自己感到平静的画面</div>
+          <div class="activity-item">"摄影展"筹备20分钟：为结业展览做准备</div>
+        </div>
+      </div>
+    </div>
+    <div class="week-visual reveal-right">
+      <div class="week-decoration w7"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Nature scene background -->
+        <ellipse cx="220" cy="340" rx="200" ry="25" fill="#D4E8DA" opacity="0.4"/>
+        <!-- Trees -->
+        <g class="svg-sway">
+          <rect x="50" y="180" width="20" height="100" rx="4" fill="#8BA888" opacity="0.5"/>
+          <circle cx="60" cy="155" r="35" fill="#4A7C59" opacity="0.3"/>
+        </g>
+        <g class="svg-sway">
+          <rect x="370" y="185" width="18" height="95" rx="4" fill="#8BA888" opacity="0.5"/>
+          <circle cx="379" cy="162" r="30" fill="#4A7C59" opacity="0.3"/>
+        </g>
+        <!-- Person observing and photographing -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="170" r="22" fill="#F5D9D3"/>
+          <path d="M198 166 Q202 144 220 140 Q238 144 242 166" fill="#A0937D" opacity="0.4"/>
+          <path d="M210 172 Q214 169 218 172" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M222 172 Q226 169 230 172" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M212 182 Q220 186 228 182" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M200 192 Q196 225 198 260 L242 260 Q244 225 240 192 Q220 186 200 192Z" fill="#9B8FA8" opacity="0.5"/>
+          <!-- Arms holding phone/camera -->
+          <path d="M200 205 Q180 225 175 250" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M240 205 Q260 225 265 250" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M210 258 Q205 285 200 305" stroke="#6B6B6B" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M230 258 Q235 285 240 305" stroke="#6B6B6B" stroke-width="9" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Phone/camera -->
+        <rect x="170" y="245" width="25" height="40" rx="4" fill="#3D3D3D" opacity="0.6"/>
+        <rect x="173" y="248" width="19" height="34" rx="2" fill="#D6EAF2" opacity="0.8"/>
+        <!-- Memory cards/leaves -->
+        <g class="svg-float">
+          <rect x="80" y="100" width="35" height="45" rx="4" fill="#F5D9D3" opacity="0.7"/>
+          <path d="M90 115 Q97 110 105 115 Q97 120 90 115" fill="#6BAF7A" opacity="0.5"/>
+        </g>
+        <g class="svg-float-d">
+          <rect x="130" y="90" width="35" height="45" rx="4" fill="#F5D9D3" opacity="0.7"/>
+          <path d="M140 105 Q147 100 155 105 Q147 110 140 105" fill="#8BA888" opacity="0.5"/>
+        </g>
+        <g class="svg-float-d2">
+          <rect x="320" y="95" width="35" height="45" rx="4" fill="#F5D9D3" opacity="0.7"/>
+          <path d="M330 110 Q337 105 345 110 Q337 115 330 110" fill="#E08B7A" opacity="0.5"/>
+        </g>
+        <!-- Brain/memory visualization -->
+        <g class="svg-pulse">
+          <circle cx="300" cy="80" r="20" stroke="#9B8FA8" stroke-width="2" fill="none" opacity="0.4"/>
+          <text x="300" y="86" text-anchor="middle" font-size="16">🧠</text>
+        </g>
+        <!-- Connection lines showing memory -->
+        <path d="M115 145 Q150 130 175 145" stroke="#9B8FA8" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+        <path d="M337 140 Q310 120 290 100" stroke="#9B8FA8" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+        <!-- Floating elements -->
+        <circle cx="60" cy="280" r="3" fill="#8BA888" class="svg-pulse"/>
+        <circle cx="380" cy="270" r="2.5" fill="#6BAF7A" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Week 8 -->
+<section class="week-section" id="week8">
+  <div class="week-container">
+    <div class="week-visual reveal-left">
+      <div class="week-decoration w8"></div>
+      <svg viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="380" rx="20" fill="#F0ECE4"/>
+        <!-- Celebration background -->
+        <ellipse cx="220" cy="340" rx="200" ry="25" fill="#D4E8DA" opacity="0.4"/>
+        <!-- Exhibition boards -->
+        <rect x="60" y="100" width="80" height="120" rx="6" fill="#F5D9D3" opacity="0.8"/>
+        <rect x="70" y="110" width="60" height="45" rx="3" fill="#D6EAF2" opacity="0.6"/>
+        <rect x="70" y="160" width="60" height="45" rx="3" fill="#D6EAF2" opacity="0.6"/>
+        <rect x="300" y="100" width="80" height="120" rx="6" fill="#F5D9D3" opacity="0.8"/>
+        <rect x="310" y="110" width="60" height="45" rx="3" fill="#D6EAF2" opacity="0.6"/>
+        <rect x="310" y="160" width="60" height="45" rx="3" fill="#D6EAF2" opacity="0.6"/>
+        <!-- Photos on boards -->
+        <rect x="75" y="115" width="25" height="18" rx="2" fill="#6BA3BE" opacity="0.5"/>
+        <rect x="100" y="115" width="25" height="18" rx="2" fill="#8BA888" opacity="0.5"/>
+        <rect x="75" y="165" width="25" height="18" rx="2" fill="#E08B7A" opacity="0.5"/>
+        <rect x="100" y="165" width="25" height="18" rx="2" fill="#6BAF7A" opacity="0.5"/>
+        <rect x="315" y="115" width="25" height="18" rx="2" fill="#9B8FA8" opacity="0.5"/>
+        <rect x="340" y="115" width="25" height="18" rx="2" fill="#6BA3BE" opacity="0.5"/>
+        <rect x="315" y="165" width="25" height="18" rx="2" fill="#8BA888" opacity="0.5"/>
+        <rect x="340" y="165" width="25" height="18" rx="2" fill="#E08B7A" opacity="0.5"/>
+        <!-- Group of people celebrating -->
+        <g class="svg-breathe">
+          <!-- Person 1 -->
+          <circle cx="180" cy="180" r="18" fill="#F5D9D3"/>
+          <path d="M162 177 Q165 160 180 157 Q195 160 198 177" fill="#A0937D" opacity="0.4"/>
+          <path d="M170 182 Q173 180 176 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M184 182 Q187 180 190 182" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M174 190 Q180 193 186 190" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M166 198 Q163 220 165 245 L195 245 Q197 220 194 198 Q180 193 166 198Z" fill="#6EC4B8" opacity="0.5"/>
+          <!-- Arms raised in celebration -->
+          <path d="M166 208 Q145 190 135 170" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M194 208 Q215 190 225 170" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M172 243 Q168 265 164 280" stroke="#6B6B6B" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M188 243 Q192 265 196 280" stroke="#6B6B6B" stroke-width="7" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="svg-breathe">
+          <!-- Person 2 -->
+          <circle cx="260" cy="175" r="20" fill="#F5D9D3"/>
+          <path d="M240 172 Q244 152 260 148 Q276 152 280 172" fill="#A0937D" opacity="0.4"/>
+          <path d="M250 178 Q254 175 258 178" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M262 178 Q266 175 270 178" stroke="#3D3D3D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M252 188 Q260 192 268 188" stroke="#E08B7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M242 196 Q238 220 240 245 L280 245 Q282 220 278 196 Q260 191 242 196Z" fill="#8BA888" opacity="0.5"/>
+          <path d="M242 205 Q220 225 215 245" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M278 205 Q300 225 305 245" stroke="#F5D9D3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M250 243 Q245 265 240 280" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M270 243 Q275 265 280 280" stroke="#6B6B6B" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Certificate/medal -->
+        <g class="svg-float">
+          <circle cx="220" cy="60" r="25" fill="#F4E4A6" opacity="0.8"/>
+          <circle cx="220" cy="60" r="20" fill="#E08B7A" opacity="0.6"/>
+          <text x="220" y="66" text-anchor="middle" font-size="16">🏆</text>
+        </g>
+        <!-- Confetti/celebration -->
+        <g class="svg-particle">
+          <circle cx="100" cy="200" r="3" fill="#E08B7A" opacity="0.5"/>
+        </g>
+        <g class="svg-particle">
+          <circle cx="340" cy="180" r="3" fill="#6BAF7A" opacity="0.5"/>
+        </g>
+        <g class="svg-particle">
+          <circle cx="150" cy="250" r="2" fill="#6BA3BE" opacity="0.5"/>
+        </g>
+        <g class="svg-particle">
+          <circle cx="290" cy="230" r="2" fill="#8BA888" opacity="0.5"/>
+        </g>
+        <!-- Stars/sparkles -->
+        <circle cx="80" cy="120" r="2" fill="#F4E4A6" class="svg-pulse"/>
+        <circle cx="360" cy="110" r="2" fill="#F4E4A6" class="svg-pulse"/>
+        <circle cx="200" cy="80" r="2.5" fill="#F4E4A6" class="svg-pulse"/>
+        <circle cx="240" cy="75" r="2" fill="#F4E4A6" class="svg-pulse"/>
+      </svg>
+    </div>
+    <div class="week-text reveal-right">
+      <div class="week-number">
+        <div class="week-badge w8">8</div>
+        <span class="week-label">第八周</span>
+      </div>
+      <h2 class="week-title">成果展示与持续发展</h2>
+      <div class="week-subtitle">结业典礼 · 健康护照 · 自治小组</div>
+      <p class="week-desc">
+        回顾8周的健康改善成果，展示自然摄影作品，集体表演八段锦和太极；颁发健康护照，成立社区健康自治小组。
+      </p>
+      <div class="activity-group">
+        <div class="activity-title">活动一</div>
+        <div class="activity-items">
+          <div class="activity-item">"健康成果回顾"30分钟：对比8周前后体能测试数据，展示改善成果</div>
+          <div class="activity-item">"自然摄影展"30分钟：展示每位参与者的自然摄影作品</div>
+          <div class="activity-item">"综合运动展示"30分钟：集体表演八段锦和太极</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <div class="activity-title">活动二（结业典礼）</div>
+        <div class="activity-items">
+          <div class="activity-item">"生命故事集"发布：将8周的故事和作品整理成册</div>
+          <div class="activity-item">"健康护照"颁发：记录每位参与者的健康改善数据和获得的技能徽章</div>
+          <div class="activity-item">"社区健康自治小组"成立：选举组长，制定后续自主活动计划</div>
+          <div class="activity-item">结业评估：完成SF-36生活质量量表、GDS老年抑郁量表、体能复测</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Phase Goals Section -->
+<section class="phase-section" id="phase">
+  <div class="phase-container">
+    <div class="section-header reveal">
+      <div class="section-tag phase">阶段性目标</div>
+      <h2 class="section-title">三阶段渐进式发展</h2>
+      <p class="section-subtitle">从建立安全感到形成社区互助文化，循序渐进地提升长者身心健康</p>
+    </div>
+    <div class="phase-illustration reveal-scale">
+      <svg viewBox="0 0 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="200" rx="20" fill="#FAF8F2"/>
+        <!-- Timeline line -->
+        <line x1="100" y1="120" x2="600" y2="120" stroke="#D4E8DA" stroke-width="3"/>
+        <!-- Phase 1 -->
+        <circle cx="150" cy="120" r="30" fill="#4A7C59" opacity="0.2"/>
+        <circle cx="150" cy="120" r="20" fill="#6BAF7A" opacity="0.4"/>
+        <text x="150" y="126" text-anchor="middle" font-size="18" fill="#4A7C59">1</text>
+        <text x="150" y="165" text-anchor="middle" font-size="13" fill="#4A7C59" font-weight="600">适应期</text>
+        <text x="150" y="182" text-anchor="middle" font-size="11" fill="#6B6B6B">第1-2周</text>
+        <!-- Phase 2 -->
+        <circle cx="350" cy="120" r="30" fill="#8BA888" opacity="0.2"/>
+        <circle cx="350" cy="120" r="20" fill="#B0D0AC" opacity="0.4"/>
+        <text x="350" y="126" text-anchor="middle" font-size="18" fill="#8BA888">2</text>
+        <text x="350" y="165" text-anchor="middle" font-size="13" fill="#8BA888" font-weight="600">深化期</text>
+        <text x="350" y="182" text-anchor="middle" font-size="11" fill="#6B6B6B">第3-5周</text>
+        <!-- Phase 3 -->
+        <circle cx="550" cy="120" r="30" fill="#6BA3BE" opacity="0.2"/>
+        <circle cx="550" cy="120" r="20" fill="#8DC4D8" opacity="0.4"/>
+        <text x="550" y="126" text-anchor="middle" font-size="18" fill="#6BA3BE">3</text>
+        <text x="550" y="165" text-anchor="middle" font-size="13" fill="#6BA3BE" font-weight="600">巩固期</text>
+        <text x="550" y="182" text-anchor="middle" font-size="11" fill="#6B6B6B">第6-8周</text>
+        <!-- Connecting arrows -->
+        <path d="M185 120 L315 120" stroke="#D4E8DA" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M385 120 L515 120" stroke="#D4E8DA" stroke-width="2" marker-end="url(#arrow)"/>
+        <!-- Icons for each phase -->
+        <g class="svg-float">
+          <circle cx="150" cy="60" r="20" fill="#D4E8DA" opacity="0.6"/>
+          <text x="150" y="66" text-anchor="middle" font-size="14">🌱</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="350" cy="60" r="20" fill="#E2EDE0" opacity="0.6"/>
+          <text x="350" y="66" text-anchor="middle" font-size="14">🌿</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="550" cy="60" r="20" fill="#D6EAF2" opacity="0.6"/>
+          <text x="550" y="66" text-anchor="middle" font-size="14">🌳</text>
+        </g>
+      </svg>
+    </div>
+    <div class="phase-grid stagger">
+      <div class="phase-card reveal" style="--i:0">
+        <div class="phase-badge p1">1</div>
+        <div class="phase-time">第1-2周</div>
+        <h3>适应期</h3>
+        <p>建立安全感、完成健康评估、体验自然疗愈、学习基础运动</p>
+      </div>
+      <div class="phase-card reveal" style="--i:1">
+        <div class="phase-badge p2">2</div>
+        <div class="phase-time">第3-5周</div>
+        <h3>深化期</h3>
+        <p>提升运动能力、发展社交网络、深化自然联结、学习健康管理知识</p>
+      </div>
+      <div class="phase-card reveal" style="--i:2">
+        <div class="phase-badge p3">3</div>
+        <div class="phase-time">第6-8周</div>
+        <h3>巩固期</h3>
+        <p>强化平衡与认知功能、建立自主管理能力、形成社区互助文化</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Safety Section -->
+<section class="safety-section" id="safety">
+  <div class="safety-container">
+    <div class="section-header reveal">
+      <div class="section-tag safety">安全注意事项</div>
+      <h2 class="section-title">全方位安全保障</h2>
+      <p class="section-subtitle">从健康筛查到急救准备，确保每位长者的安全与健康</p>
+    </div>
+    <div class="safety-illustration reveal-scale">
+      <svg viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="180" rx="20" fill="#FAF8F2"/>
+        <!-- Shield umbrella -->
+        <path d="M300 30 Q200 50 180 100 Q200 140 300 150 Q400 140 420 100 Q400 50 300 30" fill="#E08B7A" opacity="0.2"/>
+        <path d="M300 40 Q220 55 200 95 Q215 130 300 140 Q385 130 400 95 Q380 55 300 40" fill="#E08B7A" opacity="0.3"/>
+        <text x="300" y="100" text-anchor="middle" font-size="28">🛡️</text>
+        <!-- Safety icons around -->
+        <g class="svg-float">
+          <circle cx="120" cy="90" r="25" fill="#D4E8DA" opacity="0.6"/>
+          <text x="120" y="96" text-anchor="middle" font-size="18">❤️</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="480" cy="90" r="25" fill="#D6EAF2" opacity="0.6"/>
+          <text x="480" y="96" text-anchor="middle" font-size="18">🏥</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="200" cy="50" r="20" fill="#EDE8E0" opacity="0.6"/>
+          <text x="200" y="56" text-anchor="middle" font-size="14">🌡️</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="400" cy="50" r="20" fill="#FBF2E4" opacity="0.6"/>
+          <text x="400" y="56" text-anchor="middle" font-size="14">💧</text>
+        </g>
+        <!-- Connection lines -->
+        <path d="M145 90 L260 100" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+        <path d="M455 90 L340 100" stroke="#E08B7A" stroke-width="1" stroke-dasharray="3,3" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="safety-grid stagger">
+      <div class="safety-card reveal" style="--i:0">
+        <div class="safety-icon">📋</div>
+        <div>
+          <h4>参与前筛查</h4>
+          <p>完成PAR-Q问卷和基本健康检查，特殊情况需医生许可</p>
+        </div>
+      </div>
+      <div class="safety-card reveal" style="--i:1">
+        <div class="safety-icon">⚡</div>
+        <div>
+          <h4>运动强度控制</h4>
+          <p>使用Borg主观疲劳量表监控，保持在11-13分（轻度到中等强度）</p>
+        </div>
+      </div>
+      <div class="safety-card reveal" style="--i:2">
+        <div class="safety-icon">🦯</div>
+        <div>
+          <h4>防跌倒措施</h4>
+          <p>活动场地平整无障碍物，湿滑地面设置警示，确保志愿者看护</p>
+        </div>
+      </div>
+      <div class="safety-card reveal" style="--i:3">
+        <div class="safety-icon">🌡️</div>
+        <div>
+          <h4>天气预案</h4>
+          <p>极端天气改为室内活动，使用社区活动室播放自然声景视频</p>
+        </div>
+      </div>
+      <div class="safety-card reveal" style="--i:4">
+        <div class="safety-icon">🚑</div>
+        <div>
+          <h4>急救准备</h4>
+          <p>每次活动配备急救箱和血压计，至少1名具备急救资质的工作人员在场</p>
+        </div>
+      </div>
+      <div class="safety-card reveal" style="--i:5">
+        <div class="safety-icon">👥</div>
+        <div>
+          <h4>个体化调整</h4>
+          <p>根据每位参与者的身体状况提供动作替代方案（如坐姿替代站姿）</p>
+        </div>
+      </div>
+      <div class="safety-card reveal" style="--i:6">
+        <div class="safety-icon">💧</div>
+        <div>
+          <h4>补水与休息</h4>
+          <p>活动期间每20分钟安排一次休息和补水，夏季增加补水频率</p>
+        </div>
+      </div>
+      <div class="safety-card reveal" style="--i:7">
+        <div class="safety-icon">💊</div>
+        <div>
+          <h4>药物管理</h4>
+          <p>提醒参与者在运动前按医嘱服药（如降压药），避免空腹运动</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Long-term Mechanism Section -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">长效保障机制</div>
+      <h2 class="section-title">可持续的社区健康生态</h2>
+      <p class="section-subtitle">从互助小组到线上社群，构建自我运转的健康管理网络</p>
+    </div>
+    <div class="longterm-illustration reveal-scale">
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#FAF8F2"/>
+        <!-- Circular ecosystem -->
+        <circle cx="300" cy="100" r="70" stroke="#D6EAF2" stroke-width="2" fill="none" stroke-dasharray="8,4"/>
+        <circle cx="300" cy="100" r="50" stroke="#D4E8DA" stroke-width="2" fill="none" stroke-dasharray="6,3"/>
+        <!-- Center icon -->
+        <circle cx="300" cy="100" r="25" fill="#D6EAF2" opacity="0.5"/>
+        <text x="300" y="106" text-anchor="middle" font-size="18">♻️</text>
+        <!-- Six nodes around circle -->
+        <g class="svg-float">
+          <circle cx="300" cy="30" r="18" fill="#F5D9D3" opacity="0.7"/>
+          <text x="300" y="36" text-anchor="middle" font-size="14">🤲</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="370" cy="50" r="18" fill="#D6EAF2" opacity="0.7"/>
+          <text x="370" y="56" text-anchor="middle" font-size="14">🎧</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="400" cy="100" r="18" fill="#EDE8E0" opacity="0.7"/>
+          <text x="400" y="106" text-anchor="middle" font-size="14">🎓</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="370" cy="150" r="18" fill="#D4E8DA" opacity="0.7"/>
+          <text x="370" y="156" text-anchor="middle" font-size="14">🌱</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="230" cy="150" r="18" fill="#FBF2E4" opacity="0.7"/>
+          <text x="230" y="156" text-anchor="middle" font-size="14">📱</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="200" cy="100" r="18" fill="#F5D9D3" opacity="0.7"/>
+          <text x="200" y="106" text-anchor="middle" font-size="14">🏥</text>
+        </g>
+        <!-- Arrow indicators -->
+        <path d="M315 35 Q340 40 355 48" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M390 65 Q395 80 395 85" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M385 115 Q380 130 375 140" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M350 155 Q300 175 245 155" stroke="#8BA888" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M215 140 Q210 120 210 115" stroke="#8BA888" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M215 85 Q240 50 285 35" stroke="#8BA888" stroke-width="1.5" fill="none" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0">
+        <div class="longterm-icon">🤲</div>
+        <div>
+          <h4>社区健康自治小组</h4>
+          <p>由参与者中的积极分子担任组长，每周自主组织1-2次活动</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:1">
+        <div class="longterm-icon">🏥</div>
+        <div>
+          <h4>社区卫生服务中心合作</h4>
+          <p>每月提供一次免费健康检查和健康咨询</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:2">
+        <div class="longterm-icon">🌱</div>
+        <div>
+          <h4>社区健康花园</h4>
+          <p>持续维护社区花园，作为自然疗愈的固定场所</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:3">
+        <div class="longterm-icon">🎉</div>
+        <div>
+          <h4>健康主题日活动</h4>
+          <p>每季度举办一次健康主题日活动，引入新的健康主题和活动形式</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:4">
+        <div class="longterm-icon">🎓</div>
+        <div>
+          <h4>社区志愿者培训</h4>
+          <p>培训社区志愿者掌握基本的活动带领技能，确保活动的可持续性</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:5">
+        <div class="longterm-icon">📱</div>
+        <div>
+          <h4>线上社群</h4>
+          <p>建立线上社群（微信群），每日推送健康小贴士和居家练习指导</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SDGs Section -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">可持续发展</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将社区长者健康管理与联合国可持续发展目标深度结合</p>
+    </div>
+    <div class="sdgs-illustration reveal-scale">
+      <svg viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="180" rx="20" fill="#FAF8F2"/>
+        <!-- SDG icons -->
+        <g class="svg-float">
+          <circle cx="100" cy="90" r="35" fill="#D4E8DA" opacity="0.7"/>
+          <text x="100" y="96" text-anchor="middle" font-size="24">3</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="200" cy="90" r="35" fill="#D6EAF2" opacity="0.7"/>
+          <text x="200" y="96" text-anchor="middle" font-size="24">11</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="300" cy="90" r="35" fill="#EDE8E0" opacity="0.7"/>
+          <text x="300" y="96" text-anchor="middle" font-size="18">🌍</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="400" cy="90" r="35" fill="#FBF2E4" opacity="0.7"/>
+          <text x="400" y="96" text-anchor="middle" font-size="18">📊</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="500" cy="90" r="35" fill="#F5D9D3" opacity="0.7"/>
+          <text x="500" y="96" text-anchor="middle" font-size="18">🤝</text>
+        </g>
+        <!-- Connection lines -->
+        <path d="M140 90 L160 90" stroke="#4A7C59" stroke-width="1" opacity="0.3"/>
+        <path d="M240 90 L260 90" stroke="#6BA3BE" stroke-width="1" opacity="0.3"/>
+        <path d="M340 90 L360 90" stroke="#8BA888" stroke-width="1" opacity="0.3"/>
+        <path d="M440 90 L460 90" stroke="#A0937D" stroke-width="1" opacity="0.3"/>
+        <!-- Labels -->
+        <text x="100" y="145" text-anchor="middle" font-size="11" fill="#4A7C59">健康与福祉</text>
+        <text x="200" y="145" text-anchor="middle" font-size="11" fill="#6BA3BE">可持续城市</text>
+        <text x="300" y="145" text-anchor="middle" font-size="11" fill="#8BA888">全球伙伴</text>
+        <text x="400" y="145" text-anchor="middle" font-size="11" fill="#A0937D">ESG指标</text>
+        <text x="500" y="145" text-anchor="middle" font-size="11" fill="#E08B7A">社区参与</text>
+      </svg>
+    </div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0">
+        <div class="sdg-num">3.4</div>
+        <div class="sdg-title">良好健康与福祉</div>
+        <p class="sdg-desc">通过预防性健康干预减少非传染性疾病的负担，促进健康老龄化</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:1">
+        <div class="sdg-num">3.5</div>
+        <div class="sdg-title">物质使用障碍预防</div>
+        <p class="sdg-desc">加强物质使用障碍的预防和治疗（通过健康生活方式替代）</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:2">
+        <div class="sdg-num">3.8</div>
+        <div class="sdg-title">全民健康覆盖</div>
+        <p class="sdg-desc">实现全民健康覆盖，将社区健康管理纳入初级卫生保健</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:3">
+        <div class="sdg-num">11.7</div>
+        <div class="sdg-title">绿色公共空间</div>
+        <p class="sdg-desc">提供普遍可及的绿色和公共空间</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:4">
+        <div class="sdg-num">11.a</div>
+        <div class="sdg-title">城市可持续性</div>
+        <p class="sdg-desc">加强国家和区域发展规划中的城市可持续性</p>
+      </div>
+    </div>
+    <div class="kpi-box reveal">
+      <h3>📊 ESG 量化 KPI 指标</h3>
+      <div class="kpi-items">
+        <span class="kpi-item">参与者健康指标改善率</span>
+        <span class="kpi-item">活动参与率</span>
+        <span class="kpi-item">社区满意度</span>
+        <span class="kpi-item">慢性病管理依从性</span>
+        <span class="kpi-item">社交孤立感降低程度</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用自然的力量，守护每一位长者的健康与幸福 🌿</h2>
+    <p class="footer-text">心理健康是社区最宝贵的资产，让科学疗愈走进社区，温暖每一位默默付出的双手</p>
+    <div class="footer-hearts">🌿 🧘 💛 🌿</div>
+  </div>
+</footer>
+
+<script>
+// Scroll Progress Bar
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+});
+
+// Navigation Dots
+const dots = document.querySelectorAll('.nav-dot');
+const sections = ['hero', 'week1', 'week2', 'week3', 'week4', 'week5', 'week6', 'week7', 'week8', 'phase', 'safety', 'longterm', 'sdgs'];
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = dot.getAttribute('data-target');
+    document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+const sectionEls = sections.map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let current = 0;
+  sectionEls.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2) current = i;
+  });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === current);
+  });
+});
+
+// Scroll Reveal Animations
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// SVG Animation Activation
+const svgAnimatedElements = document.querySelectorAll('.svg-float, .svg-float-d, .svg-float-d2, .svg-pulse, .svg-breathe, .svg-sway, .svg-glow, .svg-draw, .svg-fade-in, .svg-fade-in-d, .svg-fade-in-d2, .svg-fade-in-d3, .svg-scale-in, .svg-ripple, .svg-particle, .svg-rise, .svg-shimmer, .svg-drip');
+const svgObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('anim-active');
+  });
+}, { threshold: 0.2 });
+svgAnimatedElements.forEach(el => svgObserver.observe(el));
+
+// Parallax effect for hero shapes
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const shapes = document.querySelectorAll('.hero-shape');
+  shapes.forEach((shape, i) => {
+    const speed = 0.03 + i * 0.02;
+    shape.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+});
+</script>
+
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

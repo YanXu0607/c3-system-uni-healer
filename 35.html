@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创业者音乐治疗工作坊 · 用音乐疗愈创业之心</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --warm: #C47860;
+    --warm-light: #F5DDD3;
+    --coral: #D97A6A;
+    --coral-light: #F5D9D3;
+    --amber: #B89840;
+    --amber-light: #F5EDCF;
+    --gold: #C9A84C;
+    --gold-light: #FBF4D6;
+    --peach: #F5E0D0;
+    --cream: #F5F0E1;
+    --cream-pale: #FAF8F2;
+    --sage: #5A988C;
+    --sage-light: #D4E8E2;
+    --teal: #5BA89C;
+    --teal-light: #D4EDE8;
+    --mint: #6BB898;
+    --mint-light: #D9F0E4;
+    --blue: #5A8FB5;
+    --blue-light: #D6E6F2;
+    --rose: #C47888;
+    --rose-light: #F2DDE2;
+    --lavender: #967BA5;
+    --lavender-light: #EDE0F3;
+    --plum: #8A6B9A;
+    --plum-light: #E8D8F0;
+    --deep: #3A3448;
+    --soft: #5A5466;
+    --surface: #F0ECE4;
+    --olive: #7B8A5B;
+    --olive-light: #E2E8D6;
+    --sky: #6AA5C6;
+    --sky-light: #DCEEF8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--cream-pale);
+    color: var(--deep);
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  /* ===== Progress Bar ===== */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 1000;
+    background: linear-gradient(90deg, var(--warm), var(--amber), var(--sage), var(--lavender));
+    width: 0%; transition: width 0.1s linear;
+  }
+
+  /* ===== Navigation Dots ===== */
+  .nav-dots {
+    position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+    z-index: 999; display: flex; flex-direction: column; gap: 10px;
+  }
+  .nav-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(0,0,0,0.15); cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .nav-dot.active {
+    background: var(--warm); transform: scale(1.5);
+    box-shadow: 0 0 10px rgba(196,120,96,0.5);
+  }
+  .nav-dot:hover { transform: scale(1.3); }
+  .nav-dot .tooltip {
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    background: var(--deep); color: #fff; padding: 4px 12px;
+    border-radius: 6px; font-size: 11px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .nav-dot:hover .tooltip { opacity: 1; }
+
+  /* ===== Hero Section ===== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--peach) 0%, var(--cream) 30%, var(--warm-light) 65%, var(--gold-light) 100%);
+  }
+  .hero-bg-shapes {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .hero-shape {
+    position: absolute; border-radius: 50%; opacity: 0.15;
+  }
+  .hero-shape:nth-child(1) { width: 420px; height: 420px; background: var(--warm); top: -120px; right: -100px; animation: floatShape 9s ease-in-out infinite; }
+  .hero-shape:nth-child(2) { width: 320px; height: 320px; background: var(--amber); bottom: -80px; left: -80px; animation: floatShape 11s ease-in-out infinite reverse; }
+  .hero-shape:nth-child(3) { width: 220px; height: 220px; background: var(--sage); top: 25%; left: 8%; animation: floatShape 13s ease-in-out infinite; }
+  .hero-shape:nth-child(4) { width: 160px; height: 160px; background: var(--gold); bottom: 20%; right: 15%; animation: floatShape 10s ease-in-out infinite reverse; }
+  @keyframes floatShape { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(20px, -20px) scale(1.05); } }
+
+  .hero-content {
+    position: relative; z-index: 2; text-align: center;
+    max-width: 860px; padding: 40px 24px;
+  }
+  .hero-badge {
+    display: inline-block; padding: 6px 20px;
+    background: rgba(196,120,96,0.18); border-radius: 20px;
+    font-size: 13px; color: var(--warm); font-weight: 500;
+    letter-spacing: 2px; margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 700;
+    line-height: 1.35; margin-bottom: 16px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title .accent { color: var(--warm); }
+  .hero-title .accent2 { color: var(--amber); }
+  .hero-subtitle {
+    font-size: clamp(14px, 2vw, 17px); color: var(--soft);
+    font-weight: 300; margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-meta {
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .hero-meta-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--soft);
+  }
+  .hero-meta-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .hero-meta-icon.pink { background: rgba(196,120,96,0.15); }
+  .hero-meta-icon.green { background: rgba(90,152,140,0.15); }
+  .hero-meta-icon.blue { background: rgba(90,143,181,0.12); }
+  .hero-meta-icon.gold { background: rgba(201,168,76,0.15); }
+
+  .hero-illustration {
+    margin-top: 36px;
+    opacity: 0; animation: fadeUp 1s 1s forwards;
+    max-width: 680px; margin-left: auto; margin-right: auto;
+  }
+  .hero-illustration svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 16px 48px rgba(0,0,0,0.06)); }
+
+  .scroll-hint {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    opacity: 0; animation: fadeUp 0.8s 1.4s forwards;
+  }
+  .scroll-hint span { font-size: 11px; color: var(--soft); letter-spacing: 1px; }
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 2px solid var(--warm); border-bottom: 2px solid var(--warm);
+    transform: rotate(45deg); animation: scrollBounce 2s ease-in-out infinite;
+  }
+  @keyframes scrollBounce { 0%, 100% { transform: rotate(45deg) translate(0,0); opacity: 0.4; } 50% { transform: rotate(45deg) translate(4px,4px); opacity: 1; } }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-badge, .hero-title, .hero-subtitle, .hero-meta, .hero-illustration { transform: translateY(20px); }
+
+  /* ===== Module Sections ===== */
+  .module-section {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 80px 24px; position: relative;
+  }
+  .module-section:nth-child(odd) { background: var(--cream-pale); }
+  .module-section:nth-child(even) { background: var(--surface); }
+
+  .module-container {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .module-section.reverse .module-container { direction: rtl; }
+  .module-section.reverse .module-container > * { direction: ltr; }
+
+  .module-number {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .module-num-badge {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 700; color: #fff;
+  }
+  .module-num-badge.m1 { background: linear-gradient(135deg, #C47860, #E0A090); }
+  .module-num-badge.m2 { background: linear-gradient(135deg, #5A988C, #8CC4B8); }
+  .module-num-badge.m3 { background: linear-gradient(135deg, #5A8FB5, #8CB8D5); }
+  .module-num-badge.m4 { background: linear-gradient(135deg, #C9A84C, #E0C878); }
+
+  .module-label {
+    font-size: 13px; letter-spacing: 2px; color: var(--soft); font-weight: 500;
+  }
+
+  .module-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(22px, 3.2vw, 34px); font-weight: 700;
+    margin-bottom: 4px; line-height: 1.4;
+  }
+  .module-theme {
+    font-size: 14px; font-weight: 500; margin-bottom: 14px;
+  }
+  .module-theme.m1 { color: var(--warm); }
+  .module-theme.m2 { color: var(--sage); }
+  .module-theme.m3 { color: var(--blue); }
+  .module-theme.m4 { color: var(--gold); }
+
+  .module-desc {
+    font-size: 15px; color: var(--soft); line-height: 1.9; margin-bottom: 18px;
+  }
+
+  .module-details {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 18px;
+  }
+  .detail-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; color: var(--soft);
+  }
+  .detail-icon {
+    width: 24px; height: 24px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0; margin-top: 2px;
+  }
+  .detail-icon.m1 { background: rgba(196,120,96,0.15); }
+  .detail-icon.m2 { background: rgba(90,152,140,0.15); }
+  .detail-icon.m3 { background: rgba(90,143,181,0.15); }
+  .detail-icon.m4 { background: rgba(201,168,76,0.15); }
+
+  .module-params {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;
+  }
+  .param-tag {
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+  }
+  .param-tag.m1 { background: rgba(196,120,96,0.08); color: var(--warm); }
+  .param-tag.m2 { background: rgba(90,152,140,0.08); color: var(--sage); }
+  .param-tag.m3 { background: rgba(90,143,181,0.08); color: var(--blue); }
+  .param-tag.m4 { background: rgba(201,168,76,0.1); color: var(--gold); }
+
+  .module-target {
+    padding: 14px 18px; border-radius: 12px;
+    font-size: 13px; color: var(--soft); line-height: 1.7;
+  }
+  .module-target.m1 { background: rgba(196,120,96,0.06); border-left: 3px solid var(--warm); }
+  .module-target.m2 { background: rgba(90,152,140,0.06); border-left: 3px solid var(--sage); }
+  .module-target.m3 { background: rgba(90,143,181,0.06); border-left: 3px solid var(--blue); }
+  .module-target.m4 { background: rgba(201,168,76,0.06); border-left: 3px solid var(--gold); }
+  .target-label {
+    font-weight: 600; font-size: 12px; letter-spacing: 1px;
+    margin-bottom: 4px; display: block;
+  }
+
+  .module-visual {
+    position: relative; perspective: 800px;
+  }
+  .module-visual svg {
+    width: 100%; height: auto; display: block;
+    border-radius: 20px;
+    filter: drop-shadow(0 12px 40px rgba(0,0,0,0.06));
+  }
+  .module-decoration {
+    position: absolute; width: 80px; height: 80px;
+    border-radius: 50%; opacity: 0.1; z-index: -1;
+  }
+  .module-decoration.m1 { background: var(--warm); top: -20px; right: -20px; }
+  .module-decoration.m2 { background: var(--sage); bottom: -20px; left: -20px; }
+  .module-decoration.m3 { background: var(--blue); top: -20px; right: -20px; }
+  .module-decoration.m4 { background: var(--gold); bottom: -20px; left: -20px; }
+
+  /* ===== Implementation Section ===== */
+  .impl-section {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--cream-pale) 100%);
+  }
+  .impl-container { max-width: 1000px; margin: 0 auto; }
+
+  .section-header {
+    text-align: center; margin-bottom: 56px;
+  }
+  .section-tag {
+    display: inline-block; padding: 5px 16px;
+    border-radius: 16px; font-size: 12px; letter-spacing: 2px;
+    font-weight: 500; margin-bottom: 16px;
+  }
+  .section-tag.impl { background: rgba(90,152,140,0.12); color: var(--sage); }
+  .section-tag.longterm { background: rgba(150,123,165,0.12); color: var(--lavender); }
+  .section-tag.sdgs { background: rgba(201,168,76,0.15); color: var(--amber); }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(26px, 4vw, 40px); font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .section-subtitle {
+    font-size: 15px; color: var(--soft); max-width: 600px; margin: 0 auto;
+  }
+
+  .impl-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-bottom: 40px;
+  }
+  .impl-card {
+    padding: 28px; border-radius: 16px;
+    background: var(--cream-pale); border: 1px solid rgba(150,123,165,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .impl-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .impl-card-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 16px;
+  }
+  .impl-card-icon.c1 { background: rgba(196,120,96,0.1); }
+  .impl-card-icon.c2 { background: rgba(90,152,140,0.1); }
+  .impl-card-icon.c3 { background: rgba(90,143,181,0.1); }
+  .impl-card-icon.c4 { background: rgba(201,168,76,0.12); }
+  .impl-card-icon.c5 { background: rgba(150,123,165,0.1); }
+
+  .impl-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .impl-card p { font-size: 14px; color: var(--soft); line-height: 1.7; }
+
+  .impl-illustration {
+    max-width: 700px; margin: 0 auto 40px;
+    border-radius: 20px; overflow: hidden;
+  }
+  .impl-illustration svg { width: 100%; height: auto; display: block; }
+
+  /* ===== Long-term Section ===== */
+  .longterm-section {
+    padding: 100px 24px;
+    background: var(--cream-pale);
+  }
+  .longterm-container { max-width: 1000px; margin: 0 auto; }
+
+  .longterm-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-bottom: 40px;
+  }
+  .longterm-card {
+    padding: 28px; border-radius: 16px;
+    background: var(--surface); border: 1px solid rgba(150,123,165,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .longterm-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .longterm-card-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .longterm-card-icon.l1 { background: rgba(90,152,140,0.1); }
+  .longterm-card-icon.l2 { background: rgba(196,120,96,0.1); }
+  .longterm-card-icon.l3 { background: rgba(150,123,165,0.1); }
+  .longterm-card-icon.l4 { background: rgba(201,168,76,0.12); }
+  .longterm-card-icon.l5 { background: rgba(90,143,181,0.1); }
+
+  .longterm-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .longterm-card p { font-size: 13px; color: var(--soft); line-height: 1.7; }
+
+  .longterm-illustration {
+    max-width: 700px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+  }
+  .longterm-illustration svg { width: 100%; height: auto; display: block; }
+
+  /* ===== SDGs Section ===== */
+  .sdgs-section {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--cream-pale), var(--surface));
+  }
+  .sdgs-container { max-width: 1000px; margin: 0 auto; }
+
+  .sdgs-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-bottom: 40px;
+  }
+  .sdg-card {
+    padding: 28px; border-radius: 16px;
+    text-align: left; position: relative; overflow: hidden;
+    transition: transform 0.3s;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .sdg-card:hover { transform: translateY(-4px); }
+  .sdg-card:nth-child(1) {
+    background: linear-gradient(135deg, rgba(196,120,96,0.08), rgba(196,120,96,0.02));
+    border: 1px solid rgba(196,120,96,0.1);
+  }
+  .sdg-card:nth-child(2) {
+    background: linear-gradient(135deg, rgba(90,152,140,0.08), rgba(90,152,140,0.02));
+    border: 1px solid rgba(90,152,140,0.1);
+  }
+  .sdg-card:nth-child(3) {
+    background: linear-gradient(135deg, rgba(90,143,181,0.08), rgba(90,143,181,0.02));
+    border: 1px solid rgba(90,143,181,0.1);
+  }
+  .sdg-card:nth-child(4) {
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.02));
+    border: 1px solid rgba(201,168,76,0.12);
+  }
+  .sdg-badge {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .sdg-card:nth-child(1) .sdg-badge { background: linear-gradient(135deg, #C47860, #E0A090); }
+  .sdg-card:nth-child(2) .sdg-badge { background: linear-gradient(135deg, #5A988C, #8CC4B8); }
+  .sdg-card:nth-child(3) .sdg-badge { background: linear-gradient(135deg, #5A8FB5, #8CB8D5); }
+  .sdg-card:nth-child(4) .sdg-badge { background: linear-gradient(135deg, #C9A84C, #E0C878); }
+
+  .sdg-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .sdg-card p { font-size: 13px; color: var(--soft); line-height: 1.7; }
+
+  .sdgs-illustration {
+    max-width: 700px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+  }
+  .sdgs-illustration svg { width: 100%; height: auto; display: block; }
+
+  /* ===== Footer ===== */
+  .footer {
+    padding: 60px 24px; text-align: center;
+    background: linear-gradient(180deg, var(--surface), var(--cream-pale));
+  }
+  .footer-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px; font-weight: 700; margin-bottom: 12px;
+  }
+  .footer-text {
+    font-size: 14px; color: var(--soft); max-width: 500px; margin: 0 auto;
+  }
+  .footer-hearts {
+    margin-top: 24px; font-size: 24px; letter-spacing: 8px; opacity: 0.3;
+  }
+
+  /* ===== Scroll Animations ===== */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale {
+    opacity: 0; transform: scale(0.92);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+  .stagger > * { transition-delay: calc(var(--i, 0) * 0.12s); }
+
+  /* ===== SVG Animation Classes ===== */
+  .svg-float { animation: svgFloat 4s ease-in-out infinite; }
+  .svg-float-d { animation: svgFloat 4s ease-in-out 1s infinite; }
+  .svg-float-d2 { animation: svgFloat 4s ease-in-out 2s infinite; }
+  .svg-float-d3 { animation: svgFloat 4s ease-in-out 3s infinite; }
+  .svg-pulse { animation: svgPulse 3s ease-in-out infinite; }
+  .svg-breathe { animation: svgBreathe 5s ease-in-out infinite; }
+  .svg-rotate { animation: svgRotate 12s linear infinite; }
+  .svg-sway { animation: svgSway 6s ease-in-out infinite; }
+  .svg-glow { animation: svgGlow 4s ease-in-out infinite; }
+  .svg-draw { stroke-dasharray: 600; stroke-dashoffset: 600; animation: svgDraw 3s ease forwards; }
+  .svg-draw-slow { stroke-dasharray: 800; stroke-dashoffset: 800; animation: svgDraw 4s ease forwards; }
+  .svg-fade-in { opacity: 0; animation: svgFadeIn 1.2s ease forwards; }
+  .svg-fade-in-d { opacity: 0; animation: svgFadeIn 1.2s 0.4s ease forwards; }
+  .svg-fade-in-d2 { opacity: 0; animation: svgFadeIn 1.2s 0.8s ease forwards; }
+  .svg-fade-in-d3 { opacity: 0; animation: svgFadeIn 1.2s 1.2s ease forwards; }
+  .svg-fade-in-d4 { opacity: 0; animation: svgFadeIn 1.2s 1.6s ease forwards; }
+  .svg-fade-in-d5 { opacity: 0; animation: svgFadeIn 1.2s 2s ease forwards; }
+  .svg-scale-in { transform: scale(0); opacity: 0; animation: svgScaleIn 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .svg-ripple { transform: scale(0); opacity: 0; animation: svgRipple 2.5s ease-out forwards; }
+  .svg-ring { transform: scale(0); opacity: 0; animation: svgRing 3s ease-out infinite; }
+  .svg-ring-d { animation: svgRing 3s ease-out 1s infinite; }
+  .svg-ring-d2 { animation: svgRing 3s ease-out 2s infinite; }
+  .svg-shimmer { opacity: 0; animation: svgShimmer 3s ease-in-out infinite; }
+  .svg-rise { opacity: 0; transform: translateY(20px); animation: svgRise 1.5s ease forwards; }
+  .svg-slide-l { opacity: 0; transform: translateX(-30px); animation: svgSlideL 1s ease forwards; }
+  .svg-slide-r { opacity: 0; transform: translateX(30px); animation: svgSlideR 1s ease forwards; }
+  .svg-drop { opacity: 0; transform: translateY(-20px); animation: svgDrop 2.5s ease infinite; }
+  .svg-drop-d { animation: svgDrop 2.5s ease 0.8s infinite; }
+  .svg-drop-d2 { animation: svgDrop 2.5s ease 1.6s infinite; }
+  .svg-spin-slow { animation: svgRotate 20s linear infinite; }
+  .svg-wave { animation: svgWave 3s ease-in-out infinite; }
+  .svg-note-rise { opacity: 0; animation: noteRise 3s ease-in-out infinite; }
+  .svg-note-rise-d { animation: noteRise 3s ease-in-out 1s infinite; }
+  .svg-note-rise-d2 { animation: noteRise 3s ease-in-out 2s infinite; }
+  .svg-note-rise-d3 { animation: noteRise 3s ease-in-out 0.5s infinite; }
+  .svg-vibrate { animation: svgVibrate 0.8s ease-in-out infinite; }
+  .svg-tune { animation: svgTune 4s ease-in-out infinite; }
+  .svg-tune-d { animation: svgTune 4s ease-in-out 1.3s infinite; }
+  .svg-harmonize { animation: svgHarmonize 3s ease-in-out infinite; }
+  .svg-harmonize-d { animation: svgHarmonize 3s ease-in-out 1s infinite; }
+  .svg-improvise { animation: svgImprovise 5s ease-in-out infinite; }
+
+  @keyframes svgFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes svgPulse { 0%, 100% { transform: scale(1); opacity: 0.55; } 50% { transform: scale(1.15); opacity: 1; } }
+  @keyframes svgBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  @keyframes svgRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes svgSway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  @keyframes svgGlow { 0%, 100% { opacity: 0.1; } 50% { opacity: 0.28; } }
+  @keyframes svgDraw { to { stroke-dashoffset: 0; } }
+  @keyframes svgFadeIn { to { opacity: 1; } }
+  @keyframes svgScaleIn { to { transform: scale(1); opacity: 1; } }
+  @keyframes svgRipple { 0% { transform: scale(0); opacity: 0.5; } 100% { transform: scale(2.5); opacity: 0; } }
+  @keyframes svgRing { 0% { transform: scale(0.3); opacity: 0.6; } 100% { transform: scale(2.2); opacity: 0; } }
+  @keyframes svgShimmer { 0%, 100% { opacity: 0; } 50% { opacity: 0.7; } }
+  @keyframes svgRise { to { opacity: 1; transform: translateY(0); } }
+  @keyframes svgSlideL { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgSlideR { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgDrop { 0% { opacity: 0; transform: translateY(-20px); } 15% { opacity: 0.8; } 60% { opacity: 0.5; transform: translateY(30px); } 80% { opacity: 0; transform: translateY(40px); } 100% { opacity: 0; transform: translateY(40px); } }
+  @keyframes svgWave { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+  @keyframes noteRise { 0% { opacity: 0; transform: translateY(0) rotate(0deg); } 20% { opacity: 0.7; } 80% { opacity: 0.3; } 100% { opacity: 0; transform: translateY(-40px) rotate(15deg); } }
+  @keyframes svgVibrate { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+  @keyframes svgTune { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(1.15); } }
+  @keyframes svgHarmonize { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-5px) scale(1.03); } }
+  @keyframes svgImprovise { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(3deg) scale(1.02); } 75% { transform: rotate(-3deg) scale(1.02); } }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .module-container { grid-template-columns: 1fr; gap: 32px; }
+    .module-section { padding: 60px 20px; }
+    .module-section.reverse .module-container { direction: ltr; }
+    .impl-grid, .sdgs-grid, .longterm-grid { grid-template-columns: 1fr; }
+    .nav-dots { right: 12px; gap: 8px; }
+    .nav-dot { width: 7px; height: 7px; }
+    .nav-dot .tooltip { display: none; }
+    .hero-meta { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="module1"><span class="tooltip">模块一 · 破冰</span></div>
+  <div class="nav-dot" data-target="module2"><span class="tooltip">模块二 · 调频</span></div>
+  <div class="nav-dot" data-target="module3"><span class="tooltip">模块三 · 和声</span></div>
+  <div class="nav-dot" data-target="module4"><span class="tooltip">模块四 · 即兴</span></div>
+  <div class="nav-dot" data-target="implementation"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs 目标</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">创业者音乐治疗工作坊</div>
+    <h1 class="hero-title">
+      用<span class="accent">音乐</span>疗愈创业之心<br><span class="accent2">声音</span>中重建内在力量
+    </h1>
+    <p class="hero-subtitle">为创业者量身定制的4次团体音乐治疗工作坊，通过即兴演奏、音乐冥想与认知重构，帮助创业者在创业旅程中找到心理支撑与情感联结</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon pink">🥁</div>
+        <span>4次团体工作坊</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon green">🎵</div>
+        <span>无需音乐基础</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon blue">🧠</div>
+        <span>循证心理干预</span>
+      </div>
+      <div class="hero-meta-icon gold">🌱</div>
+      <span>SDGs 融合</span>
+    </div>
+    <div class="hero-illustration">
+      <!-- Hero SVG: Entrepreneur finding harmony through music -->
+      <svg viewBox="0 0 680 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- City skyline (subtle) -->
+        <g opacity="0.06">
+          <rect x="40" y="240" width="50" height="120" rx="3" fill="#3A3448"/>
+          <rect x="100" y="210" width="40" height="150" rx="3" fill="#3A3448"/>
+          <rect x="150" y="260" width="60" height="100" rx="3" fill="#3A3448"/>
+          <rect x="220" y="230" width="45" height="130" rx="3" fill="#3A3448"/>
+          <rect x="420" y="250" width="55" height="110" rx="3" fill="#3A3448"/>
+          <rect x="490" y="220" width="40" height="140" rx="3" fill="#3A3448"/>
+          <rect x="540" y="260" width="65" height="100" rx="3" fill="#3A3448"/>
+          <rect x="615" y="240" width="40" height="120" rx="3" fill="#3A3448"/>
+        </g>
+        <!-- Ground -->
+        <ellipse cx="340" cy="350" rx="280" ry="22" fill="#EDE0F3" opacity="0.2"/>
+        <!-- Person playing djembe (center) -->
+        <g class="svg-breathe">
+          <ellipse cx="340" cy="290" rx="40" ry="45" fill="#5A988C" opacity="0.2"/>
+          <circle cx="340" cy="220" r="26" fill="#F5D9D3"/>
+          <path d="M314 215 Q318 192 340 188 Q362 192 366 215" fill="#5A5466" opacity="0.5"/>
+          <!-- Happy focused eyes -->
+          <path d="M330 218 Q334 215 338 218" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M342 218 Q346 215 350 218" stroke="#3A3448" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M333 228 Q340 232 347 228" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body -->
+          <path d="M318 242 Q314 268 316 300 L364 300 Q366 268 362 242 Q340 234 318 242Z" fill="#5A988C" opacity="0.5"/>
+          <!-- Arms playing drum -->
+          <path d="M318 258 Q295 270 285 290" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <path d="M362 258 Q385 270 395 290" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Djembe drum -->
+        <g class="svg-breathe">
+          <ellipse cx="340" cy="310" rx="45" ry="12" fill="#C47860" opacity="0.6"/>
+          <path d="M295 310 Q295 345 310 355 L370 355 Q385 345 385 310" fill="#C47860" opacity="0.5"/>
+          <ellipse cx="340" cy="310" rx="45" ry="12" fill="#F5DDD3" opacity="0.4"/>
+          <!-- Drum rope pattern -->
+          <line x1="300" y1="312" x2="298" y2="345" stroke="#B89840" stroke-width="1" opacity="0.3"/>
+          <line x1="320" y1="315" x2="318" y2="350" stroke="#B89840" stroke-width="1" opacity="0.3"/>
+          <line x1="340" y1="316" x2="340" y2="352" stroke="#B89840" stroke-width="1" opacity="0.3"/>
+          <line x1="360" y1="315" x2="362" y2="350" stroke="#B89840" stroke-width="1" opacity="0.3"/>
+          <line x1="380" y1="312" x2="382" y2="345" stroke="#B89840" stroke-width="1" opacity="0.3"/>
+        </g>
+        <!-- Sound waves from drum -->
+        <g class="svg-float">
+          <path d="M270 280 Q260 270 255 255" stroke="#C47860" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <path d="M262 290 Q248 275 242 255" stroke="#C47860" stroke-width="1.5" fill="none" opacity="0.2" stroke-linecap="round"/>
+        </g>
+        <g class="svg-float-d">
+          <path d="M410 280 Q420 270 425 255" stroke="#C47860" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <path d="M418 290 Q432 275 438 255" stroke="#C47860" stroke-width="1.5" fill="none" opacity="0.2" stroke-linecap="round"/>
+        </g>
+        <!-- Floating music notes -->
+        <g class="svg-note-rise">
+          <text x="260" y="200" font-size="22" fill="#C47860" opacity="0.5">♪</text>
+        </g>
+        <g class="svg-note-rise-d">
+          <text x="420" y="190" font-size="18" fill="#5A988C" opacity="0.5">♫</text>
+        </g>
+        <g class="svg-note-rise-d2">
+          <text x="300" y="170" font-size="16" fill="#C9A84C" opacity="0.4">♩</text>
+        </g>
+        <g class="svg-note-rise-d3">
+          <text x="380" y="175" font-size="20" fill="#967BA5" opacity="0.4">♬</text>
+        </g>
+        <!-- Kalimba (left) -->
+        <g class="svg-float-d2">
+          <rect x="100" y="280" width="50" height="35" rx="6" fill="#C9A84C" opacity="0.4"/>
+          <line x1="110" y1="282" x2="108" y2="270" stroke="#B89840" stroke-width="1.5" opacity="0.5"/>
+          <line x1="120" y1="282" x2="118" y2="265" stroke="#B89840" stroke-width="1.5" opacity="0.5"/>
+          <line x1="130" y1="282" x2="128" y2="268" stroke="#B89840" stroke-width="1.5" opacity="0.5"/>
+          <line x1="140" y1="282" x2="138" y2="272" stroke="#B89840" stroke-width="1.5" opacity="0.5"/>
+        </g>
+        <!-- Shaker (right) -->
+        <g class="svg-float-d3">
+          <ellipse cx="560" cy="290" rx="14" ry="22" fill="#967BA5" opacity="0.3"/>
+          <rect x="553" y="268" width="14" height="10" rx="3" fill="#967BA5" opacity="0.4"/>
+          <circle cx="555" cy="272" r="2" fill="#EDE0F3" opacity="0.5"/>
+          <circle cx="562" cy="270" r="1.5" fill="#EDE0F3" opacity="0.5"/>
+          <circle cx="558" cy="268" r="1.5" fill="#EDE0F3" opacity="0.5"/>
+        </g>
+        <!-- Sparkle dots -->
+        <circle cx="200" cy="140" r="3" fill="#C47860" opacity="0.25" class="svg-pulse"/>
+        <circle cx="480" cy="130" r="2.5" fill="#5A988C" opacity="0.25" class="svg-pulse"/>
+        <circle cx="150" cy="180" r="2" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="530" cy="170" r="2" fill="#967BA5" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滚动探索</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== MODULE 1: 破冰与情绪释放 ===== -->
+<section class="module-section" id="module1">
+  <div class="module-container">
+    <div class="module-text reveal-left">
+      <div class="module-number">
+        <div class="module-num-badge m1">1</div>
+        <span class="module-label">模块一 · 第1次</span>
+      </div>
+      <h2 class="module-title">破冰与情绪释放</h2>
+      <div class="module-theme m1">"创业者的声音" — 3小时</div>
+      <p class="module-desc">
+        建立安全氛围，打破创业者之间的心理壁垒。通过乐器即兴演奏与音乐冥想，让创业者在声音中释放积压情绪，在分享中建立团体信任。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon m1">🥁</div>
+          <span>破冰：每人用乐器即兴演奏代表"我的创业旅程"的旋律</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m1">🎵</div>
+          <span>团体即兴"创业交响曲"：体验"混乱中的秩序"</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m1">🧘</div>
+          <span>音乐冥想引导：在古琴或冥想音乐中关注身体感受</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m1">💬</div>
+          <span>分享环节：围绕音乐体验分享创业中的孤独与压力时刻</span>
+        </div>
+      </div>
+      <div class="module-params">
+        <span class="param-tag m1">第1次</span>
+        <span class="param-tag m1">3小时</span>
+        <span class="param-tag m1">非洲鼓/卡林巴琴/沙锤</span>
+      </div>
+      <div class="module-target m1">
+        <span class="target-label">🎯 预期成果</span>
+        打破孤立感，建立团体信任，初步释放积压情绪
+      </div>
+    </div>
+    <div class="module-visual reveal-right">
+      <div class="module-decoration m1"></div>
+      <!-- Module 1 SVG: Ice breaking - melting ice wall with sound -->
+      <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="440" rx="20" fill="#FAF8F2"/>
+        <!-- Ice wall (breaking apart) -->
+        <g opacity="0.15">
+          <path d="M120 60 L160 60 L170 100 L130 100 Z" fill="#5A8FB5" class="svg-float"/>
+          <path d="M160 60 L200 60 L195 100 L170 100 Z" fill="#5A8FB5" class="svg-float-d"/>
+          <path d="M200 60 L240 60 L235 100 L195 100 Z" fill="#5A8FB5" class="svg-float-d2"/>
+          <path d="M240 60 L280 60 L275 100 L235 100 Z" fill="#5A8FB5" class="svg-float-d3"/>
+          <path d="M280 60 L320 60 L310 100 L275 100 Z" fill="#5A8FB5" class="svg-float"/>
+        </g>
+        <!-- Cracks in ice -->
+        <g class="svg-draw" opacity="0.4">
+          <path d="M220 60 L215 90 L225 110 L210 140" stroke="#C47860" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M215 90 L200 100" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M225 110 L240 120" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Warmth glow behind ice -->
+        <circle cx="220" cy="200" r="80" fill="#C47860" opacity="0.06" class="svg-glow"/>
+        <circle cx="220" cy="200" r="50" fill="#C47860" opacity="0.08" class="svg-glow"/>
+        <!-- Sound waves breaking through -->
+        <g class="svg-float">
+          <path d="M160 140 Q140 160 135 190" stroke="#C47860" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <path d="M150 150 Q125 175 120 210" stroke="#C47860" stroke-width="1.5" fill="none" opacity="0.2" stroke-linecap="round"/>
+        </g>
+        <g class="svg-float-d">
+          <path d="M280 140 Q300 160 305 190" stroke="#C47860" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <path d="M290 150 Q315 175 320 210" stroke="#C47860" stroke-width="1.5" fill="none" opacity="0.2" stroke-linecap="round"/>
+        </g>
+        <!-- Group of people sitting in circle -->
+        <g class="svg-breathe">
+          <!-- Person 1 (left) -->
+          <circle cx="140" cy="270" r="16" fill="#F5D9D3"/>
+          <path d="M124 266 Q127 252 140 250 Q153 252 156 266" fill="#5A5466" opacity="0.4"/>
+          <path d="M128 282 Q126 300 128 320 L152 320 Q154 300 152 282 Q140 278 128 282Z" fill="#C47860" opacity="0.35"/>
+          <!-- Person 2 (center-left) -->
+          <circle cx="195" cy="260" r="16" fill="#F5D9D3"/>
+          <path d="M179 256 Q182 242 195 240 Q208 242 211 256" fill="#5A5466" opacity="0.4"/>
+          <path d="M183 272 Q181 290 183 310 L207 310 Q209 290 207 272 Q195 268 183 272Z" fill="#5A988C" opacity="0.35"/>
+          <!-- Person 3 (center) -->
+          <circle cx="250" cy="255" r="16" fill="#F5D9D3"/>
+          <path d="M234 251 Q237 237 250 235 Q263 237 266 251" fill="#5A5466" opacity="0.4"/>
+          <path d="M238 267 Q236 285 238 305 L262 305 Q264 285 262 267 Q250 263 238 267Z" fill="#5A8FB5" opacity="0.35"/>
+          <!-- Person 4 (center-right) -->
+          <circle cx="305" cy="260" r="16" fill="#F5D9D3"/>
+          <path d="M289 256 Q292 242 305 240 Q318 242 321 256" fill="#5A5466" opacity="0.4"/>
+          <path d="M293 272 Q291 290 293 310 L317 310 Q319 290 317 272 Q305 268 293 272Z" fill="#C9A84C" opacity="0.35"/>
+          <!-- Person 5 (right) -->
+          <circle cx="355" cy="270" r="16" fill="#F5D9D3"/>
+          <path d="M339 266 Q342 252 355 250 Q368 252 371 266" fill="#5A5466" opacity="0.4"/>
+          <path d="M343 282 Q341 300 343 320 L367 320 Q369 300 367 282 Q355 278 343 282Z" fill="#967BA5" opacity="0.35"/>
+        </g>
+        <!-- Instruments in center -->
+        <g class="svg-float-d2">
+          <!-- Small drum -->
+          <ellipse cx="220" cy="340" rx="20" ry="6" fill="#C47860" opacity="0.5"/>
+          <path d="M200 340 Q200 358 208 362 L232 362 Q240 358 240 340" fill="#C47860" opacity="0.4"/>
+          <!-- Kalimba -->
+          <rect x="255" y="335" width="28" height="20" rx="4" fill="#C9A84C" opacity="0.4"/>
+          <line x1="261" y1="335" x2="260" y2="326" stroke="#B89840" stroke-width="1" opacity="0.5"/>
+          <line x1="268" y1="335" x2="267" y2="323" stroke="#B89840" stroke-width="1" opacity="0.5"/>
+          <line x1="275" y1="335" x2="274" y2="328" stroke="#B89840" stroke-width="1" opacity="0.5"/>
+          <!-- Shaker -->
+          <ellipse cx="180" cy="345" rx="8" ry="14" fill="#967BA5" opacity="0.3"/>
+        </g>
+        <!-- Connection lines between people (trust building) -->
+        <g opacity="0.15">
+          <line x1="156" y1="290" x2="179" y2="280" stroke="#C47860" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="211" y1="280" x2="234" y2="275" stroke="#C47860" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="266" y1="275" x2="289" y2="280" stroke="#C47860" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="321" y1="280" x2="339" y2="290" stroke="#C47860" stroke-width="1" stroke-dasharray="4,4"/>
+        </g>
+        <!-- Music notes floating up -->
+        <g class="svg-note-rise"><text x="170" y="220" font-size="16" fill="#C47860" opacity="0.4">♪</text></g>
+        <g class="svg-note-rise-d"><text x="260" y="210" font-size="14" fill="#5A988C" opacity="0.4">♫</text></g>
+        <g class="svg-note-rise-d2"><text x="310" y="225" font-size="16" fill="#C9A84C" opacity="0.4">♩</text></g>
+        <!-- Heart connections forming -->
+        <g class="svg-float-d3">
+          <text x="220" y="240" text-anchor="middle" font-size="14" fill="#C47860" opacity="0.3">❤</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 2: 压力识别与认知重构 ===== -->
+<section class="module-section reverse" id="module2">
+  <div class="module-container">
+    <div class="module-visual reveal-left">
+      <div class="module-decoration m2"></div>
+      <!-- Module 2 SVG: Radio tuning metaphor -->
+      <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="440" rx="20" fill="#F0ECE4"/>
+        <!-- Background noise/static pattern -->
+        <g opacity="0.06">
+          <circle cx="80" cy="80" r="3" fill="#3A3448"/>
+          <circle cx="120" cy="60" r="2" fill="#3A3448"/>
+          <circle cx="160" cy="90" r="2.5" fill="#3A3448"/>
+          <circle cx="200" cy="70" r="2" fill="#3A3448"/>
+          <circle cx="240" cy="85" r="3" fill="#3A3448"/>
+          <circle cx="280" cy="65" r="2" fill="#3A3448"/>
+          <circle cx="320" cy="80" r="2.5" fill="#3A3448"/>
+          <circle cx="360" cy="70" r="2" fill="#3A3448"/>
+          <circle cx="100" cy="120" r="2" fill="#3A3448"/>
+          <circle cx="140" cy="110" r="3" fill="#3A3448"/>
+          <circle cx="180" cy="130" r="2" fill="#3A3448"/>
+          <circle cx="220" cy="115" r="2.5" fill="#3A3448"/>
+          <circle cx="260" cy="125" r="2" fill="#3A3448"/>
+          <circle cx="300" cy="110" r="3" fill="#3A3448"/>
+          <circle cx="340" cy="130" r="2" fill="#3A3448"/>
+        </g>
+        <!-- Radio/waveform visualization (distorted → clear) -->
+        <!-- Distorted wave (left) -->
+        <g class="svg-vibrate" opacity="0.3">
+          <path d="M40 220 Q50 200 55 220 Q60 240 65 220 Q70 200 75 220 Q80 240 85 220 Q90 200 95 220 Q100 240 105 220 Q110 200 115 220" stroke="#C47860" stroke-width="2" fill="none"/>
+        </g>
+        <!-- Transition zone -->
+        <g class="svg-tune" opacity="0.5">
+          <path d="M130 220 Q140 210 145 220 Q150 230 155 220 Q160 210 165 220 Q170 230 175 220 Q180 210 185 220 Q190 230 195 220 Q200 210 205 220" stroke="#C9A84C" stroke-width="2" fill="none"/>
+        </g>
+        <!-- Clear wave (right) -->
+        <g class="svg-tune-d" opacity="0.7">
+          <path d="M220 220 Q235 195 250 220 Q265 245 280 220 Q295 195 310 220 Q325 245 340 220 Q355 195 370 220 Q385 245 400 220" stroke="#5A988C" stroke-width="2.5" fill="none"/>
+        </g>
+        <!-- Frequency labels -->
+        <g class="svg-fade-in">
+          <text x="70" y="260" text-anchor="middle" font-size="11" fill="#C47860" opacity="0.6">杂音</text>
+        </g>
+        <g class="svg-fade-in-d">
+          <text x="165" y="260" text-anchor="middle" font-size="11" fill="#C9A84C" opacity="0.6">调频中</text>
+        </g>
+        <g class="svg-fade-in-d2">
+          <text x="310" y="260" text-anchor="middle" font-size="11" fill="#5A988C" opacity="0.6">清晰</text>
+        </g>
+        <!-- Person with thought bubbles (cognitive restructuring) -->
+        <g class="svg-breathe">
+          <circle cx="220" cy="340" r="22" fill="#F5D9D3"/>
+          <path d="M198 336 Q201 318 220 315 Q239 318 242 336" fill="#5A5466" opacity="0.4"/>
+          <!-- Thoughtful eyes -->
+          <circle cx="212" cy="338" r="2" fill="#3A3448"/>
+          <circle cx="228" cy="338" r="2" fill="#3A3448"/>
+          <path d="M214 348 Q220 352 226 348" stroke="#C47860" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body -->
+          <path d="M202 358 Q200 380 202 405 L238 405 Q240 380 238 358 Q220 352 202 358Z" fill="#5A988C" opacity="0.4"/>
+        </g>
+        <!-- Thought bubble: old belief (crossed out) -->
+        <g class="svg-float-d">
+          <rect x="60" y="300" width="100" height="36" rx="18" fill="#F5D9D3" opacity="0.6"/>
+          <text x="110" y="322" text-anchor="middle" font-size="10" fill="#C47860" opacity="0.7">融资失败=人生失败</text>
+          <line x1="70" y1="305" x2="150" y2="330" stroke="#C47860" stroke-width="1.5" opacity="0.4"/>
+        </g>
+        <!-- Thought bubble: new belief -->
+        <g class="svg-float-d2">
+          <rect x="280" y="300" width="110" height="36" rx="18" fill="#D4E8E2" opacity="0.7"/>
+          <text x="335" y="322" text-anchor="middle" font-size="10" fill="#5A988C" opacity="0.8">失败是成长的养分</text>
+        </g>
+        <!-- Arrow from old to new -->
+        <g class="svg-fade-in-d3">
+          <path d="M165 318 Q200 300 275 318" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-dasharray="4,4" opacity="0.5" marker-end="url(#arrowGold)"/>
+        </g>
+        <!-- ESS scale icon -->
+        <g class="svg-float-d3">
+          <rect x="170" y="140" width="100" height="50" rx="10" fill="#D4E8E2" opacity="0.5"/>
+          <text x="220" y="162" text-anchor="middle" font-size="11" fill="#3A3448" font-weight="500">ESS 压力量表</text>
+          <text x="220" y="178" text-anchor="middle" font-size="9" fill="#5A5466">压力自评</text>
+        </g>
+        <!-- Musical expression bubbles -->
+        <g class="svg-note-rise"><text x="350" y="160" font-size="18" fill="#5A988C" opacity="0.4">♪</text></g>
+        <g class="svg-note-rise-d"><text x="380" y="180" font-size="14" fill="#C9A84C" opacity="0.4">♫</text></g>
+        <!-- Sparkle -->
+        <circle cx="400" cy="200" r="3" fill="#5A988C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="50" cy="200" r="2.5" fill="#C47860" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+    <div class="module-text reveal-right">
+      <div class="module-number">
+        <div class="module-num-badge m2">2</div>
+        <span class="module-label">模块二 · 第2次</span>
+      </div>
+      <h2 class="module-title">压力识别与认知重构</h2>
+      <div class="module-theme m2">"调频" — 3小时</div>
+      <p class="module-desc">
+        帮助创业者识别个人压力模式，学习认知重构技术。用"调频"的音乐隐喻，引导成员觉察并调整自己的心理频率，从"杂音"走向"清晰"。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon m2">📊</div>
+          <span>压力自评：完成创业者压力量表（ESS）</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m2">📻</div>
+          <span>音乐隐喻"调频"：用音乐比喻自己的心理状态</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m2">🔄</div>
+          <span>认知重构：识别"灾难化思维"，学习灵活解读</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m2">🎶</div>
+          <span>即兴创作"我的新频率"：用音乐表达重构后的状态</span>
+        </div>
+      </div>
+      <div class="module-params">
+        <span class="param-tag m2">第2次</span>
+        <span class="param-tag m2">3小时</span>
+        <span class="param-tag m2">ESS量表 + 认知重构</span>
+      </div>
+      <div class="module-target m2">
+        <span class="target-label">🎯 预期成果</span>
+        提升压力自我觉察能力，掌握认知重构基本技术
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 3: 团队动力学与沟通 ===== -->
+<section class="module-section" id="module3">
+  <div class="module-container">
+    <div class="module-text reveal-left">
+      <div class="module-number">
+        <div class="module-num-badge m3">3</div>
+        <span class="module-label">模块三 · 第3次</span>
+      </div>
+      <h2 class="module-title">团队动力学与沟通</h2>
+      <div class="module-theme m3">"和声" — 3小时</div>
+      <p class="module-desc">
+        改善创业团队内部沟通，提升协作效能。通过音乐对话练习与团队即兴创作，体验倾听与回应的艺术，发现团队沟通中的盲区。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon m3">🎵</div>
+          <span>音乐对话练习：两人一组用乐器进行"对话"</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m3">🎤</div>
+          <span>团队即兴创作：以创业团队为单位创作"团队之歌"</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m3">🤔</div>
+          <span>反思讨论：谁是主导者？谁的声音被忽略了？</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m3">🕊️</div>
+          <span>沟通技巧：学习非暴力沟通（NVC）在创业场景中的应用</span>
+        </div>
+      </div>
+      <div class="module-params">
+        <span class="param-tag m3">第3次</span>
+        <span class="param-tag m3">3小时</span>
+        <span class="param-tag m3">音乐对话 + NVC</span>
+      </div>
+      <div class="module-target m3">
+        <span class="target-label">🎯 预期成果</span>
+        改善团队沟通模式，增强团队凝聚力
+      </div>
+    </div>
+    <div class="module-visual reveal-right">
+      <div class="module-decoration m3"></div>
+      <!-- Module 3 SVG: Harmony - people creating music together -->
+      <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="440" rx="20" fill="#FAF8F2"/>
+        <!-- Sound wave harmony pattern (background) -->
+        <g opacity="0.08">
+          <path d="M0 200 Q55 170 110 200 Q165 230 220 200 Q275 170 330 200 Q385 230 440 200" stroke="#5A8FB5" stroke-width="3" fill="none"/>
+          <path d="M0 220 Q55 190 110 220 Q165 250 220 220 Q275 190 330 220 Q385 250 440 220" stroke="#5A8FB5" stroke-width="3" fill="none"/>
+          <path d="M0 240 Q55 210 110 240 Q165 270 220 240 Q275 210 330 240 Q385 270 440 240" stroke="#5A8FB5" stroke-width="3" fill="none"/>
+        </g>
+        <!-- Two people in musical dialogue -->
+        <!-- Person A (left) -->
+        <g class="svg-harmonize">
+          <circle cx="130" cy="180" r="22" fill="#F5D9D3"/>
+          <path d="M108 175 Q112 155 130 152 Q148 155 152 175" fill="#5A5466" opacity="0.4"/>
+          <path d="M112 198 Q108 225 110 260 L150 260 Q152 225 148 198 Q130 190 112 198Z" fill="#5A8FB5" opacity="0.4"/>
+          <!-- Playing instrument arm -->
+          <path d="M148 215 Q170 230 180 250" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <!-- Small instrument (xylophone) -->
+          <rect x="170" y="240" width="40" height="8" rx="2" fill="#C9A84C" opacity="0.5"/>
+          <rect x="170" y="232" width="40" height="8" rx="2" fill="#C47860" opacity="0.4"/>
+          <rect x="170" y="248" width="40" height="8" rx="2" fill="#5A988C" opacity="0.4"/>
+        </g>
+        <!-- Person B (right) -->
+        <g class="svg-harmonize-d">
+          <circle cx="310" cy="180" r="22" fill="#F5D9D3"/>
+          <path d="M288 175 Q292 155 310 152 Q328 155 332 175" fill="#5A5466" opacity="0.4"/>
+          <path d="M292 198 Q288 225 290 260 L330 260 Q332 225 328 198 Q310 190 292 198Z" fill="#C47860" opacity="0.4"/>
+          <!-- Listening/responding arm -->
+          <path d="M292 215 Q270 230 260 250" stroke="#F5D9D3" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <!-- Small drum -->
+          <ellipse cx="255" cy="258" rx="18" ry="5" fill="#C47860" opacity="0.4"/>
+          <path d="M237 258 Q237 272 244 275 L266 275 Q273 272 273 258" fill="#C47860" opacity="0.35"/>
+        </g>
+        <!-- Sound waves between them (dialogue) -->
+        <g class="svg-float">
+          <path d="M195 210 Q210 195 220 210 Q230 225 240 210" stroke="#5A8FB5" stroke-width="2" fill="none" opacity="0.4" stroke-linecap="round"/>
+        </g>
+        <g class="svg-float-d">
+          <path d="M200 225 Q212 212 220 225 Q228 238 240 225" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.3" stroke-linecap="round"/>
+        </g>
+        <!-- Music notes flowing between -->
+        <g class="svg-note-rise"><text x="210" y="190" font-size="16" fill="#5A8FB5" opacity="0.4">♪</text></g>
+        <g class="svg-note-rise-d"><text x="225" y="185" font-size="14" fill="#C9A84C" opacity="0.4">♫</text></g>
+        <!-- Team circle below (team song creation) -->
+        <g class="svg-breathe">
+          <!-- Person 1 -->
+          <circle cx="160" cy="340" r="14" fill="#F5D9D3"/>
+          <path d="M146 336 Q149 324 160 322 Q171 324 174 336" fill="#5A5466" opacity="0.4"/>
+          <path d="M148 350 Q147 365 148 380 L172 380 Q173 365 172 350 Q160 346 148 350Z" fill="#5A8FB5" opacity="0.3"/>
+          <!-- Person 2 -->
+          <circle cx="220" cy="330" r="14" fill="#F5D9D3"/>
+          <path d="M206 326 Q209 314 220 312 Q231 314 234 326" fill="#5A5466" opacity="0.4"/>
+          <path d="M208 340 Q207 355 208 370 L232 370 Q233 355 232 340 Q220 336 208 340Z" fill="#C47860" opacity="0.3"/>
+          <!-- Person 3 -->
+          <circle cx="280" cy="340" r="14" fill="#F5D9D3"/>
+          <path d="M266 336 Q269 324 280 322 Q291 324 294 336" fill="#5A5466" opacity="0.4"/>
+          <path d="M268 350 Q267 365 268 380 L292 380 Q293 365 292 350 Q280 346 268 350Z" fill="#5A988C" opacity="0.3"/>
+        </g>
+        <!-- Team connection circle -->
+        <circle cx="220" cy="355" r="50" stroke="#5A8FB5" stroke-width="1" fill="none" opacity="0.1" stroke-dasharray="6,4" class="svg-rotate"/>
+        <!-- "Team Song" label -->
+        <g class="svg-float-d2">
+          <rect x="180" y="390" width="80" height="30" rx="15" fill="#D6E6F2" opacity="0.6"/>
+          <text x="220" y="410" text-anchor="middle" font-size="11" fill="#5A8FB5" font-weight="500">团队之歌 🎵</text>
+        </g>
+        <!-- NVC dialogue bubbles -->
+        <g class="svg-float-d3">
+          <rect x="40" y="300" width="80" height="28" rx="14" fill="#D6E6F2" opacity="0.5"/>
+          <text x="80" y="318" text-anchor="middle" font-size="9" fill="#5A8FB5">我感到…因为…</text>
+        </g>
+        <g class="svg-float">
+          <rect x="320" y="300" width="80" height="28" rx="14" fill="#F5D9D3" opacity="0.5"/>
+          <text x="360" y="318" text-anchor="middle" font-size="9" fill="#C47860">我需要…我希望…</text>
+        </g>
+        <!-- Sparkles -->
+        <circle cx="220" cy="140" r="3" fill="#5A8FB5" opacity="0.3" class="svg-pulse"/>
+        <circle cx="100" cy="140" r="2" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="340" cy="140" r="2" fill="#5A988C" opacity="0.3" class="svg-pulse"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 4: 韧性建设与未来展望 ===== -->
+<section class="module-section reverse" id="module4">
+  <div class="module-container">
+    <div class="module-visual reveal-left">
+      <div class="module-decoration m4"></div>
+      <!-- Module 4 SVG: Improvisation - tree growing from music -->
+      <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="440" height="440" rx="20" fill="#F0ECE4"/>
+        <!-- Ground -->
+        <ellipse cx="220" cy="390" rx="160" ry="20" fill="#E2E8D6" opacity="0.4"/>
+        <!-- Tree trunk (growing from music) -->
+        <g class="svg-improvise">
+          <path d="M210 390 Q205 340 200 300 Q195 260 210 230 Q220 210 230 230 Q245 260 240 300 Q235 340 230 390" fill="#C9A84C" opacity="0.3"/>
+        </g>
+        <!-- Tree branches -->
+        <g class="svg-sway">
+          <path d="M210 280 Q180 260 160 240" stroke="#C9A84C" stroke-width="3" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <path d="M230 270 Q260 250 280 235" stroke="#C9A84C" stroke-width="3" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <path d="M215 250 Q190 230 175 210" stroke="#C9A84C" stroke-width="2.5" fill="none" opacity="0.25" stroke-linecap="round"/>
+          <path d="M225 245 Q250 225 265 205" stroke="#C9A84C" stroke-width="2.5" fill="none" opacity="0.25" stroke-linecap="round"/>
+        </g>
+        <!-- Leaves (resilience) -->
+        <g class="svg-float">
+          <ellipse cx="155" cy="235" rx="15" ry="10" fill="#5A988C" opacity="0.3" transform="rotate(-20 155 235)"/>
+        </g>
+        <g class="svg-float-d">
+          <ellipse cx="285" cy="230" rx="15" ry="10" fill="#5A988C" opacity="0.3" transform="rotate(20 285 230)"/>
+        </g>
+        <g class="svg-float-d2">
+          <ellipse cx="170" cy="205" rx="12" ry="8" fill="#6BB898" opacity="0.25" transform="rotate(-15 170 205)"/>
+        </g>
+        <g class="svg-float-d3">
+          <ellipse cx="270" cy="200" rx="12" ry="8" fill="#6BB898" opacity="0.25" transform="rotate(15 270 200)"/>
+        </g>
+        <g class="svg-float">
+          <ellipse cx="220" cy="195" rx="14" ry="9" fill="#5A988C" opacity="0.2"/>
+        </g>
+        <!-- Music notes as "seeds" growing into tree -->
+        <g class="svg-note-rise"><text x="195" y="320" font-size="16" fill="#C9A84C" opacity="0.5">♪</text></g>
+        <g class="svg-note-rise-d"><text x="235" y="330" font-size="14" fill="#C47860" opacity="0.4">♫</text></g>
+        <g class="svg-note-rise-d2"><text x="210" y="350" font-size="18" fill="#5A988C" opacity="0.4">♩</text></g>
+        <!-- Stars/sparkles at top (future vision) -->
+        <circle cx="220" cy="160" r="4" fill="#C9A84C" opacity="0.3" class="svg-pulse"/>
+        <circle cx="190" cy="170" r="3" fill="#C47860" opacity="0.25" class="svg-pulse"/>
+        <circle cx="250" cy="165" r="3" fill="#5A988C" opacity="0.25" class="svg-pulse"/>
+        <circle cx="160" cy="185" r="2.5" fill="#C9A84C" opacity="0.2" class="svg-pulse"/>
+        <circle cx="280" cy="180" r="2.5" fill="#C9A84C" opacity="0.2" class="svg-pulse"/>
+        <!-- People around the tree (group improvisation) -->
+        <g class="svg-breathe">
+          <!-- Person left -->
+          <circle cx="100" cy="340" r="16" fill="#F5D9D3"/>
+          <path d="M84 336 Q87 322 100 320 Q113 322 116 336" fill="#5A5466" opacity="0.4"/>
+          <path d="M88 352 Q86 370 88 390 L112 390 Q114 370 112 352 Q100 348 88 352Z" fill="#C47860" opacity="0.3"/>
+          <!-- Person right -->
+          <circle cx="340" cy="340" r="16" fill="#F5D9D3"/>
+          <path d="M324 336 Q327 322 340 320 Q353 322 356 336" fill="#5A5466" opacity="0.4"/>
+          <path d="M328 352 Q326 370 328 390 L352 390 Q354 370 352 352 Q340 348 328 352Z" fill="#5A8FB5" opacity="0.3"/>
+        </g>
+        <!-- Instruments being played -->
+        <g class="svg-float-d2">
+          <!-- Small drum near left person -->
+          <ellipse cx="80" cy="375" rx="14" ry="4" fill="#C47860" opacity="0.4"/>
+          <path d="M66 375 Q66 385 72 387 L88 387 Q94 385 94 375" fill="#C47860" opacity="0.3"/>
+        </g>
+        <g class="svg-float-d3">
+          <!-- Kalimba near right person -->
+          <rect x="355" y="368" width="22" height="16" rx="3" fill="#C9A84C" opacity="0.4"/>
+          <line x1="360" y1="368" x2="359" y2="362" stroke="#B89840" stroke-width="1" opacity="0.5"/>
+          <line x1="366" y1="368" x2="365" y2="360" stroke="#B89840" stroke-width="1" opacity="0.5"/>
+          <line x1="372" y1="368" x2="371" y2="363" stroke="#B89840" stroke-width="1" opacity="0.5"/>
+        </g>
+        <!-- "No sheet music" symbol -->
+        <g class="svg-float" opacity="0.2">
+          <rect x="190" y="100" width="60" height="40" rx="4" fill="#E2E8D6"/>
+          <line x1="200" y1="112" x2="240" y2="112" stroke="#7B8A5B" stroke-width="1"/>
+          <line x1="200" y1="120" x2="240" y2="120" stroke="#7B8A5B" stroke-width="1"/>
+          <line x1="200" y1="128" x2="230" y2="128" stroke="#7B8A5B" stroke-width="1"/>
+          <line x1="188" y1="98" x2="252" y2="142" stroke="#C47860" stroke-width="2"/>
+        </g>
+        <!-- Future vision text -->
+        <g class="svg-fade-in-d3">
+          <text x="220" y="90" text-anchor="middle" font-size="12" fill="#C9A84C" font-weight="500" opacity="0.6">即使没有乐谱</text>
+          <text x="220" y="108" text-anchor="middle" font-size="12" fill="#C9A84C" font-weight="500" opacity="0.6">也能创造和谐</text>
+        </g>
+        <!-- Courage card -->
+        <g class="svg-float-d">
+          <rect x="185" y="400" width="70" height="30" rx="6" fill="#FBF4D6" opacity="0.6" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.3"/>
+          <text x="220" y="420" text-anchor="middle" font-size="10" fill="#C9A84C" font-weight="500">勇气纪念卡 🎵</text>
+        </g>
+      </svg>
+    </div>
+    <div class="module-text reveal-right">
+      <div class="module-number">
+        <div class="module-num-badge m4">4</div>
+        <span class="module-label">模块四 · 第4次</span>
+      </div>
+      <h2 class="module-title">韧性建设与未来展望</h2>
+      <div class="module-theme m4">"即兴人生" — 3小时</div>
+      <p class="module-desc">
+        培养心理韧性，建立积极的未来导向。通过音乐叙事与即兴合奏，体验"即使没有乐谱，也能创造和谐"，在音乐中描绘理想的创业生活。
+      </p>
+      <div class="module-details">
+        <div class="detail-item">
+          <div class="detail-icon m4">💪</div>
+          <span>韧性评估：完成心理韧性量表（CD-RISC）</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m4">📖</div>
+          <span>音乐叙事"转折点"：用音乐讲述创业关键转折</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m4">🎶</div>
+          <span>"即兴人生"大合奏：体验没有乐谱也能创造和谐</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m4">🌟</div>
+          <span>未来愿景音乐创作：创作代表"想要的创业生活"的旋律</span>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon m4">🎁</div>
+          <span>结业仪式：互赠"创业勇气"音乐纪念卡</span>
+        </div>
+      </div>
+      <div class="module-params">
+        <span class="param-tag m4">第4次</span>
+        <span class="param-tag m4">3小时</span>
+        <span class="param-tag m4">CD-RISC + 即兴合奏</span>
+      </div>
+      <div class="module-target m4">
+        <span class="target-label">🎯 预期成果</span>
+        提升心理韧性，增强创业信心与未来乐观态度
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPLEMENTATION ===== -->
+<section class="impl-section" id="implementation">
+  <div class="impl-container">
+    <div class="section-header reveal">
+      <div class="section-tag impl">⚙ 实施适配</div>
+      <h2 class="section-title">以人为本的实施策略</h2>
+      <p class="section-subtitle">无需音乐基础，强调"声音表达"而非"音乐表演"，让每位创业者安心参与</p>
+    </div>
+
+    <div class="impl-illustration reveal-scale">
+      <!-- Implementation SVG -->
+      <svg viewBox="0 0 700 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="220" rx="20" fill="#FAF8F2"/>
+        <!-- Timeline -->
+        <line x1="80" y1="110" x2="620" y2="110" stroke="#D4E8E2" stroke-width="3" stroke-linecap="round"/>
+        <!-- Month markers -->
+        <g class="svg-float">
+          <circle cx="150" cy="110" r="20" fill="#F5DDD3" stroke="#C47860" stroke-width="2"/>
+          <text x="150" y="106" text-anchor="middle" font-size="11" fill="#C47860" font-weight="700">M1</text>
+          <text x="150" y="118" text-anchor="middle" font-size="8" fill="#C47860">破冰</text>
+          <text x="150" y="150" text-anchor="middle" font-size="10" fill="#5A5466">创业者之声</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="300" cy="110" r="20" fill="#D4E8E2" stroke="#5A988C" stroke-width="2"/>
+          <text x="300" y="106" text-anchor="middle" font-size="11" fill="#5A988C" font-weight="700">M2</text>
+          <text x="300" y="118" text-anchor="middle" font-size="8" fill="#5A988C">调频</text>
+          <text x="300" y="150" text-anchor="middle" font-size="10" fill="#5A5466">认知重构</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="450" cy="110" r="20" fill="#D6E6F2" stroke="#5A8FB5" stroke-width="2"/>
+          <text x="450" y="106" text-anchor="middle" font-size="11" fill="#5A8FB5" font-weight="700">M3</text>
+          <text x="450" y="118" text-anchor="middle" font-size="8" fill="#5A8FB5">和声</text>
+          <text x="450" y="150" text-anchor="middle" font-size="10" fill="#5A5466">团队沟通</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="600" cy="110" r="20" fill="#FBF4D6" stroke="#C9A84C" stroke-width="2"/>
+          <text x="600" y="106" text-anchor="middle" font-size="11" fill="#C9A84C" font-weight="700">M4</text>
+          <text x="600" y="118" text-anchor="middle" font-size="8" fill="#C9A84C">即兴</text>
+          <text x="600" y="150" text-anchor="middle" font-size="10" fill="#5A5466">韧性展望</text>
+        </g>
+        <!-- Music notes along timeline -->
+        <g class="svg-note-rise"><text x="200" y="90" font-size="14" fill="#C47860" opacity="0.4">♪</text></g>
+        <g class="svg-note-rise-d"><text x="370" y="85" font-size="12" fill="#5A988C" opacity="0.4">♫</text></g>
+        <g class="svg-note-rise-d2"><text x="520" y="88" font-size="14" fill="#5A8FB5" opacity="0.4">♩</text></g>
+        <!-- Arrow at end -->
+        <path d="M625 110 L640 110" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+        <path d="M635 105 L640 110 L635 115" stroke="#C9A84C" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <div class="impl-grid stagger">
+      <div class="impl-card reveal" style="--i:0">
+        <div class="impl-card-icon c1">📅</div>
+        <h3>时间安排</h3>
+        <p>每月1次，每次3小时（建议安排在周末下午），连续4个月，循序渐进地推进心理建设</p>
+      </div>
+      <div class="impl-card reveal" style="--i:1">
+        <div class="impl-card-icon c2">🏢</div>
+        <h3>场地要求</h3>
+        <p>宽敞的活动空间，配备基础打击乐器、旋律乐器及音响设备，营造舒适的音乐体验环境</p>
+      </div>
+      <div class="impl-card reveal" style="--i:2">
+        <div class="impl-card-icon c3">👥</div>
+        <h3>人员配置</h3>
+        <p>1名注册音乐治疗师（主带领）+ 1名心理咨询师（协同带领，负责心理评估与危机干预）</p>
+      </div>
+      <div class="impl-card reveal" style="--i:3">
+        <div class="impl-card-icon c4">🎵</div>
+        <h3>音乐背景适配</h3>
+        <p>无需参与者具备音乐基础，强调"声音表达"而非"音乐表演"，降低参与门槛</p>
+      </div>
+      <div class="impl-card reveal" style="--i:4">
+        <div class="impl-card-icon c5">🔗</div>
+        <h3>创业场景融入</h3>
+        <p>在讨论与分享环节自然融入创业话题，避免让参与者感到"脱离实际"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONG-TERM MECHANISM ===== -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">长效保障机制</div>
+      <h2 class="section-title">可持续的长效保障机制</h2>
+      <p class="section-subtitle">从效果评估到文化建设，构建自我运转的心理支持生态</p>
+    </div>
+
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0">
+        <div class="longterm-card-icon l1">📊</div>
+        <div>
+          <h3>效果评估</h3>
+          <p>工作坊前后分别测量ESS、CD-RISC、主观幸福感量表（SWB），追踪心理指标变化</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:1">
+        <div class="longterm-card-icon l2">🤝</div>
+        <div>
+          <h3>创业导师联动</h3>
+          <p>将心理支持与创业辅导有机结合，定期举办"心理+商业"联合沙龙</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:2">
+        <div class="longterm-card-icon l3">👥</div>
+        <div>
+          <h3>同伴互助小组</h3>
+          <p>工作坊结束后建立创业者互助小组，每月自发聚会，持续支持</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:3">
+        <div class="longterm-card-icon l4">🏥</div>
+        <div>
+          <h3>危机干预通道</h3>
+          <p>建立与专业心理咨询机构的绿色通道，为需要深度支持的创业者提供转介服务</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:4">
+        <div class="longterm-card-icon l5">🏢</div>
+        <div>
+          <h3>孵化器文化融入</h3>
+          <p>将心理健康意识纳入孵化器文化建设，定期举办心理健康主题活动</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="longterm-illustration reveal-scale">
+      <!-- Long-term mechanism SVG: Ecosystem cycle -->
+      <svg viewBox="0 0 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="200" rx="20" fill="#F0ECE4"/>
+        <!-- Central hub -->
+        <circle cx="350" cy="100" r="40" fill="#EDE0F3" opacity="0.5"/>
+        <circle cx="350" cy="100" r="28" fill="#EDE0F3" opacity="0.3"/>
+        <text x="350" y="96" text-anchor="middle" font-size="16">♻️</text>
+        <text x="350" y="112" text-anchor="middle" font-size="9" fill="#967BA5" font-weight="500">自我运转</text>
+        <!-- Orbiting nodes -->
+        <g class="svg-float">
+          <circle cx="350" cy="20" r="18" fill="#D4E8E2" opacity="0.8"/>
+          <text x="350" y="25" text-anchor="middle" font-size="14">📊</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="480" cy="45" r="18" fill="#F5DDD3" opacity="0.8"/>
+          <text x="480" y="50" text-anchor="middle" font-size="14">🤝</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="530" cy="120" r="18" fill="#EDE0F3" opacity="0.8"/>
+          <text x="530" y="125" text-anchor="middle" font-size="14">👥</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="480" cy="175" r="18" fill="#FBF4D6" opacity="0.8"/>
+          <text x="480" y="180" text-anchor="middle" font-size="14">🏥</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="220" cy="175" r="18" fill="#D6E6F2" opacity="0.8"/>
+          <text x="220" y="180" text-anchor="middle" font-size="14">🏢</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="170" cy="120" r="18" fill="#D4E8E2" opacity="0.8"/>
+          <text x="170" y="125" text-anchor="middle" font-size="14">🎵</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="220" cy="45" r="18" fill="#F5D9D3" opacity="0.8"/>
+          <text x="220" y="50" text-anchor="middle" font-size="14">💪</text>
+        </g>
+        <!-- Connecting orbit -->
+        <circle cx="350" cy="100" r="85" stroke="#EDE0F3" stroke-width="1.5" fill="none" stroke-dasharray="8,6" opacity="0.4" class="svg-spin-slow"/>
+        <!-- Arrow indicators on orbit -->
+        <path d="M375 22 Q410 28 440 42" stroke="#967BA5" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M498 60 Q520 85 528 108" stroke="#C47860" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M525 138 Q510 158 490 170" stroke="#5A988C" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M462 180 Q350 200 240 180" stroke="#5A8FB5" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M205 162 Q180 140 175 118" stroke="#C9A84C" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M190 55 Q200 35 225 28" stroke="#967BA5" stroke-width="1" fill="none" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs ===== -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">🌍 可持续发展</div>
+      <h2 class="section-title">SDGs & ESG 目标融合</h2>
+      <p class="section-subtitle">将创业者心理健康与联合国可持续发展目标深度结合</p>
+    </div>
+
+    <div class="sdgs-illustration reveal-scale">
+      <!-- SDGs SVG: Interconnected goals -->
+      <svg viewBox="0 0 700 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="180" rx="20" fill="#FAF8F2"/>
+        <!-- Connection web -->
+        <line x1="175" y1="90" x2="350" y2="90" stroke="#EDE0F3" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+        <line x1="350" y1="90" x2="525" y2="90" stroke="#D4E8E2" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+        <line x1="175" y1="90" x2="525" y2="90" stroke="#FBF4D6" stroke-width="1" stroke-dasharray="4,6" opacity="0.3"/>
+        <!-- SDG 3 -->
+        <g class="svg-float">
+          <circle cx="175" cy="90" r="40" fill="#F5DDD3" opacity="0.4"/>
+          <circle cx="175" cy="90" r="30" fill="#F5DDD3" opacity="0.3"/>
+          <text x="175" y="82" text-anchor="middle" font-size="20" fill="#C47860" font-weight="700">3</text>
+          <text x="175" y="98" text-anchor="middle" font-size="8" fill="#C47860" font-weight="500">良好健康</text>
+          <text x="175" y="108" text-anchor="middle" font-size="7" fill="#C47860" opacity="0.7">与福祉</text>
+        </g>
+        <!-- SDG 8 -->
+        <g class="svg-float-d">
+          <circle cx="350" cy="90" r="40" fill="#D4E8E2" opacity="0.4"/>
+          <circle cx="350" cy="90" r="30" fill="#D4E8E2" opacity="0.3"/>
+          <text x="350" y="82" text-anchor="middle" font-size="20" fill="#5A988C" font-weight="700">8</text>
+          <text x="350" y="98" text-anchor="middle" font-size="8" fill="#5A988C" font-weight="500">体面工作</text>
+          <text x="350" y="108" text-anchor="middle" font-size="7" fill="#5A988C" opacity="0.7">与经济增长</text>
+        </g>
+        <!-- SDG 9 -->
+        <g class="svg-float-d2">
+          <circle cx="525" cy="90" r="40" fill="#D6E6F2" opacity="0.4"/>
+          <circle cx="525" cy="90" r="30" fill="#D6E6F2" opacity="0.3"/>
+          <text x="525" y="82" text-anchor="middle" font-size="20" fill="#5A8FB5" font-weight="700">9</text>
+          <text x="525" y="98" text-anchor="middle" font-size="8" fill="#5A8FB5" font-weight="500">产业创新</text>
+          <text x="525" y="108" text-anchor="middle" font-size="7" fill="#5A8FB5" opacity="0.7">与基础设施</text>
+        </g>
+        <!-- ESG-S badge -->
+        <g class="svg-float-d3">
+          <rect x="580" y="140" width="100" height="30" rx="15" fill="#FBF4D6" opacity="0.7" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.3"/>
+          <text x="630" y="160" text-anchor="middle" font-size="10" fill="#C9A84C" font-weight="600">ESG-S</text>
+        </g>
+        <!-- Sparkles -->
+        <circle cx="100" cy="50" r="3" fill="#C47860" opacity="0.2" class="svg-pulse"/>
+        <circle cx="600" cy="50" r="3" fill="#5A8FB5" opacity="0.2" class="svg-pulse"/>
+        <circle cx="350" cy="30" r="2.5" fill="#5A988C" opacity="0.2" class="svg-pulse"/>
+      </svg>
+    </div>
+
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0">
+        <div class="sdg-badge">03</div>
+        <div>
+          <h3>良好健康与福祉</h3>
+          <p>提升创业者心理健康水平，预防创业倦怠与心理危机，守护每一位创业者的身心健康</p>
+        </div>
+      </div>
+      <div class="sdg-card reveal" style="--i:1">
+        <div class="sdg-badge">08</div>
+        <div>
+          <h3>体面工作与经济增长</h3>
+          <p>支持创业者可持续发展，促进高质量就业创造，让创业成为经济增长的良性引擎</p>
+        </div>
+      </div>
+      <div class="sdg-card reveal" style="--i:2">
+        <div class="sdg-badge">09</div>
+        <div>
+          <h3>产业创新与基础设施</h3>
+          <p>通过心理资本建设支持创新创业生态，为产业创新提供坚实的心理基础设施</p>
+        </div>
+      </div>
+      <div class="sdg-card reveal" style="--i:3">
+        <div class="sdg-badge">S</div>
+        <div>
+          <h3>ESG-S 社会责任</h3>
+          <p>孵化器履行对入驻企业家的全面支持责任，将心理健康纳入企业社会责任体系</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用音乐照亮创业之路 🎵</h2>
+    <p class="footer-text">每位创业者都值得被倾听，每段创业旅程都值得被温柔以待。让音乐成为创业路上最温暖的力量。</p>
+    <div class="footer-hearts">🥁 🎵 💛 🌿</div>
+  </div>
+</footer>
+
+<script>
+// ===== Scroll Progress Bar =====
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+});
+
+// ===== Navigation Dots =====
+const dots = document.querySelectorAll('.nav-dot');
+const sections = ['hero', 'module1', 'module2', 'module3', 'module4', 'implementation', 'longterm', 'sdgs'];
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = dot.getAttribute('data-target');
+    document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+const sectionEls = sections.map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let current = 0;
+  sectionEls.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2) current = i;
+  });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === current);
+  });
+});
+
+// ===== Scroll Reveal Animations =====
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ===== Parallax effect for hero shapes =====
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const shapes = document.querySelectorAll('.hero-shape');
+  shapes.forEach((shape, i) => {
+    const speed = 0.03 + i * 0.02;
+    shape.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+});
+</script>
+
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

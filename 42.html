@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>回归自然，绿色出行 — 社区无车日自然疗愈与环保教育周</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --forest:#3D8B6E;--forest-light:#D4EDE2;--forest-pale:#E8F5EE;
+    --leaf:#5AAE7A;--leaf-light:#D9F0E4;
+    --sky:#5A9EC4;--sky-light:#D6EAF5;
+    --earth:#8B7355;--earth-light:#E8DDD0;
+    --sun:#D4A843;--sun-light:#FBF4D6;
+    --bloom:#C47888;--bloom-light:#F2DDE2;
+    --lavender:#967BA5;--lavender-light:#EDE0F3;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --peach:#F5E0D0;--surface:#F0ECE4;
+    --deep:#2D3A2E;--soft:#5A6B5C;
+    --coral:#D97A6A;--coral-light:#F5DDD3;
+    --mint:#6BB898;--olive:#7B8A5B;--olive-light:#E2E8D6;
+    --amber:#C9A84C;--amber-light:#F5EDCF;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--forest),var(--leaf),var(--sky),var(--sun),var(--bloom));width:0%;transition:width .1s linear}
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
+  .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--forest);transform:scale(1.5);box-shadow:0 0 10px rgba(61,139,110,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--forest-pale) 0%,var(--cream) 30%,var(--sky-light) 65%,var(--sun-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:420px;height:420px;background:var(--forest);top:-120px;right:-100px;animation:floatShape 9s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:320px;height:320px;background:var(--sky);bottom:-80px;left:-80px;animation:floatShape 11s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--leaf);top:25%;left:8%;animation:floatShape 13s ease-in-out infinite}
+  .hero-shape:nth-child(4){width:160px;height:160px;background:var(--sun);bottom:20%;right:15%;animation:floatShape 10s ease-in-out infinite reverse}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(61,139,110,.12);border-radius:20px;font-size:13px;color:var(--forest);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.3;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--forest)}.hero-title .accent2{color:var(--sky)}
+  .hero-subtitle{font-size:clamp(14px,2vw,17px);color:var(--soft);font-weight:300;margin-bottom:28px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+  .hero-meta-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .hero-meta-icon.green{background:rgba(61,139,110,.15)}.hero-meta-icon.blue{background:rgba(90,158,196,.12)}
+  .hero-meta-icon.gold{background:rgba(212,168,67,.15)}.hero-meta-icon.pink{background:rgba(196,120,136,.12)}
+  .hero-illustration{margin-top:36px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:680px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block}
+
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+  .day-section{min-height:100vh;display:flex;align-items:center;padding:80px 24px;position:relative}
+  .day-section:nth-child(odd){background:var(--cream-pale)}.day-section:nth-child(even){background:var(--surface)}
+  .day-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .day-section.reverse .day-container{direction:rtl}.day-section.reverse .day-container>*{direction:ltr}
+
+  .day-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+  .day-num-badge{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:#fff}
+  .day-num-badge.d1{background:linear-gradient(135deg,#3D8B6E,#5AAE7A)}.day-num-badge.d2{background:linear-gradient(135deg,#2D6B4E,#3D8B6E)}
+  .day-num-badge.d3{background:linear-gradient(135deg,#D4A843,#E8C86A)}.day-num-badge.d4{background:linear-gradient(135deg,#5A9EC4,#7AB8D8)}
+  .day-num-badge.d5{background:linear-gradient(135deg,#C47888,#D89AA8)}.day-num-badge.d6{background:linear-gradient(135deg,#967BA5,#B8A0C4)}
+  .day-num-badge.d7{background:linear-gradient(135deg,#7B8A5B,#9AAD6E)}
+  .day-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+
+  .day-title{font-family:'Noto Serif SC',serif;font-size:clamp(22px,3.2vw,34px);font-weight:700;margin-bottom:4px;line-height:1.4}
+  .day-theme{font-size:14px;font-weight:500;margin-bottom:14px}
+  .day-theme.d1{color:var(--forest)}.day-theme.d2{color:#2D6B4E}.day-theme.d3{color:var(--sun)}
+  .day-theme.d4{color:var(--sky)}.day-theme.d5{color:var(--bloom)}.day-theme.d6{color:var(--lavender)}.day-theme.d7{color:var(--olive)}
+
+  .day-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:18px}
+  .day-details{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+  .detail-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--soft)}
+  .detail-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+  .detail-icon.d1{background:rgba(61,139,110,.12)}.detail-icon.d2{background:rgba(45,107,78,.12)}
+  .detail-icon.d3{background:rgba(212,168,67,.12)}.detail-icon.d4{background:rgba(90,158,196,.12)}
+  .detail-icon.d5{background:rgba(196,120,136,.12)}.detail-icon.d6{background:rgba(150,123,165,.12)}
+  .detail-icon.d7{background:rgba(123,138,91,.12)}
+
+  .day-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .day-tag{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500}
+  .day-tag.d1{background:rgba(61,139,110,.08);color:var(--forest)}.day-tag.d2{background:rgba(45,107,78,.08);color:#2D6B4E}
+  .day-tag.d3{background:rgba(212,168,67,.08);color:var(--sun)}.day-tag.d4{background:rgba(90,158,196,.08);color:var(--sky)}
+  .day-tag.d5{background:rgba(196,120,136,.08);color:var(--bloom)}.day-tag.d6{background:rgba(150,123,165,.08);color:var(--lavender)}
+  .day-tag.d7{background:rgba(123,138,91,.08);color:var(--olive)}
+
+  .day-benefit{padding:14px 18px;border-radius:12px;font-size:13px;color:var(--soft);line-height:1.7}
+  .day-benefit.d1{background:rgba(61,139,110,.06);border-left:3px solid var(--forest)}
+  .day-benefit.d2{background:rgba(45,107,78,.06);border-left:3px solid #2D6B4E}
+  .day-benefit.d3{background:rgba(212,168,67,.06);border-left:3px solid var(--sun)}
+  .day-benefit.d4{background:rgba(90,158,196,.06);border-left:3px solid var(--sky)}
+  .day-benefit.d5{background:rgba(196,120,136,.06);border-left:3px solid var(--bloom)}
+  .day-benefit.d6{background:rgba(150,123,165,.06);border-left:3px solid var(--lavender)}
+  .day-benefit.d7{background:rgba(123,138,91,.06);border-left:3px solid var(--olive)}
+  .benefit-label{font-weight:600;font-size:12px;letter-spacing:1px;margin-bottom:4px;display:block}
+
+  .day-visual{position:relative;perspective:800px}
+  .day-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+  .day-decoration{position:absolute;width:80px;height:80px;border-radius:50%;opacity:.1;z-index:-1}
+  .day-decoration.d1{background:var(--forest);top:-20px;right:-20px}.day-decoration.d2{background:#2D6B4E;bottom:-20px;left:-20px}
+  .day-decoration.d3{background:var(--sun);top:-20px;left:-20px}.day-decoration.d4{background:var(--sky);bottom:-20px;right:-20px}
+  .day-decoration.d5{background:var(--bloom);top:-20px;right:-20px}.day-decoration.d6{background:var(--lavender);bottom:-20px;left:-20px}
+  .day-decoration.d7{background:var(--olive);top:-20px;left:-20px}
+
+  .impl-section{padding:100px 24px;background:linear-gradient(180deg,var(--surface) 0%,var(--cream-pale) 100%)}
+  .impl-container,.longterm-container,.sdgs-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:56px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.impl{background:rgba(61,139,110,.12);color:var(--forest)}
+  .section-tag.longterm{background:rgba(150,123,165,.12);color:var(--lavender)}
+  .section-tag.sdgs{background:rgba(212,168,67,.15);color:var(--sun)}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+
+  .impl-grid,.longterm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
+  .impl-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(61,139,110,.06);transition:transform .3s,box-shadow .3s}
+  .impl-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .impl-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+  .impl-card-icon.c1{background:rgba(61,139,110,.1)}.impl-card-icon.c2{background:rgba(90,158,196,.1)}
+  .impl-card-icon.c3{background:rgba(212,168,67,.1)}.impl-card-icon.c4{background:rgba(196,120,136,.1)}
+  .impl-card-icon.c5{background:rgba(150,123,165,.1)}
+  .impl-card h3{font-size:16px;font-weight:600;margin-bottom:8px}.impl-card p{font-size:14px;color:var(--soft);line-height:1.7}
+
+  .impl-illustration,.longterm-illustration,.sdgs-illustration{max-width:700px;margin:0 auto 40px;border-radius:20px;overflow:hidden}
+  .impl-illustration svg,.longterm-illustration svg,.sdgs-illustration svg{width:100%;height:auto;display:block}
+
+  .longterm-section{padding:100px 24px;background:var(--cream-pale)}
+  .longterm-card{padding:28px;border-radius:16px;background:var(--surface);border:1px solid rgba(61,139,110,.06);transition:transform .3s,box-shadow .3s;display:flex;align-items:flex-start;gap:16px}
+  .longterm-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .longterm-card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .longterm-card-icon.l1{background:rgba(61,139,110,.1)}.longterm-card-icon.l2{background:rgba(90,158,196,.1)}
+  .longterm-card-icon.l3{background:rgba(212,168,67,.1)}.longterm-card-icon.l4{background:rgba(196,120,136,.1)}
+  .longterm-card h3{font-size:15px;font-weight:600;margin-bottom:6px}.longterm-card p{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .sdgs-section{padding:100px 24px;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .sdgs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:50px}
+  .sdg-card{padding:28px;border-radius:16px;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(61,139,110,.08),rgba(61,139,110,.02));border:1px solid rgba(61,139,110,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(90,158,196,.08),rgba(90,158,196,.02));border:1px solid rgba(90,158,196,.1)}
+  .sdg-card:nth-child(3){background:linear-gradient(135deg,rgba(212,168,67,.08),rgba(212,168,67,.02));border:1px solid rgba(212,168,67,.1)}
+  .sdg-card:nth-child(4){background:linear-gradient(135deg,rgba(196,120,136,.08),rgba(196,120,136,.02));border:1px solid rgba(196,120,136,.1)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--forest)}.sdg-card:nth-child(2) .sdg-num{color:var(--sky)}
+  .sdg-card:nth-child(3) .sdg-num{color:var(--sun)}.sdg-card:nth-child(4) .sdg-num{color:var(--bloom)}
+  .sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}.sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+  .reveal-scale{opacity:0;transform:scale(.9);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-scale.visible{opacity:1;transform:scale(1)}
+  .stagger>*{transition-delay:calc(var(--i,0)*.12s)}
+
+  .svg-float{animation:svgFloat 4s ease-in-out infinite}.svg-float-d{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2{animation:svgFloat 4s ease-in-out 2s infinite}.svg-float-d3{animation:svgFloat 4s ease-in-out 3s infinite}
+  .svg-pulse{animation:svgPulse 3s ease-in-out infinite}.svg-breathe{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-sway{animation:svgSway 6s ease-in-out infinite}.svg-walk{animation:svgWalk 2s ease-in-out infinite}
+  .svg-grow{animation:svgGrow 4s ease-in-out infinite}.svg-bird{animation:svgBird 3s ease-in-out infinite}
+  .svg-bird-d{animation:svgBird 3s ease-in-out 1s infinite}.svg-water{animation:svgWater 4s ease-in-out infinite}
+  .svg-leaf-fall{animation:svgLeafFall 5s ease-in-out infinite}.svg-leaf-fall-d{animation:svgLeafFall 5s ease-in-out 2s infinite}
+  .svg-leaf-fall-d2{animation:svgLeafFall 5s ease-in-out 3.5s infinite}.svg-firefly{animation:svgFirefly 3s ease-in-out infinite}
+  .svg-firefly-d{animation:svgFirefly 3s ease-in-out 1.5s infinite}.svg-firefly-d2{animation:svgFirefly 3s ease-in-out 3s infinite}
+  .svg-music-note{animation:svgMusicNote 3s ease-in-out infinite}.svg-music-note-d{animation:svgMusicNote 3s ease-in-out 1s infinite}
+  .svg-drop{animation:svgDrop 2.5s ease infinite}.svg-drop-d{animation:svgDrop 2.5s ease .8s infinite}
+  .svg-ring{transform:scale(0);opacity:0;animation:svgRing 3s ease-out infinite}
+  .svg-ring-d{animation:svgRing 3s ease-out 1s infinite}.svg-ring-d2{animation:svgRing 3s ease-out 2s infinite}
+
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.15);opacity:1}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes svgWalk{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+  @keyframes svgGrow{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+  @keyframes svgBird{0%,100%{transform:translate(0,0)}25%{transform:translate(5px,-4px)}50%{transform:translate(10px,0)}75%{transform:translate(5px,4px)}}
+  @keyframes svgWater{0%,100%{transform:translateX(0) scaleX(1)}50%{transform:translateX(4px) scaleX(1.02)}}
+  @keyframes svgLeafFall{0%{transform:translateY(0) rotate(0deg);opacity:.7}50%{transform:translateY(15px) rotate(20deg);opacity:.5}100%{transform:translateY(30px) rotate(40deg);opacity:0}}
+  @keyframes svgFirefly{0%,100%{opacity:0;transform:translate(0,0)}30%{opacity:.8}70%{opacity:.6;transform:translate(8px,-6px)}100%{opacity:0;transform:translate(12px,-10px)}}
+  @keyframes svgMusicNote{0%{opacity:0;transform:translateY(0) rotate(0deg)}20%{opacity:.7}80%{opacity:.3}100%{opacity:0;transform:translateY(-40px) rotate(15deg)}}
+  @keyframes svgDrop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.7}60%{opacity:.4;transform:translateY(30px)}80%,100%{opacity:0;transform:translateY(40px)}}
+  @keyframes svgRing{0%{transform:scale(.3);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+
+  @media(max-width:768px){
+    .day-container{grid-template-columns:1fr;gap:32px}.day-section{padding:60px 20px}
+    .day-section.reverse .day-container{direction:ltr}
+    .impl-grid,.sdgs-grid,.longterm-grid{grid-template-columns:1fr}
+    .nav-dots{right:12px;gap:8px}.nav-dot{width:7px;height:7px}.nav-dot .tooltip{display:none}
+    .hero-meta{gap:14px}
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="day1"><span class="tooltip">第1天·启动日</span></div>
+  <div class="nav-dot" data-target="day2"><span class="tooltip">第2天·森林浴</span></div>
+  <div class="nav-dot" data-target="day3"><span class="tooltip">第3天·亲子日</span></div>
+  <div class="nav-dot" data-target="day4"><span class="tooltip">第4天·园艺日</span></div>
+  <div class="nav-dot" data-target="day5"><span class="tooltip">第5天·绿色出行</span></div>
+  <div class="nav-dot" data-target="day6"><span class="tooltip">第6天·嘉年华</span></div>
+  <div class="nav-dot" data-target="day7"><span class="tooltip">第7天·反思日</span></div>
+  <div class="nav-dot" data-target="implementation"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs目标</span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">社区无车日 · 自然疗愈与环保教育周</div>
+    <h1 class="hero-title"><span class="accent">回归自然</span>，<span class="accent2">绿色出行</span><br>一周改变一座社区</h1>
+    <p class="hero-subtitle">7天沉浸式自然疗愈体验，融合环保教育与社区共建，让每位居民在自然中找回身心平衡</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon green">🌿</div><span>自然疗愈</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon blue">🚲</div><span>绿色出行</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon gold">👨‍👩‍👧</div><span>全龄参与</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon pink">🌍</div><span>SDGs融合</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 680 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="680" height="340" rx="20" fill="#FAF8F2"/>
+        <defs><linearGradient id="skyG" x1="0" y1="0" x2="0" y2="200"><stop offset="0%" stop-color="#D6EAF5" stop-opacity=".4"/><stop offset="100%" stop-color="#FAF8F2" stop-opacity="0"/></linearGradient><linearGradient id="grassG" x1="0" y1="240" x2="0" y2="340"><stop offset="0%" stop-color="#D9F0E4" stop-opacity=".6"/><stop offset="100%" stop-color="#E8F5EE" stop-opacity=".3"/></linearGradient></defs>
+        <rect x="0" y="0" width="680" height="200" rx="20" fill="url(#skyG)"/>
+        <rect x="0" y="240" width="680" height="100" fill="url(#grassG)"/>
+        <g class="svg-pulse"><circle cx="580" cy="60" r="32" fill="#FBF4D6" opacity=".7"/><circle cx="580" cy="60" r="22" fill="#F5EDCF" opacity=".9"/></g>
+        <g class="svg-float" opacity=".3"><ellipse cx="120" cy="50" rx="40" ry="16" fill="#fff"/><ellipse cx="150" cy="45" rx="30" ry="14" fill="#fff"/><ellipse cx="90" cy="48" rx="25" ry="12" fill="#fff"/></g>
+        <g class="svg-float-d" opacity=".2"><ellipse cx="400" cy="70" rx="35" ry="14" fill="#fff"/><ellipse cx="430" cy="65" rx="28" ry="12" fill="#fff"/></g>
+        <g class="svg-sway"><rect x="80" y="200" width="10" height="50" rx="3" fill="#8B7355" opacity=".4"/><ellipse cx="85" cy="185" rx="30" ry="35" fill="#5AAE7A" opacity=".5"/><ellipse cx="75" cy="195" rx="22" ry="25" fill="#3D8B6E" opacity=".4"/></g>
+        <g class="svg-sway" style="animation-delay:.5s"><rect x="560" y="190" width="12" height="60" rx="3" fill="#8B7355" opacity=".4"/><ellipse cx="566" cy="170" rx="35" ry="40" fill="#5AAE7A" opacity=".45"/><ellipse cx="555" cy="180" rx="25" ry="28" fill="#3D8B6E" opacity=".35"/></g>
+        <g class="svg-sway" style="animation-delay:1s"><rect x="620" y="210" width="8" height="40" rx="3" fill="#8B7355" opacity=".3"/><ellipse cx="624" cy="195" rx="22" ry="28" fill="#7B8A5B" opacity=".4"/></g>
+        <path d="M60 300Q180 270 300 280Q420 290 540 265Q600 255 660 260" stroke="#E8DDD0" stroke-width="20" fill="none" stroke-linecap="round" opacity=".5"/>
+        <g class="svg-walk"><circle cx="200" cy="258" r="8" fill="#F5D9D3"/><path d="M192 266Q190 280 192 295L208 295Q210 280 208 266Z" fill="#5A9EC4" opacity=".6"/><path d="M192 272Q184 282 186 292" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M208 272Q216 282 214 292" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-walk" style="animation-delay:.5s"><circle cx="260" cy="262" r="7" fill="#F5D9D3"/><path d="M253 269Q251 281 253 294L267 294Q269 281 267 269Z" fill="#967BA5" opacity=".5"/><path d="M253 274Q246 283 248 291" stroke="#F5D9D3" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M267 274Q274 283 272 291" stroke="#F5D9D3" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
+        <g transform="translate(380,260)"><circle cx="-18" cy="20" r="14" stroke="#3D8B6E" stroke-width="2" fill="none" opacity=".5"/><circle cx="18" cy="20" r="14" stroke="#3D8B6E" stroke-width="2" fill="none" opacity=".5"/><path d="M-18 20L0 5L18 20" stroke="#3D8B6E" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="0" cy="5" r="3" fill="#3D8B6E" opacity=".4"/></g>
+        <g class="svg-bird" opacity=".4"><path d="M300 40Q305 35 310 40Q315 35 320 40" stroke="#5A6B5C" stroke-width="1.5" fill="none"/></g>
+        <g class="svg-bird-d" opacity=".3"><path d="M340 55Q344 51 348 55Q352 51 356 55" stroke="#5A6B5C" stroke-width="1.2" fill="none"/></g>
+        <g class="svg-float" opacity=".5"><circle cx="140" cy="295" r="5" fill="#C47888"/><circle cx="140" cy="295" r="2" fill="#F5EDCF"/><line x1="140" y1="300" x2="140" y2="312" stroke="#5AAE7A" stroke-width="1.5"/></g>
+        <g class="svg-float-d" opacity=".4"><circle cx="480" cy="280" r="4" fill="#D4A843"/><circle cx="480" cy="280" r="1.5" fill="#FBF4D6"/><line x1="480" y1="284" x2="480" y2="294" stroke="#5AAE7A" stroke-width="1.2"/></g>
+        <g class="svg-leaf-fall" opacity=".5"><ellipse cx="160" cy="120" rx="4" ry="2" fill="#5AAE7A" transform="rotate(30,160,120)"/></g>
+        <g class="svg-leaf-fall-d" opacity=".4"><ellipse cx="450" cy="100" rx="3.5" ry="1.8" fill="#7B8A5B" transform="rotate(-20,450,100)"/></g>
+        <g class="svg-water" opacity=".3"><ellipse cx="100" cy="310" rx="50" ry="12" fill="#D6EAF5"/><path d="M70 308Q85 304 100 308Q115 312 130 308" stroke="#5A9EC4" stroke-width=".8" fill="none" opacity=".5"/></g>
+        <g class="svg-firefly" opacity=".6"><ellipse cx="350" cy="150" rx="3" ry="2" fill="#C47888" transform="rotate(-30,350,150)"/><ellipse cx="356" cy="148" rx="3" ry="2" fill="#D89AA8" transform="rotate(30,356,148)"/></g>
+        <g class="svg-firefly-d" opacity=".5"><ellipse cx="220" cy="170" rx="2.5" ry="1.5" fill="#D4A843" transform="rotate(-20,220,170)"/><ellipse cx="225" cy="168" rx="2.5" ry="1.5" fill="#E8C86A" transform="rotate(20,225,168)"/></g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索七天旅程</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- DAY 1 -->
+<section class="day-section" id="day1">
+  <div class="day-container">
+    <div class="day-text reveal-left">
+      <div class="day-number"><div class="day-num-badge d1">1</div><span class="day-label">周一 · 启动日</span></div>
+      <h2 class="day-title">步行发现社区之美</h2>
+      <div class="day-theme d1">以脚步丈量社区，以目光捕捉自然</div>
+      <p class="day-desc">无车日启动仪式拉开序幕，社区领导宣导绿色出行理念。下午开启"社区自然漫步"，规划一条经过社区公园、绿道、滨水区的3公里步行路线，沿途设置"自然观察站"。</p>
+      <div class="day-details">
+        <div class="detail-item"><div class="detail-icon d1">🚶</div><span>3公里社区自然漫步路线（公园→绿道→滨水区）</span></div>
+        <div class="detail-item"><div class="detail-icon d1">🔭</div><span>自然观察站：引导关注树木、鸟类、昆虫</span></div>
+        <div class="detail-item"><div class="detail-icon d1">📸</div><span>"我眼中的社区自然之美"手机摄影比赛</span></div>
+        <div class="detail-item"><div class="detail-icon d1">📖</div><span>发放《社区绿色出行指南》</span></div>
+      </div>
+      <div class="day-tags"><span class="day-tag d1">启动仪式</span><span class="day-tag d1">自然漫步</span><span class="day-tag d1">摄影比赛</span><span class="day-tag d1">环保教育</span></div>
+      <div class="day-benefit d1"><span class="benefit-label">🎯 核心目标</span>以步行替代驾车，唤醒居民对社区自然环境的感知与热爱</div>
+    </div>
+    <div class="day-visual reveal-right"><div class="day-decoration d1"></div>
+      <svg viewBox="0 0 440 420" fill="none"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/><rect x="0" y="0" width="440" height="180" rx="20" fill="#D6EAF5" opacity=".2"/>
+        <circle cx="380" cy="50" r="24" fill="#FBF4D6" opacity=".6" class="svg-pulse"/>
+        <g class="svg-float" opacity=".25"><ellipse cx="100" cy="40" rx="30" ry="12" fill="#fff"/><ellipse cx="125" cy="36" rx="22" ry="10" fill="#fff"/></g>
+        <g class="svg-sway"><rect x="50" y="180" width="8" height="40" rx="3" fill="#8B7355" opacity=".4"/><ellipse cx="54" cy="168" rx="22" ry="28" fill="#5AAE7A" opacity=".5"/></g>
+        <g class="svg-sway" style="animation-delay:.5s"><rect x="160" y="190" width="7" height="35" rx="3" fill="#8B7355" opacity=".35"/><ellipse cx="163" cy="178" rx="20" ry="25" fill="#3D8B6E" opacity=".45"/></g>
+        <g class="svg-sway" style="animation-delay:1s"><rect x="320" y="175" width="9" height="45" rx="3" fill="#8B7355" opacity=".4"/><ellipse cx="324" cy="160" rx="25" ry="32" fill="#5AAE7A" opacity=".5"/></g>
+        <g class="svg-sway" style="animation-delay:1.5s"><rect x="390" y="185" width="7" height="38" rx="3" fill="#8B7355" opacity=".35"/><ellipse cx="393" cy="173" rx="20" ry="26" fill="#7B8A5B" opacity=".4"/></g>
+        <path d="M30 320Q80 290 140 300Q200 310 260 285Q320 260 380 270Q410 275 430 265" stroke="#E8DDD0" stroke-width="28" fill="none" stroke-linecap="round" opacity=".5"/>
+        <path d="M30 320Q80 290 140 300Q200 310 260 285Q320 260 380 270Q410 275 430 265" stroke="#D4C8B8" stroke-width="2" fill="none" stroke-linecap="round" opacity=".3" stroke-dasharray="8,6"/>
+        <g class="svg-float"><circle cx="90" cy="280" r="14" fill="#D4EDE2" opacity=".8"/><text x="90" y="285" text-anchor="middle" font-size="14">🔭</text></g>
+        <g class="svg-float-d"><circle cx="240" cy="295" r="14" fill="#D6EAF5" opacity=".8"/><text x="240" y="300" text-anchor="middle" font-size="14">🐦</text></g>
+        <g class="svg-float-d2"><circle cx="370" cy="265" r="14" fill="#FBF4D6" opacity=".8"/><text x="370" y="270" text-anchor="middle" font-size="14">📸</text></g>
+        <g class="svg-walk"><circle cx="180" cy="272" r="9" fill="#F5D9D3"/><path d="M171 281Q169 296 171 310L189 310Q191 296 189 281Z" fill="#3D8B6E" opacity=".6"/><path d="M171 288Q162 298 164 308" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M189 288Q198 298 196 308" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-bird" opacity=".35"><path d="M200 60Q205 55 210 60Q215 55 220 60" stroke="#5A6B5C" stroke-width="1.5" fill="none"/></g>
+        <g class="svg-leaf-fall" opacity=".4"><ellipse cx="130" cy="130" rx="4" ry="2" fill="#5AAE7A" transform="rotate(30,130,130)"/></g>
+        <g class="svg-leaf-fall-d" opacity=".3"><ellipse cx="300" cy="110" rx="3" ry="1.5" fill="#7B8A5B" transform="rotate(-25,300,110)"/></g>
+        <g class="svg-float-d2" opacity=".6"><rect x="300" y="340" width="24" height="30" rx="3" fill="#D4EDE2" stroke="#3D8B6E" stroke-width="1"/><line x1="306" y1="350" x2="318" y2="350" stroke="#3D8B6E" stroke-width=".8" opacity=".4"/><line x1="306" y1="355" x2="318" y2="355" stroke="#3D8B6E" stroke-width=".8" opacity=".4"/><line x1="306" y1="360" x2="315" y2="360" stroke="#3D8B6E" stroke-width=".8" opacity=".4"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 2 -->
+<section class="day-section reverse" id="day2">
+  <div class="day-container">
+    <div class="day-visual reveal-left"><div class="day-decoration d2"></div>
+      <svg viewBox="0 0 440 420" fill="none"><rect x="0" y="0" width="440" height="420" rx="20" fill="#E8F5EE"/><rect x="0" y="0" width="440" height="420" rx="20" fill="#D4EDE2" opacity=".3"/>
+        <g opacity=".08"><polygon points="200,0 160,420 220,420" fill="#F5EDCF"/><polygon points="280,0 250,420 310,420" fill="#F5EDCF"/><polygon points="340,0 320,420 370,420" fill="#F5EDCF"/></g>
+        <g class="svg-sway"><rect x="60" y="160" width="16" height="120" rx="5" fill="#8B7355" opacity=".5"/><ellipse cx="68" cy="130" rx="45" ry="55" fill="#3D8B6E" opacity=".4"/><ellipse cx="55" cy="150" rx="30" ry="35" fill="#2D6B4E" opacity=".35"/></g>
+        <g class="svg-sway" style="animation-delay:.7s"><rect x="350" y="150" width="14" height="130" rx="5" fill="#8B7355" opacity=".45"/><ellipse cx="357" cy="120" rx="42" ry="52" fill="#3D8B6E" opacity=".38"/><ellipse cx="370" cy="140" rx="28" ry="32" fill="#2D6B4E" opacity=".3"/></g>
+        <g class="svg-sway" style="animation-delay:1.2s"><rect x="180" y="180" width="10" height="100" rx="4" fill="#8B7355" opacity=".35"/><ellipse cx="185" cy="160" rx="28" ry="35" fill="#5AAE7A" opacity=".4"/></g>
+        <g class="svg-sway" style="animation-delay:.4s"><rect x="280" y="170" width="12" height="110" rx="4" fill="#8B7355" opacity=".4"/><ellipse cx="286" cy="145" rx="32" ry="40" fill="#5AAE7A" opacity=".35"/></g>
+        <ellipse cx="220" cy="360" rx="200" ry="30" fill="#D9F0E4" opacity=".5"/>
+        <g class="svg-breathe"><circle cx="220" cy="250" r="18" fill="#F5D9D3"/><path d="M202 246Q206 230 220 227Q234 230 238 246" fill="#7A7486" opacity=".35"/><path d="M212 252Q215 249 218 252" stroke="#4A4458" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M222 252Q225 249 228 252" stroke="#4A4458" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M216 260Q220 263 224 260" stroke="#C47888" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M206 266Q203 290 206 320L234 320Q237 290 234 266Q220 260 206 266Z" fill="#5A9EC4" opacity=".4"/><path d="M206 318Q195 330 190 345Q200 348 212 342Q218 335 220 328" fill="#7A7486" opacity=".25"/><path d="M234 318Q245 330 250 345Q240 348 228 342Q222 335 220 328" fill="#7A7486" opacity=".25"/><path d="M206 285Q192 298 188 315" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M234 285Q248 298 252 315" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-float" opacity=".6"><circle cx="140" cy="220" r="16" fill="#D4EDE2" opacity=".8"/><text x="140" y="225" text-anchor="middle" font-size="14">👁️</text><text x="140" y="248" text-anchor="middle" font-size="9" fill="#2D6B4E" font-weight="500">视觉</text></g>
+        <g class="svg-float-d" opacity=".6"><circle cx="300" cy="210" r="16" fill="#D6EAF5" opacity=".8"/><text x="300" y="215" text-anchor="middle" font-size="14">👂</text><text x="300" y="238" text-anchor="middle" font-size="9" fill="#2D6B4E" font-weight="500">听觉</text></g>
+        <g class="svg-float-d2" opacity=".6"><circle cx="150" cy="300" r="16" fill="#FBF4D6" opacity=".8"/><text x="150" y="305" text-anchor="middle" font-size="14">👃</text><text x="150" y="328" text-anchor="middle" font-size="9" fill="#2D6B4E" font-weight="500">嗅觉</text></g>
+        <g class="svg-float-d3" opacity=".6"><circle cx="290" cy="300" r="16" fill="#F2DDE2" opacity=".8"/><text x="290" y="305" text-anchor="middle" font-size="14">✋</text><text x="290" y="328" text-anchor="middle" font-size="9" fill="#2D6B4E" font-weight="500">触觉</text></g>
+        <g class="svg-leaf-fall" opacity=".4"><ellipse cx="100" cy="100" rx="5" ry="2.5" fill="#5AAE7A" transform="rotate(35,100,100)"/></g>
+        <g class="svg-leaf-fall-d" opacity=".35"><ellipse cx="340" cy="80" rx="4" ry="2" fill="#3D8B6E" transform="rotate(-20,340,80)"/></g>
+        <circle cx="220" cy="190" r="40" stroke="#3D8B6E" stroke-width="1" fill="none" opacity=".1" stroke-dasharray="180 70" class="svg-pulse"/>
+        <circle cx="220" cy="190" r="60" stroke="#5AAE7A" stroke-width=".8" fill="none" opacity=".08" stroke-dasharray="250 130" class="svg-pulse" style="animation-delay:1s"/>
+      </svg>
+    </div>
+    <div class="day-text reveal-right">
+      <div class="day-number"><div class="day-num-badge d2">2</div><span class="day-label">周二 · 自然疗愈日</span></div>
+      <h2 class="day-title">城市森林浴</h2>
+      <div class="day-theme d2">Shinrin-yoku · 在城市绿洲中洗涤身心</div>
+      <p class="day-desc">在社区公园进行系统的森林浴体验，引导式感官觉察涵盖视觉、听觉、嗅觉、触觉四大维度，在自然中进行20分钟正念静坐冥想。下午利用自然材料进行环保艺术创作。</p>
+      <div class="day-details">
+        <div class="detail-item"><div class="detail-icon d2">🌲</div><span>90分钟森林浴体验（社区公园/附近绿地）</span></div>
+        <div class="detail-item"><div class="detail-icon d2">👁️</div><span>视觉：观察树冠层次与光影变化</span></div>
+        <div class="detail-item"><div class="detail-icon d2">👂</div><span>听觉：鸟鸣、风声、树叶沙沙声</span></div>
+        <div class="detail-item"><div class="detail-icon d2">🧘</div><span>20分钟自然正念静坐冥想</span></div>
+        <div class="detail-item"><div class="detail-icon d2">🎨</div><span>下午：自然材料手工创作（落叶、松果、树枝）</span></div>
+      </div>
+      <div class="day-tags"><span class="day-tag d2">森林浴</span><span class="day-tag d2">感官觉察</span><span class="day-tag d2">正念冥想</span><span class="day-tag d2">自然手工</span></div>
+      <div class="day-benefit d2"><span class="benefit-label">🎯 双重益处</span>自然疗愈促进身心放松 + 环保教育了解城市绿地碳汇功能</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 3 -->
+<section class="day-section" id="day3">
+  <div class="day-container">
+    <div class="day-text reveal-left">
+      <div class="day-number"><div class="day-num-badge d3">3</div><span class="day-label">周三 · 亲子自然日</span></div>
+      <h2 class="day-title">小小自然探索家</h2>
+      <div class="day-theme d3">在自然中成长，在探索中联结</div>
+      <p class="day-desc">亲子自然探索活动，儿童在家长陪同下完成自然观察任务卡、自然绘本故事会、亲子种植体验。下午开展垃圾分类互动游戏与"我的绿色承诺"家庭环保计划。</p>
+      <div class="day-details">
+        <div class="detail-item"><div class="detail-icon d3">🔍</div><span>自然寻宝游戏：完成自然观察任务卡</span></div>
+        <div class="detail-item"><div class="detail-icon d3">📚</div><span>户外自然绘本故事会</span></div>
+        <div class="detail-item"><div class="detail-icon d3">🌱</div><span>亲子种植：每个家庭种植一盆绿色植物带回家</span></div>
+        <div class="detail-item"><div class="detail-icon d3">♻️</div><span>垃圾分类互动游戏 + 家庭环保计划制定</span></div>
+      </div>
+      <div class="day-tags"><span class="day-tag d3">亲子探索</span><span class="day-tag d3">自然寻宝</span><span class="day-tag d3">绘本故事</span><span class="day-tag d3">环保教育</span></div>
+      <div class="day-benefit d3"><span class="benefit-label">🎯 双重益处</span>增进亲子关系 + 培养儿童自然联结与环保意识</div>
+    </div>
+    <div class="day-visual reveal-right"><div class="day-decoration d3"></div>
+      <svg viewBox="0 0 440 420" fill="none"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/><rect x="0" y="0" width="440" height="180" rx="20" fill="#FBF4D6" opacity=".2"/>
+        <circle cx="360" cy="55" r="28" fill="#F5EDCF" opacity=".6" class="svg-pulse"/>
+        <g class="svg-sway"><rect x="310" y="140" width="14" height="140" rx="5" fill="#8B7355" opacity=".45"/><ellipse cx="317" cy="110" rx="50" ry="55" fill="#5AAE7A" opacity=".4"/><ellipse cx="300" cy="130" rx="35" ry="38" fill="#3D8B6E" opacity=".35"/></g>
+        <ellipse cx="220" cy="370" rx="200" ry="35" fill="#D9F0E4" opacity=".4"/>
+        <g class="svg-walk"><circle cx="160" cy="240" r="14" fill="#F5D9D3"/><path d="M146 236Q150 218 160 215Q170 218 174 236" fill="#7A7486" opacity=".35"/><circle cx="155" cy="242" r="1.5" fill="#4A4458"/><circle cx="165" cy="242" r="1.5" fill="#4A4458"/><path d="M148 252Q145 275 148 300L172 300Q175 275 172 252Q160 246 148 252Z" fill="#D4A843" opacity=".45"/><path d="M148 262Q136 278 140 298" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M172 262Q184 278 180 298" stroke="#F5D9D3" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-walk" style="animation-delay:.3s"><circle cx="210" cy="275" r="10" fill="#F5D9D3"/><path d="M200 272Q203 260 210 258Q217 260 220 272" fill="#7A7486" opacity=".3"/><circle cx="206" cy="277" r="1.2" fill="#4A4458"/><circle cx="214" cy="277" r="1.2" fill="#4A4458"/><path d="M202 285Q200 302 202 320L218 320Q220 302 218 285Q210 280 202 285Z" fill="#5A9EC4" opacity=".5"/><path d="M202 292Q194 302 196 315" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M218 292Q226 302 224 315" stroke="#F5D9D3" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+        <path d="M172 280Q185 285 200 290" stroke="#F5D9D3" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/>
+        <g class="svg-float" opacity=".7"><circle cx="240" cy="310" r="12" stroke="#D4A843" stroke-width="2" fill="#FBF4D6" opacity=".5"/><line x1="249" y1="319" x2="258" y2="328" stroke="#D4A843" stroke-width="2.5" stroke-linecap="round"/><text x="240" y="315" text-anchor="middle" font-size="10">🔍</text></g>
+        <g class="svg-float-d" opacity=".6"><rect x="60" y="200" width="50" height="65" rx="6" fill="#fff" stroke="#D4A843" stroke-width="1.5"/><text x="85" y="220" text-anchor="middle" font-size="9" fill="#D4A843" font-weight="600">任务卡</text><line x1="70" y1="230" x2="100" y2="230" stroke="#E8DDD0" stroke-width=".8"/><rect x="70" y="236" width="8" height="8" rx="2" fill="#D9F0E4"/><text x="82" y="244" font-size="7" fill="#5A6B5C">树叶</text><rect x="70" y="248" width="8" height="8" rx="2" fill="#D6EAF5"/><text x="82" y="256" font-size="7" fill="#5A6B5C">石头</text></g>
+        <g class="svg-float-d2" opacity=".6"><rect x="350" y="340" width="30" height="25" rx="4" fill="#E8DDD0"/><path d="M355 340Q355 325 365 320Q375 325 375 340" fill="#5AAE7A" opacity=".6"/><line x1="365" y1="340" x2="365" y2="322" stroke="#3D8B6E" stroke-width="1.5"/><ellipse cx="360" cy="322" rx="6" ry="4" fill="#7B8A5B" opacity=".5"/><ellipse cx="370" cy="318" rx="5" ry="3.5" fill="#5AAE7A" opacity=".5"/></g>
+        <g class="svg-float-d3" opacity=".5"><rect x="80" y="310" width="35" height="28" rx="4" fill="#F2DDE2" stroke="#C47888" stroke-width="1"/><text x="97" y="328" text-anchor="middle" font-size="14">📖</text></g>
+        <g class="svg-firefly" opacity=".5"><ellipse cx="280" cy="160" rx="3" ry="2" fill="#D4A843" transform="rotate(-30,280,160)"/><ellipse cx="286" cy="158" rx="3" ry="2" fill="#E8C86A" transform="rotate(30,286,158)"/></g>
+        <g class="svg-firefly-d" opacity=".4"><ellipse cx="140" cy="180" rx="2.5" ry="1.5" fill="#C47888" transform="rotate(-20,140,180)"/><ellipse cx="145" cy="178" rx="2.5" ry="1.5" fill="#D89AA8" transform="rotate(20,145,178)"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 4 -->
+<section class="day-section reverse" id="day4">
+  <div class="day-container">
+    <div class="day-visual reveal-left"><div class="day-decoration d4"></div>
+      <svg viewBox="0 0 440 420" fill="none"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/><rect x="0" y="0" width="440" height="160" rx="20" fill="#D6EAF5" opacity=".15"/>
+        <circle cx="80" cy="50" r="22" fill="#FBF4D6" opacity=".5" class="svg-pulse"/>
+        <rect x="40" y="260" width="160" height="60" rx="8" fill="#E8DDD0" opacity=".5"/><rect x="240" y="260" width="160" height="60" rx="8" fill="#E8DDD0" opacity=".5"/>
+        <rect x="45" y="270" width="150" height="45" rx="6" fill="#8B7355" opacity=".15"/><rect x="245" y="270" width="150" height="45" rx="6" fill="#8B7355" opacity=".15"/>
+        <g class="svg-grow"><line x1="80" y1="270" x2="80" y2="240" stroke="#3D8B6E" stroke-width="2"/><ellipse cx="74" cy="238" rx="8" ry="5" fill="#5AAE7A" opacity=".6"/><ellipse cx="86" cy="235" rx="7" ry="4.5" fill="#7B8A5B" opacity=".5"/></g>
+        <g class="svg-grow" style="animation-delay:.5s"><line x1="120" y1="270" x2="120" y2="230" stroke="#3D8B6E" stroke-width="2"/><ellipse cx="114" cy="228" rx="9" ry="5.5" fill="#5AAE7A" opacity=".55"/><ellipse cx="126" cy="225" rx="8" ry="5" fill="#3D8B6E" opacity=".5"/><circle cx="120" cy="222" r="4" fill="#C47888" opacity=".5"/></g>
+        <g class="svg-grow" style="animation-delay:1s"><line x1="160" y1="270" x2="160" y2="245" stroke="#3D8B6E" stroke-width="1.8"/><ellipse cx="155" cy="243" rx="7" ry="4" fill="#7B8A5B" opacity=".5"/><ellipse cx="165" cy="240" rx="6" ry="3.5" fill="#5AAE7A" opacity=".45"/></g>
+        <g class="svg-grow" style="animation-delay:.3s"><line x1="280" y1="270" x2="280" y2="235" stroke="#3D8B6E" stroke-width="2"/><ellipse cx="274" cy="233" rx="8" ry="5" fill="#5AAE7A" opacity=".55"/><ellipse cx="286" cy="230" rx="7" ry="4.5" fill="#7B8A5B" opacity=".5"/></g>
+        <g class="svg-grow" style="animation-delay:.8s"><line x1="320" y1="270" x2="320" y2="225" stroke="#3D8B6E" stroke-width="2"/><ellipse cx="314" cy="223" rx="9" ry="5.5" fill="#5AAE7A" opacity=".5"/><ellipse cx="326" cy="220" rx="8" ry="5" fill="#3D8B6E" opacity=".45"/><circle cx="320" cy="216" r="3.5" fill="#D4A843" opacity=".5"/></g>
+        <g class="svg-grow" style="animation-delay:1.3s"><line x1="360" y1="270" x2="360" y2="248" stroke="#3D8B6E" stroke-width="1.8"/><ellipse cx="355" cy="246" rx="7" ry="4" fill="#7B8A5B" opacity=".5"/><ellipse cx="365" cy="243" rx="6" ry="3.5" fill="#5AAE7A" opacity=".45"/></g>
+        <g class="svg-breathe"><circle cx="100" cy="210" r="12" fill="#F5D9D3"/><path d="M88 207Q92 194 100 192Q108 194 112 207" fill="#7A7486" opacity=".3"/><path d="M90 218Q88 238 90 258L110 258Q112 238 110 218Q100 213 90 218Z" fill="#5A9EC4" opacity=".45"/><path d="M90 228Q80 240 85 255" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M110 228Q120 240 115 255" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-breathe" style="animation-delay:.5s"><circle cx="340" cy="205" r="12" fill="#F5D9D3"/><path d="M328 202Q332 189 340 187Q348 189 352 202" fill="#7A7486" opacity=".3"/><path d="M330 213Q328 233 330 253L350 253Q352 233 350 213Q340 208 330 213Z" fill="#967BA5" opacity=".4"/><path d="M330 223Q320 235 325 250" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M350 223Q360 235 355 250" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-float" opacity=".6"><rect x="190" y="280" width="28" height="22" rx="4" fill="#5A9EC4" opacity=".3"/><line x1="218" y1="286" x2="235" y2="275" stroke="#5A9EC4" stroke-width="2" stroke-linecap="round" opacity=".4"/><g class="svg-drop" opacity=".4"><circle cx="238" cy="278" r="1.5" fill="#5A9EC4"/></g><g class="svg-drop-d" opacity=".3"><circle cx="242" cy="280" r="1.2" fill="#5A9EC4"/></g></g>
+        <g class="svg-float-d" opacity=".5"><rect x="30" y="340" width="40" height="35" rx="4" fill="#8B7355" opacity=".2"/><text x="50" y="362" text-anchor="middle" font-size="10">♻️</text></g>
+        <g class="svg-float-d2" opacity=".5"><rect x="300" y="340" width="100" height="40" rx="10" fill="#D6EAF5" opacity=".7"/><text x="350" y="356" text-anchor="middle" font-size="9" fill="#5A9EC4" font-weight="500">阳台小农场</text><text x="350" y="370" text-anchor="middle" font-size="8" fill="#5A6B5C">容器种植指南</text></g>
+        <g class="svg-bird" opacity=".3"><path d="M200 60Q205 55 210 60Q215 55 220 60" stroke="#5A6B5C" stroke-width="1.5" fill="none"/></g>
+      </svg>
+    </div>
+    <div class="day-text reveal-right">
+      <div class="day-number"><div class="day-num-badge d4">4</div><span class="day-label">周四 · 社区园艺日</span></div>
+      <h2 class="day-title">我们的共享花园</h2>
+      <div class="day-theme d4">亲手播种绿色，用心培育社区</div>
+      <p class="day-desc">居民共同参与社区花园的种植与维护，种植本地适应性强的蔬菜、香草、花卉。体验园艺疗愈的放松与成就感。下午举办"阳台上的小农场"与"厨余堆肥入门"讲座。</p>
+      <div class="day-details">
+        <div class="detail-item"><div class="detail-icon d4">🌻</div><span>社区花园共建：种植蔬菜、香草、花卉</span></div>
+        <div class="detail-item"><div class="detail-icon d4">🌱</div><span>园艺疗愈：体验种植的放松与成就感</span></div>
+        <div class="detail-item"><div class="detail-icon d4">🏡</div><span>讲座："阳台上的小农场"容器种植指南</span></div>
+        <div class="detail-item"><div class="detail-icon d4">♻️</div><span>讲座："厨余堆肥入门"有机肥料制作</span></div>
+      </div>
+      <div class="day-tags"><span class="day-tag d4">花园共建</span><span class="day-tag d4">园艺疗愈</span><span class="day-tag d4">容器种植</span><span class="day-tag d4">厨余堆肥</span></div>
+      <div class="day-benefit d4"><span class="benefit-label">🎯 双重益处</span>园艺活动促进身心健康 + 学习可持续生活方式</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 5 -->
+<section class="day-section" id="day5">
+  <div class="day-container">
+    <div class="day-text reveal-left">
+      <div class="day-number"><div class="day-num-badge d5">5</div><span class="day-label">周五 · 绿色出行日</span></div>
+      <h2 class="day-title">低碳生活实验室</h2>
+      <div class="day-theme d5">用行动丈量碳减排，用耳朵绘制声音地图</div>
+      <p class="day-desc">鼓励居民尝试公交、地铁、骑行、步行等绿色出行方式，记录碳排放减少量。下午在社区不同地点录制环境声音，制作"社区声音地图"。</p>
+      <div class="day-details">
+        <div class="detail-item"><div class="detail-icon d5">🚌</div><span>绿色出行挑战：公交、地铁、骑行、步行</span></div>
+        <div class="detail-item"><div class="detail-icon d5">🚴</div><span>社区骑行团，探索周边骑行路线</span></div>
+        <div class="detail-item"><div class="detail-icon d5">🎵</div><span>"声音地图"：公园、街道、水边声景录制</span></div>
+        <div class="detail-item"><div class="detail-icon d5">📊</div><span>展示不同出行方式碳排放对比数据</span></div>
+      </div>
+      <div class="day-tags"><span class="day-tag d5">绿色出行</span><span class="day-tag d5">骑行活动</span><span class="day-tag d5">声音地图</span><span class="day-tag d5">碳排对比</span></div>
+      <div class="day-benefit d5"><span class="benefit-label">🎯 核心目标</span>通过体验不同绿色出行方式，建立低碳生活意识与习惯</div>
+    </div>
+    <div class="day-visual reveal-right"><div class="day-decoration d5"></div>
+      <svg viewBox="0 0 440 420" fill="none"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <rect x="0" y="300" width="440" height="80" fill="#E8E3EE" opacity=".3"/><line x1="20" y1="340" x2="420" y2="340" stroke="#fff" stroke-width="2" stroke-dasharray="20,15" opacity=".5"/>
+        <g class="svg-walk"><rect x="40" y="280" width="70" height="40" rx="8" fill="#5A9EC4" opacity=".4"/><rect x="45" y="285" width="25" height="20" rx="4" fill="#D6EAF5" opacity=".6"/><rect x="75" y="285" width="25" height="20" rx="4" fill="#D6EAF5" opacity=".6"/><circle cx="55" cy="322" r="6" fill="#5A6B5C" opacity=".3"/><circle cx="95" cy="322" r="6" fill="#5A6B5C" opacity=".3"/></g>
+        <g transform="translate(200,290)"><circle cx="-15" cy="22" r="14" stroke="#3D8B6E" stroke-width="2" fill="none" opacity=".5"/><circle cx="15" cy="22" r="14" stroke="#3D8B6E" stroke-width="2" fill="none" opacity=".5"/><path d="M-15 22L0 8L15 22" stroke="#3D8B6E" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="0" cy="8" r="3" fill="#3D8B6E" opacity=".4"/><circle cx="0" cy="-5" r="8" fill="#F5D9D3"/><path d="M-6-1Q-8 10-6 18L6 18Q8 10 6-1Q0-4-6-1Z" fill="#C47888" opacity=".4"/></g>
+        <g class="svg-walk" style="animation-delay:.5s"><circle cx="320" cy="290" r="8" fill="#F5D9D3"/><path d="M312 298Q310 312 312 325L328 325Q330 312 328 298Z" fill="#967BA5" opacity=".45"/><path d="M312 304Q304 314 306 323" stroke="#F5D9D3" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M328 304Q336 314 334 323" stroke="#F5D9D3" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-float" opacity=".5"><circle cx="370" cy="200" r="20" fill="#F2DDE2" opacity=".6"/><text x="370" y="205" text-anchor="middle" font-size="16">🎵</text><path d="M395 190Q400 200 395 210" stroke="#C47888" stroke-width="1.5" fill="none" opacity=".4" class="svg-pulse"/><path d="M402 185Q410 200 402 215" stroke="#C47888" stroke-width="1.2" fill="none" opacity=".3" class="svg-pulse" style="animation-delay:.5s"/></g>
+        <g class="svg-float-d" opacity=".4"><circle cx="100" cy="180" r="18" fill="#D6EAF5" opacity=".6"/><text x="100" y="185" text-anchor="middle" font-size="14">🌳</text><path d="M78 170Q72 180 78 190" stroke="#5A9EC4" stroke-width="1.5" fill="none" opacity=".4" class="svg-pulse"/></g>
+        <g class="svg-float-d2" opacity=".4"><circle cx="250" cy="160" r="18" fill="#D4EDE2" opacity=".6"/><text x="250" y="165" text-anchor="middle" font-size="14">💧</text><path d="M272 150Q278 160 272 170" stroke="#3D8B6E" stroke-width="1.5" fill="none" opacity=".4" class="svg-pulse"/></g>
+        <path d="M118 185Q180 170 232 162" stroke="#C47888" stroke-width="1" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <path d="M268 165Q320 175 352 195" stroke="#C47888" stroke-width="1" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <g opacity=".5"><rect x="140" y="60" width="160" height="80" rx="10" fill="#fff" stroke="#E8E3EE" stroke-width="1"/><text x="220" y="78" text-anchor="middle" font-size="9" fill="#5A6B5C" font-weight="600">碳排放对比 (g/km)</text><rect x="160" y="100" width="60" height="6" rx="3" fill="#C47888" opacity=".5"/><text x="155" y="107" text-anchor="end" font-size="7" fill="#C47888">驾车 250</text><rect x="160" y="112" width="24" height="6" rx="3" fill="#D4A843" opacity=".5"/><text x="155" y="119" text-anchor="end" font-size="7" fill="#D4A843">公交 80</text><rect x="160" y="124" width="6" height="6" rx="3" fill="#3D8B6E" opacity=".5"/><text x="155" y="131" text-anchor="end" font-size="7" fill="#3D8B6E">骑行 0</text></g>
+        <g class="svg-float" opacity=".2"><ellipse cx="350" cy="50" rx="30" ry="12" fill="#fff"/><ellipse cx="375" cy="46" rx="22" ry="10" fill="#fff"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 6 -->
+<section class="day-section reverse" id="day6">
+  <div class="day-container">
+    <div class="day-visual reveal-left"><div class="day-decoration d6"></div>
+      <svg viewBox="0 0 440 420" fill="none"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <g opacity=".3"><path d="M20 40Q110 60 220 40Q330 20 420 40" stroke="#967BA5" stroke-width="1.5" fill="none"/><polygon points="80,48 90,48 85,65" fill="#C47888" opacity=".5"/><polygon points="130,52 140,52 135,69" fill="#D4A843" opacity=".5"/><polygon points="180,50 190,50 185,67" fill="#5A9EC4" opacity=".5"/><polygon points="230,48 240,48 235,65" fill="#3D8B6E" opacity=".5"/><polygon points="280,44 290,44 285,61" fill="#967BA5" opacity=".5"/><polygon points="330,40 340,40 335,57" fill="#C47888" opacity=".5"/><polygon points="380,38 390,38 385,55" fill="#D4A843" opacity=".5"/></g>
+        <g class="svg-float"><rect x="30" y="100" width="110" height="90" rx="14" fill="#EDE0F3" opacity=".5"/><text x="85" y="125" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="600">正念体验区</text><text x="55" y="150" text-anchor="middle" font-size="16">🍵</text><text x="85" y="150" text-anchor="middle" font-size="16">🌸</text><text x="115" y="150" text-anchor="middle" font-size="16">✍️</text><text x="85" y="178" text-anchor="middle" font-size="8" fill="#967BA5">茶道·花艺·书法</text></g>
+        <g class="svg-float-d"><rect x="165" y="100" width="110" height="90" rx="14" fill="#F2DDE2" opacity=".5"/><text x="220" y="125" text-anchor="middle" font-size="11" fill="#C47888" font-weight="600">音乐疗愈区</text><text x="195" y="150" text-anchor="middle" font-size="16">🎸</text><text x="220" y="150" text-anchor="middle" font-size="16">🪈</text><text x="245" y="150" text-anchor="middle" font-size="16">🥁</text><text x="220" y="178" text-anchor="middle" font-size="8" fill="#C47888">Acoustic·自然乐器</text></g>
+        <g class="svg-float-d2"><rect x="300" y="100" width="110" height="90" rx="14" fill="#D4EDE2" opacity=".5"/><text x="355" y="125" text-anchor="middle" font-size="11" fill="#3D8B6E" font-weight="600">运动疗愈区</text><text x="330" y="150" text-anchor="middle" font-size="16">🧘</text><text x="355" y="150" text-anchor="middle" font-size="16">☯️</text><text x="380" y="150" text-anchor="middle" font-size="16">🤸</text><text x="355" y="178" text-anchor="middle" font-size="8" fill="#3D8B6E">瑜伽·太极·气功</text></g>
+        <g class="svg-float-d3" opacity=".6"><rect x="60" y="220" width="140" height="70" rx="12" fill="#FBF4D6" opacity=".5"/><text x="130" y="245" text-anchor="middle" font-size="11" fill="#D4A843" font-weight="600">环保创意市集</text><text x="100" y="272" text-anchor="middle" font-size="12">♻️</text><text x="130" y="272" text-anchor="middle" font-size="12">🌿</text><text x="160" y="272" text-anchor="middle" font-size="12">💡</text></g>
+        <g class="svg-float" opacity=".5"><rect x="240" y="220" width="140" height="70" rx="12" fill="#D6EAF5" opacity=".4"/><text x="310" y="245" text-anchor="middle" font-size="11" fill="#5A9EC4" font-weight="600">户外自然电影</text><text x="310" y="272" text-anchor="middle" font-size="12">🎬 🌍</text></g>
+        <g class="svg-firefly" opacity=".4"><circle cx="50" cy="340" r="2" fill="#D4A843"/></g><g class="svg-firefly-d" opacity=".35"><circle cx="150" cy="350" r="1.8" fill="#D4A843"/></g><g class="svg-firefly-d2" opacity=".3"><circle cx="300" cy="340" r="2.2" fill="#D4A843"/></g><g class="svg-firefly" opacity=".25"><circle cx="400" cy="355" r="1.5" fill="#D4A843"/></g>
+        <g class="svg-music-note" opacity=".4"><text x="190" y="210" font-size="14" fill="#C47888">♪</text></g><g class="svg-music-note-d" opacity=".35"><text x="250" y="215" font-size="12" fill="#967BA5">♫</text></g>
+        <g opacity=".15"><circle cx="100" cy="380" r="6" fill="#5A6B5C"/><circle cx="130" cy="378" r="6" fill="#5A6B5C"/><circle cx="160" cy="380" r="6" fill="#5A6B5C"/><circle cx="280" cy="379" r="6" fill="#5A6B5C"/><circle cx="310" cy="381" r="6" fill="#5A6B5C"/><circle cx="340" cy="378" r="6" fill="#5A6B5C"/></g>
+      </svg>
+    </div>
+    <div class="day-text reveal-right">
+      <div class="day-number"><div class="day-num-badge d6">6</div><span class="day-label">周六 · 社区庆典日</span></div>
+      <h2 class="day-title">绿色嘉年华</h2>
+      <div class="day-theme d6">一场属于社区的绿色盛宴</div>
+      <p class="day-desc">全天候社区庆典！上午三大疗愈体验区（正念茶道/花艺/书法、音乐疗愈、运动疗愈），下午环保创意市集与"绿色生活达人"分享会，晚上户外自然电影放映。</p>
+      <div class="day-details">
+        <div class="detail-item"><div class="detail-icon d6">🍵</div><span>正念体验区：茶道、花艺、书法</span></div>
+        <div class="detail-item"><div class="detail-icon d6">🎵</div><span>音乐疗愈区：Acoustic演奏、自然乐器体验</span></div>
+        <div class="detail-item"><div class="detail-icon d6">🧘</div><span>运动疗愈区：户外瑜伽、太极、气功</span></div>
+        <div class="detail-item"><div class="detail-icon d6">♻️</div><span>环保创意市集：旧物改造、环保产品体验</span></div>
+        <div class="detail-item"><div class="detail-icon d6">🎬</div><span>晚上：户外自然纪录片放映</span></div>
+      </div>
+      <div class="day-tags"><span class="day-tag d6">正念体验</span><span class="day-tag d6">音乐疗愈</span><span class="day-tag d6">环保市集</span><span class="day-tag d6">户外电影</span></div>
+      <div class="day-benefit d6"><span class="benefit-label">🎯 核心目标</span>通过多元体验让自然疗愈与环保理念深入人心，营造社区绿色文化</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 7 -->
+<section class="day-section" id="day7">
+  <div class="day-container">
+    <div class="day-text reveal-left">
+      <div class="day-number"><div class="day-num-badge d7">7</div><span class="day-label">周日 · 反思与展望日</span></div>
+      <h2 class="day-title">我们的绿色承诺</h2>
+      <div class="day-theme d7">感恩自然，承诺未来</div>
+      <p class="day-desc">在社区公园进行"自然感恩散步"，书写"给地球的一封信"。下午展示一周成果，颁发"绿色社区公民"证书，成立"社区绿色生活委员会"，发布《社区绿色生活公约》。</p>
+      <div class="day-details">
+        <div class="detail-item"><div class="detail-icon d7">🙏</div><span>"自然感恩散步"——在行走中感恩自然</span></div>
+        <div class="detail-item"><div class="detail-icon d7">✉️</div><span>书写"给地球的一封信"</span></div>
+        <div class="detail-item"><div class="detail-icon d7">🏆</div><span>展示一周成果，颁发"绿色社区公民"证书</span></div>
+        <div class="detail-item"><div class="detail-icon d7">📋</div><span>成立"社区绿色生活委员会"，发布《社区绿色生活公约》</span></div>
+      </div>
+      <div class="day-tags"><span class="day-tag d7">感恩散步</span><span class="day-tag d7">成果展示</span><span class="day-tag d7">绿色证书</span><span class="day-tag d7">持续行动</span></div>
+      <div class="day-benefit d7"><span class="benefit-label">🎯 核心目标</span>将一周体验转化为长期承诺与持续行动</div>
+    </div>
+    <div class="day-visual reveal-right"><div class="day-decoration d7"></div>
+      <svg viewBox="0 0 440 420" fill="none"><rect x="0" y="0" width="440" height="420" rx="20" fill="#FAF8F2"/>
+        <defs><linearGradient id="sunrise" x1="220" y1="0" x2="220" y2="200"><stop offset="0%" stop-color="#FBF4D6" stop-opacity=".3"/><stop offset="100%" stop-color="#FAF8F2" stop-opacity="0"/></linearGradient></defs>
+        <rect x="0" y="0" width="440" height="200" rx="20" fill="url(#sunrise)"/>
+        <g class="svg-pulse"><circle cx="220" cy="80" r="35" fill="#F5EDCF" opacity=".5"/><circle cx="220" cy="80" r="22" fill="#FBF4D6" opacity=".7"/></g>
+        <g opacity=".06"><line x1="220" y1="80" x2="100" y2="20" stroke="#D4A843" stroke-width="2"/><line x1="220" y1="80" x2="340" y2="20" stroke="#D4A843" stroke-width="2"/><line x1="220" y1="80" x2="60" y2="80" stroke="#D4A843" stroke-width="2"/><line x1="220" y1="80" x2="380" y2="80" stroke="#D4A843" stroke-width="2"/><line x1="220" y1="80" x2="100" y2="150" stroke="#D4A843" stroke-width="2"/><line x1="220" y1="80" x2="340" y2="150" stroke="#D4A843" stroke-width="2"/></g>
+        <g class="svg-sway" opacity=".3"><rect x="50" y="160" width="8" height="50" rx="3" fill="#7B8A5B"/><ellipse cx="54" cy="145" rx="22" ry="28" fill="#7B8A5B"/></g>
+        <g class="svg-sway" style="animation-delay:.5s" opacity=".3"><rect x="380" y="155" width="8" height="55" rx="3" fill="#7B8A5B"/><ellipse cx="384" cy="138" rx="24" ry="30" fill="#7B8A5B"/></g>
+        <ellipse cx="220" cy="340" rx="190" ry="35" fill="#D9F0E4" opacity=".3"/>
+        <g class="svg-breathe"><circle cx="220" cy="230" r="16" fill="#F5D9D3"/><path d="M204 226Q208 210 220 207Q232 210 236 226" fill="#7A7486" opacity=".3"/><circle cx="214" cy="232" r="1.5" fill="#4A4458"/><circle cx="226" cy="232" r="1.5" fill="#4A4458"/><path d="M216 240Q220 243 224 240" stroke="#C47888" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M208 244Q205 268 208 295L232 295Q235 268 232 244Q220 238 208 244Z" fill="#7B8A5B" opacity=".4"/><path d="M208 258Q190 272 195 290" stroke="#F5D9D3" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+        <g class="svg-float" opacity=".6"><rect x="160" y="300" width="50" height="35" rx="4" fill="#fff" stroke="#7B8A5B" stroke-width="1.2"/><path d="M160 300L185 318L210 300" stroke="#7B8A5B" stroke-width="1" fill="none" opacity=".5"/><text x="185" y="325" text-anchor="middle" font-size="8" fill="#7B8A5B">给地球的信</text></g>
+        <g class="svg-float-d" opacity=".5"><rect x="280" y="180" width="55" height="40" rx="6" fill="#FBF4D6" stroke="#D4A843" stroke-width="1.2"/><text x="307" y="198" text-anchor="middle" font-size="8" fill="#D4A843" font-weight="600">绿色公民</text><text x="307" y="212" text-anchor="middle" font-size="14">🏆</text></g>
+        <g class="svg-float-d2" opacity=".5"><rect x="60" y="180" width="60" height="40" rx="6" fill="#D4EDE2" stroke="#3D8B6E" stroke-width="1.2"/><text x="90" y="198" text-anchor="middle" font-size="8" fill="#3D8B6E" font-weight="600">绿色委员会</text><text x="90" y="212" text-anchor="middle" font-size="14">🤝</text></g>
+        <g class="svg-bird" opacity=".3"><path d="M150 60Q155 55 160 60Q165 55 170 60" stroke="#5A6B5C" stroke-width="1.5" fill="none"/></g>
+        <g class="svg-bird-d" opacity=".25"><path d="M270 50Q274 46 278 50Q282 46 286 50" stroke="#5A6B5C" stroke-width="1.2" fill="none"/></g>
+        <g class="svg-firefly" opacity=".4"><ellipse cx="320" cy="140" rx="3" ry="2" fill="#C47888" transform="rotate(-25,320,140)"/><ellipse cx="326" cy="138" rx="3" ry="2" fill="#D89AA8" transform="rotate(25,326,138)"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- IMPLEMENTATION -->
+<section class="impl-section" id="implementation">
+  <div class="impl-container">
+    <div class="section-header reveal"><div class="section-tag impl">实施适配</div><h2 class="section-title">因地制宜的实施策略</h2><p class="section-subtitle">场地利用、居民参与、年龄适配、天气预案、合作伙伴五大维度保障落地</p></div>
+    <div class="impl-illustration reveal-scale">
+      <svg viewBox="0 0 700 200" fill="none"><rect x="0" y="0" width="700" height="200" rx="20" fill="#FAF8F2"/>
+        <g class="svg-float"><rect x="20" y="40" width="110" height="120" rx="14" fill="#D4EDE2" opacity=".5"/><text x="75" y="70" text-anchor="middle" font-size="22">🏞️</text><text x="75" y="95" text-anchor="middle" font-size="11" fill="#3D8B6E" font-weight="600">场地利用</text><text x="75" y="115" text-anchor="middle" font-size="9" fill="#5A6B5C">公园·绿道</text><text x="75" y="130" text-anchor="middle" font-size="9" fill="#5A6B5C">活动中心·操场</text></g>
+        <g class="svg-float-d"><rect x="150" y="40" width="110" height="120" rx="14" fill="#D6EAF5" opacity=".5"/><text x="205" y="70" text-anchor="middle" font-size="22">📢</text><text x="205" y="95" text-anchor="middle" font-size="11" fill="#5A9EC4" font-weight="600">居民参与</text><text x="205" y="115" text-anchor="middle" font-size="9" fill="#5A6B5C">微信群·公告栏</text><text x="205" y="130" text-anchor="middle" font-size="9" fill="#5A6B5C">物业通知</text></g>
+        <g class="svg-float-d2"><rect x="280" y="40" width="110" height="120" rx="14" fill="#FBF4D6" opacity=".5"/><text x="335" y="70" text-anchor="middle" font-size="22">👨‍👩‍👧‍👦</text><text x="335" y="95" text-anchor="middle" font-size="11" fill="#D4A843" font-weight="600">年龄适配</text><text x="335" y="115" text-anchor="middle" font-size="9" fill="#5A6B5C">儿童·青年</text><text x="335" y="130" text-anchor="middle" font-size="9" fill="#5A6B5C">中年·老年</text></g>
+        <g class="svg-float-d3"><rect x="410" y="40" width="110" height="120" rx="14" fill="#F2DDE2" opacity=".5"/><text x="465" y="70" text-anchor="middle" font-size="22">☂️</text><text x="465" y="95" text-anchor="middle" font-size="11" fill="#C47888" font-weight="600">天气预案</text><text x="465" y="115" text-anchor="middle" font-size="9" fill="#5A6B5C">室内备选方案</text><text x="465" y="130" text-anchor="middle" font-size="9" fill="#5A6B5C">灵活调整</text></g>
+        <g class="svg-float" style="animation-delay:2s"><rect x="540" y="40" width="110" height="120" rx="14" fill="#EDE0F3" opacity=".5"/><text x="595" y="70" text-anchor="middle" font-size="22">🤝</text><text x="595" y="95" text-anchor="middle" font-size="11" fill="#967BA5" font-weight="600">合作伙伴</text><text x="595" y="115" text-anchor="middle" font-size="9" fill="#5A6B5C">环保组织</text><text x="595" y="130" text-anchor="middle" font-size="9" fill="#5A6B5C">园艺·心理机构</text></g>
+        <line x1="130" y1="100" x2="150" y2="100" stroke="#E8E3EE" stroke-width="2" stroke-dasharray="4,4"/><line x1="260" y1="100" x2="280" y2="100" stroke="#E8E3EE" stroke-width="2" stroke-dasharray="4,4"/><line x1="390" y1="100" x2="410" y2="100" stroke="#E8E3EE" stroke-width="2" stroke-dasharray="4,4"/><line x1="520" y1="100" x2="540" y2="100" stroke="#E8E3EE" stroke-width="2" stroke-dasharray="4,4"/>
+      </svg>
+    </div>
+    <div class="impl-grid stagger">
+      <div class="impl-card reveal" style="--i:0"><div class="impl-card-icon c1">🏞️</div><h3>场地利用</h3><p>充分利用社区公园、绿道、社区活动中心、学校操场等公共空间，打造沉浸式自然体验场景</p></div>
+      <div class="impl-card reveal" style="--i:1"><div class="impl-card-icon c2">📢</div><h3>居民参与</h3><p>通过社区微信群、公告栏、物业通知等多渠道宣传，降低参与门槛，吸引更多居民加入</p></div>
+      <div class="impl-card reveal" style="--i:2"><div class="impl-card-icon c3">👨‍👩‍👧‍👦</div><h3>年龄适配</h3><p>儿童（亲子活动）、青年（骑行、摄影）、中年（园艺、正念）、老年（森林浴、太极），全龄覆盖</p></div>
+      <div class="impl-card reveal" style="--i:3"><div class="impl-card-icon c4">☂️</div><h3>天气预案</h3><p>准备室内备选方案，如雨天将户外活动移至社区活动中心，确保活动不受天气影响</p></div>
+      <div class="impl-card reveal" style="--i:4"><div class="impl-card-icon c5">🤝</div><h3>合作伙伴</h3><p>与当地环保组织、园艺协会、心理咨询机构合作，提升专业性与资源整合能力</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LONG-TERM -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal"><div class="section-tag longterm">长效保障</div><h2 class="section-title">可持续的长效保障机制</h2><p class="section-subtitle">从效果评估到常态化运营，构建自我运转的绿色社区生态</p></div>
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0"><div class="longterm-card-icon l1">📊</div><div><h3>效果评估体系</h3><p>使用WHO-5幸福感指数、PSS-4感知压力量表进行前后测量；环保知识测试与行为意愿调查；参与人数与满意度反馈</p></div></div>
+      <div class="longterm-card reveal" style="--i:1"><div class="longterm-card-icon l2">📅</div><div><h3>常态化机制</h3><p>将"无车日"发展为月度常规活动，每周固定一天为"社区自然日"，形成可持续的社区绿色文化</p></div></div>
+      <div class="longterm-card reveal" style="--i:2"><div class="longterm-card-icon l3">🌻</div><div><h3>社区花园持续运营</h3><p>建立花园维护志愿者轮值制度，确保社区花园长期生机勃勃，成为居民日常自然疗愈空间</p></div></div>
+      <div class="longterm-card reveal" style="--i:3"><div class="longterm-card-icon l4">🚌</div><div><h3>绿色出行激励</h3><p>与当地公交公司合作，为参与活动的居民提供公交优惠，形成正向激励循环</p></div></div>
+    </div>
+    <div class="longterm-illustration reveal-scale">
+      <svg viewBox="0 0 700 200" fill="none"><rect x="0" y="0" width="700" height="200" rx="20" fill="#F0ECE4"/>
+        <circle cx="350" cy="100" r="65" stroke="#D4EDE2" stroke-width="2" fill="none" stroke-dasharray="8,4"/>
+        <circle cx="350" cy="100" r="30" fill="#D4EDE2" opacity=".5"/><text x="350" y="96" text-anchor="middle" font-size="18">♻️</text><text x="350" y="112" text-anchor="middle" font-size="8" fill="#3D8B6E" font-weight="500">自我运转</text>
+        <g class="svg-float"><circle cx="350" cy="25" r="16" fill="#D4EDE2" opacity=".8"/><text x="350" y="30" text-anchor="middle" font-size="14">📊</text></g>
+        <g class="svg-float-d"><circle cx="430" cy="55" r="16" fill="#D6EAF5" opacity=".8"/><text x="430" y="60" text-anchor="middle" font-size="14">📅</text></g>
+        <g class="svg-float-d2"><circle cx="430" cy="145" r="16" fill="#FBF4D6" opacity=".8"/><text x="430" y="150" text-anchor="middle" font-size="14">🌻</text></g>
+        <g class="svg-float-d3"><circle cx="270" cy="145" r="16" fill="#F2DDE2" opacity=".8"/><text x="270" y="150" text-anchor="middle" font-size="14">🚌</text></g>
+        <g class="svg-float" style="animation-delay:2s"><circle cx="270" cy="55" r="16" fill="#EDE0F3" opacity=".8"/><text x="270" y="60" text-anchor="middle" font-size="14">🤝</text></g>
+        <path d="M365 30Q400 35 418 48" stroke="#3D8B6E" stroke-width="1.5" fill="none" opacity=".3"/><path d="M440 70Q445 105 440 135" stroke="#5A9EC4" stroke-width="1.5" fill="none" opacity=".3"/><path d="M415 155Q350 180 285 155" stroke="#D4A843" stroke-width="1.5" fill="none" opacity=".3"/><path d="M260 135Q255 105 260 70" stroke="#C47888" stroke-width="1.5" fill="none" opacity=".3"/><path d="M285 50Q310 30 335 28" stroke="#967BA5" stroke-width="1.5" fill="none" opacity=".3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SDGs -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal"><div class="section-tag sdgs">可持续发展</div><h2 class="section-title">SDGs & ESG 目标融合</h2><p class="section-subtitle">将社区绿色行动与联合国可持续发展目标深度结合</p></div>
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0"><div class="sdg-num">03</div><div class="sdg-title">良好健康与福祉</div><p class="sdg-desc">通过自然疗愈促进居民身心健康，提升社区整体幸福感和生活质量</p></div>
+      <div class="sdg-card reveal" style="--i:1"><div class="sdg-num">11</div><div class="sdg-title">可持续城市与社区</div><p class="sdg-desc">推动绿色出行与社区公共空间利用，建设更加宜居的可持续社区</p></div>
+      <div class="sdg-card reveal" style="--i:2"><div class="sdg-num">12</div><div class="sdg-title">负责任消费与生产</div><p class="sdg-desc">倡导可持续生活方式与减少碳排放，推动负责任的消费观念</p></div>
+      <div class="sdg-card reveal" style="--i:3"><div class="sdg-num">13</div><div class="sdg-title">气候行动</div><p class="sdg-desc">通过减少汽车使用降低社区碳足迹，为应对气候变化贡献力量</p></div>
+    </div>
+    <div class="sdgs-illustration reveal-scale">
+      <svg viewBox="0 0 700 160" fill="none"><rect x="0" y="0" width="700" height="160" rx="20" fill="#FAF8F2"/>
+        <!-- Earth -->
+        <g class="svg-breathe"><circle cx="350" cy="80" r="40" fill="#D6EAF5" opacity=".4"/><circle cx="350" cy="80" r="28" fill="#D4EDE2" opacity=".5"/><text x="350" y="86" text-anchor="middle" font-size="24">🌍</text></g>
+        <!-- SDG connections -->
+        <g class="svg-float"><circle cx="120" cy="50" r="22" fill="#D4EDE2" opacity=".6"/><text x="120" y="46" text-anchor="middle" font-size="10" fill="#3D8B6E" font-weight="700">SDG</text><text x="120" y="60" text-anchor="middle" font-size="14" fill="#3D8B6E" font-weight="700">3</text></g>
+        <g class="svg-float-d"><circle cx="120" cy="120" r="22" fill="#D6EAF5" opacity=".6"/><text x="120" y="116" text-anchor="middle" font-size="10" fill="#5A9EC4" font-weight="700">SDG</text><text x="120" y="130" text-anchor="middle" font-size="14" fill="#5A9EC4" font-weight="700">11</text></g>
+        <g class="svg-float-d2"><circle cx="580" cy="50" r="22" fill="#FBF4D6" opacity=".6"/><text x="580" y="46" text-anchor="middle" font-size="10" fill="#D4A843" font-weight="700">SDG</text><text x="580" y="60" text-anchor="middle" font-size="14" fill="#D4A843" font-weight="700">12</text></g>
+        <g class="svg-float-d3"><circle cx="580" cy="120" r="22" fill="#F2DDE2" opacity=".6"/><text x="580" y="116" text-anchor="middle" font-size="10" fill="#C47888" font-weight="700">SDG</text><text x="580" y="130" text-anchor="middle" font-size="14" fill="#C47888" font-weight="700">13</text></g>
+        <!-- Connection lines -->
+        <path d="M142 55Q240 50 310 70" stroke="#3D8B6E" stroke-width="1" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <path d="M142 115Q240 120 310 95" stroke="#5A9EC4" stroke-width="1" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <path d="M390 70Q460 50 558 55" stroke="#D4A843" stroke-width="1" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <path d="M390 95Q460 120 558 115" stroke="#C47888" stroke-width="1" fill="none" stroke-dasharray="4,4" opacity=".3"/>
+        <!-- ESG label -->
+        <g class="svg-float" opacity=".6"><rect x="290" y="130" width="120" height="24" rx="12" fill="#D4EDE2" opacity=".7"/><text x="350" y="146" text-anchor="middle" font-size="10" fill="#3D8B6E" font-weight="600">ESG-E 环境保护</text></g>
+        <!-- Ripple rings -->
+        <circle cx="350" cy="80" r="50" stroke="#3D8B6E" stroke-width=".8" fill="none" opacity=".1" class="svg-ring"/>
+        <circle cx="350" cy="80" r="60" stroke="#5A9EC4" stroke-width=".6" fill="none" opacity=".08" class="svg-ring-d"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用一周改变一座社区 🌿</h2>
+    <p class="footer-text">每一步都是对地球的温柔承诺，每一天都是身心重生的开始。让我们携手，从社区出发，走向更绿色的未来</p>
+    <div class="footer-hearts">🌿 🌍 🚲 💚</div>
+  </div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d*100)+'%'});
+
+const dots=document.querySelectorAll('.nav-dot');
+const sections=['hero','day1','day2','day3','day4','day5','day6','day7','implementation','longterm','sdgs'];
+dots.forEach(dot=>{dot.addEventListener('click',()=>{document.getElementById(dot.getAttribute('data-target')).scrollIntoView({behavior:'smooth'})})});
+const sectionEls=sections.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sectionEls.forEach((el,i)=>{if(el.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((d,i)=>{d.classList.toggle('active',i===c)})});
+
+const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});
+revealEls.forEach(el=>observer.observe(el));
+
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

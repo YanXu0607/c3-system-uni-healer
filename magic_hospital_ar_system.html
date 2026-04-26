@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>"魔法医院"——儿童医疗焦虑AR干预系统</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --magic-purple: #7B68AE;
+    --magic-purple-light: #E8E0F3;
+    --magic-blue: #5B9BD5;
+    --magic-blue-light: #D6E6F5;
+    --magic-pink: #E88BA0;
+    --magic-pink-light: #F8DDE3;
+    --magic-teal: #5BBFAD;
+    --magic-teal-light: #D4EDE8;
+    --magic-gold: #D4A843;
+    --magic-gold-light: #F8EDCF;
+    --magic-orange: #E8A060;
+    --magic-orange-light: #F8E4D0;
+    --cream: #F5F0E1;
+    --cream-pale: #FAF8F2;
+    --peach: #F5E0D0;
+    --deep: #3A3448;
+    --soft: #6A6478;
+    --surface: #F0ECE4;
+    --star-gold: #FFD700;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--cream-pale);
+    color: var(--deep);
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  /* ===== Scroll Progress Bar ===== */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 1000;
+    background: linear-gradient(90deg, var(--magic-purple), var(--magic-pink), var(--magic-blue), var(--magic-gold));
+    width: 0%; transition: width 0.1s linear;
+  }
+
+  /* ===== Navigation Dots ===== */
+  .nav-dots {
+    position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+    z-index: 999; display: flex; flex-direction: column; gap: 10px;
+  }
+  .nav-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(0,0,0,0.12); cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .nav-dot.active {
+    background: var(--magic-purple); transform: scale(1.5);
+    box-shadow: 0 0 12px rgba(123,104,174,0.5);
+  }
+  .nav-dot:hover { transform: scale(1.3); }
+  .nav-dot .tooltip {
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    background: var(--deep); color: #fff; padding: 4px 12px;
+    border-radius: 6px; font-size: 11px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .nav-dot:hover .tooltip { opacity: 1; }
+
+  /* ===== Hero Section ===== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--magic-purple-light) 0%, var(--cream) 30%, var(--magic-blue-light) 60%, var(--magic-pink-light) 100%);
+  }
+  .hero-bg-shapes {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .hero-shape {
+    position: absolute; border-radius: 50%; opacity: 0.12;
+  }
+  .hero-shape:nth-child(1) {
+    width: 420px; height: 420px; background: var(--magic-purple);
+    top: -120px; right: -100px;
+    animation: floatShape 9s ease-in-out infinite;
+  }
+  .hero-shape:nth-child(2) {
+    width: 320px; height: 320px; background: var(--magic-pink);
+    bottom: -80px; left: -80px;
+    animation: floatShape 11s ease-in-out infinite reverse;
+  }
+  .hero-shape:nth-child(3) {
+    width: 220px; height: 220px; background: var(--magic-blue);
+    top: 25%; left: 8%;
+    animation: floatShape 13s ease-in-out infinite;
+  }
+  .hero-shape:nth-child(4) {
+    width: 180px; height: 180px; background: var(--magic-gold);
+    bottom: 20%; right: 15%;
+    animation: floatShape 10s ease-in-out infinite reverse;
+  }
+  @keyframes floatShape {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2; text-align: center;
+    max-width: 860px; padding: 40px 24px;
+  }
+  .hero-badge {
+    display: inline-block; padding: 6px 20px;
+    background: rgba(123,104,174,0.12); border-radius: 20px;
+    font-size: 13px; color: var(--magic-purple); font-weight: 500;
+    letter-spacing: 2px; margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(30px, 5vw, 54px); font-weight: 700;
+    line-height: 1.3; margin-bottom: 16px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title .accent { color: var(--magic-purple); }
+  .hero-title .accent2 { color: var(--magic-pink); }
+  .hero-title .accent3 { color: var(--magic-blue); }
+  .hero-subtitle {
+    font-size: clamp(14px, 2vw, 18px); color: var(--soft);
+    font-weight: 300; margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-meta {
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .hero-meta-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--soft);
+  }
+  .hero-meta-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .hero-meta-icon.purple { background: rgba(123,104,174,0.12); }
+  .hero-meta-icon.pink { background: rgba(232,139,160,0.12); }
+  .hero-meta-icon.blue { background: rgba(91,155,213,0.12); }
+  .hero-meta-icon.gold { background: rgba(212,168,67,0.15); }
+
+  .hero-illustration {
+    margin-top: 36px;
+    opacity: 0; animation: fadeUp 1s 1s forwards;
+    max-width: 640px; margin-left: auto; margin-right: auto;
+  }
+  .hero-illustration svg { width: 100%; height: auto; display: block; }
+
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--soft); font-size: 12px; letter-spacing: 1px;
+    opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .scroll-arrow {
+    width: 20px; height: 20px; border-right: 2px solid var(--soft);
+    border-bottom: 2px solid var(--soft); transform: rotate(45deg);
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Module Sections ===== */
+  .module-section {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 80px 24px; position: relative;
+  }
+  .module-section:nth-child(odd) { background: var(--cream-pale); }
+  .module-section:nth-child(even) { background: var(--surface); }
+
+  .module-container {
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .module-section.reverse .module-container { direction: rtl; }
+  .module-section.reverse .module-container > * { direction: ltr; }
+
+  .module-number {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .module-num-badge {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 700; color: #fff;
+  }
+  .module-num-badge.m1 { background: linear-gradient(135deg, #7B68AE, #A898CC); }
+  .module-num-badge.m2 { background: linear-gradient(135deg, #5B9BD5, #8BC0E8); }
+  .module-num-badge.m3 { background: linear-gradient(135deg, #E88BA0, #F0B8C4); }
+
+  .module-label {
+    font-size: 13px; letter-spacing: 2px; color: var(--soft); font-weight: 500;
+  }
+  .module-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(22px, 3.2vw, 34px); font-weight: 700;
+    margin-bottom: 4px; line-height: 1.4;
+  }
+  .module-subtitle {
+    font-size: 14px; font-weight: 500; margin-bottom: 14px;
+  }
+  .module-subtitle.m1 { color: var(--magic-purple); }
+  .module-subtitle.m2 { color: var(--magic-blue); }
+  .module-subtitle.m3 { color: var(--magic-pink); }
+
+  .module-desc {
+    font-size: 15px; color: var(--soft); line-height: 1.9;
+    margin-bottom: 18px;
+  }
+
+  /* Feature Cards */
+  .feature-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 18px;
+  }
+  .feature-card {
+    padding: 16px; border-radius: 14px;
+    background: var(--cream-pale); border: 1px solid rgba(123,104,174,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .feature-card-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; margin-bottom: 8px;
+  }
+  .feature-card-icon.f1 { background: rgba(123,104,174,0.1); }
+  .feature-card-icon.f2 { background: rgba(91,155,213,0.1); }
+  .feature-card-icon.f3 { background: rgba(232,139,160,0.1); }
+  .feature-card-icon.f4 { background: rgba(212,168,67,0.12); }
+  .feature-card h4 {
+    font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  }
+  .feature-card p {
+    font-size: 12px; color: var(--soft); line-height: 1.6;
+  }
+  .feature-card .age-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 8px;
+    font-size: 10px; font-weight: 500; margin-top: 6px;
+    background: rgba(123,104,174,0.08); color: var(--magic-purple);
+  }
+
+  .module-visual {
+    position: relative;
+    perspective: 800px;
+  }
+  .module-visual svg {
+    width: 100%; height: auto; display: block;
+    border-radius: 20px;
+    filter: drop-shadow(0 12px 40px rgba(0,0,0,0.06));
+  }
+  .module-decoration {
+    position: absolute; width: 80px; height: 80px;
+    border-radius: 50%; opacity: 0.1; z-index: -1;
+  }
+  .module-decoration.m1 { background: var(--magic-purple); top: -20px; right: -20px; }
+  .module-decoration.m2 { background: var(--magic-blue); bottom: -20px; left: -20px; }
+  .module-decoration.m3 { background: var(--magic-pink); top: -20px; left: -20px; }
+
+  /* ===== Flow Section ===== */
+  .flow-section {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--cream-pale) 100%);
+  }
+  .flow-container {
+    max-width: 1000px; margin: 0 auto;
+  }
+  .section-header {
+    text-align: center; margin-bottom: 60px;
+  }
+  .section-tag {
+    display: inline-block; padding: 5px 16px;
+    border-radius: 16px; font-size: 12px; letter-spacing: 2px;
+    font-weight: 500; margin-bottom: 16px;
+  }
+  .section-tag.flow { background: rgba(91,155,213,0.12); color: var(--magic-blue); }
+  .section-tag.adapt { background: rgba(91,191,173,0.12); color: var(--magic-teal); }
+  .section-tag.longterm { background: rgba(123,104,174,0.12); color: var(--magic-purple); }
+  .section-tag.sdgs { background: rgba(212,168,67,0.15); color: var(--magic-gold); }
+  .section-tag.eval { background: rgba(232,139,160,0.12); color: var(--magic-pink); }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(26px, 4vw, 40px); font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .section-subtitle {
+    font-size: 15px; color: var(--soft); max-width: 600px; margin: 0 auto;
+  }
+
+  .flow-steps {
+    display: flex; flex-direction: column; gap: 0;
+    margin-bottom: 50px;
+  }
+  .flow-step {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 20px; align-items: start;
+    padding: 20px 0;
+    position: relative;
+  }
+  .flow-step-num {
+    width: 52px; height: 52px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 700; color: #fff;
+    position: relative; z-index: 2;
+  }
+  .flow-step-num.s1 { background: linear-gradient(135deg, #7B68AE, #A898CC); }
+  .flow-step-num.s2 { background: linear-gradient(135deg, #5B9BD5, #8BC0E8); }
+  .flow-step-num.s3 { background: linear-gradient(135deg, #5BBFAD, #8DD8CA); }
+  .flow-step-num.s4 { background: linear-gradient(135deg, #E88BA0, #F0B8C4); }
+  .flow-step-num.s5 { background: linear-gradient(135deg, #D4A843, #E8CC7A); }
+
+  .flow-step-line {
+    position: absolute; left: 40px; top: 72px; bottom: -20px;
+    width: 2px; background: linear-gradient(180deg, rgba(123,104,174,0.2), rgba(123,104,174,0.05));
+  }
+  .flow-step:last-child .flow-step-line { display: none; }
+
+  .flow-step-content {
+    padding: 20px 24px; border-radius: 16px;
+    background: var(--cream-pale);
+    border: 1px solid rgba(123,104,174,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .flow-step-content:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  }
+  .flow-step-title {
+    font-size: 16px; font-weight: 600; margin-bottom: 4px;
+  }
+  .flow-step-time {
+    font-size: 12px; color: var(--magic-purple); font-weight: 500; margin-bottom: 8px;
+  }
+  .flow-step-items {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .flow-step-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; color: var(--soft); line-height: 1.6;
+  }
+  .flow-step-item .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--magic-purple); opacity: 0.4;
+    flex-shrink: 0; margin-top: 8px;
+  }
+
+  /* ===== Adaptation Section ===== */
+  .adapt-section {
+    padding: 100px 24px;
+    background: var(--cream-pale);
+  }
+  .adapt-container {
+    max-width: 1100px; margin: 0 auto;
+  }
+  .adapt-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 20px; margin-bottom: 50px;
+  }
+  .adapt-card {
+    padding: 24px; border-radius: 16px;
+    background: var(--surface); border: 1px solid rgba(123,104,174,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .adapt-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .adapt-card-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .adapt-card-icon.a1 { background: rgba(91,155,213,0.1); }
+  .adapt-card-icon.a2 { background: rgba(232,139,160,0.1); }
+  .adapt-card-icon.a3 { background: rgba(91,191,173,0.1); }
+  .adapt-card-icon.a4 { background: rgba(212,168,67,0.12); }
+  .adapt-card-icon.a5 { background: rgba(123,104,174,0.1); }
+  .adapt-card h3 {
+    font-size: 15px; font-weight: 600; margin-bottom: 6px;
+  }
+  .adapt-card p {
+    font-size: 13px; color: var(--soft); line-height: 1.7;
+  }
+
+  /* ===== Long-term Section ===== */
+  .longterm-section {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--surface), var(--cream-pale));
+  }
+  .longterm-container {
+    max-width: 1000px; margin: 0 auto;
+  }
+  .longterm-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 20px; margin-bottom: 50px;
+  }
+  .longterm-card {
+    padding: 24px; border-radius: 16px;
+    background: var(--cream-pale); border: 1px solid rgba(123,104,174,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .longterm-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .longterm-card-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .longterm-card-icon.l1 { background: rgba(91,155,213,0.1); }
+  .longterm-card-icon.l2 { background: rgba(232,139,160,0.1); }
+  .longterm-card-icon.l3 { background: rgba(123,104,174,0.1); }
+  .longterm-card-icon.l4 { background: rgba(212,168,67,0.12); }
+  .longterm-card-icon.l5 { background: rgba(91,191,173,0.1); }
+  .longterm-card h3 {
+    font-size: 15px; font-weight: 600; margin-bottom: 6px;
+  }
+  .longterm-card p {
+    font-size: 13px; color: var(--soft); line-height: 1.7;
+  }
+
+  /* ===== SDGs Section ===== */
+  .sdgs-section {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--cream-pale), var(--surface));
+  }
+  .sdgs-container {
+    max-width: 1000px; margin: 0 auto;
+  }
+  .sdgs-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px; margin-bottom: 40px;
+  }
+  .sdg-card {
+    padding: 24px; border-radius: 16px;
+    text-align: center; position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .sdg-card:hover { transform: translateY(-4px); }
+  .sdg-card:nth-child(1) {
+    background: linear-gradient(135deg, rgba(91,155,213,0.08), rgba(91,155,213,0.02));
+    border: 1px solid rgba(91,155,213,0.1);
+  }
+  .sdg-card:nth-child(2) {
+    background: linear-gradient(135deg, rgba(91,191,173,0.08), rgba(91,191,173,0.02));
+    border: 1px solid rgba(91,191,173,0.1);
+  }
+  .sdg-card:nth-child(3) {
+    background: linear-gradient(135deg, rgba(212,168,67,0.1), rgba(212,168,67,0.02));
+    border: 1px solid rgba(212,168,67,0.12);
+  }
+  .sdg-card:nth-child(4) {
+    background: linear-gradient(135deg, rgba(232,139,160,0.08), rgba(232,139,160,0.02));
+    border: 1px solid rgba(232,139,160,0.1);
+  }
+  .sdg-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px; font-weight: 700; margin-bottom: 6px;
+  }
+  .sdg-card:nth-child(1) .sdg-num { color: var(--magic-blue); }
+  .sdg-card:nth-child(2) .sdg-num { color: var(--magic-teal); }
+  .sdg-card:nth-child(3) .sdg-num { color: var(--magic-gold); }
+  .sdg-card:nth-child(4) .sdg-num { color: var(--magic-pink); }
+  .sdg-title {
+    font-size: 14px; font-weight: 600; margin-bottom: 8px;
+  }
+  .sdg-desc {
+    font-size: 12px; color: var(--soft); line-height: 1.7;
+  }
+
+  .esg-box {
+    padding: 24px 28px; border-radius: 16px;
+    background: var(--cream-pale);
+    border: 1px solid rgba(123,104,174,0.08);
+    margin-bottom: 0;
+  }
+  .esg-box h3 {
+    font-size: 16px; font-weight: 600; margin-bottom: 14px; text-align: center;
+  }
+  .esg-items {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .esg-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px; border-radius: 10px;
+    font-size: 13px; color: var(--soft); line-height: 1.7;
+  }
+  .esg-item:nth-child(1) { background: rgba(91,155,213,0.06); }
+  .esg-item:nth-child(2) { background: rgba(123,104,174,0.06); }
+  .esg-item:nth-child(3) { background: rgba(91,191,173,0.06); }
+  .esg-item-label {
+    font-weight: 600; font-size: 12px; color: var(--deep);
+    flex-shrink: 0;
+  }
+
+  /* ===== Evaluation Section ===== */
+  .eval-section {
+    padding: 100px 24px;
+    background: var(--cream-pale);
+  }
+  .eval-container {
+    max-width: 1100px; margin: 0 auto;
+  }
+  .eval-table-wrap {
+    border-radius: 16px; overflow: hidden;
+    background: var(--surface);
+    border: 1px solid rgba(123,104,174,0.06);
+    margin-bottom: 0;
+  }
+  .eval-table {
+    width: 100%; border-collapse: collapse;
+  }
+  .eval-table thead th {
+    padding: 16px 20px; text-align: left;
+    font-size: 13px; font-weight: 600; color: var(--deep);
+    background: rgba(123,104,174,0.06);
+    border-bottom: 1px solid rgba(123,104,174,0.08);
+  }
+  .eval-table tbody td {
+    padding: 14px 20px; font-size: 13px; color: var(--soft);
+    border-bottom: 1px solid rgba(123,104,174,0.04);
+    line-height: 1.6;
+  }
+  .eval-table tbody tr:last-child td { border-bottom: none; }
+  .eval-table tbody tr {
+    transition: background 0.2s;
+  }
+  .eval-table tbody tr:hover { background: rgba(123,104,174,0.03); }
+  .eval-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 6px;
+    font-size: 11px; font-weight: 500;
+  }
+  .eval-tag.t1 { background: rgba(91,155,213,0.1); color: var(--magic-blue); }
+  .eval-tag.t2 { background: rgba(232,139,160,0.1); color: var(--magic-pink); }
+  .eval-tag.t3 { background: rgba(212,168,67,0.1); color: var(--magic-gold); }
+  .eval-tag.t4 { background: rgba(91,191,173,0.1); color: var(--magic-teal); }
+
+  /* ===== Footer ===== */
+  .footer {
+    padding: 60px 24px; text-align: center;
+    background: linear-gradient(180deg, var(--surface), var(--cream-pale));
+  }
+  .footer-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px; font-weight: 700; margin-bottom: 12px;
+  }
+  .footer-text {
+    font-size: 14px; color: var(--soft); max-width: 500px; margin: 0 auto;
+  }
+  .footer-hearts {
+    margin-top: 24px; font-size: 24px; letter-spacing: 8px; opacity: 0.3;
+  }
+
+  /* ===== Scroll Animations ===== */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale {
+    opacity: 0; transform: scale(0.9);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+  .stagger > * { transition-delay: calc(var(--i, 0) * 0.12s); }
+
+  /* ===== SVG Animation Classes ===== */
+  .svg-float { animation: svgFloat 4s ease-in-out infinite; }
+  .svg-float-d { animation: svgFloat 4s ease-in-out 1s infinite; }
+  .svg-float-d2 { animation: svgFloat 4s ease-in-out 2s infinite; }
+  .svg-float-d3 { animation: svgFloat 4s ease-in-out 3s infinite; }
+  .svg-pulse { animation: svgPulse 3s ease-in-out infinite; }
+  .svg-breathe { animation: svgBreathe 5s ease-in-out infinite; }
+  .svg-rotate { animation: svgRotate 12s linear infinite; }
+  .svg-rotate-slow { animation: svgRotate 20s linear infinite; }
+  .svg-sway { animation: svgSway 6s ease-in-out infinite; }
+  .svg-glow { animation: svgGlow 4s ease-in-out infinite; }
+  .svg-draw { stroke-dasharray: 600; stroke-dashoffset: 600; animation: svgDraw 3s ease forwards; }
+  .svg-draw-slow { stroke-dasharray: 800; stroke-dashoffset: 800; animation: svgDraw 4s ease forwards; }
+  .svg-fade-in { opacity: 0; animation: svgFadeIn 1.2s ease forwards; }
+  .svg-fade-in-d { opacity: 0; animation: svgFadeIn 1.2s 0.4s ease forwards; }
+  .svg-fade-in-d2 { opacity: 0; animation: svgFadeIn 1.2s 0.8s ease forwards; }
+  .svg-fade-in-d3 { opacity: 0; animation: svgFadeIn 1.2s 1.2s ease forwards; }
+  .svg-fade-in-d4 { opacity: 0; animation: svgFadeIn 1.2s 1.6s ease forwards; }
+  .svg-scale-in { transform: scale(0); opacity: 0; animation: svgScaleIn 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .svg-ripple { transform: scale(0); opacity: 0; animation: svgRipple 2.5s ease-out forwards; }
+  .svg-ring { transform: scale(0); opacity: 0; animation: svgRing 3s ease-out infinite; }
+  .svg-ring-d { animation: svgRing 3s ease-out 1s infinite; }
+  .svg-ring-d2 { animation: svgRing 3s ease-out 2s infinite; }
+  .svg-shimmer { opacity: 0; animation: svgShimmer 3s ease-in-out infinite; }
+  .svg-rise { opacity: 0; transform: translateY(20px); animation: svgRise 1.5s ease forwards; }
+  .svg-slide-l { opacity: 0; transform: translateX(-30px); animation: svgSlideL 1s ease forwards; }
+  .svg-slide-r { opacity: 0; transform: translateX(30px); animation: svgSlideR 1s ease forwards; }
+  .svg-drop { opacity: 0; transform: translateY(-20px); animation: svgDrop 2.5s ease infinite; }
+  .svg-drop-d { animation: svgDrop 2.5s ease 0.8s infinite; }
+  .svg-drop-d2 { animation: svgDrop 2.5s ease 1.6s infinite; }
+  .svg-twinkle { animation: svgTwinkle 2s ease-in-out infinite; }
+  .svg-twinkle-d { animation: svgTwinkle 2s ease-in-out 0.7s infinite; }
+  .svg-twinkle-d2 { animation: svgTwinkle 2s ease-in-out 1.4s infinite; }
+  .svg-bubble { opacity: 0; animation: svgBubble 3s ease infinite; }
+  .svg-bubble-d { animation: svgBubble 3s ease 1s infinite; }
+  .svg-bubble-d2 { animation: svgBubble 3s ease 2s infinite; }
+  .svg-wand { animation: svgWand 2s ease-in-out infinite; }
+  .svg-heartbeat { animation: svgHeartbeat 1.5s ease-in-out infinite; }
+  .svg-wave-hand { animation: svgWaveHand 1.5s ease-in-out infinite; }
+
+  @keyframes svgFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes svgPulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.15); opacity: 1; } }
+  @keyframes svgBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  @keyframes svgRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes svgSway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  @keyframes svgGlow { 0%, 100% { opacity: 0.08; } 50% { opacity: 0.25; } }
+  @keyframes svgDraw { to { stroke-dashoffset: 0; } }
+  @keyframes svgFadeIn { to { opacity: 1; } }
+  @keyframes svgScaleIn { to { transform: scale(1); opacity: 1; } }
+  @keyframes svgRipple { 0% { transform: scale(0); opacity: 0.5; } 100% { transform: scale(2.5); opacity: 0; } }
+  @keyframes svgRing { 0% { transform: scale(0.3); opacity: 0.6; } 100% { transform: scale(2.2); opacity: 0; } }
+  @keyframes svgShimmer { 0%, 100% { opacity: 0; } 50% { opacity: 0.6; } }
+  @keyframes svgRise { to { opacity: 1; transform: translateY(0); } }
+  @keyframes svgSlideL { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgSlideR { to { opacity: 1; transform: translateX(0); } }
+  @keyframes svgDrop { 0% { opacity: 0; transform: translateY(-20px); } 15% { opacity: 0.7; } 60% { opacity: 0.4; transform: translateY(30px); } 80% { opacity: 0; transform: translateY(40px); } 100% { opacity: 0; transform: translateY(40px); } }
+  @keyframes svgTwinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+  @keyframes svgBubble { 0% { opacity: 0; transform: translateY(10px) scale(0.5); } 20% { opacity: 0.6; } 80% { opacity: 0.3; transform: translateY(-30px) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.1); } }
+  @keyframes svgWand { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+  @keyframes svgHeartbeat { 0%, 100% { transform: scale(1); } 14% { transform: scale(1.15); } 28% { transform: scale(1); } 42% { transform: scale(1.1); } 56% { transform: scale(1); } }
+  @keyframes svgWaveHand { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(15deg); } 75% { transform: rotate(-15deg); } }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .module-container { grid-template-columns: 1fr; gap: 32px; }
+    .module-section.reverse .module-container { direction: ltr; }
+    .module-section { padding: 60px 20px; }
+    .adapt-grid, .longterm-grid, .sdgs-grid { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .nav-dots { right: 12px; gap: 8px; }
+    .nav-dot { width: 7px; height: 7px; }
+    .nav-dot .tooltip { display: none; }
+    .hero-meta { gap: 14px; }
+    .flow-step { grid-template-columns: 52px 1fr; gap: 14px; }
+    .flow-step-line { left: 26px; }
+    .eval-table { font-size: 12px; }
+    .eval-table thead th, .eval-table tbody td { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="module1"><span class="tooltip">魔法探险</span></div>
+  <div class="nav-dot" data-target="module2"><span class="tooltip">勇敢之旅</span></div>
+  <div class="nav-dot" data-target="module3"><span class="tooltip">亲子乐园</span></div>
+  <div class="nav-dot" data-target="flow"><span class="tooltip">干预流程</span></div>
+  <div class="nav-dot" data-target="adapt"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs目标</span></div>
+  <div class="nav-dot" data-target="eval"><span class="tooltip">评估机制</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🪄 儿童医疗焦虑 AR 干预系统</div>
+    <h1 class="hero-title">
+      <span class="accent">"魔法医院"</span><br>
+      让就医变成一场<span class="accent2">奇妙冒险</span>
+    </h1>
+    <p class="hero-subtitle">面向3-12岁儿童的AR增强现实医疗焦虑干预系统，用科技与想象力守护每一颗小小的心灵</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon purple">🧸</div>
+        <span>3-12岁儿童</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon pink">📱</div>
+        <span>AR增强现实</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon blue">🏥</div>
+        <span>三大核心模块</span>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon gold">💚</div>
+        <span>SDGs融合</span>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <!-- Hero SVG: Magic Hospital Scene -->
+      <svg viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="640" height="360" rx="20" fill="#FAF8F2"/>
+        <!-- Hospital building silhouette -->
+        <g opacity="0.08">
+          <rect x="40" y="120" width="120" height="180" rx="6" fill="#7B68AE"/>
+          <rect x="180" y="80" width="100" height="220" rx="6" fill="#7B68AE"/>
+          <rect x="300" y="140" width="140" height="160" rx="6" fill="#7B68AE"/>
+          <rect x="460" y="100" width="130" height="200" rx="6" fill="#7B68AE"/>
+          <!-- Cross signs -->
+          <rect x="90" y="160" width="20" height="6" rx="2" fill="#fff"/>
+          <rect x="97" y="153" width="6" height="20" rx="2" fill="#fff"/>
+          <rect x="220" y="120" width="20" height="6" rx="2" fill="#fff"/>
+          <rect x="227" y="113" width="6" height="20" rx="2" fill="#fff"/>
+        </g>
+        <!-- Ground -->
+        <ellipse cx="320" cy="310" rx="280" ry="30" fill="#E8E0F3" opacity="0.25"/>
+        <!-- Magic wand -->
+        <g class="svg-wand" transform="translate(480, 60)">
+          <line x1="0" y1="0" x2="40" y2="50" stroke="#D4A843" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="40,50 35,42 45,42" fill="#FFD700"/>
+          <!-- Sparkles from wand -->
+          <g class="svg-twinkle">
+            <circle cx="50" cy="45" r="3" fill="#FFD700" opacity="0.8"/>
+          </g>
+          <g class="svg-twinkle-d">
+            <circle cx="58" cy="38" r="2" fill="#FFD700" opacity="0.6"/>
+          </g>
+          <g class="svg-twinkle-d2">
+            <circle cx="44" cy="56" r="2.5" fill="#FFD700" opacity="0.7"/>
+          </g>
+        </g>
+        <!-- Child with AR tablet -->
+        <g class="svg-breathe">
+          <!-- Child body -->
+          <circle cx="300" cy="210" r="22" fill="#F8DDE3"/>
+          <path d="M278 206 Q282 186 300 183 Q318 186 322 206" fill="#6A6478" opacity="0.4"/>
+          <!-- Happy face -->
+          <circle cx="293" cy="208" r="2" fill="#3A3448"/>
+          <circle cx="307" cy="208" r="2" fill="#3A3448"/>
+          <path d="M294 218 Q300 223 306 218" stroke="#E88BA0" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Body -->
+          <path d="M282 228 Q278 255 280 285 L320 285 Q322 255 318 228 Q300 222 282 228Z" fill="#5B9BD5" opacity="0.5"/>
+          <!-- Arms holding tablet -->
+          <path d="M282 240 Q265 255 270 275" stroke="#F8DDE3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M318 240 Q335 255 330 275" stroke="#F8DDE3" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <!-- Tablet -->
+          <rect x="262" y="268" width="76" height="50" rx="6" fill="#3A3448" opacity="0.15"/>
+          <rect x="266" y="272" width="68" height="42" rx="4" fill="#D6E6F5" opacity="0.5"/>
+          <!-- AR glow on tablet -->
+          <circle cx="300" cy="293" r="12" fill="#7B68AE" opacity="0.15" class="svg-pulse"/>
+        </g>
+        <!-- AR animal friend (bear nurse) floating above tablet -->
+        <g class="svg-float">
+          <circle cx="300" cy="175" r="18" fill="#D4A843" opacity="0.4"/>
+          <circle cx="295" cy="172" r="2" fill="#3A3448"/>
+          <circle cx="305" cy="172" r="2" fill="#3A3448"/>
+          <ellipse cx="300" cy="178" rx="4" ry="2" fill="#3A3448"/>
+          <!-- Nurse hat -->
+          <rect x="290" y="158" width="20" height="6" rx="2" fill="#fff" opacity="0.6"/>
+          <rect x="294" y="153" width="12" height="7" rx="2" fill="#fff" opacity="0.6"/>
+          <!-- Bear ears -->
+          <circle cx="284" cy="164" r="6" fill="#D4A843" opacity="0.3"/>
+          <circle cx="316" cy="164" r="6" fill="#D4A843" opacity="0.3"/>
+        </g>
+        <!-- Floating magic elements -->
+        <g class="svg-float-d">
+          <text x="160" y="160" font-size="24" opacity="0.5">⭐</text>
+        </g>
+        <g class="svg-float-d2">
+          <text x="420" y="180" font-size="20" opacity="0.4">✨</text>
+        </g>
+        <g class="svg-float">
+          <text x="140" y="240" font-size="18" opacity="0.4">💎</text>
+        </g>
+        <g class="svg-float-d3">
+          <text x="440" y="250" font-size="22" opacity="0.4">🌟</text>
+        </g>
+        <!-- Magic sparkles -->
+        <circle cx="200" cy="130" r="3" fill="#FFD700" opacity="0.3" class="svg-twinkle"/>
+        <circle cx="380" cy="120" r="2.5" fill="#7B68AE" opacity="0.3" class="svg-twinkle-d"/>
+        <circle cx="500" cy="160" r="2" fill="#E88BA0" opacity="0.3" class="svg-twinkle-d2"/>
+        <circle cx="120" cy="180" r="2" fill="#5B9BD5" opacity="0.3" class="svg-twinkle"/>
+        <!-- Hearts -->
+        <g class="svg-float-d" opacity="0.4">
+          <text x="520" y="100" font-size="16">💜</text>
+        </g>
+        <g class="svg-float-d2" opacity="0.4">
+          <text x="100" y="100" font-size="14">💙</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滚动探索魔法世界</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== MODULE 1: 魔法探险 ===== -->
+<section class="module-section" id="module1">
+  <div class="module-container">
+    <div class="reveal-left">
+      <div class="module-number">
+        <div class="module-num-badge m1">⚠</div>
+        <span class="module-label">模块一</span>
+      </div>
+      <h2 class="module-title">"魔法探险"<br>注意力转移与放松</h2>
+      <p class="module-subtitle m1">Attention Redirection & Relaxation</p>
+      <p class="module-desc">
+        通过AR技术将候诊区变为充满奇幻色彩的探险世界，用虚拟动物朋友、寻宝游戏、沉浸式自然场景和呼吸引导，帮助儿童转移注意力、缓解焦虑情绪。
+      </p>
+      <div class="feature-grid stagger">
+        <div class="feature-card reveal" style="--i:0">
+          <div class="feature-card-icon f1">🐻</div>
+          <h4>AR动物朋友</h4>
+          <p>虚拟动物朋友（如小熊护士）与儿童互动对话、讲笑话</p>
+          <span class="age-tag">3-8岁</span>
+        </div>
+        <div class="feature-card reveal" style="--i:1">
+          <div class="feature-card-icon f2">💎</div>
+          <h4>AR寻宝游戏</h4>
+          <p>扫描标记发现隐藏的魔法宝石，集齐后解锁奖励动画</p>
+          <span class="age-tag">6-12岁</span>
+        </div>
+        <div class="feature-card reveal" style="--i:2">
+          <div class="feature-card-icon f3">🌊</div>
+          <h4>AR自然场景</h4>
+          <p>候诊区变身为海底世界/太空/森林，手势互动</p>
+          <span class="age-tag">3-12岁</span>
+        </div>
+        <div class="feature-card reveal" style="--i:3">
+          <div class="feature-card-icon f4">🐋</div>
+          <h4>AR呼吸引导</h4>
+          <p>虚拟角色引导呼吸练习，如"跟着小鲸鱼吐泡泡"</p>
+          <span class="age-tag">3-12岁</span>
+        </div>
+      </div>
+    </div>
+    <div class="module-visual reveal-right">
+      <div class="module-decoration m1"></div>
+      <!-- Module 1 SVG: Magic Adventure Scene -->
+      <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="480" height="480" rx="20" fill="#FAF8F2"/>
+        <!-- Underwater scene background -->
+        <ellipse cx="240" cy="440" rx="220" ry="50" fill="#D6E6F5" opacity="0.3"/>
+        <!-- Water waves -->
+        <g class="svg-float" opacity="0.2">
+          <path d="M20 80 Q80 60 140 80 Q200 100 260 80 Q320 60 380 80 Q440 100 480 80" stroke="#5B9BD5" stroke-width="2" fill="none"/>
+        </g>
+        <g class="svg-float-d" opacity="0.15">
+          <path d="M0 110 Q60 90 120 110 Q180 130 240 110 Q300 90 360 110 Q420 130 480 110" stroke="#5B9BD5" stroke-width="2" fill="none"/>
+        </g>
+        <!-- Whale (breathing guide) -->
+        <g class="svg-breathe">
+          <ellipse cx="240" cy="260" rx="70" ry="40" fill="#5B9BD5" opacity="0.25"/>
+          <!-- Whale body -->
+          <ellipse cx="230" cy="270" rx="55" ry="30" fill="#5B9BD5" opacity="0.4"/>
+          <!-- Whale tail -->
+          <path d="M280 260 Q310 240 320 220 Q300 250 280 260Z" fill="#5B9BD5" opacity="0.3"/>
+          <path d="M280 260 Q310 280 320 300 Q300 270 280 260Z" fill="#5B9BD5" opacity="0.3"/>
+          <!-- Whale eye -->
+          <circle cx="205" cy="262" r="4" fill="#3A3448" opacity="0.5"/>
+          <!-- Whale smile -->
+          <path d="M200 278 Q210 284 220 278" stroke="#3A3448" stroke-width="1.5" fill="none" opacity="0.3" stroke-linecap="round"/>
+          <!-- Water spout -->
+          <g class="svg-drop">
+            <circle cx="200" cy="230" r="4" fill="#D6E6F5" opacity="0.6"/>
+          </g>
+          <g class="svg-drop-d">
+            <circle cx="210" cy="225" r="3" fill="#D6E6F5" opacity="0.5"/>
+          </g>
+          <g class="svg-drop-d2">
+            <circle cx="195" cy="220" r="3.5" fill="#D6E6F5" opacity="0.5"/>
+          </g>
+        </g>
+        <!-- Breathing bubbles -->
+        <g class="svg-bubble">
+          <circle cx="190" cy="200" r="5" fill="#D6E6F5" opacity="0.4"/>
+        </g>
+        <g class="svg-bubble-d">
+          <circle cx="175" cy="180" r="4" fill="#D6E6F5" opacity="0.3"/>
+        </g>
+        <g class="svg-bubble-d2">
+          <circle cx="185" cy="160" r="3" fill="#D6E6F5" opacity="0.3"/>
+        </g>
+        <!-- Treasure gems -->
+        <g class="svg-float">
+          <polygon points="380,350 390,330 400,350 390,370" fill="#FFD700" opacity="0.5"/>
+          <polygon points="380,350 390,330 400,350 390,370" stroke="#D4A843" stroke-width="1" fill="none" opacity="0.3"/>
+        </g>
+        <g class="svg-float-d">
+          <polygon points="420,380 428,365 436,380 428,395" fill="#E88BA0" opacity="0.4"/>
+        </g>
+        <g class="svg-float-d2">
+          <polygon points="60,370 68,355 76,370 68,385" fill="#7B68AE" opacity="0.4"/>
+        </g>
+        <!-- Bear nurse friend -->
+        <g class="svg-float-d3">
+          <circle cx="100" cy="160" r="22" fill="#D4A843" opacity="0.35"/>
+          <circle cx="94" cy="156" r="2.5" fill="#3A3448" opacity="0.5"/>
+          <circle cx="106" cy="156" r="2.5" fill="#3A3448" opacity="0.5"/>
+          <ellipse cx="100" cy="164" rx="5" ry="2.5" fill="#3A3448" opacity="0.3"/>
+          <!-- Nurse hat -->
+          <rect x="88" y="138" width="24" height="7" rx="2" fill="#fff" opacity="0.5"/>
+          <rect x="93" y="132" width="14" height="8" rx="2" fill="#fff" opacity="0.5"/>
+          <!-- Bear ears -->
+          <circle cx="80" cy="146" r="8" fill="#D4A843" opacity="0.25"/>
+          <circle cx="120" cy="146" r="8" fill="#D4A843" opacity="0.25"/>
+        </g>
+        <!-- Fish -->
+        <g class="svg-float-d2">
+          <ellipse cx="360" cy="200" rx="16" ry="10" fill="#5BBFAD" opacity="0.3"/>
+          <polygon points="376,200 386,194 386,206" fill="#5BBFAD" opacity="0.3"/>
+          <circle cx="354" cy="198" r="2" fill="#3A3448" opacity="0.4"/>
+        </g>
+        <g class="svg-float">
+          <ellipse cx="80" cy="280" rx="12" ry="8" fill="#E88BA0" opacity="0.25"/>
+          <polygon points="68,280 58,275 58,285" fill="#E88BA0" opacity="0.25"/>
+          <circle cx="86" cy="278" r="1.5" fill="#3A3448" opacity="0.4"/>
+        </g>
+        <!-- Seaweed -->
+        <g class="svg-sway">
+          <path d="M40 440 Q45 400 35 360 Q30 340 40 320" stroke="#5BBFAD" stroke-width="3" fill="none" opacity="0.2" stroke-linecap="round"/>
+        </g>
+        <g class="svg-sway" style="animation-delay: 1s">
+          <path d="M440 440 Q435 410 445 380 Q450 360 440 340" stroke="#5BBFAD" stroke-width="3" fill="none" opacity="0.2" stroke-linecap="round"/>
+        </g>
+        <!-- Stars/sparkles -->
+        <circle cx="320" cy="140" r="3" fill="#FFD700" opacity="0.3" class="svg-twinkle"/>
+        <circle cx="160" cy="120" r="2.5" fill="#7B68AE" opacity="0.3" class="svg-twinkle-d"/>
+        <circle cx="400" cy="160" r="2" fill="#E88BA0" opacity="0.3" class="svg-twinkle-d2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 2: 勇敢之旅 ===== -->
+<section class="module-section reverse" id="module2">
+  <div class="module-container">
+    <div class="module-visual reveal-left">
+      <div class="module-decoration m2"></div>
+      <!-- Module 2 SVG: Brave Journey Scene -->
+      <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="480" height="480" rx="20" fill="#F0ECE4"/>
+        <!-- Path/road -->
+        <path d="M60 420 Q120 380 180 340 Q240 300 300 260 Q360 220 420 180" stroke="#D6E6F5" stroke-width="40" fill="none" stroke-linecap="round" opacity="0.4"/>
+        <path d="M60 420 Q120 380 180 340 Q240 300 300 260 Q360 220 420 180" stroke="#5B9BD5" stroke-width="2" fill="none" stroke-dasharray="8,6" opacity="0.3"/>
+        <!-- Step markers along path -->
+        <g class="svg-float">
+          <circle cx="120" cy="380" r="16" fill="#D6E6F5" opacity="0.6"/>
+          <text x="120" y="385" text-anchor="middle" font-size="14">📋</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="210" cy="320" r="16" fill="#E8E0F3" opacity="0.6"/>
+          <text x="210" y="325" text-anchor="middle" font-size="14">🔬</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="300" cy="260" r="16" fill="#F8DDE3" opacity="0.6"/>
+          <text x="300" y="265" text-anchor="middle" font-size="14">💉</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="390" cy="200" r="16" fill="#F8EDCF" opacity="0.6"/>
+          <text x="390" y="205" text-anchor="middle" font-size="14">🏥</text>
+        </g>
+        <!-- Brave medal at the end -->
+        <g class="svg-pulse">
+          <circle cx="420" cy="140" r="28" fill="#FFD700" opacity="0.15"/>
+          <circle cx="420" cy="140" r="20" fill="#FFD700" opacity="0.25"/>
+          <text x="420" y="146" text-anchor="middle" font-size="18">🏅</text>
+        </g>
+        <!-- Child doctor (role play) -->
+        <g class="svg-breathe">
+          <circle cx="160" cy="240" r="20" fill="#F8DDE3"/>
+          <path d="M140 236 Q144 218 160 215 Q176 218 180 236" fill="#6A6478" opacity="0.4"/>
+          <!-- Doctor hat -->
+          <rect x="148" y="215" width="24" height="4" rx="2" fill="#fff" opacity="0.6"/>
+          <rect x="153" y="210" width="14" height="7" rx="2" fill="#fff" opacity="0.6"/>
+          <!-- Confident face -->
+          <circle cx="154" cy="238" r="2" fill="#3A3448"/>
+          <circle cx="166" cy="238" r="2" fill="#3A3448"/>
+          <path d="M155 248 Q160 252 165 248" stroke="#E88BA0" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- Lab coat -->
+          <path d="M144 256 Q140 280 142 310 L178 310 Q180 280 176 256 Q160 250 144 256Z" fill="#fff" opacity="0.5"/>
+          <!-- Stethoscope -->
+          <path d="M152 260 Q148 275 155 285" stroke="#5B9BD5" stroke-width="2" fill="none" opacity="0.4"/>
+          <circle cx="155" cy="288" r="4" fill="#5B9BD5" opacity="0.3"/>
+        </g>
+        <!-- Virtual doll patient -->
+        <g class="svg-float-d">
+          <circle cx="260" cy="280" r="16" fill="#D4A843" opacity="0.3"/>
+          <circle cx="255" cy="278" r="1.5" fill="#3A3448" opacity="0.4"/>
+          <circle cx="265" cy="278" r="1.5" fill="#3A3448" opacity="0.4"/>
+          <path d="M256 286 Q260 289 264 286" stroke="#3A3448" stroke-width="1" fill="none" opacity="0.3"/>
+          <rect x="248" y="296" width="24" height="20" rx="4" fill="#E88BA0" opacity="0.2"/>
+        </g>
+        <!-- "小医生" virtual character -->
+        <g class="svg-float-d2">
+          <rect x="60" y="140" width="90" height="70" rx="14" fill="#D6E6F5" opacity="0.5"/>
+          <circle cx="105" cy="160" r="14" fill="#F8DDE3" opacity="0.7"/>
+          <rect x="96" y="146" width="18" height="4" rx="2" fill="#fff" opacity="0.6"/>
+          <circle cx="100" cy="159" r="1.5" fill="#3A3448" opacity="0.4"/>
+          <circle cx="110" cy="159" r="1.5" fill="#3A3448" opacity="0.4"/>
+          <text x="105" y="190" text-anchor="middle" font-size="10" fill="#5B9BD5" font-weight="500">小医生</text>
+        </g>
+        <!-- Speech bubble -->
+        <g class="svg-float" opacity="0.6">
+          <rect x="170" y="180" width="120" height="36" rx="10" fill="#fff" opacity="0.7"/>
+          <polygon points="175,216 185,216 170,228" fill="#fff" opacity="0.7"/>
+          <text x="230" y="202" text-anchor="middle" font-size="10" fill="#5B9BD5">"像大象鼻子一样~"</text>
+        </g>
+        <!-- Stars along the journey -->
+        <circle cx="340" cy="300" r="3" fill="#FFD700" opacity="0.3" class="svg-twinkle"/>
+        <circle cx="100" cy="320" r="2.5" fill="#7B68AE" opacity="0.3" class="svg-twinkle-d"/>
+        <circle cx="400" cy="280" r="2" fill="#E88BA0" opacity="0.3" class="svg-twinkle-d2"/>
+      </svg>
+    </div>
+    <div class="reveal-right">
+      <div class="module-number">
+        <div class="module-num-badge m2">🔄</div>
+        <span class="module-label">模块二</span>
+      </div>
+      <h2 class="module-title">"勇敢之旅"<br>医疗流程预演</h2>
+      <p class="module-subtitle m2">Medical Procedure Preview</p>
+      <p class="module-desc">
+        通过AR空间逐步展示医疗流程的简化版动画，配合虚拟"小医生"角色介绍设备、勇敢者挑战和角色扮演，让儿童在安全环境中建立对医疗流程的认知与掌控感。
+      </p>
+      <div class="feature-grid stagger">
+        <div class="feature-card reveal" style="--i:0">
+          <div class="feature-card-icon f2">👨‍⚕️</div>
+          <h4>AR设备介绍</h4>
+          <p>"小医生"用儿童化语言介绍医疗设备，如"像大象鼻子的管子"</p>
+          <span class="age-tag">各类检查</span>
+        </div>
+        <div class="feature-card reveal" style="--i:1">
+          <div class="feature-card-icon f1">🎬</div>
+          <h4>AR流程动画</h4>
+          <p>AR空间中逐步展示医疗流程简化版，可点击查看详情</p>
+          <span class="age-tag">手术/MRI/采血</span>
+        </div>
+        <div class="feature-card reveal" style="--i:2">
+          <div class="feature-card-icon f4">🏅</div>
+          <h4>AR勇敢者挑战</h4>
+          <p>完成流程预演获得虚拟"勇敢勋章"，可收集和展示</p>
+          <span class="age-tag">所有场景</span>
+        </div>
+        <div class="feature-card reveal" style="--i:3">
+          <div class="feature-card-icon f3">🎭</div>
+          <h4>AR角色扮演</h4>
+          <p>扮演"小医生"为虚拟玩偶进行医疗操作，获得掌控感</p>
+          <span class="age-tag">采血/注射</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE 3: 亲子乐园 ===== -->
+<section class="module-section" id="module3">
+  <div class="module-container">
+    <div class="reveal-left">
+      <div class="module-number">
+        <div class="module-num-badge m3">◆</div>
+        <span class="module-label">模块三</span>
+      </div>
+      <h2 class="module-title">"亲子乐园"<br>家庭共同参与</h2>
+      <p class="module-subtitle m3">Family Co-participation</p>
+      <p class="module-desc">
+        通过AR亲子合照、协作游戏和知识问答，让家长与儿童共同参与，在温馨的互动中增进亲子关系，同时寓教于乐传播健康知识。
+      </p>
+      <div class="feature-grid stagger" style="grid-template-columns: 1fr 1fr 1fr;">
+        <div class="feature-card reveal" style="--i:0">
+          <div class="feature-card-icon f3">📸</div>
+          <h4>AR亲子合照</h4>
+          <p>虚拟角色与家庭合影，生成可保存的纪念照片</p>
+        </div>
+        <div class="feature-card reveal" style="--i:1">
+          <div class="feature-card-icon f1">🌻</div>
+          <h4>AR亲子游戏</h4>
+          <p>亲子协作小游戏，如一起为虚拟花园浇水</p>
+        </div>
+        <div class="feature-card reveal" style="--i:2">
+          <div class="feature-card-icon f2">❓</div>
+          <h4>AR知识问答</h4>
+          <p>家长与儿童一起回答健康知识问题，寓教于乐</p>
+        </div>
+      </div>
+    </div>
+    <div class="module-visual reveal-right">
+      <div class="module-decoration m3"></div>
+      <!-- Module 3 SVG: Family Co-participation -->
+      <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="480" height="480" rx="20" fill="#FAF8F2"/>
+        <!-- Garden ground -->
+        <ellipse cx="240" cy="400" rx="200" ry="40" fill="#D9F0E4" opacity="0.3"/>
+        <!-- Virtual garden -->
+        <g class="svg-sway">
+          <!-- Flower 1 -->
+          <line x1="120" y1="380" x2="120" y2="320" stroke="#5BBFAD" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+          <circle cx="120" cy="310" r="12" fill="#E88BA0" opacity="0.3"/>
+          <circle cx="120" cy="310" r="6" fill="#FFD700" opacity="0.3"/>
+        </g>
+        <g class="svg-sway" style="animation-delay: 0.5s">
+          <!-- Flower 2 -->
+          <line x1="180" y1="390" x2="180" y2="340" stroke="#5BBFAD" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+          <circle cx="180" cy="330" r="10" fill="#7B68AE" opacity="0.3"/>
+          <circle cx="180" cy="330" r="5" fill="#FFD700" opacity="0.3"/>
+        </g>
+        <g class="svg-sway" style="animation-delay: 1s">
+          <!-- Flower 3 -->
+          <line x1="300" y1="385" x2="300" y2="330" stroke="#5BBFAD" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+          <circle cx="300" cy="320" r="11" fill="#5B9BD5" opacity="0.3"/>
+          <circle cx="300" cy="320" r="5.5" fill="#FFD700" opacity="0.3"/>
+        </g>
+        <g class="svg-sway" style="animation-delay: 1.5s">
+          <!-- Flower 4 -->
+          <line x1="360" y1="390" x2="360" y2="345" stroke="#5BBFAD" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+          <circle cx="360" cy="335" r="10" fill="#E88BA0" opacity="0.25"/>
+          <circle cx="360" cy="335" r="5" fill="#FFD700" opacity="0.25"/>
+        </g>
+        <!-- Water drops (watering) -->
+        <g class="svg-drop">
+          <circle cx="200" cy="350" r="3" fill="#5B9BD5" opacity="0.4"/>
+        </g>
+        <g class="svg-drop-d">
+          <circle cx="220" cy="360" r="2.5" fill="#5B9BD5" opacity="0.3"/>
+        </g>
+        <g class="svg-drop-d2">
+          <circle cx="210" cy="370" r="2" fill="#5B9BD5" opacity="0.3"/>
+        </g>
+        <!-- Parent figure -->
+        <g class="svg-breathe">
+          <circle cx="180" cy="220" r="24" fill="#F8DDE3"/>
+          <path d="M156 216 Q160 194 180 190 Q200 194 204 216" fill="#6A6478" opacity="0.35"/>
+          <circle cx="173" cy="218" r="2" fill="#3A3448"/>
+          <circle cx="187" cy="218" r="2" fill="#3A3448"/>
+          <path d="M174 228 Q180 232 186 228" stroke="#E88BA0" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M162 240 Q158 270 160 310 L200 310 Q202 270 198 240 Q180 234 162 240Z" fill="#7B68AE" opacity="0.3"/>
+          <!-- Arm holding watering can -->
+          <path d="M198 255 Q220 270 230 290" stroke="#F8DDE3" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <!-- Watering can -->
+          <rect x="225" y="282" width="20" height="16" rx="3" fill="#5B9BD5" opacity="0.4"/>
+          <line x1="245" y1="286" x2="260" y2="275" stroke="#5B9BD5" stroke-width="2" opacity="0.3"/>
+        </g>
+        <!-- Child figure -->
+        <g class="svg-breathe" style="animation-delay: 0.5s">
+          <circle cx="300" cy="250" r="18" fill="#F8DDE3"/>
+          <path d="M282 246 Q286 230 300 227 Q314 230 318 246" fill="#6A6478" opacity="0.35"/>
+          <circle cx="295" cy="248" r="1.8" fill="#3A3448"/>
+          <circle cx="305" cy="248" r="1.8" fill="#3A3448"/>
+          <path d="M296 257 Q300 260 304 257" stroke="#E88BA0" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M286 264 Q283 285 284 310 L316 310 Q317 285 314 264 Q300 258 286 264Z" fill="#E88BA0" opacity="0.3"/>
+          <!-- Arm reaching to help -->
+          <path d="M286 275 Q270 285 265 300" stroke="#F8DDE3" stroke-width="6" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- AR virtual character (photo frame) -->
+        <g class="svg-float">
+          <rect x="340" y="120" width="100" height="80" rx="12" fill="#fff" opacity="0.6" stroke="#E88BA0" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <circle cx="390" cy="150" r="16" fill="#D4A843" opacity="0.3"/>
+          <circle cx="385" cy="147" r="2" fill="#3A3448" opacity="0.4"/>
+          <circle cx="395" cy="147" r="2" fill="#3A3448" opacity="0.4"/>
+          <path d="M386 155 Q390 158 394 155" stroke="#3A3448" stroke-width="1" fill="none" opacity="0.3"/>
+          <text x="390" y="185" text-anchor="middle" font-size="10" fill="#E88BA0">📸 AR合照</text>
+        </g>
+        <!-- Hearts between parent and child -->
+        <g class="svg-heartbeat" opacity="0.4">
+          <text x="244" y="240" font-size="16">💕</text>
+        </g>
+        <!-- Knowledge quiz bubble -->
+        <g class="svg-float-d2" opacity="0.6">
+          <rect x="50" y="100" width="110" height="50" rx="12" fill="#E8E0F3" opacity="0.5"/>
+          <text x="105" y="122" text-anchor="middle" font-size="11" fill="#7B68AE" font-weight="500">🧠 知识问答</text>
+          <text x="105" y="140" text-anchor="middle" font-size="9" fill="#6A6478">一起学习健康知识</text>
+        </g>
+        <!-- Butterflies -->
+        <g class="svg-float-d3" opacity="0.4">
+          <text x="400" y="220" font-size="16">🦋</text>
+        </g>
+        <!-- Sparkles -->
+        <circle cx="150" cy="160" r="2.5" fill="#FFD700" opacity="0.3" class="svg-twinkle"/>
+        <circle cx="320" cy="180" r="2" fill="#7B68AE" opacity="0.3" class="svg-twinkle-d"/>
+        <circle cx="420" cy="260" r="2" fill="#E88BA0" opacity="0.3" class="svg-twinkle-d2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INTERVENTION FLOW ===== -->
+<section class="flow-section" id="flow">
+  <div class="flow-container">
+    <div class="section-header reveal">
+      <div class="section-tag flow">🌱 干预流程</div>
+      <h2 class="section-title">标准化操作协议</h2>
+      <p class="section-subtitle">从筛查到后续跟进，5步标准化流程确保干预质量</p>
+    </div>
+
+    <div class="flow-steps">
+      <!-- Step 1 -->
+      <div class="flow-step reveal" style="--i:0">
+        <div class="flow-step-num s1">1</div>
+        <div class="flow-step-line"></div>
+        <div class="flow-step-content">
+          <div class="flow-step-title">筛查与分级</div>
+          <div class="flow-step-time">⏱ 护士完成，约2分钟</div>
+          <div class="flow-step-items">
+            <div class="flow-step-item"><span class="dot"></span>使用简化版 FACCS（面部焦虑量表）快速评估焦虑水平</div>
+            <div class="flow-step-item"><span class="dot"></span>低焦虑（FACCS ≤2）：自主选择是否使用AR</div>
+            <div class="flow-step-item"><span class="dot"></span>中焦虑（FACCS 3-4）：推荐使用AR模块一+二</div>
+            <div class="flow-step-item"><span class="dot"></span>高焦虑（FACCS ≥5）：强烈推荐使用全套AR+家长陪同</div>
+          </div>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="flow-step reveal" style="--i:1">
+        <div class="flow-step-num s2">2</div>
+        <div class="flow-step-line"></div>
+        <div class="flow-step-content">
+          <div class="flow-step-title">设备准备</div>
+          <div class="flow-step-time">⏱ 约1分钟</div>
+          <div class="flow-step-items">
+            <div class="flow-step-item"><span class="dot"></span>发放已消毒的AR设备（平板电脑，配备一次性保护套）</div>
+            <div class="flow-step-item"><span class="dot"></span>根据年龄和焦虑级别预加载对应模块</div>
+            <div class="flow-step-item"><span class="dot"></span>简要指导家长协助操作</div>
+          </div>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="flow-step reveal" style="--i:2">
+        <div class="flow-step-num s3">3</div>
+        <div class="flow-step-line"></div>
+        <div class="flow-step-content">
+          <div class="flow-step-title">AR体验</div>
+          <div class="flow-step-time">⏱ 候诊/准备阶段，10-20分钟</div>
+          <div class="flow-step-items">
+            <div class="flow-step-item"><span class="dot"></span>首先进入模块一（注意力转移），体验5-8分钟</div>
+            <div class="flow-step-item"><span class="dot"></span>过渡到模块二（医疗预演），体验5-8分钟</div>
+            <div class="flow-step-item"><span class="dot"></span>如时间充裕，进入模块三（亲子互动），体验5分钟</div>
+            <div class="flow-step-item"><span class="dot"></span>护士每5分钟巡视一次，评估儿童状态</div>
+          </div>
+        </div>
+      </div>
+      <!-- Step 4 -->
+      <div class="flow-step reveal" style="--i:3">
+        <div class="flow-step-num s4">4</div>
+        <div class="flow-step-line"></div>
+        <div class="flow-step-content">
+          <div class="flow-step-title">过渡引导</div>
+          <div class="flow-step-time">⏱ 约2分钟</div>
+          <div class="flow-step-items">
+            <div class="flow-step-item"><span class="dot"></span>AR中的虚拟角色说"接下来你要去完成一个勇敢的任务啦！"</div>
+            <div class="flow-step-item"><span class="dot"></span>儿童获得虚拟"勇敢勋章"（可打印实体版本）</div>
+            <div class="flow-step-item"><span class="dot"></span>家长陪同进入医疗程序</div>
+          </div>
+        </div>
+      </div>
+      <!-- Step 5 -->
+      <div class="flow-step reveal" style="--i:4">
+        <div class="flow-step-num s5">5</div>
+        <div class="flow-step-content">
+          <div class="flow-step-title">后续跟进</div>
+          <div class="flow-step-time">⏱ 医疗程序后</div>
+          <div class="flow-step-items">
+            <div class="flow-step-item"><span class="dot"></span>收集设备，进行消毒处理</div>
+            <div class="flow-step-item"><span class="dot"></span>邀请儿童对AR体验进行简单评价（笑脸/哭脸选择）</div>
+            <div class="flow-step-item"><span class="dot"></span>高焦虑儿童记录档案，建议后续心理随访</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flow Illustration SVG -->
+    <div class="reveal-scale" style="max-width:700px;margin:0 auto;">
+      <svg viewBox="0 0 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="200" rx="20" fill="#FAF8F2"/>
+        <!-- Flow path -->
+        <path d="M80 100 Q180 60 280 100 Q380 140 480 100 Q580 60 640 100" stroke="#D6E6F5" stroke-width="3" fill="none" stroke-dasharray="8,4" opacity="0.5"/>
+        <!-- Step nodes -->
+        <g class="svg-float">
+          <circle cx="80" cy="100" r="24" fill="#E8E0F3" opacity="0.6"/>
+          <text x="80" y="106" text-anchor="middle" font-size="16">🔍</text>
+          <text x="80" y="145" text-anchor="middle" font-size="10" fill="#7B68AE" font-weight="500">筛查</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="230" cy="80" r="24" fill="#D6E6F5" opacity="0.6"/>
+          <text x="230" y="86" text-anchor="middle" font-size="16">📱</text>
+          <text x="230" y="125" text-anchor="middle" font-size="10" fill="#5B9BD5" font-weight="500">准备</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="380" cy="110" r="28" fill="#D4EDE8" opacity="0.6"/>
+          <text x="380" y="116" text-anchor="middle" font-size="18">🪄</text>
+          <text x="380" y="155" text-anchor="middle" font-size="10" fill="#5BBFAD" font-weight="500">AR体验</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="530" cy="80" r="24" fill="#F8DDE3" opacity="0.6"/>
+          <text x="530" y="86" text-anchor="middle" font-size="16">🏅</text>
+          <text x="530" y="125" text-anchor="middle" font-size="10" fill="#E88BA0" font-weight="500">过渡</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="640" cy="100" r="24" fill="#F8EDCF" opacity="0.6"/>
+          <text x="640" y="106" text-anchor="middle" font-size="16">📋</text>
+          <text x="640" y="145" text-anchor="middle" font-size="10" fill="#D4A843" font-weight="500">跟进</text>
+        </g>
+        <!-- Connecting arrows -->
+        <path d="M106 95 L200 82" stroke="#7B68AE" stroke-width="1.5" fill="none" opacity="0.2" marker-end="url(#arrowP)"/>
+        <path d="M256 78 L348 105" stroke="#5B9BD5" stroke-width="1.5" fill="none" opacity="0.2"/>
+        <path d="M410 108 L502 82" stroke="#5BBFAD" stroke-width="1.5" fill="none" opacity="0.2"/>
+        <path d="M556 78 L612 95" stroke="#E88BA0" stroke-width="1.5" fill="none" opacity="0.2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPLEMENTATION ADAPTATION ===== -->
+<section class="adapt-section" id="adapt">
+  <div class="adapt-container">
+    <div class="section-header reveal">
+      <div class="section-tag adapt">⚙ 实施适配</div>
+      <h2 class="section-title">多维度精准适配</h2>
+      <p class="section-subtitle">年龄、场景、感染控制、空间、特殊需求——全方位保障</p>
+    </div>
+
+    <div class="adapt-grid stagger">
+      <div class="adapt-card reveal" style="--i:0">
+        <div class="adapt-card-icon a1">👶</div>
+        <div>
+          <h3>年龄适配</h3>
+          <p>3-5岁以被动观看和简单触控为主，内容高度拟人化；6-8岁增加互动游戏和选择权；9-12岁增加知识性和挑战性内容</p>
+        </div>
+      </div>
+      <div class="adapt-card reveal" style="--i:1">
+        <div class="adapt-card-icon a2">🏥</div>
+        <div>
+          <h3>医疗场景适配</h3>
+          <p>针对门诊候诊、住院准备、手术前准备、MRI检查、采血等不同场景定制差异化的AR内容包</p>
+        </div>
+      </div>
+      <div class="adapt-card reveal" style="--i:2">
+        <div class="adapt-card-icon a3">🛡️</div>
+        <div>
+          <h3>感染控制</h3>
+          <p>每台设备配备一次性硅胶保护套，每次使用后紫外线消毒箱5分钟消毒；设备表面选用医疗级抗菌材质</p>
+        </div>
+      </div>
+      <div class="adapt-card reveal" style="--i:3">
+        <div class="adapt-card-icon a4">📐</div>
+        <div>
+          <h3>空间适配</h3>
+          <p>基于标记追踪（marker-based）和空间定位（SLAM）技术，适配不同大小的候诊区域；无需额外硬件安装</p>
+        </div>
+      </div>
+      <div class="adapt-card reveal" style="--i:4" style="grid-column: 1 / -1;">
+        <div class="adapt-card-icon a5">♿</div>
+        <div>
+          <h3>特殊需求适配</h3>
+          <p>为听觉/视觉障碍儿童提供替代方案（如触觉反馈版、字幕版）；为自闭谱系儿童提供低感官刺激版本</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adaptation Illustration SVG -->
+    <div class="reveal-scale" style="max-width:700px;margin:0 auto;">
+      <svg viewBox="0 0 700 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="220" rx="20" fill="#F0ECE4"/>
+        <!-- Three age groups -->
+        <g class="svg-float">
+          <circle cx="140" cy="90" r="30" fill="#F8DDE3" opacity="0.5"/>
+          <circle cx="140" cy="82" r="14" fill="#F8DDE3"/>
+          <path d="M126 79 Q130 66 140 64 Q150 66 154 79" fill="#6A6478" opacity="0.3"/>
+          <circle cx="136" cy="81" r="1.5" fill="#3A3448"/>
+          <circle cx="144" cy="81" r="1.5" fill="#3A3448"/>
+          <path d="M137 88 Q140 90 143 88" stroke="#E88BA0" stroke-width="1" fill="none"/>
+          <text x="140" y="140" text-anchor="middle" font-size="12" fill="#E88BA0" font-weight="500">3-5岁</text>
+          <text x="140" y="156" text-anchor="middle" font-size="10" fill="#6A6478">被动观看·简单触控</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="350" cy="90" r="30" fill="#D6E6F5" opacity="0.5"/>
+          <circle cx="350" cy="80" r="16" fill="#F8DDE3"/>
+          <path d="M334 77 Q338 62 350 59 Q362 62 366 77" fill="#6A6478" opacity="0.3"/>
+          <circle cx="345" cy="79" r="1.8" fill="#3A3448"/>
+          <circle cx="355" cy="79" r="1.8" fill="#3A3448"/>
+          <path d="M346 87 Q350 90 354 87" stroke="#E88BA0" stroke-width="1" fill="none"/>
+          <text x="350" y="140" text-anchor="middle" font-size="12" fill="#5B9BD5" font-weight="500">6-8岁</text>
+          <text x="350" y="156" text-anchor="middle" font-size="10" fill="#6A6478">互动游戏·选择权</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="560" cy="90" r="30" fill="#E8E0F3" opacity="0.5"/>
+          <circle cx="560" cy="78" r="18" fill="#F8DDE3"/>
+          <path d="M542 74 Q547 58 560 55 Q573 58 578 74" fill="#6A6478" opacity="0.3"/>
+          <circle cx="554" cy="77" r="2" fill="#3A3448"/>
+          <circle cx="566" cy="77" r="2" fill="#3A3448"/>
+          <path d="M555 85 Q560 88 565 85" stroke="#E88BA0" stroke-width="1" fill="none"/>
+          <text x="560" y="140" text-anchor="middle" font-size="12" fill="#7B68AE" font-weight="500">9-12岁</text>
+          <text x="560" y="156" text-anchor="middle" font-size="10" fill="#6A6478">知识性·挑战性</text>
+        </g>
+        <!-- Progression arrows -->
+        <path d="M175 90 L310 90" stroke="#D6E6F5" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="6,4"/>
+        <path d="M385 90 L520 90" stroke="#E8E0F3" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="6,4"/>
+        <!-- Bottom labels -->
+        <g class="svg-float-d3" opacity="0.5">
+          <rect x="100" y="175" width="80" height="28" rx="10" fill="#F8DDE3" opacity="0.5"/>
+          <text x="140" y="194" text-anchor="middle" font-size="10" fill="#E88BA0">拟人化</text>
+        </g>
+        <g class="svg-float" opacity="0.5">
+          <rect x="310" y="175" width="80" height="28" rx="10" fill="#D6E6F5" opacity="0.5"/>
+          <text x="350" y="194" text-anchor="middle" font-size="10" fill="#5B9BD5">互动化</text>
+        </g>
+        <g class="svg-float-d" opacity="0.5">
+          <rect x="520" y="175" width="80" height="28" rx="10" fill="#E8E0F3" opacity="0.5"/>
+          <text x="560" y="194" text-anchor="middle" font-size="10" fill="#7B68AE">探索化</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONG-TERM MECHANISM ===== -->
+<section class="longterm-section" id="longterm">
+  <div class="longterm-container">
+    <div class="section-header reveal">
+      <div class="section-tag longterm">🔒 长效保障</div>
+      <h2 class="section-title">可持续的长效保障机制</h2>
+      <p class="section-subtitle">从循证研究到成本控制，构建完善的运营保障体系</p>
+    </div>
+
+    <div class="longterm-grid stagger">
+      <div class="longterm-card reveal" style="--i:0">
+        <div class="longterm-card-icon l1">🔬</div>
+        <div>
+          <h3>临床循证研究</h3>
+          <p>开展随机对照试验（RCT），对比AR干预组与对照组的焦虑水平、生理指标和医疗配合度，积累循证数据</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:1">
+        <div class="longterm-card-icon l2">🔄</div>
+        <div>
+          <h3>内容迭代机制</h3>
+          <p>建立儿童-家长-医护三方反馈系统，每季度根据反馈数据和临床使用数据更新AR内容</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:2">
+        <div class="longterm-card-icon l3">🎓</div>
+        <div>
+          <h3>人员培训</h3>
+          <p>为护士和儿童生活专家提供AR设备操作培训和儿童焦虑识别培训，确保干预的标准化实施</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:3">
+        <div class="longterm-card-icon l4">🔧</div>
+        <div>
+          <h3>技术维护</h3>
+          <p>与AR技术供应商签订长期维护协议，确保系统稳定性、内容更新和技术支持</p>
+        </div>
+      </div>
+      <div class="longterm-card reveal" style="--i:4" style="grid-column: 1 / -1;">
+        <div class="longterm-card-icon l5">💰</div>
+        <div>
+          <h3>成本控制</h3>
+          <p>采用"硬件租赁+内容订阅"模式降低初始投入；逐步从试点科室扩展至全院</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Long-term cycle illustration -->
+    <div class="reveal-scale" style="max-width:600px;margin:0 auto;">
+      <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="600" height="200" rx="20" fill="#FAF8F2"/>
+        <!-- Circular flow -->
+        <circle cx="300" cy="100" r="65" stroke="#E8E0F3" stroke-width="2" fill="none" stroke-dasharray="8,4" opacity="0.5"/>
+        <!-- Center -->
+        <circle cx="300" cy="100" r="28" fill="#E8E0F3" opacity="0.3"/>
+        <text x="300" y="96" text-anchor="middle" font-size="18">♻️</text>
+        <text x="300" y="112" text-anchor="middle" font-size="9" fill="#7B68AE" font-weight="500">持续优化</text>
+        <!-- Nodes -->
+        <g class="svg-float">
+          <circle cx="300" cy="25" r="18" fill="#D6E6F5" opacity="0.6"/>
+          <text x="300" y="31" text-anchor="middle" font-size="14">🔬</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="380" cy="65" r="18" fill="#F8DDE3" opacity="0.6"/>
+          <text x="380" y="71" text-anchor="middle" font-size="14">🔄</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="380" cy="140" r="18" fill="#E8E0F3" opacity="0.6"/>
+          <text x="380" y="146" text-anchor="middle" font-size="14">🎓</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="220" cy="140" r="18" fill="#F8EDCF" opacity="0.6"/>
+          <text x="220" y="146" text-anchor="middle" font-size="14">🔧</text>
+        </g>
+        <g class="svg-float">
+          <circle cx="220" cy="65" r="18" fill="#D4EDE8" opacity="0.6"/>
+          <text x="220" y="71" text-anchor="middle" font-size="14">💰</text>
+        </g>
+        <!-- Flow arrows -->
+        <path d="M316 28 Q345 35 365 55" stroke="#5B9BD5" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M392 80 Q398 110 392 130" stroke="#E88BA0" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M365 152 Q300 175 240 152" stroke="#7B68AE" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M210 130 Q204 110 210 80" stroke="#D4A843" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <path d="M235 55 Q260 35 284 28" stroke="#5BBFAD" stroke-width="1.5" fill="none" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs & ESG ===== -->
+<section class="sdgs-section" id="sdgs">
+  <div class="sdgs-container">
+    <div class="section-header reveal">
+      <div class="section-tag sdgs">📈 SDGs & ESG</div>
+      <h2 class="section-title">可持续发展目标融合</h2>
+      <p class="section-subtitle">将儿童医疗焦虑干预与联合国可持续发展目标深度结合</p>
+    </div>
+
+    <div class="sdgs-grid stagger">
+      <div class="sdg-card reveal" style="--i:0">
+        <div class="sdg-num">3.4</div>
+        <div class="sdg-title">心理健康</div>
+        <p class="sdg-desc">通过AR干预降低儿童医疗焦虑，改善就医体验和心理健康</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:1">
+        <div class="sdg-num">3.8</div>
+        <div class="sdg-title">人文医疗</div>
+        <p class="sdg-desc">提升医疗服务的人文关怀质量，实现"以患者为中心"的医疗</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:2">
+        <div class="sdg-num">9.5</div>
+        <div class="sdg-title">科技创新</div>
+        <p class="sdg-desc">将前沿AR技术应用于医疗健康领域，促进科技创新</p>
+      </div>
+      <div class="sdg-card reveal" style="--i:3">
+        <div class="sdg-num">10.2</div>
+        <div class="sdg-title">弱势群体</div>
+        <p class="sdg-desc">关注儿童这一弱势群体在医疗场景中的特殊需求</p>
+      </div>
+    </div>
+
+    <div class="esg-box reveal">
+      <h3>🌍 ESG 融合框架</h3>
+      <div class="esg-items">
+        <div class="esg-item">
+          <span class="esg-item-label">社会维度 (S)</span>
+          <span>改善儿童就医体验，减轻家长心理负担，体现医疗机构的人文关怀</span>
+        </div>
+        <div class="esg-item">
+          <span class="esg-item-label">治理维度 (G)</span>
+          <span>建立严格的儿童数据保护协议，确保AR使用过程中的隐私安全</span>
+        </div>
+        <div class="esg-item">
+          <span class="esg-item-label">创新维度</span>
+          <span>探索数字疗法在儿科场景的应用模式，为行业提供可复制的实践范例</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EVALUATION ===== -->
+<section class="eval-section" id="eval">
+  <div class="eval-container">
+    <div class="section-header reveal">
+      <div class="section-tag eval">📊 评估机制</div>
+      <h2 class="section-title">多维度科学评估体系</h2>
+      <p class="section-subtitle">从焦虑水平到长期效果，全方位量化干预成效</p>
+    </div>
+
+    <div class="eval-table-wrap reveal-scale">
+      <table class="eval-table">
+        <thead>
+          <tr>
+            <th>评估维度</th>
+            <th>评估工具</th>
+            <th>评估时间点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="eval-tag t1">😰 焦虑水平</span></td>
+            <td>FACCS（面部焦虑量表）、mYPAS（改良耶鲁儿童焦虑量表）</td>
+            <td>干预前、干预后、医疗程序中</td>
+          </tr>
+          <tr>
+            <td><span class="eval-tag t2">💓 生理指标</span></td>
+            <td>心率、血氧饱和度、皮质醇唾液检测（可选）</td>
+            <td>干预前、干预后</td>
+          </tr>
+          <tr>
+            <td><span class="eval-tag t3">😣 疼痛感知</span></td>
+            <td>Wong-Baker FACES 疼痛量表</td>
+            <td>医疗程序后</td>
+          </tr>
+          <tr>
+            <td><span class="eval-tag t4">🤝 医疗配合度</span></td>
+            <td>医护人员评定量表（IMCS）</td>
+            <td>医疗程序中</td>
+          </tr>
+          <tr>
+            <td><span class="eval-tag t1">😊 家长满意度</span></td>
+            <td>自编家长满意度问卷（5点Likert量表）</td>
+            <td>医疗程序后</td>
+          </tr>
+          <tr>
+            <td><span class="eval-tag t2">🧒 儿童体验</span></td>
+            <td>笑脸/哭脸选择 + 开放式提问</td>
+            <td>医疗程序后</td>
+          </tr>
+          <tr>
+            <td><span class="eval-tag t3">📈 长期效果</span></td>
+            <td>医疗恐惧筛查量表（CFSS）</td>
+            <td>下次就医前</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Evaluation illustration -->
+    <div class="reveal-scale" style="max-width:700px;margin:30px auto 0;">
+      <svg viewBox="0 0 700 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="700" height="180" rx="20" fill="#FAF8F2"/>
+        <!-- Timeline -->
+        <line x1="80" y1="100" x2="620" y2="100" stroke="#E8E0F3" stroke-width="2" opacity="0.5"/>
+        <!-- Time points -->
+        <g class="svg-float">
+          <circle cx="120" cy="100" r="20" fill="#D6E6F5" opacity="0.5"/>
+          <text x="120" y="106" text-anchor="middle" font-size="14">📝</text>
+          <text x="120" y="140" text-anchor="middle" font-size="10" fill="#5B9BD5" font-weight="500">干预前</text>
+        </g>
+        <g class="svg-float-d">
+          <circle cx="300" cy="100" r="20" fill="#D4EDE8" opacity="0.5"/>
+          <text x="300" y="106" text-anchor="middle" font-size="14">🪄</text>
+          <text x="300" y="140" text-anchor="middle" font-size="10" fill="#5BBFAD" font-weight="500">干预后</text>
+        </g>
+        <g class="svg-float-d2">
+          <circle cx="480" cy="100" r="20" fill="#F8DDE3" opacity="0.5"/>
+          <text x="480" y="106" text-anchor="middle" font-size="14">🏥</text>
+          <text x="480" y="140" text-anchor="middle" font-size="10" fill="#E88BA0" font-weight="500">医疗程序中</text>
+        </g>
+        <g class="svg-float-d3">
+          <circle cx="620" cy="100" r="20" fill="#F8EDCF" opacity="0.5"/>
+          <text x="620" y="106" text-anchor="middle" font-size="14">📅</text>
+          <text x="620" y="140" text-anchor="middle" font-size="10" fill="#D4A843" font-weight="500">下次就医</text>
+        </g>
+        <!-- Improvement curve -->
+        <path d="M120 80 Q200 70 300 60 Q400 55 480 50 Q560 45 620 42" stroke="#5BBFAD" stroke-width="2.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+        <!-- Arrow at end -->
+        <polygon points="620,42 612,38 614,46" fill="#5BBFAD" opacity="0.4"/>
+        <text x="400" y="40" text-anchor="middle" font-size="10" fill="#5BBFAD" opacity="0.6">焦虑水平持续下降 →</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal">
+    <h2 class="footer-title">用魔法守护每一颗小小的心灵 🪄</h2>
+    <p class="footer-text">让科技与想象力成为最好的"止痛药"，让每位孩子都能勇敢面对医疗挑战</p>
+    <div class="footer-hearts">💜 🌟 💙 💜</div>
+  </div>
+</footer>
+
+<script>
+// ===== Scroll Progress Bar =====
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+});
+
+// ===== Navigation Dots =====
+const dots = document.querySelectorAll('.nav-dot');
+const sections = ['hero', 'module1', 'module2', 'module3', 'flow', 'adapt', 'longterm', 'sdgs', 'eval'];
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const target = dot.getAttribute('data-target');
+    document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+const sectionEls = sections.map(id => document.getElementById(id));
+window.addEventListener('scroll', () => {
+  let current = 0;
+  sectionEls.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2) current = i;
+  });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === current);
+  });
+});
+
+// ===== Scroll Reveal Animations =====
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ===== Parallax effect for hero shapes =====
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const shapes = document.querySelectorAll('.hero-shape');
+  shapes.forEach((shape, i) => {
+    const speed = 0.03 + i * 0.02;
+    shape.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+});
+</script>
+<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
+</body>
+</html>

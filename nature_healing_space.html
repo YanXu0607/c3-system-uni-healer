@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自然疗愈空间 · 制造企业员工心理恢复方案</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --forest:#4A7C59;--forest-light:#D4E8DA;--forest-pale:#EAF5EE;
+    --sage:#8BA888;--sage-light:#E2EDE0;
+    --moss:#6B8F71;--moss-light:#C8DDD0;
+    --stone:#A0937D;--stone-light:#EDE8E0;
+    --water:#6BA3BE;--water-light:#D6EAF2;
+    --lavender:#9B8FA8;--lavender-light:#E8E3EE;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --warm:#E8C89E;--warm-light:#FBF2E4;
+    --deep:#3D3D3D;--soft:#6B6B6B;--surface:#F0ECE4;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8}
+
+  .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--forest),var(--water),var(--sage));width:0%;transition:width .1s linear}
+
+  .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+  .nav-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.12);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
+  .nav-dot.active{background:var(--forest);transform:scale(1.4);box-shadow:0 0 12px rgba(74,124,89,.4)}
+  .nav-dot:hover{transform:scale(1.3)}
+  .nav-dot .tooltip{position:absolute;right:22px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+  .nav-dot:hover .tooltip{opacity:1}
+
+  /* Hero */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--forest-pale) 0%,var(--cream) 40%,var(--water-light) 100%)}
+  .hero-bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-shape{position:absolute;border-radius:50%;opacity:.12}
+  .hero-shape:nth-child(1){width:400px;height:400px;background:var(--forest);top:-100px;right:-80px;animation:floatShape 8s ease-in-out infinite}
+  .hero-shape:nth-child(2){width:300px;height:300px;background:var(--water);bottom:-60px;left:-60px;animation:floatShape 10s ease-in-out infinite reverse}
+  .hero-shape:nth-child(3){width:220px;height:220px;background:var(--sage);top:30%;left:10%;animation:floatShape 12s ease-in-out infinite}
+  @keyframes floatShape{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.05)}}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:40px 24px}
+  .hero-badge{display:inline-block;padding:6px 20px;background:rgba(74,124,89,.1);border-radius:20px;font-size:13px;color:var(--forest);font-weight:500;letter-spacing:2px;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards}
+  .hero-title{font-family:'Noto Serif SC',serif;font-size:clamp(32px,5.5vw,58px);font-weight:700;line-height:1.3;margin-bottom:16px;opacity:0;animation:fadeUp .8s .4s forwards}
+  .hero-title .accent{color:var(--forest)}
+  .hero-subtitle{font-size:clamp(15px,2.2vw,19px);color:var(--soft);font-weight:300;margin-bottom:32px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-meta{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards}
+  .hero-meta-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--soft)}
+  .hero-meta-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .hero-meta-icon.green{background:rgba(74,124,89,.1)}
+  .hero-meta-icon.blue{background:rgba(107,163,190,.12)}
+  .hero-meta-icon.stone{background:rgba(160,147,125,.12)}
+  .hero-meta-icon.warm{background:rgba(232,200,158,.15)}
+  .hero-illustration{margin-top:40px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:620px;margin-left:auto;margin-right:auto}
+  .hero-illustration svg{width:100%;height:auto;display:block}
+  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+  /* Zone Sections */
+  .zone-section{min-height:100vh;display:flex;align-items:center;padding:80px 24px;position:relative}
+  .zone-section:nth-child(odd){background:var(--cream-pale)}
+  .zone-section:nth-child(even){background:var(--surface)}
+  .zone-container{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .zone-number{display:inline-flex;align-items:center;gap:10px;margin-bottom:16px}
+  .zone-badge{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#fff}
+  .zone-badge.z1{background:linear-gradient(135deg,#4A7C59,#6BAF7A)}
+  .zone-badge.z2{background:linear-gradient(135deg,#6BA3BE,#8DC4D8)}
+  .zone-badge.z3{background:linear-gradient(135deg,#A0937D,#C4B8A6)}
+  .zone-badge.z4{background:linear-gradient(135deg,#8BA888,#B0D0AC)}
+  .zone-label{font-size:13px;letter-spacing:2px;color:var(--soft);font-weight:500}
+  .zone-title{font-family:'Noto Serif SC',serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;margin-bottom:8px;line-height:1.4}
+  .zone-area{font-size:14px;color:var(--forest);font-weight:500;margin-bottom:16px;display:inline-block;padding:4px 14px;background:rgba(74,124,89,.08);border-radius:16px}
+  .zone-desc{font-size:15px;color:var(--soft);line-height:1.9;margin-bottom:20px}
+  .zone-details{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+  .detail-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--soft)}
+  .detail-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+  .detail-icon.z1{background:rgba(74,124,89,.1)}.detail-icon.z2{background:rgba(107,163,190,.1)}
+  .detail-icon.z3{background:rgba(160,147,125,.1)}.detail-icon.z4{background:rgba(139,168,136,.1)}
+  .zone-visual{position:relative}
+  .zone-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+
+  /* Info Sections */
+  .info-section{padding:100px 24px;position:relative}
+  .info-section.elements{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .info-section.guide{background:var(--cream-pale)}
+  .info-section.impl{background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .info-section.longterm{background:var(--surface)}
+  .info-section.sdgs{background:linear-gradient(180deg,var(--surface),var(--cream-pale))}
+  .info-container{max-width:1100px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:60px}
+  .section-tag{display:inline-block;padding:5px 16px;border-radius:16px;font-size:12px;letter-spacing:2px;font-weight:500;margin-bottom:16px}
+  .section-tag.elements{background:rgba(74,124,89,.1);color:var(--forest)}
+  .section-tag.guide{background:rgba(107,163,190,.1);color:var(--water)}
+  .section-tag.impl{background:rgba(160,147,125,.1);color:var(--stone)}
+  .section-tag.longterm{background:rgba(139,168,136,.1);color:var(--sage)}
+  .section-tag.sdgs{background:rgba(232,200,158,.15);color:#A08050}
+  .section-title{font-family:'Noto Serif SC',serif;font-size:clamp(26px,4vw,40px);font-weight:700;margin-bottom:12px}
+  .section-subtitle{font-size:15px;color:var(--soft);max-width:600px;margin:0 auto}
+
+  .info-with-visual{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:60px}
+  .info-visual svg{width:100%;height:auto;display:block;border-radius:20px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.05))}
+  .info-text h3{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;margin-bottom:12px}
+  .info-text p{font-size:15px;color:var(--soft);line-height:1.8;margin-bottom:16px}
+  .info-text .info-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .info-text .info-tag{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500}
+  .info-tag.t1{background:rgba(74,124,89,.08);color:var(--forest)}
+  .info-tag.t2{background:rgba(107,163,190,.08);color:var(--water)}
+  .info-tag.t3{background:rgba(160,147,125,.08);color:var(--stone)}
+  .info-tag.t4{background:rgba(139,168,136,.08);color:var(--sage)}
+
+  /* Elements Grid */
+  .elements-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  .element-card{padding:28px;border-radius:16px;background:var(--cream-pale);border:1px solid rgba(74,124,89,.06);transition:transform .3s,box-shadow .3s}
+  .element-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .element-card-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+  .element-card-icon.e1{background:rgba(74,124,89,.1)}
+  .element-card-icon.e2{background:rgba(107,163,190,.1)}
+  .element-card-icon.e3{background:rgba(232,200,158,.15)}
+  .element-card-icon.e4{background:rgba(139,168,136,.1)}
+  .element-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .element-card p{font-size:14px;color:var(--soft);line-height:1.7}
+
+  /* SDGs */
+  .sdgs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  .sdg-card{padding:28px;border-radius:16px;text-align:center;position:relative;overflow:hidden;transition:transform .3s}
+  .sdg-card:hover{transform:translateY(-4px)}
+  .sdg-card:nth-child(1){background:linear-gradient(135deg,rgba(74,124,89,.08),rgba(74,124,89,.02));border:1px solid rgba(74,124,89,.1)}
+  .sdg-card:nth-child(2){background:linear-gradient(135deg,rgba(107,163,190,.08),rgba(107,163,190,.02));border:1px solid rgba(107,163,190,.1)}
+  .sdg-num{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;margin-bottom:8px}
+  .sdg-card:nth-child(1) .sdg-num{color:var(--forest)}
+  .sdg-card:nth-child(2) .sdg-num{color:var(--water)}
+  .sdg-title{font-size:15px;font-weight:600;margin-bottom:10px}
+  .sdg-desc{font-size:13px;color:var(--soft);line-height:1.7}
+
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .footer-title{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto}
+  .footer-hearts{margin-top:24px;font-size:24px;letter-spacing:8px;opacity:.3}
+
+  /* Scroll Reveal */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+
+  /* Scroll-Triggered SVG Animations */
+  .svg-float{opacity:1}.svg-float.anim-active{animation:svgFloat 4s ease-in-out infinite}
+  .svg-float-d.anim-active{animation:svgFloat 4s ease-in-out 1s infinite}
+  .svg-float-d2.anim-active{animation:svgFloat 4s ease-in-out 2s infinite}
+  .svg-pulse{opacity:0}.svg-pulse.anim-active{animation:svgPulse 3s ease-in-out infinite}
+  .svg-breathe{opacity:1}.svg-breathe.anim-active{animation:svgBreathe 5s ease-in-out infinite}
+  .svg-sway{opacity:1}.svg-sway.anim-active{animation:svgSway 6s ease-in-out infinite}
+  .svg-glow{opacity:0}.svg-glow.anim-active{animation:svgGlow 4s ease-in-out infinite}
+  .svg-draw{stroke-dasharray:1000;stroke-dashoffset:1000;opacity:1}.svg-draw.anim-active{animation:svgDraw 3s ease forwards}
+  .svg-draw-slow{stroke-dasharray:1000;stroke-dashoffset:1000;opacity:1}.svg-draw-slow.anim-active{animation:svgDraw 5s ease forwards}
+  .svg-fade-in{opacity:0}.svg-fade-in.anim-active{animation:svgFadeIn 1.2s ease forwards}
+  .svg-fade-in-d{opacity:0}.svg-fade-in-d.anim-active{animation:svgFadeIn 1.2s .4s ease forwards}
+  .svg-fade-in-d2{opacity:0}.svg-fade-in-d2.anim-active{animation:svgFadeIn 1.2s .8s ease forwards}
+  .svg-fade-in-d3{opacity:0}.svg-fade-in-d3.anim-active{animation:svgFadeIn 1.2s 1.2s ease forwards}
+  .svg-scale-in{transform:scale(0);opacity:0}.svg-scale-in.anim-active{animation:svgScaleIn .8s cubic-bezier(.34,1.56,.64,1) forwards}
+  .svg-ripple{transform:scale(0);opacity:0}.svg-ripple.anim-active{animation:svgRipple 2s ease-out forwards}
+  .svg-particle{opacity:0}.svg-particle.anim-active{animation:svgParticle 4s ease-in-out infinite}
+  .svg-rise{opacity:0;transform:translateY(20px)}.svg-rise.anim-active{animation:svgRise 1.5s ease forwards}
+  .svg-shimmer{opacity:0}.svg-shimmer.anim-active{animation:svgShimmer 3s ease-in-out infinite}
+  .svg-drip{opacity:0}.svg-drip.anim-active{animation:svgDrip 2s ease-in infinite}
+
+  @keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes svgPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.15);opacity:.8}}
+  @keyframes svgBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes svgSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  @keyframes svgGlow{0%,100%{opacity:.08}50%{opacity:.25}}
+  @keyframes svgDraw{to{stroke-dashoffset:0}}
+  @keyframes svgFadeIn{to{opacity:1}}
+  @keyframes svgScaleIn{to{transform:scale(1);opacity:1}}
+  @keyframes svgRipple{0%{transform:scale(0);opacity:.5}100%{transform:scale(2.5);opacity:0}}
+  @keyframes svgParticle{0%{opacity:0;transform:translateY(0) translateX(0)}25%{opacity:.5}50%{opacity:.3;transform:translateY(-12px) translateX(6px)}75%{opacity:.15}100%{opacity:0;transform:translateY(-24px) translateX(-4px)}}
+  @keyframes svgRise{to{opacity:1;transform:translateY(0)}}
+  @keyframes svgShimmer{0%,100%{opacity:0}50%{opacity:.6}}
+  @keyframes svgDrip{0%{opacity:0;transform:translateY(-8px)}30%{opacity:.5}100%{opacity:0;transform:translateY(16px)}}
+
+  @media(max-width:768px){
+    .zone-container,.info-with-visual{grid-template-columns:1fr;gap:32px}
+    .zone-section{padding:60px 20px}
+    .elements-grid,.sdgs-grid{grid-template-columns:1fr}
+    .nav-dots{right:12px;gap:10px}
+    .nav-dot{width:8px;height:8px}
+    .nav-dot .tooltip{display:none}
+    .hero-meta{gap:16px}
+  }
+</style>
+
+<style>
+.plan-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #5A5265;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.2s;
+}
+.plan-back-btn:hover {
+    background: rgba(255,255,255,0.98);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+.plan-back-btn .back-arrow { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero"><span class="tooltip">首页</span></div>
+  <div class="nav-dot" data-target="zone1"><span class="tooltip">绿意入口</span></div>
+  <div class="nav-dot" data-target="zone2"><span class="tooltip">静坐冥想</span></div>
+  <div class="nav-dot" data-target="zone3"><span class="tooltip">感官花园</span></div>
+  <div class="nav-dot" data-target="zone4"><span class="tooltip">社交休息</span></div>
+  <div class="nav-dot" data-target="elements"><span class="tooltip">核心元素</span></div>
+  <div class="nav-dot" data-target="guide"><span class="tooltip">使用指南</span></div>
+  <div class="nav-dot" data-target="impl"><span class="tooltip">实施适配</span></div>
+  <div class="nav-dot" data-target="longterm"><span class="tooltip">长效保障</span></div>
+  <div class="nav-dot" data-target="sdgs"><span class="tooltip">SDGs</span></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes"><div class="hero-shape"></div><div class="hero-shape"></div><div class="hero-shape"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge">注意力恢复理论 · 亲自然性假说</div>
+    <h1 class="hero-title"><span class="accent">自然疗愈空间</span><br>让身心回归绿意</h1>
+    <p class="hero-subtitle">为制造企业员工打造可快速恢复心理资源的自然化休息环境<br>80-120㎡ · 四大功能区域 · 多维度自然疗愈</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="hero-meta-icon green">🌿</div><span>自然疗愈</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon blue">💧</div><span>水景声光</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon stone">🪨</div><span>天然建材</span></div>
+      <div class="hero-meta-item"><div class="hero-meta-icon warm">☀️</div><span>80-120㎡</span></div>
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 620 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="620" height="340" rx="20" fill="#FAF8F2"/>
+        <!-- Sky gradient -->
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#EAF5EE" stop-opacity=".3"/>
+            <stop offset="100%" stop-color="#FAF8F2" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6BA3BE" stop-opacity=".08"/>
+            <stop offset="100%" stop-color="#6BA3BE" stop-opacity=".18"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="620" height="200" rx="20" fill="url(#skyGrad)"/>
+
+        <!-- Sun with rays -->
+        <g class="svg-sway" style="transform-origin:520px 55px">
+          <circle cx="520" cy="55" r="28" fill="#E8C89E" opacity=".2"/>
+          <circle cx="520" cy="55" r="18" fill="#E8C89E" opacity=".35"/>
+          <circle cx="520" cy="55" r="10" fill="#F4E4A6" opacity=".4"/>
+          <line x1="520" y1="18" x2="520" y2="8" stroke="#E8C89E" stroke-width="2" opacity=".2" stroke-linecap="round"/>
+          <line x1="548" y1="27" x2="556" y2="19" stroke="#E8C89E" stroke-width="2" opacity=".2" stroke-linecap="round"/>
+          <line x1="558" y1="55" x2="568" y2="55" stroke="#E8C89E" stroke-width="2" opacity=".2" stroke-linecap="round"/>
+          <line x1="548" y1="83" x2="556" y2="91" stroke="#E8C89E" stroke-width="2" opacity=".2" stroke-linecap="round"/>
+          <line x1="492" y1="27" x2="484" y2="19" stroke="#E8C89E" stroke-width="2" opacity=".2" stroke-linecap="round"/>
+          <line x1="482" y1="55" x2="472" y2="55" stroke="#E8C89E" stroke-width="2" opacity=".2" stroke-linecap="round"/>
+          <line x1="492" y1="83" x2="484" y2="91" stroke="#E8C89E" stroke-width="2" opacity=".2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Clouds drifting -->
+        <g class="svg-float"><ellipse cx="100" cy="45" rx="42" ry="16" fill="#fff" opacity=".6"/><ellipse cx="125" cy="38" rx="30" ry="13" fill="#fff" opacity=".5"/><ellipse cx="80" cy="40" rx="22" ry="10" fill="#fff" opacity=".4"/></g>
+        <g class="svg-float-d"><ellipse cx="350" cy="35" rx="36" ry="14" fill="#fff" opacity=".5"/><ellipse cx="372" cy="28" rx="26" ry="11" fill="#fff" opacity=".4"/></g>
+        <g class="svg-float-d2"><ellipse cx="240" cy="55" rx="28" ry="11" fill="#fff" opacity=".35"/></g>
+
+        <!-- Birds flying -->
+        <g class="svg-float" style="animation-delay:.3s">
+          <path d="M140 70 Q145 64 150 70" stroke="#6B6B6B" stroke-width="1.2" fill="none" opacity=".2"/>
+          <path d="M155 65 Q160 59 165 65" stroke="#6B6B6B" stroke-width="1.2" fill="none" opacity=".18"/>
+        </g>
+        <g class="svg-float-d" style="animation-delay:.8s">
+          <path d="M420 50 Q424 45 428 50" stroke="#6B6B6B" stroke-width="1" fill="none" opacity=".15"/>
+          <path d="M434 46 Q438 41 442 46" stroke="#6B6B6B" stroke-width="1" fill="none" opacity=".13"/>
+        </g>
+
+        <!-- Distant mountains -->
+        <g class="svg-fade-in">
+          <path d="M0 180 Q80 120 160 160 Q220 130 280 155 Q340 110 400 150 Q460 125 520 145 Q580 115 620 155 L620 200 L0 200Z" fill="#D4E8DA" opacity=".15"/>
+        </g>
+
+        <!-- Ground layers -->
+        <path d="M0 210 Q100 200 200 208 Q300 216 400 206 Q500 198 620 210 L620 340 L0 340Z" fill="#D4E8DA" opacity=".2"/>
+        <path d="M0 230 Q150 222 300 228 Q450 234 620 225 L620 340 L0 340Z" fill="#D4E8DA" opacity=".15"/>
+
+        <!-- Left large tree -->
+        <g class="svg-sway" style="transform-origin:75px 175px">
+          <rect x="70" y="175" width="10" height="65" rx="3" fill="#A0937D" opacity=".35"/>
+          <path d="M55 178 Q50 155 60 140" stroke="#A0937D" stroke-width="3" fill="none" opacity=".2" stroke-linecap="round"/>
+          <circle cx="75" cy="140" r="38" fill="#4A7C59" opacity=".15"/>
+          <circle cx="60" cy="152" r="26" fill="#6BAF7A" opacity=".12"/>
+          <circle cx="90" cy="148" r="24" fill="#4A7C59" opacity=".14"/>
+          <circle cx="75" cy="128" r="22" fill="#8BA888" opacity=".1"/>
+          <circle cx="55" cy="138" r="16" fill="#6BAF7A" opacity=".1"/>
+          <circle cx="95" cy="135" r="14" fill="#4A7C59" opacity=".12"/>
+        </g>
+
+        <!-- Left small bush -->
+        <g class="svg-sway" style="transform-origin:140px 218px;animation-delay:.5s">
+          <circle cx="140" cy="212" r="16" fill="#6BAF7A" opacity=".15"/>
+          <circle cx="130" cy="216" r="12" fill="#4A7C59" opacity=".12"/>
+          <circle cx="152" cy="214" r="10" fill="#8BA888" opacity=".12"/>
+        </g>
+
+        <!-- Right large tree -->
+        <g class="svg-sway" style="transform-origin:530px 170px;animation-delay:1s">
+          <rect x="525" y="170" width="10" height="70" rx="3" fill="#A0937D" opacity=".35"/>
+          <path d="M540 175 Q545 152 535 138" stroke="#A0937D" stroke-width="3" fill="none" opacity=".2" stroke-linecap="round"/>
+          <circle cx="530" cy="135" r="40" fill="#4A7C59" opacity=".14"/>
+          <circle cx="515" cy="148" r="28" fill="#6BAF7A" opacity=".11"/>
+          <circle cx="545" cy="142" r="26" fill="#4A7C59" opacity=".13"/>
+          <circle cx="530" cy="122" r="24" fill="#8BA888" opacity=".1"/>
+          <circle cx="510" cy="135" r="18" fill="#6BAF7A" opacity=".09"/>
+          <circle cx="550" cy="130" r="16" fill="#4A7C59" opacity=".11"/>
+        </g>
+
+        <!-- Right small bush -->
+        <g class="svg-sway" style="transform-origin:470px 215px;animation-delay:1.5s">
+          <circle cx="470" cy="210" r="14" fill="#8BA888" opacity=".14"/>
+          <circle cx="480" cy="214" r="11" fill="#4A7C59" opacity=".12"/>
+          <circle cx="462" cy="216" r="10" fill="#6BAF7A" opacity=".1"/>
+        </g>
+
+        <!-- Center building with green roof -->
+        <g class="svg-fade-in-d">
+          <rect x="210" y="120" width="200" height="110" rx="8" fill="#E8E3EE" opacity=".18"/>
+          <!-- Windows with warm light -->
+          <rect x="228" y="138" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".25"/>
+          <rect x="228" y="138" width="28" height="28" rx="3" fill="#E8C89E" opacity=".08"/>
+          <rect x="270" y="138" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".25"/>
+          <rect x="270" y="138" width="28" height="28" rx="3" fill="#E8C89E" opacity=".08"/>
+          <rect x="312" y="138" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".25"/>
+          <rect x="312" y="138" width="28" height="28" rx="3" fill="#E8C89E" opacity=".08"/>
+          <rect x="354" y="138" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".25"/>
+          <rect x="354" y="138" width="28" height="28" rx="3" fill="#E8C89E" opacity=".08"/>
+          <rect x="228" y="180" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".2"/>
+          <rect x="270" y="180" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".2"/>
+          <rect x="312" y="180" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".2"/>
+          <rect x="354" y="180" width="28" height="28" rx="3" fill="#D4E8DA" opacity=".2"/>
+          <!-- Door -->
+          <rect x="285" y="210" width="30" height="20" rx="3" fill="#A0937D" opacity=".18"/>
+        </g>
+        <!-- Green roof -->
+        <g class="svg-fade-in-d2">
+          <path d="M205 120 L310 78 L415 120" fill="#4A7C59" opacity=".12"/>
+          <circle cx="265" cy="102" r="14" fill="#6BAF7A" opacity=".18"/>
+          <circle cx="310" cy="90" r="16" fill="#4A7C59" opacity=".16"/>
+          <circle cx="355" cy="102" r="13" fill="#8BA888" opacity=".18"/>
+          <circle cx="240" cy="108" r="10" fill="#4A7C59" opacity=".12"/>
+          <circle cx="380" cy="108" r="10" fill="#6BAF7A" opacity=".12"/>
+        </g>
+
+        <!-- Stone path from building -->
+        <g class="svg-fade-in-d3">
+          <ellipse cx="310" cy="245" rx="22" ry="8" fill="#A0937D" opacity=".15"/>
+          <ellipse cx="295" cy="258" rx="20" ry="7" fill="#A0937D" opacity=".13"/>
+          <ellipse cx="325" cy="260" rx="18" ry="7" fill="#A0937D" opacity=".12"/>
+          <ellipse cx="308" cy="272" rx="20" ry="7" fill="#A0937D" opacity=".11"/>
+          <ellipse cx="335" cy="275" rx="16" ry="6" fill="#A0937D" opacity=".1"/>
+        </g>
+
+        <!-- Water feature (pond) -->
+        <g class="svg-fade-in" style="animation-delay:.5s">
+          <ellipse cx="185" cy="260" rx="55" ry="18" fill="url(#waterGrad)"/>
+          <ellipse cx="185" cy="258" rx="40" ry="12" fill="#6BA3BE" opacity=".1"/>
+        </g>
+        <!-- Water ripples -->
+        <ellipse cx="185" cy="255" rx="18" ry="5" fill="none" stroke="#6BA3BE" stroke-width="1" opacity=".2" class="svg-ripple"/>
+        <ellipse cx="185" cy="255" rx="18" ry="5" fill="none" stroke="#6BA3BE" stroke-width="1" opacity=".15" class="svg-ripple" style="animation-delay:.7s"/>
+        <ellipse cx="185" cy="255" rx="18" ry="5" fill="none" stroke="#6BA3BE" stroke-width="1" opacity=".1" class="svg-ripple" style="animation-delay:1.4s"/>
+        <!-- Water lily -->
+        <g class="svg-scale-in" style="animation-delay:1.2s">
+          <ellipse cx="175" cy="252" rx="8" ry="4" fill="#8BA888" opacity=".2"/>
+          <circle cx="175" cy="250" r="3" fill="#9B8FA8" opacity=".25"/>
+        </g>
+
+        <!-- Small fountain -->
+        <g class="svg-fade-in" style="animation-delay:.8s">
+          <ellipse cx="440" cy="255" rx="30" ry="10" fill="#6BA3BE" opacity=".1"/>
+          <rect x="434" y="238" width="12" height="16" rx="2" fill="#A0937D" opacity=".15"/>
+          <path d="M440 238 Q438 225 440 215 Q442 225 440 238" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".15" class="svg-draw" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:1.5s"/>
+          <circle cx="440" cy="212" r="2" fill="#6BA3BE" opacity=".2" class="svg-pulse"/>
+        </g>
+
+        <!-- Flowers along ground -->
+        <g class="svg-scale-in" style="animation-delay:.6s"><circle cx="160" cy="228" r="5" fill="#E8C89E" opacity=".3"/><circle cx="160" cy="228" r="2" fill="#F4E4A6" opacity=".4"/></g>
+        <g class="svg-scale-in" style="animation-delay:.8s"><circle cx="200" cy="232" r="4" fill="#9B8FA8" opacity=".25"/><circle cx="200" cy="232" r="1.5" fill="#E8C89E" opacity=".35"/></g>
+        <g class="svg-scale-in" style="animation-delay:1s"><circle cx="460" cy="228" r="4.5" fill="#E8C89E" opacity=".25"/><circle cx="460" cy="228" r="2" fill="#F4E4A6" opacity=".35"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.2s"><circle cx="500" cy="232" r="4" fill="#9B8FA8" opacity=".2"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.4s"><circle cx="120" cy="235" r="3.5" fill="#8BA888" opacity=".2"/></g>
+        <g class="svg-scale-in" style="animation-delay:1.6s"><circle cx="550" cy="230" r="4" fill="#E8C89E" opacity=".2"/></g>
+
+        <!-- Grass tufts -->
+        <g class="svg-sway" style="transform-origin:170px 225px;animation-delay:.3s">
+          <line x1="167" y1="228" x2="165" y2="218" stroke="#6BAF7A" stroke-width="1.5" opacity=".2" stroke-linecap="round"/>
+          <line x1="170" y1="228" x2="170" y2="215" stroke="#4A7C59" stroke-width="1.5" opacity=".2" stroke-linecap="round"/>
+          <line x1="173" y1="228" x2="175" y2="218" stroke="#6BAF7A" stroke-width="1.5" opacity=".2" stroke-linecap="round"/>
+        </g>
+        <g class="svg-sway" style="transform-origin:450px 222px;animation-delay:.8s">
+          <line x1="447" y1="225" x2="445" y2="215" stroke="#6BAF7A" stroke-width="1.5" opacity=".2" stroke-linecap="round"/>
+          <line x1="450" y1="225" x2="450" y2="212" stroke="#4A7C59" stroke-width="1.5" opacity=".2" stroke-linecap="round"/>
+          <line x1="453" y1="225" x2="455" y2="215" stroke="#6BAF7A" stroke-width="1.5" opacity=".2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Person 1: walking toward nature space -->
+        <g class="svg-float-d">
+          <circle cx="165" cy="198" r="10" fill="#E8C89E" opacity=".55"/>
+          <path d="M155 196 Q158 188 165 186 Q172 188 175 196" fill="#6B6B6B" opacity=".18"/>
+          <path d="M157 203 Q155 215 156 232 L174 232 Q175 215 173 203 Q165 200 157 203Z" fill="#4A7C59" opacity=".2"/>
+          <path d="M173 210 Q183 216 186 228" stroke="#E8C89E" stroke-width="4" fill="none" stroke-linecap="round" opacity=".4"/>
+          <path d="M157 210 Q147 216 144 228" stroke="#E8C89E" stroke-width="4" fill="none" stroke-linecap="round" opacity=".4"/>
+        </g>
+
+        <!-- Person 2: sitting on bench -->
+        <g class="svg-breathe">
+          <circle cx="310" cy="200" r="10" fill="#E8C89E" opacity=".55"/>
+          <path d="M300 198 Q303 190 310 188 Q317 190 320 198" fill="#6B6B6B" opacity=".18"/>
+          <path d="M302 205 Q300 217 301 232 L319 232 Q320 217 318 205 Q310 202 302 205Z" fill="#6BA3BE" opacity=".2"/>
+          <!-- Bench -->
+          <rect x="292" y="218" width="36" height="6" rx="2" fill="#A0937D" opacity=".2"/>
+          <rect x="296" y="224" width="4" height="10" rx="1" fill="#A0937D" opacity=".15"/>
+          <rect x="320" y="224" width="4" height="10" rx="1" fill="#A0937D" opacity=".15"/>
+        </g>
+
+        <!-- Person 3: standing near water -->
+        <g class="svg-float-d2">
+          <circle cx="445" cy="195" r="10" fill="#E8C89E" opacity=".5"/>
+          <path d="M435 193 Q438 185 445 183 Q452 185 455 193" fill="#6B6B6B" opacity=".16"/>
+          <path d="M437 200 Q435 212 436 228 L454 228 Q455 212 453 200 Q445 197 437 200Z" fill="#8BA888" opacity=".2"/>
+          <path d="M453 208 Q463 214 466 226" stroke="#E8C89E" stroke-width="4" fill="none" stroke-linecap="round" opacity=".35"/>
+        </g>
+
+        <!-- Butterfly -->
+        <g class="svg-float" style="animation-delay:.5s">
+          <ellipse cx="230" cy="160" rx="5" ry="3" fill="#E8C89E" opacity=".25" transform="rotate(-20,230,160)"/>
+          <ellipse cx="240" cy="158" rx="5" ry="3" fill="#E8C89E" opacity=".25" transform="rotate(20,240,158)"/>
+          <line x1="235" y1="158" x2="235" y2="164" stroke="#A0937D" stroke-width=".8" opacity=".2"/>
+        </g>
+        <g class="svg-float-d" style="animation-delay:1.2s">
+          <ellipse cx="380" cy="145" rx="4" ry="2.5" fill="#9B8FA8" opacity=".2" transform="rotate(-15,380,145)"/>
+          <ellipse cx="388" cy="143" rx="4" ry="2.5" fill="#9B8FA8" opacity=".2" transform="rotate(15,388,143)"/>
+          <line x1="384" y1="143" x2="384" y2="148" stroke="#A0937D" stroke-width=".8" opacity=".18"/>
+        </g>
+
+        <!-- Floating nature element badges -->
+        <g class="svg-scale-in" style="animation-delay:.4s"><circle cx="40" cy="90" r="14" fill="#D4E8DA" opacity=".45"/><text x="40" y="95" text-anchor="middle" font-size="12">🍃</text></g>
+        <g class="svg-scale-in" style="animation-delay:.7s"><circle cx="575" cy="85" r="14" fill="#D6EAF2" opacity=".45"/><text x="575" y="90" text-anchor="middle" font-size="12">💧</text></g>
+        <g class="svg-scale-in" style="animation-delay:1s"><circle cx="130" cy="60" r="12" fill="#EDE8E0" opacity=".45"/><text x="130" y="65" text-anchor="middle" font-size="11">🪨</text></g>
+        <g class="svg-scale-in" style="animation-delay:1.3s"><circle cx="480" cy="65" r="12" fill="#E2EDE0" opacity=".45"/><text x="480" y="70" text-anchor="middle" font-size="11">🌿</text></g>
+        <g class="svg-scale-in" style="animation-delay:1.6s"><circle cx="310" cy="40" r="12" fill="#FBF2E4" opacity=".45"/><text x="310" y="45" text-anchor="middle" font-size="11">☀️</text></g>
+
+        <!-- Sparkle particles scattered -->
+        <circle cx="200" cy="80" r="2" fill="#4A7C59" opacity=".25" class="svg-pulse"/>
+        <circle cx="350" cy="70" r="1.5" fill="#6BA3BE" opacity=".25" class="svg-pulse" style="animation-delay:.8s"/>
+        <circle cx="450" cy="85" r="2" fill="#8BA888" opacity=".25" class="svg-pulse" style="animation-delay:1.6s"/>
+        <circle cx="280" cy="95" r="1.5" fill="#E8C89E" opacity=".3" class="svg-pulse" style="animation-delay:2.4s"/>
+        <circle cx="150" cy="110" r="1.5" fill="#4A7C59" opacity=".2" class="svg-shimmer"/>
+        <circle cx="470" cy="100" r="1.5" fill="#6BA3BE" opacity=".2" class="svg-shimmer" style="animation-delay:1s"/>
+        <circle cx="550" cy="110" r="2" fill="#8BA888" opacity=".2" class="svg-shimmer" style="animation-delay:2s"/>
+        <circle cx="80" cy="120" r="1.5" fill="#E8C89E" opacity=".2" class="svg-shimmer" style="animation-delay:.5s"/>
+
+        <!-- Fallen leaves drifting -->
+        <g class="svg-particle"><ellipse cx="250" cy="130" rx="4" ry="2" fill="#6BAF7A" opacity=".2" transform="rotate(30,250,130)"/></g>
+        <g class="svg-particle" style="animation-delay:1s"><ellipse cx="380" cy="120" rx="3.5" ry="1.8" fill="#E8C89E" opacity=".2" transform="rotate(-20,380,120)"/></g>
+        <g class="svg-particle" style="animation-delay:2s"><ellipse cx="160" cy="140" rx="3" ry="1.5" fill="#4A7C59" opacity=".18" transform="rotate(45,160,140)"/></g>
+
+        <!-- Zone labels at bottom -->
+        <g class="svg-rise" style="animation-delay:2s">
+          <rect x="20" y="300" width="80" height="22" rx="11" fill="#D4E8DA" opacity=".5"/>
+          <text x="60" y="315" text-anchor="middle" font-size="8" fill="#4A7C59" font-weight="500">🌿 绿意入口</text>
+        </g>
+        <g class="svg-rise" style="animation-delay:2.2s">
+          <rect x="120" y="300" width="80" height="22" rx="11" fill="#D6EAF2" opacity=".5"/>
+          <text x="160" y="315" text-anchor="middle" font-size="8" fill="#6BA3BE" font-weight="500">🧘 静坐冥想</text>
+        </g>
+        <g class="svg-rise" style="animation-delay:2.4s">
+          <rect x="220" y="300" width="80" height="22" rx="11" fill="#EDE8E0" opacity=".5"/>
+          <text x="260" y="315" text-anchor="middle" font-size="8" fill="#A0937D" font-weight="500">💜 感官花园</text>
+        </g>
+        <g class="svg-rise" style="animation-delay:2.6s">
+          <rect x="320" y="300" width="80" height="22" rx="11" fill="#E2EDE0" opacity=".5"/>
+          <text x="360" y="315" text-anchor="middle" font-size="8" fill="#8BA888" font-weight="500">💬 社交休息</text>
+        </g>
+        <g class="svg-rise" style="animation-delay:2.8s">
+          <rect x="420" y="300" width="90" height="22" rx="11" fill="#FBF2E4" opacity=".5"/>
+          <text x="465" y="315" text-anchor="middle" font-size="8" fill="#A08050" font-weight="500">💧 水景疗愈</text>
+        </g>
+        <g class="svg-rise" style="animation-delay:3s">
+          <rect x="530" y="300" width="70" height="22" rx="11" fill="#E8E3EE" opacity=".5"/>
+          <text x="565" y="315" text-anchor="middle" font-size="8" fill="#9B8FA8" font-weight="500">☀️ 光环境</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ===== ZONE 1: 绿意入口区 ===== -->
+<section class="zone-section" id="zone1">
+  <div class="zone-container">
+    <div class="zone-text reveal-left">
+      <div class="zone-number"><div class="zone-badge z1">1</div><span class="zone-label">功能区域</span></div>
+      <h2 class="zone-title">绿意入口区</h2>
+      <div class="zone-area">📐 约 15㎡</div>
+      <p class="zone-desc">设置低维护、高净化的虎尾兰、绿萝等绿植墙，搭配天然石材步道，打造工业场景向自然空间的缓冲过渡区域，弱化车间工作的紧绷感。</p>
+      <div class="zone-details">
+        <div class="detail-item"><div class="detail-icon z1">🪴</div><span>虎尾兰、绿萝等高净化绿植墙</span></div>
+        <div class="detail-item"><div class="detail-icon z1">🪨</div><span>天然石材步道</span></div>
+        <div class="detail-item"><div class="detail-icon z1">🔄</div><span>工业场景→自然空间的缓冲过渡</span></div>
+      </div>
+    </div>
+    <div class="zone-visual reveal-right svg-anim-group">
+      <svg viewBox="0 0 420 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="400" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Green wall -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="40" y="50" width="340" height="200" rx="12" fill="#D4E8DA" opacity=".25"/>
+          <!-- Plant pots on wall -->
+          <rect x="60" y="80" width="50" height="40" rx="6" fill="#A0937D" opacity=".2"/>
+          <g class="svg-sway" style="transform-origin:85px 80px">
+            <path d="M75 80 Q70 55 85 45 Q100 55 95 80" fill="#4A7C59" opacity=".35"/>
+            <line x1="85" y1="80" x2="85" y2="50" stroke="#4A7C59" stroke-width="1.5" opacity=".3"/>
+          </g>
+          <rect x="130" y="100" width="50" height="40" rx="6" fill="#A0937D" opacity=".2"/>
+          <g class="svg-sway" style="transform-origin:155px 100px;animation-delay:.5s">
+            <path d="M145 100 Q140 75 155 65 Q170 75 165 100" fill="#6BAF7A" opacity=".3"/>
+            <line x1="155" y1="100" x2="155" y2="70" stroke="#6BAF7A" stroke-width="1.5" opacity=".25"/>
+          </g>
+          <rect x="200" y="70" width="50" height="40" rx="6" fill="#A0937D" opacity=".2"/>
+          <g class="svg-sway" style="transform-origin:225px 70px;animation-delay:1s">
+            <path d="M215 70 Q210 45 225 35 Q240 45 235 70" fill="#4A7C59" opacity=".3"/>
+            <path d="M218 70 Q225 50 232 70" fill="#6BAF7A" opacity=".25"/>
+          </g>
+          <rect x="270" y="90" width="50" height="40" rx="6" fill="#A0937D" opacity=".2"/>
+          <g class="svg-sway" style="transform-origin:295px 90px;animation-delay:1.5s">
+            <path d="M285 90 Q280 65 295 55 Q310 65 305 90" fill="#8BA888" opacity=".3"/>
+            <line x1="295" y1="90" x2="295" y2="60" stroke="#8BA888" stroke-width="1.5" opacity=".25"/>
+          </g>
+          <rect x="340" y="75" width="30" height="35" rx="6" fill="#A0937D" opacity=".2"/>
+          <g class="svg-sway" style="transform-origin:355px 75px;animation-delay:2s">
+            <path d="M348 75 Q345 58 355 50 Q365 58 362 75" fill="#4A7C59" opacity=".3"/>
+          </g>
+        </g>
+        <!-- Stone path -->
+        <g class="svg-fade-in" style="animation-delay:.8s">
+          <ellipse cx="120" cy="290" rx="35" ry="14" fill="#A0937D" opacity=".2"/>
+          <ellipse cx="200" cy="300" rx="38" ry="15" fill="#A0937D" opacity=".18"/>
+          <ellipse cx="290" cy="295" rx="36" ry="14" fill="#A0937D" opacity=".2"/>
+          <ellipse cx="170" cy="320" rx="32" ry="13" fill="#A0937D" opacity=".15"/>
+          <ellipse cx="250" cy="325" rx="34" ry="13" fill="#A0937D" opacity=".15"/>
+        </g>
+        <!-- Path connecting line -->
+        <path d="M120 290 Q160 295 200 300 Q245 298 290 295" stroke="#A0937D" stroke-width="1.5" fill="none" opacity=".15" stroke-dasharray="6,4" class="svg-draw" stroke-dasharray="250" stroke-dashoffset="250" style="animation-delay:1.2s"/>
+        <!-- Ground -->
+        <path d="M40 340 Q210 330 380 340 L380 370 L40 370Z" fill="#D4E8DA" opacity=".2"/>
+        <!-- Small plants along path -->
+        <g class="svg-scale-in" style="animation-delay:1.4s">
+          <circle cx="80" cy="350" r="8" fill="#4A7C59" opacity=".2"/>
+          <circle cx="80" cy="348" r="4" fill="#6BAF7A" opacity=".25"/>
+        </g>
+        <g class="svg-scale-in" style="animation-delay:1.6s">
+          <circle cx="340" cy="348" r="7" fill="#8BA888" opacity=".2"/>
+          <circle cx="340" cy="346" r="3.5" fill="#6BAF7A" opacity=".25"/>
+        </g>
+        <!-- Label -->
+        <g class="svg-rise" style="animation-delay:1.8s">
+          <rect x="130" y="360" width="160" height="24" rx="12" fill="#D4E8DA" opacity=".6"/>
+          <text x="210" y="376" text-anchor="middle" font-size="10" fill="#4A7C59" font-weight="500">🌿 工业场景 → 自然空间</text>
+        </g>
+        <!-- Particles -->
+        <circle cx="60" cy="60" r="2" fill="#4A7C59" opacity=".3" class="svg-particle"/>
+        <circle cx="370" cy="55" r="1.5" fill="#6BAF7A" opacity=".3" class="svg-particle" style="animation-delay:1s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ZONE 2: 静坐冥想区 ===== -->
+<section class="zone-section" id="zone2">
+  <div class="zone-container">
+    <div class="zone-visual reveal-left svg-anim-group">
+      <svg viewBox="0 0 420 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="400" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Warm ambient glow -->
+        <circle cx="210" cy="200" r="140" fill="#E8C89E" opacity=".04" class="svg-glow"/>
+        <!-- Wooden floor -->
+        <rect x="40" y="260" width="340" height="100" rx="8" fill="#EDE8E0" opacity=".3"/>
+        <line x1="40" y1="280" x2="380" y2="280" stroke="#A0937D" stroke-width=".5" opacity=".15"/>
+        <line x1="40" y1="300" x2="380" y2="300" stroke="#A0937D" stroke-width=".5" opacity=".15"/>
+        <line x1="40" y1="320" x2="380" y2="320" stroke="#A0937D" stroke-width=".5" opacity=".15"/>
+        <line x1="40" y1="340" x2="380" y2="340" stroke="#A0937D" stroke-width=".5" opacity=".15"/>
+        <!-- Warm light circles -->
+        <circle cx="100" cy="100" r="40" fill="#E8C89E" opacity=".06" class="svg-pulse"/>
+        <circle cx="210" cy="90" r="45" fill="#E8C89E" opacity=".06" class="svg-pulse" style="animation-delay:.5s"/>
+        <circle cx="320" cy="100" r="40" fill="#E8C89E" opacity=".06" class="svg-pulse" style="animation-delay:1s"/>
+        <!-- Meditation seats (semi-enclosed) -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <!-- Seat 1 -->
+          <path d="M55 240 Q55 200 80 190 Q105 200 105 240" fill="#E2EDE0" opacity=".3" stroke="#8BA888" stroke-width="1" opacity=".2"/>
+          <ellipse cx="80" cy="265" rx="22" ry="8" fill="#A0937D" opacity=".2"/>
+          <!-- Person meditating -->
+          <circle cx="80" cy="230" r="10" fill="#E8C89E" opacity=".6"/>
+          <path d="M70 228 Q73 222 80 220 Q87 222 90 228" fill="#6B6B6B" opacity=".2"/>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <!-- Seat 2 -->
+          <path d="M140 240 Q140 195 168 185 Q196 195 196 240" fill="#E2EDE0" opacity=".3" stroke="#8BA888" stroke-width="1" opacity=".2"/>
+          <ellipse cx="168" cy="265" rx="22" ry="8" fill="#A0937D" opacity=".2"/>
+          <circle cx="168" cy="225" r="10" fill="#E8C89E" opacity=".6"/>
+          <path d="M158 223 Q161 217 168 215 Q175 217 178 223" fill="#6B6B6B" opacity=".2"/>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:.9s">
+          <!-- Seat 3 -->
+          <path d="M225 240 Q225 195 253 185 Q281 195 281 240" fill="#E2EDE0" opacity=".3" stroke="#8BA888" stroke-width="1" opacity=".2"/>
+          <ellipse cx="253" cy="265" rx="22" ry="8" fill="#A0937D" opacity=".2"/>
+          <circle cx="253" cy="225" r="10" fill="#E8C89E" opacity=".6"/>
+          <path d="M243 223 Q246 217 253 215 Q260 217 263 223" fill="#6B6B6B" opacity=".2"/>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.2s">
+          <!-- Seat 4 -->
+          <path d="M310 240 Q310 200 335 190 Q360 200 360 240" fill="#E2EDE0" opacity=".3" stroke="#8BA888" stroke-width="1" opacity=".2"/>
+          <ellipse cx="335" cy="265" rx="22" ry="8" fill="#A0937D" opacity=".2"/>
+          <circle cx="335" cy="230" r="10" fill="#E8C89E" opacity=".6"/>
+          <path d="M325 228 Q328 222 335 220 Q342 222 345 228" fill="#6B6B6B" opacity=".2"/>
+        </g>
+        <!-- Sound waves (natural sounds) -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <path d="M30 150 Q30 130 40 120" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".2"/>
+          <path d="M25 160 Q25 125 40 110" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".15"/>
+          <path d="M20 170 Q20 120 40 100" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".1"/>
+          <text x="18" y="185" font-size="10" fill="#6BA3BE" opacity=".4">🐦</text>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.8s">
+          <path d="M390 150 Q390 130 380 120" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".2"/>
+          <path d="M395 160 Q395 125 380 110" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".15"/>
+          <path d="M400 170 Q400 120 380 100" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".1"/>
+          <text x="385" y="185" font-size="10" fill="#6BA3BE" opacity=".4">💧</text>
+        </g>
+        <!-- Label -->
+        <g class="svg-rise" style="animation-delay:2s">
+          <rect x="120" y="350" width="180" height="24" rx="12" fill="#D6EAF2" opacity=".6"/>
+          <text x="210" y="366" text-anchor="middle" font-size="10" fill="#6BA3BE" font-weight="500">🧘 2700-3000K 暖调柔光 · 自然声景</text>
+        </g>
+        <!-- Breathing particles -->
+        <circle cx="80" cy="210" r="1.5" fill="#E8C89E" opacity=".3" class="svg-particle"/>
+        <circle cx="168" cy="205" r="1.5" fill="#E8C89E" opacity=".3" class="svg-particle" style="animation-delay:1s"/>
+        <circle cx="253" cy="205" r="1.5" fill="#E8C89E" opacity=".3" class="svg-particle" style="animation-delay:2s"/>
+        <circle cx="335" cy="210" r="1.5" fill="#E8C89E" opacity=".3" class="svg-particle" style="animation-delay:1.5s"/>
+      </svg>
+    </div>
+    <div class="zone-text reveal-right">
+      <div class="zone-number"><div class="zone-badge z2">2</div><span class="zone-label">功能区域</span></div>
+      <h2 class="zone-title">静坐冥想区</h2>
+      <div class="zone-area">📐 约 30㎡</div>
+      <p class="zone-desc">铺设天然木质地板，设置6-8个半包围式独立冥想座位，保障个人休憩私密性；配套自然声景系统，循环播放鸟鸣、流水等自然白噪音，搭配2700-3000K暖调柔光，适配身心放松与专注力恢复。</p>
+      <div class="zone-details">
+        <div class="detail-item"><div class="detail-icon z2">🪵</div><span>天然木质地板</span></div>
+        <div class="detail-item"><div class="detail-icon z2">🧘</div><span>6-8个半包围式独立冥想座位</span></div>
+        <div class="detail-item"><div class="detail-icon z2">🔊</div><span>自然声景系统（鸟鸣、流水白噪音）</span></div>
+        <div class="detail-item"><div class="detail-icon z2">💡</div><span>2700-3000K 暖调柔光</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ZONE 3: 感官花园区 ===== -->
+<section class="zone-section" id="zone3">
+  <div class="zone-container">
+    <div class="zone-text reveal-left">
+      <div class="zone-number"><div class="zone-badge z3">3</div><span class="zone-label">功能区域</span></div>
+      <h2 class="zone-title">感官花园区</h2>
+      <div class="zone-area">📐 约 40㎡</div>
+      <p class="zone-desc">栽种薰衣草、迷迭香、薄荷等芳香植物，打造多质感触摸绿植与天然石材体验区，搭配室内小型流水墙、桌面涌泉水景，构建视觉、嗅觉、触觉、听觉一体的多感官自然疗愈场景。</p>
+      <div class="zone-details">
+        <div class="detail-item"><div class="detail-icon z3">💜</div><span>薰衣草、迷迭香、薄荷等芳香植物</span></div>
+        <div class="detail-item"><div class="detail-icon z3">🤲</div><span>多质感触摸绿植与天然石材体验区</span></div>
+        <div class="detail-item"><div class="detail-icon z3">💧</div><span>室内流水墙、桌面涌泉水景</span></div>
+        <div class="detail-item"><div class="detail-icon z3">👁️</div><span>视·嗅·触·听多感官疗愈场景</span></div>
+      </div>
+    </div>
+    <div class="zone-visual reveal-right svg-anim-group">
+      <svg viewBox="0 0 420 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="400" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Garden ground -->
+        <path d="M40 300 Q210 290 380 300 L380 370 L40 370Z" fill="#D4E8DA" opacity=".2"/>
+        <!-- Stone path -->
+        <ellipse cx="130" cy="320" rx="28" ry="10" fill="#A0937D" opacity=".15"/>
+        <ellipse cx="210" cy="330" rx="30" ry="11" fill="#A0937D" opacity=".13"/>
+        <ellipse cx="290" cy="322" rx="28" ry="10" fill="#A0937D" opacity=".15"/>
+        <!-- Water wall (left) -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <rect x="40" y="60" width="80" height="220" rx="8" fill="#A0937D" opacity=".15"/>
+          <rect x="48" y="68" width="64" height="204" rx="4" fill="#D6EAF2" opacity=".2"/>
+          <!-- Water flowing down -->
+          <line x1="65" y1="80" x2="65" y2="260" stroke="#6BA3BE" stroke-width="2" opacity=".15" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200"/>
+          <line x1="80" y1="80" x2="80" y2="260" stroke="#6BA3BE" stroke-width="1.5" opacity=".12" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:.5s"/>
+          <line x1="95" y1="80" x2="95" y2="260" stroke="#6BA3BE" stroke-width="1" opacity=".1" class="svg-draw" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay:1s"/>
+          <!-- Water drips -->
+          <circle cx="65" cy="265" r="3" fill="#6BA3BE" opacity=".2" class="svg-drip"/>
+          <circle cx="80" cy="268" r="2.5" fill="#6BA3BE" opacity=".15" class="svg-drip" style="animation-delay:.5s"/>
+          <circle cx="95" cy="266" r="2" fill="#6BA3BE" opacity=".15" class="svg-drip" style="animation-delay:1s"/>
+        </g>
+        <!-- Lavender plants -->
+        <g class="svg-sway" style="transform-origin:180px 250px">
+          <line x1="180" y1="290" x2="180" y2="230" stroke="#6B8F71" stroke-width="2" opacity=".3"/>
+          <circle cx="174" cy="228" r="6" fill="#9B8FA8" opacity=".35"/>
+          <circle cx="180" cy="222" r="7" fill="#9B8FA8" opacity=".3"/>
+          <circle cx="186" cy="228" r="6" fill="#9B8FA8" opacity=".35"/>
+          <circle cx="180" cy="218" r="5" fill="#B8A8C8" opacity=".25"/>
+        </g>
+        <g class="svg-sway" style="transform-origin:220px 255px;animation-delay:.5s">
+          <line x1="220" y1="295" x2="220" y2="240" stroke="#6B8F71" stroke-width="2" opacity=".3"/>
+          <circle cx="214" cy="238" r="5.5" fill="#9B8FA8" opacity=".3"/>
+          <circle cx="220" cy="232" r="6.5" fill="#9B8FA8" opacity=".28"/>
+          <circle cx="226" cy="238" r="5.5" fill="#9B8FA8" opacity=".3"/>
+        </g>
+        <!-- Rosemary -->
+        <g class="svg-sway" style="transform-origin:280px 248px;animation-delay:1s">
+          <line x1="280" y1="290" x2="280" y2="225" stroke="#6B8F71" stroke-width="2" opacity=".3"/>
+          <ellipse cx="274" cy="228" rx="8" ry="5" fill="#4A7C59" opacity=".25" transform="rotate(-20,274,228)"/>
+          <ellipse cx="286" cy="222" rx="8" ry="5" fill="#4A7C59" opacity=".25" transform="rotate(20,286,222)"/>
+          <ellipse cx="280" cy="218" rx="7" ry="4.5" fill="#6BAF7A" opacity=".2" transform="rotate(-10,280,218)"/>
+        </g>
+        <!-- Mint -->
+        <g class="svg-sway" style="transform-origin:330px 252px;animation-delay:1.5s">
+          <line x1="330" y1="292" x2="330" y2="235" stroke="#6B8F71" stroke-width="2" opacity=".3"/>
+          <circle cx="324" cy="238" r="7" fill="#8BA888" opacity=".3"/>
+          <circle cx="330" cy="230" r="8" fill="#8BA888" opacity=".25"/>
+          <circle cx="336" cy="238" r="7" fill="#8BA888" opacity=".3"/>
+        </g>
+        <!-- Touch stones -->
+        <g class="svg-scale-in" style="animation-delay:1.2s">
+          <ellipse cx="160" cy="340" rx="18" ry="12" fill="#A0937D" opacity=".25"/>
+          <ellipse cx="250" cy="345" rx="16" ry="11" fill="#A0937D" opacity=".2"/>
+          <ellipse cx="340" cy="338" rx="15" ry="10" fill="#A0937D" opacity=".22"/>
+        </g>
+        <!-- Desktop fountain -->
+        <g class="svg-fade-in" style="animation-delay:1.5s">
+          <ellipse cx="350" cy="160" rx="35" ry="14" fill="#D6EAF2" opacity=".25"/>
+          <ellipse cx="350" cy="158" rx="25" ry="10" fill="#6BA3BE" opacity=".12"/>
+          <rect x="340" y="140" width="20" height="18" rx="3" fill="#A0937D" opacity=".2"/>
+          <!-- Fountain spray -->
+          <path d="M350 140 Q348 125 350 115 Q352 125 350 140" stroke="#6BA3BE" stroke-width="1.5" fill="none" opacity=".2" class="svg-draw" stroke-dasharray="40" stroke-dashoffset="40" style="animation-delay:1.8s"/>
+          <circle cx="350" cy="112" r="2" fill="#6BA3BE" opacity=".2" class="svg-pulse"/>
+        </g>
+        <!-- Senses labels -->
+        <g class="svg-rise" style="animation-delay:2s">
+          <rect x="140" y="365" width="140" height="22" rx="11" fill="#E8E3EE" opacity=".6"/>
+          <text x="210" y="380" text-anchor="middle" font-size="9" fill="#9B8FA8" font-weight="500">👁️ 视 · 👃 嗅 · 🤲 触 · 👂 听</text>
+        </g>
+        <!-- Aroma particles -->
+        <circle cx="180" cy="210" r="1.5" fill="#9B8FA8" opacity=".3" class="svg-particle"/>
+        <circle cx="220" cy="215" r="1.5" fill="#9B8FA8" opacity=".3" class="svg-particle" style="animation-delay:.5s"/>
+        <circle cx="280" cy="210" r="1.5" fill="#4A7C59" opacity=".3" class="svg-particle" style="animation-delay:1s"/>
+        <circle cx="330" cy="218" r="1.5" fill="#8BA888" opacity=".3" class="svg-particle" style="animation-delay:1.5s"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ZONE 4: 社交休息区 ===== -->
+<section class="zone-section" id="zone4">
+  <div class="zone-container">
+    <div class="zone-visual reveal-left svg-anim-group">
+      <svg viewBox="0 0 420 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="400" height="380" rx="20" fill="#FAF8F2"/>
+        <!-- Warm floor -->
+        <path d="M40 280 Q210 272 380 280 L380 370 L40 370Z" fill="#EDE8E0" opacity=".25"/>
+        <!-- Wooden round table -->
+        <g class="svg-fade-in" style="animation-delay:.3s">
+          <ellipse cx="210" cy="240" rx="65" ry="22" fill="#A0937D" opacity=".2"/>
+          <rect x="205" y="240" width="10" height="50" rx="2" fill="#A0937D" opacity=".15"/>
+          <!-- Items on table -->
+          <circle cx="190" cy="232" r="8" fill="#D4E8DA" opacity=".3"/>
+          <circle cx="190" cy="230" r="4" fill="#4A7C59" opacity=".25"/>
+          <rect x="215" y="226" width="20" height="14" rx="2" fill="#E8E3EE" opacity=".3"/>
+        </g>
+        <!-- Comfortable chairs -->
+        <g class="svg-fade-in" style="animation-delay:.6s">
+          <!-- Chair 1 (left) -->
+          <path d="M100 230 Q95 210 110 200 Q125 210 120 230" fill="#E2EDE0" opacity=".3"/>
+          <ellipse cx="110" cy="245" rx="18" ry="8" fill="#A0937D" opacity=".15"/>
+          <circle cx="110" cy="218" r="10" fill="#E8C89E" opacity=".5"/>
+          <path d="M100 216 Q103 210 110 208 Q117 210 120 216" fill="#6B6B6B" opacity=".15"/>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:.9s">
+          <!-- Chair 2 (right) -->
+          <path d="M300 230 Q295 210 310 200 Q325 210 320 230" fill="#E2EDE0" opacity=".3"/>
+          <ellipse cx="310" cy="245" rx="18" ry="8" fill="#A0937D" opacity=".15"/>
+          <circle cx="310" cy="218" r="10" fill="#E8C89E" opacity=".5"/>
+          <path d="M300 216 Q303 210 310 208 Q317 210 320 216" fill="#6B6B6B" opacity=".15"/>
+        </g>
+        <!-- Chair 3 (back) -->
+        <g class="svg-fade-in" style="animation-delay:1.2s">
+          <path d="M185 195 Q180 175 195 165 Q210 175 205 195" fill="#D6EAF2" opacity=".2"/>
+          <circle cx="195" cy="182" r="9" fill="#E8C89E" opacity=".4"/>
+        </g>
+        <!-- Chair 4 (back right) -->
+        <g class="svg-fade-in" style="animation-delay:1.4s">
+          <path d="M230 195 Q225 175 240 165 Q255 175 250 195" fill="#D6EAF2" opacity=".2"/>
+          <circle cx="240" cy="182" r="9" fill="#E8C89E" opacity=".4"/>
+        </g>
+        <!-- Wall art -->
+        <g class="svg-fade-in" style="animation-delay:1s">
+          <rect x="60" y="60" width="80" height="60" rx="6" fill="#fff" stroke="#E8E3EE" stroke-width="1"/>
+          <path d="M70 110 Q100 85 130 110" fill="#D4E8DA" opacity=".3"/>
+          <circle cx="85" cy="85" r="8" fill="#E8C89E" opacity=".2"/>
+          <path d="M90 95 Q105 88 120 95" fill="#4A7C59" opacity=".15"/>
+        </g>
+        <g class="svg-fade-in" style="animation-delay:1.2s">
+          <rect x="280" y="60" width="80" height="60" rx="6" fill="#fff" stroke="#E8E3EE" stroke-width="1"/>
+          <circle cx="310" cy="85" r="12" fill="#6BA3BE" opacity=".15"/>
+          <circle cx="310" cy="85" r="6" fill="#6BA3BE" opacity=".1"/>
+          <path d="M290 105 Q310 95 350 105" fill="#D4E8DA" opacity=".2"/>
+        </g>
+        <!-- Workshop label -->
+        <g class="svg-rise" style="animation-delay:1.6s">
+          <rect x="140" y="60" width="140" height="26" rx="13" fill="#E2EDE0" opacity=".6"/>
+          <text x="210" y="78" text-anchor="middle" font-size="10" fill="#4A7C59" font-weight="500">🎨 自然主题艺术作品</text>
+        </g>
+        <!-- Plants in corners -->
+        <g class="svg-scale-in" style="animation-delay:1.5s">
+          <rect x="40" y="300" width="24" height="30" rx="4" fill="#A0937D" opacity=".15"/>
+          <circle cx="52" cy="290" r="14" fill="#4A7C59" opacity=".2"/>
+          <circle cx="46" cy="286" r="8" fill="#6BAF7A" opacity=".15"/>
+        </g>
+        <g class="svg-scale-in" style="animation-delay:1.7s">
+          <rect x="356" y="300" width="24" height="30" rx="4" fill="#A0937D" opacity=".15"/>
+          <circle cx="368" cy="290" r="14" fill="#8BA888" opacity=".2"/>
+          <circle cx="374" cy="286" r="8" fill="#6BAF7A" opacity=".15"/>
+        </g>
+        <!-- Social connection lines -->
+        <path d="M120 220 Q165 210 195 210" stroke="#E8C89E" stroke-width="1" fill="none" opacity=".15" class="svg-draw" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay:1.8s"/>
+        <path d="M240 210 Q275 210 300 220" stroke="#E8C89E" stroke-width="1" fill="none" opacity=".15" class="svg-draw" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay:2s"/>
+        <!-- Label -->
+        <g class="svg-rise" style="animation-delay:2.2s">
+          <rect x="130" y="350" width="160" height="24" rx="12" fill="#E2EDE0" opacity=".6"/>
+          <text x="210" y="366" text-anchor="middle" font-size="10" fill="#4A7C59" font-weight="500">💬 非正式交流 · 松弛治愈氛围</text>
+        </g>
+      </svg>
+    </div>
+    <div class="zone-text reveal-right">
+      <div class="zone-number"><div class="zone-badge z4">4</div><span class="zone-label">功能区域</span></div>
+      <h2 class="zone-title">社交休息区</h2>
+      <div class="zone-area">📐 约 20㎡</div>
+      <p class="zone-desc">配置木质圆桌与舒适休闲座椅，满足员工非正式交流、轻团体休憩需求，墙面陈设自然主题艺术作品和满足定期开展的工作坊，营造松弛治愈的社交氛围。</p>
+      <div class="zone-details">
+        <div class="detail-item"><div class="detail-icon z4">🪑</div><span>木质圆桌与舒适休闲座椅</span></div>
+        <div class="detail-item"><div class="detail-icon z4">🎨</div><span>墙面陈设自然主题艺术作品</span></div>
+        <div class="detail-item"><div class="detail-icon z4">👥</div><span>非正式交流与轻团体休憩</span></div>
+        <div class="detail-item"><div class="detail-icon z4">📋</div><span>定期开展自然疗愈工作坊</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CORE ELEMENTS ===== -->
+<section class="info-section elements" id="elements">
+  <div class="info-container">
+    <div class="section-header reveal"><div class="section-tag elements">核心疗愈元素</div><h2 class="section-title">四维沉浸式自然恢复体验</h2><p class="section-subtitle">植物疗愈 · 声景疗愈 · 光环境疗愈 · 水元素疗愈</p></div>
+    <div class="elements-grid">
+      <div class="element-card reveal" style="transition-delay:.1s">
+        <div class="element-card-icon e1">🌿</div>
+        <h3>植物疗愈</h3>
+        <p>选用空气净化、情绪调节型绿植，结合植物养护活动，强化人与自然的联结。虎尾兰净化空气，薰衣草舒缓情绪，绿萝增添生机。</p>
+      </div>
+      <div class="element-card reveal" style="transition-delay:.2s">
+        <div class="element-card-icon e2">🔊</div>
+        <h3>声景疗愈</h3>
+        <p>依托可调式自然音效、白噪音系统，舒缓神经疲劳。鸟鸣、流水、风吹树叶等自然声景，帮助大脑从定向注意力中恢复。</p>
+      </div>
+      <div class="element-card reveal" style="transition-delay:.3s">
+        <div class="element-card-icon e3">☀️</div>
+        <h3>光环境疗愈</h3>
+        <p>采用仿生自然光谱照明，模拟日光节律，调节人体昼夜状态。暖色调柔光营造安全感，冷白光提升专注力。</p>
+      </div>
+      <div class="element-card reveal" style="transition-delay:.4s">
+        <div class="element-card-icon e4">💧</div>
+        <h3>水元素疗愈</h3>
+        <p>通过动态流水视觉与水声，快速恢复消耗的注意力资源。流水墙、涌泉水景带来"软迷恋"体验，自然吸引注意力。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EMPLOYEE GUIDE ===== -->
+<section class="info-section guide" id="guide">
+  <div class="info-container">
+    <div class="section-header reveal"><div class="section-tag guide">使用指南</div><h2 class="section-title">15分钟标准化自然休憩流程</h2><p class="section-subtitle">科学设计的短时恢复方案，让每次休憩都高效充实</p></div>
+    <div class="info-with-visual">
+      <div class="info-visual reveal-left svg-anim-group">
+        <svg viewBox="0 0 380 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="360" height="240" rx="20" fill="#FAF8F2"/>
+          <!-- Timeline line -->
+          <line x1="60" y1="130" x2="320" y2="130" stroke="#6BA3BE" stroke-width="2" opacity=".2" class="svg-draw" stroke-dasharray="280" stroke-dashoffset="280"/>
+          <!-- Step 1: 5min sensory -->
+          <g class="svg-fade-in" style="animation-delay:.3s">
+            <circle cx="100" cy="130" r="28" fill="#D4E8DA" opacity=".3"/>
+            <text x="100" y="126" text-anchor="middle" font-size="16">👁️</text>
+            <text x="100" y="142" text-anchor="middle" font-size="9" fill="#4A7C59" font-weight="600">5 min</text>
+          </g>
+          <g class="svg-rise" style="animation-delay:.6s">
+            <text x="100" y="180" text-anchor="middle" font-size="10" fill="#4A7C59" font-weight="500">自然感官觉察</text>
+            <text x="100" y="196" text-anchor="middle" font-size="8" fill="#6B6B6B">看·听·闻·触</text>
+          </g>
+          <!-- Step 2: 5min breathing -->
+          <g class="svg-fade-in" style="animation-delay:.8s">
+            <circle cx="190" cy="130" r="28" fill="#D6EAF2" opacity=".3"/>
+            <text x="190" y="126" text-anchor="middle" font-size="16">🌬️</text>
+            <text x="190" y="142" text-anchor="middle" font-size="9" fill="#6BA3BE" font-weight="600">5 min</text>
+          </g>
+          <g class="svg-rise" style="animation-delay:1.1s">
+            <text x="190" y="180" text-anchor="middle" font-size="10" fill="#6BA3BE" font-weight="500">正念呼吸练习</text>
+            <text x="190" y="196" text-anchor="middle" font-size="8" fill="#6B6B6B">专注当下</text>
+          </g>
+          <!-- Step 3: 5min free -->
+          <g class="svg-fade-in" style="animation-delay:1.3s">
+            <circle cx="280" cy="130" r="28" fill="#E2EDE0" opacity=".3"/>
+            <text x="280" y="126" text-anchor="middle" font-size="16">😌</text>
+            <text x="280" y="142" text-anchor="middle" font-size="9" fill="#8BA888" font-weight="600">5 min</text>
+          </g>
+          <g class="svg-rise" style="animation-delay:1.6s">
+            <text x="280" y="180" text-anchor="middle" font-size="10" fill="#8BA888" font-weight="500">自由放松</text>
+            <text x="280" y="196" text-anchor="middle" font-size="8" fill="#6B6B6B">静坐或轻社交</text>
+          </g>
+          <!-- Arrows -->
+          <polygon points="135,126 145,130 135,134" fill="#6BA3BE" opacity=".3"/>
+          <polygon points="225,126 235,130 225,134" fill="#6BA3BE" opacity=".3"/>
+          <!-- Title -->
+          <g class="svg-rise" style="animation-delay:1.8s">
+            <rect x="110" y="40" width="160" height="28" rx="14" fill="#D6EAF2" opacity=".5"/>
+            <text x="190" y="59" text-anchor="middle" font-size="11" fill="#6BA3BE" font-weight="600">⏱️ 15分钟标准休憩流程</text>
+          </g>
+          <!-- Breathing circle animation -->
+          <circle cx="190" cy="80" r="12" fill="none" stroke="#6BA3BE" stroke-width="1" opacity=".2" class="svg-breathe"/>
+        </svg>
+      </div>
+      <div class="info-text reveal-right">
+        <h3>📖 使用手册与工作坊</h3>
+        <p>制定专属《自然疗愈空间使用手册》，规范空间开放时间、使用礼仪及预约方式。推行15分钟标准化自然休憩流程。</p>
+        <p>每月定期开展植物养护、自然手工、户外正念行走等自然疗愈工作坊，深化空间使用价值。同时设置空间体验反馈簿，线上线下常态化收集员工建议，持续优化空间功能与体验。</p>
+        <div class="info-tags">
+          <span class="info-tag t1">标准化流程</span>
+          <span class="info-tag t2">预约管理</span>
+          <span class="info-tag t4">月度工作坊</span>
+          <span class="info-tag t3">反馈优化</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPLEMENTATION ===== -->
+<section class="info-section impl" id="impl">
+  <div class="info-container">
+    <div class="section-header reveal"><div class="section-tag impl">实施适配</div><h2 class="section-title">贴合企业实际的实施策略</h2><p class="section-subtitle">本地建材、低维护成本、适配轮班模式</p></div>
+    <div class="info-with-visual">
+      <div class="info-visual reveal-left svg-anim-group">
+        <svg viewBox="0 0 380 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="360" height="240" rx="20" fill="#FAF8F2"/>
+          <!-- Factory building -->
+          <g class="svg-fade-in" style="animation-delay:.3s">
+            <rect x="30" y="80" width="120" height="120" rx="6" fill="#E8E3EE" opacity=".2"/>
+            <rect x="40" y="95" width="25" height="25" rx="2" fill="#D6EAF2" opacity=".25"/>
+            <rect x="75" y="95" width="25" height="25" rx="2" fill="#D6EAF2" opacity=".25"/>
+            <rect x="110" y="95" width="25" height="25" rx="2" fill="#D6EAF2" opacity=".25"/>
+            <rect x="40" y="130" width="25" height="25" rx="2" fill="#D6EAF2" opacity=".2"/>
+            <rect x="75" y="130" width="25" height="25" rx="2" fill="#D6EAF2" opacity=".2"/>
+            <rect x="110" y="130" width="25" height="25" rx="2" fill="#D6EAF2" opacity=".2"/>
+            <!-- Chimney -->
+            <rect x="50" y="55" width="16" height="25" rx="2" fill="#A0937D" opacity=".2"/>
+            <g class="svg-float-d2">
+              <circle cx="58" cy="48" r="4" fill="#E8E3EE" opacity=".25"/>
+              <circle cx="62" cy="40" r="3" fill="#E8E3EE" opacity=".18"/>
+            </g>
+            <text x="90" y="225" text-anchor="middle" font-size="9" fill="#6B6B6B">🏭 车间</text>
+          </g>
+          <!-- Arrow transition -->
+          <path d="M160 140 L200 140" stroke="#4A7C59" stroke-width="2" opacity=".25" class="svg-draw" stroke-dasharray="50" stroke-dashoffset="50" style="animation-delay:1s"/>
+          <polygon points="200,136 210,140 200,144" fill="#4A7C59" opacity=".25"/>
+          <!-- Nature space -->
+          <g class="svg-fade-in" style="animation-delay:.8s">
+            <rect x="220" y="70" width="130" height="130" rx="12" fill="#D4E8DA" opacity=".2"/>
+            <!-- Mini trees -->
+            <circle cx="250" cy="110" r="16" fill="#4A7C59" opacity=".2"/>
+            <circle cx="250" cy="105" r="10" fill="#6BAF7A" opacity=".15"/>
+            <circle cx="290" cy="115" r="14" fill="#8BA888" opacity=".2"/>
+            <circle cx="320" cy="108" r="12" fill="#4A7C59" opacity=".18"/>
+            <!-- Water -->
+            <ellipse cx="285" cy="165" rx="30" ry="10" fill="#6BA3BE" opacity=".12"/>
+            <!-- Bench -->
+            <rect x="240" y="175" width="40" height="8" rx="2" fill="#A0937D" opacity=".2"/>
+            <text x="285" y="225" text-anchor="middle" font-size="9" fill="#4A7C59" font-weight="500">🌿 疗愈空间</text>
+          </g>
+          <!-- Labels -->
+          <g class="svg-fade-in" style="animation-delay:1.4s">
+            <rect x="50" y="35" width="100" height="20" rx="10" fill="#EDE8E0" opacity=".6"/>
+            <text x="100" y="49" text-anchor="middle" font-size="9" fill="#A0937D">本地建材 · 乡土绿植</text>
+          </g>
+          <g class="svg-fade-in" style="animation-delay:1.6s">
+            <rect x="230" y="35" width="110" height="20" rx="10" fill="#D4E8DA" opacity=".6"/>
+            <text x="285" y="49" text-anchor="middle" font-size="9" fill="#4A7C59">低维护 · 错峰开放</text>
+          </g>
+          <!-- People icons -->
+          <g class="svg-float"><circle cx="260" cy="150" r="5" fill="#E8C89E" opacity=".4"/></g>
+          <g class="svg-float-d"><circle cx="300" cy="148" r="5" fill="#E8C89E" opacity=".4"/></g>
+        </svg>
+      </div>
+      <div class="info-text reveal-right">
+        <h3>🏗️ 实施适配策略</h3>
+        <p>景观与装修优先选用本地天然建材、易养护乡土绿植，取材便捷、维护成本低。贴合制造企业生产作息与员工轮班模式，尊重员工身心差异与独处需求。</p>
+        <p>错峰开放结合合理动静分区，可自由选择静坐放松或轻度社交，适配厂区全员使用。</p>
+        <div class="info-tags">
+          <span class="info-tag t3">本地天然建材</span>
+          <span class="info-tag t1">易养护乡土绿植</span>
+          <span class="info-tag t2">错峰开放</span>
+          <span class="info-tag t4">动静分区</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LONG-TERM ===== -->
+<section class="info-section longterm" id="longterm">
+  <div class="info-container">
+    <div class="section-header reveal"><div class="section-tag longterm">长效保障</div><h2 class="section-title">可持续运营保障机制</h2><p class="section-subtitle">低成本运维、员工自主参与、长期稳定开放</p></div>
+    <div class="info-with-visual">
+      <div class="info-text reveal-left">
+        <h3>♻️ 三大保障支柱</h3>
+        <p>依托厂区现有场地条件改造升级，大量采用本地天然材料与易存活乡土植物，后期养护简单、运维负担小。</p>
+        <p>鼓励员工自主使用、结伴放松，形成常态化自然休憩习惯。同步培育内部空间维护与引导人员，定期开展小型自然疗愈活动，让空间长期稳定开放、可持续运营。</p>
+        <div class="info-tags">
+          <span class="info-tag t3">低成本运维</span>
+          <span class="info-tag t1">员工自主参与</span>
+          <span class="info-tag t4">内部引导人员</span>
+        </div>
+      </div>
+      <div class="info-visual reveal-right svg-anim-group">
+        <svg viewBox="0 0 420 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="400" height="280" rx="20" fill="#FAF8F2"/>
+
+          <!-- Pillar 1: Low-cost renovation - building being upgraded -->
+          <g class="svg-fade-in" style="animation-delay:.3s">
+            <rect x="30" y="40" width="110" height="200" rx="14" fill="#EDE8E0" opacity=".25"/>
+            <!-- Factory outline -->
+            <rect x="50" y="70" width="70" height="55" rx="4" fill="#E8E3EE" opacity=".25"/>
+            <rect x="58" y="80" width="16" height="16" rx="2" fill="#D4E8DA" opacity=".3"/>
+            <rect x="80" y="80" width="16" height="16" rx="2" fill="#D4E8DA" opacity=".3"/>
+            <rect x="58" y="102" width="16" height="16" rx="2" fill="#D4E8DA" opacity=".25"/>
+            <rect x="80" y="102" width="16" height="16" rx="2" fill="#D4E8DA" opacity=".25"/>
+            <!-- Arrow transforming -->
+            <path d="M85 130 L85 145" stroke="#4A7C59" stroke-width="2" opacity=".3" class="svg-draw" stroke-dasharray="20" stroke-dashoffset="20" style="animation-delay:1s"/>
+            <polygon points="80,143 85,150 90,143" fill="#4A7C59" opacity=".3"/>
+            <!-- Upgraded building with green -->
+            <rect x="48" y="155" width="74" height="50" rx="4" fill="#D4E8DA" opacity=".2"/>
+            <rect x="56" y="163" width="16" height="14" rx="2" fill="#D4E8DA" opacity=".35"/>
+            <rect x="56" y="163" width="16" height="14" rx="2" fill="#E8C89E" opacity=".1"/>
+            <rect x="78" y="163" width="16" height="14" rx="2" fill="#D4E8DA" opacity=".35"/>
+            <rect x="78" y="163" width="16" height="14" rx="2" fill="#E8C89E" opacity=".1"/>
+            <rect x="100" y="163" width="16" height="14" rx="2" fill="#D4E8DA" opacity=".35"/>
+            <rect x="100" y="163" width="16" height="14" rx="2" fill="#E8C89E" opacity=".1"/>
+            <!-- Green roof on upgraded -->
+            <path d="M46 155 L85 135 L124 155" fill="#4A7C59" opacity=".15"/>
+            <circle cx="70" cy="145" r="7" fill="#6BAF7A" opacity=".2"/>
+            <circle cx="85" cy="140" r="8" fill="#4A7C59" opacity=".18"/>
+            <circle cx="100" cy="145" r="7" fill="#8BA888" opacity=".2"/>
+            <!-- Local materials icons -->
+            <g class="svg-scale-in" style="animation-delay:1.2s">
+              <rect x="45" y="215" width="20" height="16" rx="3" fill="#A0937D" opacity=".25"/>
+              <rect x="72" y="215" width="20" height="16" rx="3" fill="#A0937D" opacity=".2"/>
+              <rect x="99" y="215" width="20" height="16" rx="3" fill="#A0937D" opacity=".18"/>
+            </g>
+            <!-- Small plants -->
+            <g class="svg-scale-in" style="animation-delay:1.5s">
+              <circle cx="55" cy="210" r="6" fill="#4A7C59" opacity=".2"/>
+              <circle cx="82" cy="208" r="7" fill="#6BAF7A" opacity=".18"/>
+              <circle cx="109" cy="210" r="5.5" fill="#8BA888" opacity=".2"/>
+            </g>
+          </g>
+
+          <!-- Pillar 2: Employee autonomy - people relaxing -->
+          <g class="svg-fade-in" style="animation-delay:.6s">
+            <rect x="155" y="40" width="110" height="200" rx="14" fill="#D4E8DA" opacity=".25"/>
+            <!-- Relaxation scene -->
+            <!-- Hammock / bench area -->
+            <g class="svg-breathe">
+              <path d="M175 140 Q210 125 245 140" stroke="#A0937D" stroke-width="2" fill="none" opacity=".2"/>
+              <line x1="175" y1="140" x2="170" y2="170" stroke="#A0937D" stroke-width="1.5" opacity=".15"/>
+              <line x1="245" y1="140" x2="250" y2="170" stroke="#A0937D" stroke-width="1.5" opacity=".15"/>
+            </g>
+            <!-- Person sitting peacefully -->
+            <g class="svg-float-d">
+              <circle cx="210" cy="120" r="10" fill="#E8C89E" opacity=".5"/>
+              <path d="M200 118 Q203 110 210 108 Q217 110 220 118" fill="#6B6B6B" opacity=".15"/>
+              <path d="M202 125 Q200 137 201 152 L219 152 Q220 137 218 125 Q210 122 202 125Z" fill="#4A7C59" opacity=".18"/>
+            </g>
+            <!-- Two people chatting -->
+            <g class="svg-fade-in" style="animation-delay:1s">
+              <circle cx="180" cy="185" r="8" fill="#E8C89E" opacity=".4"/>
+              <path d="M173 183 Q175 178 180 176 Q185 178 187 183" fill="#6B6B6B" opacity=".12"/>
+              <path d="M174 188 Q173 196 174 206 L186 206 Q187 196 186 188 Q180 186 174 188Z" fill="#6BA3BE" opacity=".15"/>
+              <circle cx="240" cy="185" r="8" fill="#E8C89E" opacity=".4"/>
+              <path d="M233 183 Q235 178 240 176 Q245 178 247 183" fill="#6B6B6B" opacity=".12"/>
+              <path d="M234 188 Q233 196 234 206 L246 206 Q247 196 246 188 Q240 186 234 188Z" fill="#8BA888" opacity=".15"/>
+              <!-- Chat connection -->
+              <path d="M188 192 Q210 186 232 192" stroke="#E8C89E" stroke-width="1" fill="none" opacity=".2" stroke-dasharray="3,3" class="svg-draw" stroke-dasharray="50" stroke-dashoffset="50" style="animation-delay:1.5s"/>
+            </g>
+            <!-- Heart floating -->
+            <g class="svg-float"><circle cx="210" cy="170" r="4" fill="#E08B7A" opacity=".15"/></g>
+            <!-- Plant in pot -->
+            <g class="svg-scale-in" style="animation-delay:1.3s">
+              <rect x="195" y="218" width="30" height="22" rx="4" fill="#A0937D" opacity=".15"/>
+              <circle cx="210" cy="210" r="12" fill="#4A7C59" opacity=".18"/>
+              <circle cx="204" cy="206" r="7" fill="#6BAF7A" opacity=".14"/>
+              <circle cx="216" cy="208" r="6" fill="#8BA888" opacity=".14"/>
+            </g>
+          </g>
+
+          <!-- Pillar 3: Internal cultivation - training & activities -->
+          <g class="svg-fade-in" style="animation-delay:.9s">
+            <rect x="280" y="40" width="110" height="200" rx="14" fill="#E2EDE0" opacity=".25"/>
+            <!-- Workshop circle -->
+            <circle cx="335" cy="110" r="35" fill="#D4E8DA" opacity=".2"/>
+            <circle cx="335" cy="110" r="25" fill="#D4E8DA" opacity=".15"/>
+            <!-- Teacher in center -->
+            <circle cx="335" cy="98" r="8" fill="#E8C89E" opacity=".5"/>
+            <path d="M328 96 Q330 91 335 89 Q340 91 342 96" fill="#6B6B6B" opacity=".15"/>
+            <path d="M329 101 Q328 109 329 118 L341 118 Q342 109 341 101 Q335 99 329 101Z" fill="#9B8FA8" opacity=".18"/>
+            <!-- Students around -->
+            <g class="svg-fade-in" style="animation-delay:1.2s">
+              <circle cx="310" cy="125" r="6" fill="#E8C89E" opacity=".35"/>
+              <path d="M305 123 Q307 119 310 118 Q313 119 315 123" fill="#6B6B6B" opacity=".1"/>
+              <circle cx="360" cy="125" r="6" fill="#E8C89E" opacity=".35"/>
+              <path d="M355 123 Q357 119 360 118 Q363 119 365 123" fill="#6B6B6B" opacity=".1"/>
+              <circle cx="335" cy="140" r="6" fill="#E8C89E" opacity=".35"/>
+              <path d="M330 138 Q332 134 335 133 Q338 134 340 138" fill="#6B6B6B" opacity=".1"/>
+            </g>
+            <!-- Knowledge flow lines -->
+            <path d="M335 106 Q320 112 312 122" stroke="#9B8FA8" stroke-width="1" fill="none" opacity=".15" class="svg-draw" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:1.5s"/>
+            <path d="M335 106 Q350 112 358 122" stroke="#9B8FA8" stroke-width="1" fill="none" opacity=".15" class="svg-draw" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:1.7s"/>
+            <path d="M335 106 L335 134" stroke="#9B8FA8" stroke-width="1" fill="none" opacity=".15" class="svg-draw" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay:1.9s"/>
+            <!-- Calendar / schedule below -->
+            <g class="svg-fade-in" style="animation-delay:1.4s">
+              <rect x="300" y="165" width="70" height="50" rx="6" fill="#fff" stroke="#E8E3EE" stroke-width="1" opacity=".6"/>
+              <rect x="300" y="165" width="70" height="14" rx="6" fill="#8BA888" opacity=".15"/>
+              <line x1="310" y1="188" x2="360" y2="188" stroke="#E8E3EE" stroke-width="1" opacity=".3"/>
+              <line x1="310" y1="196" x2="350" y2="196" stroke="#E8E3EE" stroke-width="1" opacity=".3"/>
+              <line x1="310" y1="204" x2="355" y2="204" stroke="#E8E3EE" stroke-width="1" opacity=".3"/>
+            </g>
+            <!-- Growing plant -->
+            <g class="svg-scale-in" style="animation-delay:1.6s">
+              <line x1="335" y1="225" x2="335" y2="200" stroke="#4A7C59" stroke-width="2" opacity=".2"/>
+              <circle cx="328" cy="205" r="6" fill="#6BAF7A" opacity=".2"/>
+              <circle cx="342" cy="200" r="7" fill="#4A7C59" opacity=".18"/>
+              <circle cx="335" cy="195" r="5" fill="#8BA888" opacity=".2"/>
+            </g>
+          </g>
+
+          <!-- Connection base - continuous loop -->
+          <g class="svg-fade-in" style="animation-delay:1.5s">
+            <path d="M85 245 Q210 230 335 245" stroke="#4A7C59" stroke-width="2" fill="none" opacity=".15" class="svg-draw" stroke-dasharray="300" stroke-dashoffset="300" style="animation-delay:2s"/>
+            <!-- Circular arrow suggesting sustainability -->
+            <path d="M85 255 Q210 268 335 255" stroke="#8BA888" stroke-width="1.5" fill="none" opacity=".12" stroke-dasharray="4,4" class="svg-draw" stroke-dasharray="300" stroke-dashoffset="300" style="animation-delay:2.3s"/>
+            <!-- Green pulse at center -->
+            <circle cx="210" cy="258" r="12" fill="#4A7C59" opacity=".06" class="svg-pulse"/>
+            <circle cx="210" cy="258" r="8" fill="#4A7C59" opacity=".08" class="svg-pulse" style="animation-delay:.5s"/>
+          </g>
+
+          <!-- Sparkle particles -->
+          <circle cx="85" cy="55" r="2" fill="#A0937D" opacity=".2" class="svg-shimmer"/>
+          <circle cx="210" cy="50" r="2" fill="#4A7C59" opacity=".2" class="svg-shimmer" style="animation-delay:1s"/>
+          <circle cx="335" cy="55" r="2" fill="#8BA888" opacity=".2" class="svg-shimmer" style="animation-delay:2s"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SDGs ===== -->
+<section class="info-section sdgs" id="sdgs">
+  <div class="info-container">
+    <div class="section-header reveal"><div class="section-tag sdgs">可持续发展</div><h2 class="section-title">SDGs & ESG 目标融合</h2><p class="section-subtitle">将员工心理康复与企业可持续发展深度结合</p></div>
+    <div class="sdgs-grid">
+      <div class="sdg-card reveal" style="transition-delay:.1s">
+        <div class="sdg-num">03</div>
+        <div class="sdg-title">良好健康与福祉</div>
+        <p class="sdg-desc">通过自然绿植、水景、舒缓声光环境，有效缓解车间作业疲劳、情绪压力与心理耗竭，全面提升员工身心健康水平。</p>
+      </div>
+      <div class="sdg-card reveal" style="transition-delay:.2s">
+        <div class="sdg-num">08</div>
+        <div class="sdg-title">体面工作与经济增长</div>
+        <p class="sdg-desc">优化厂区人文休憩环境，舒缓长期劳作带来的身心倦怠，稳定工作状态，减少精力透支造成的效率损耗。将员工休憩满意度、身心恢复状态、空间使用率纳入企业EAP与ESG考核，实现厂区人文关怀常态化管理。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="reveal"><h2 class="footer-title">让自然治愈身心 🌿</h2><p class="footer-text">在工业场景中打造一片绿洲，让每位员工都能找到恢复力量的宁静角落</p><div class="footer-hearts">🌿 💧 🪨 🌿</div></div>
+</footer>
+
+<script>
+const progressBar=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const s=window.scrollY;const d=document.documentElement.scrollHeight-window.innerHeight;progressBar.style.width=(s/d)*100+'%'});
+
+const dots=document.querySelectorAll('.nav-dot');
+const sections=['hero','zone1','zone2','zone3','zone4','elements','guide','impl','longterm','sdgs'];
+dots.forEach(dot=>{dot.addEventListener('click',()=>{document.getElementById(dot.getAttribute('data-target')).scrollIntoView({behavior:'smooth'})})});
+const sectionEls=sections.map(id=>document.getElementById(id));
+window.addEventListener('scroll',()=>{let c=0;sectionEls.forEach((el,i)=>{if(el.getBoundingClientRect().top<=window.innerHeight/2)c=i});dots.forEach((dot,i)=>{dot.classList.toggle('active',i===c)})});
+
+const revealElements=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});
+revealElements.forEach(el=>revealObserver.observe(el));
+
+const svgAnimGroups=document.querySelectorAll('.svg-anim-group');
+const svgAnimObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){const els=entry.target.querySelectorAll('.svg-float,.svg-float-d,.svg-float-d2,.svg-pulse,.svg-breathe,.svg-sway,.svg-glow,.svg-draw,.svg-draw-slow,.svg-fade-in,.svg-fade-in-d,.svg-fade-in-d2,.svg-fade-in-d3,.svg-scale-in,.svg-ripple,.svg-particle,.svg-rise,.svg-shimmer,.svg-drip');els.forEach(el=>el.classList.add('anim-active'));svgAnimObserver.unobserve(entry.target)}})},{threshold:.2,rootMargin:'0px 0px -30px 0px'});
+svgAnimGroups.forEach(group=>svgAnimObserver.observe(group));
+
+window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((shape,i)=>{shape.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
+</script>
+
+<script>
+(function() {
+    var source = sessionStorage.getItem('plan_source') || 'home';
+    var mainPage = 'index.html';
+    var btn = document.createElement('a');
+    btn.className = 'plan-back-btn';
+    btn.href = mainPage;
+    var label = source === 'cap' ? '返回校园CAP' : source === 'eap' ? '返回企业EAP' : '返回首页';
+    btn.innerHTML = '<span class="back-arrow">←</span> ' + label;
+    // Add hash to indicate which page to switch to
+    if (source === 'cap') btn.href += '#page-cap';
+    else if (source === 'eap') btn.href += '#page-eap';
+    document.body.appendChild(btn);
+})();
+</script>
+</body>
+</html>
