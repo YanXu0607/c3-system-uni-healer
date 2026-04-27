@@ -91,6 +91,11 @@ body{font-family:'Noto Sans SC',sans-serif;color:var(--deep);background:var(--cr
 .sdg-card h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--deep)}
 .sdg-card p{font-size:13px;color:var(--soft);line-height:1.7}
 .footer{padding:60px 24px;text-align:center;background:linear-gradient(135deg,var(--deep) 0%,#5A5468 100%);color:rgba(255,255,255,.8)}
+.scroll-hint{position:absolute;bottom:32px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards;z-index:10}
+.scroll-arrow{width:20px;height:20px;display:flex;align-items:center;justify-content:center;animation:scrollBounce 2s ease-in-out infinite}
+.scroll-arrow::after{content:'';width:10px;height:10px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg)}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(6px);opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 .footer h3{font-family:'Noto Serif SC',serif;font-size:22px;color:#fff;margin-bottom:8px}
 .footer p{font-size:14px;opacity:.7;letter-spacing:2px}
 @keyframes svg-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -223,6 +228,7 @@ body{font-family:'Noto Sans SC',sans-serif;color:var(--deep);background:var(--cr
       </svg>
     </div>
   </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
 </section>
 
 <!-- PHASE 1 -->
@@ -1251,6 +1257,5 @@ const navObserver = new IntersectionObserver((entries) => {
 
 sections.forEach(section => navObserver.observe(section));
 </script>
-<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
 </body>
 </html>

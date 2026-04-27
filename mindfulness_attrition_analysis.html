@@ -45,7 +45,7 @@
   .hero-sub{font-size:14px;color:var(--soft);font-weight:300;margin-bottom:24px;opacity:0;animation:fadeUp .8s .6s forwards}
   .hero-illustration{opacity:0;animation:fadeUp 1s .8s forwards;width:100%}
   .hero-illustration svg{width:100%;height:auto;display:block}
-  .scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:scrollHintIn 1s 1.2s forwards}
+  .scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:scrollHintIn 1s 1.2s forwards;z-index:10}
   .scroll-hint-text{font-size:11px;letter-spacing:2px;color:var(--soft);opacity:.6}
   .scroll-hint-arrow-wrap{width:20px;height:40px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
   .scroll-hint-arrow-wrap::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2px;height:100%;background:linear-gradient(to bottom,transparent 0%,var(--sky) 100%);border-radius:1px;animation:arrowPulse 2s ease-in-out infinite}
@@ -148,27 +148,6 @@
 </style>
 
 <style>
-.plan-back-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 18px;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 12px;
-    font-size: 13px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #5A5265;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    transition: all 0.2s;
-}
 .plan-back-btn:hover {
     background: rgba(255,255,255,0.98);
     box-shadow: 0 4px 20px rgba(0,0,0,0.12);
@@ -982,22 +961,6 @@ const svgAnimObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>
 svgAnimGroups.forEach(group=>svgAnimObserver.observe(group));
 
 window.addEventListener('scroll',()=>{const s=window.scrollY;document.querySelectorAll('.hero-shape').forEach((shape,i)=>{shape.style.transform=`translateY(${s*(.03+i*.02)}px)`})});
-</script>
-
-<script>
-(function() {
-    var source = sessionStorage.getItem('plan_source') || 'home';
-    var mainPage = 'index.html';
-    var btn = document.createElement('a');
-    btn.className = 'plan-back-btn';
-    btn.href = mainPage;
-    var label = source === 'cap' ? '返回校园CAP' : source === 'eap' ? '返回企业EAP' : '返回首页';
-    btn.innerHTML = '<span class="back-arrow">←</span> ' + label;
-    // Add hash to indicate which page to switch to
-    if (source === 'cap') btn.href += '#page-cap';
-    else if (source === 'eap') btn.href += '#page-eap';
-    document.body.appendChild(btn);
-})();
 </script>
 </body>
 </html>

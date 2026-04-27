@@ -61,9 +61,10 @@
   .hero-meta-icon.warm{background:rgba(232,200,158,.15)}
   .hero-illustration{margin-top:40px;opacity:0;animation:fadeUp 1s 1s forwards;max-width:620px;margin-left:auto;margin-right:auto}
   .hero-illustration svg{width:100%;height:auto;display:block}
-  .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards}
-  .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);animation:bounce 2s infinite}
-  @keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+  .scroll-hint{position:absolute;bottom:32px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .scroll-arrow{width:20px;height:20px;display:flex;align-items:center;justify-content:center;animation:bounce 2s infinite}
+    .scroll-arrow::after{content:'';width:10px;height:10px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg)}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
   @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 
   /* Week Sections */
@@ -1565,6 +1566,5 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
 </body>
 </html>

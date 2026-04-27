@@ -745,71 +745,61 @@ a { color: inherit; text-decoration: none; }
     </div>
   </div>
   <div class="hero-svg-wrap">
-    <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg" style="max-width:460px;">
-      <!-- Canvas / Easel -->
-      <rect x="140" y="60" width="220" height="180" rx="8" fill="#F5F0E1" stroke="#D4CFC5" stroke-width="2"/>
-      <rect x="148" y="68" width="204" height="164" rx="4" fill="#FFFFFF"/>
-      <!-- Easel legs -->
-      <line x1="160" y1="240" x2="130" y2="320" stroke="#C4B99A" stroke-width="4" stroke-linecap="round"/>
-      <line x1="340" y1="240" x2="370" y2="320" stroke="#C4B99A" stroke-width="4" stroke-linecap="round"/>
-      <line x1="250" y1="240" x2="250" y2="320" stroke="#C4B99A" stroke-width="4" stroke-linecap="round"/>
-      <!-- Emotion faces on canvas -->
-      <circle cx="190" cy="110" r="18" fill="#F4E4A6" class="svg-float"/>
-      <circle cx="190" cy="110" r="14" fill="#F4E4A6" stroke="#E0D080" stroke-width="1"/>
-      <circle cx="185" cy="107" r="2" fill="#4A4458"/>
-      <circle cx="195" cy="107" r="2" fill="#4A4458"/>
-      <path d="M184 114 Q190 120 196 114" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <circle cx="250" cy="110" r="18" fill="#A8D8EA" class="svg-float-d"/>
-      <circle cx="250" cy="110" r="14" fill="#A8D8EA" stroke="#7BA7CC" stroke-width="1"/>
-      <circle cx="245" cy="107" r="2" fill="#4A4458"/>
-      <circle cx="255" cy="107" r="2" fill="#4A4458"/>
-      <path d="M244 115 Q250 111 256 115" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <circle cx="310" cy="110" r="18" fill="#F4B8B8" class="svg-float"/>
-      <circle cx="310" cy="110" r="14" fill="#F4B8B8" stroke="#E08B7A" stroke-width="1"/>
-      <circle cx="305" cy="107" r="2" fill="#4A4458"/>
-      <circle cx="315" cy="107" r="2" fill="#4A4458"/>
-      <path d="M304 116 Q310 112 316 116" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <!-- Rainbow arc on canvas -->
-      <path d="M170 190 Q250 140 330 190" stroke="#E08B7A" stroke-width="3" fill="none" opacity="0.5" class="svg-fade-in"/>
-      <path d="M175 190 Q250 145 325 190" stroke="#C9A84C" stroke-width="3" fill="none" opacity="0.5" class="svg-fade-in-d1"/>
-      <path d="M180 190 Q250 150 320 190" stroke="#8BC9A8" stroke-width="3" fill="none" opacity="0.5" class="svg-fade-in-d2"/>
-      <path d="M185 190 Q250 155 315 190" stroke="#7BA7CC" stroke-width="3" fill="none" opacity="0.5" class="svg-fade-in-d3"/>
-      <path d="M190 190 Q250 160 310 190" stroke="#A68BB5" stroke-width="3" fill="none" opacity="0.5" class="svg-fade-in-d4"/>
-      <!-- Child sitting -->
-      <ellipse cx="250" cy="280" rx="28" ry="14" fill="#6EC4B8" opacity="0.3"/>
-      <!-- Body -->
-      <ellipse cx="250" cy="260" rx="22" ry="28" fill="#7BA7CC"/>
-      <!-- Arms -->
-      <line x1="230" y1="252" x2="200" y2="230" stroke="#F5D9D3" stroke-width="6" stroke-linecap="round"/>
-      <line x1="270" y1="252" x2="300" y2="230" stroke="#F5D9D3" stroke-width="6" stroke-linecap="round"/>
-      <!-- Paintbrush in hand -->
-      <line x1="296" y1="232" x2="310" y2="210" stroke="#C4B99A" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="312" cy="207" r="4" fill="#E08B7A"/>
-      <!-- Head -->
-      <circle cx="250" cy="228" r="18" fill="#F5D9D3"/>
-      <!-- Hair -->
-      <path d="M234 222 Q240 208 250 210 Q260 208 266 222" fill="#4A4458"/>
-      <!-- Eyes -->
-      <circle cx="244" cy="228" r="2.5" fill="#4A4458"/>
-      <circle cx="256" cy="228" r="2.5" fill="#4A4458"/>
-      <!-- Smile -->
-      <path d="M244 234 Q250 240 256 234" stroke="#4A4458" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <!-- Legs -->
-      <line x1="240" y1="285" x2="234" y2="310" stroke="#4A4458" stroke-width="5" stroke-linecap="round"/>
-      <line x1="260" y1="285" x2="266" y2="310" stroke="#4A4458" stroke-width="5" stroke-linecap="round"/>
-      <!-- Floating emotion bubbles -->
-      <circle cx="80" cy="100" r="22" fill="#F4E4A6" opacity="0.7" class="svg-float"/>
-      <text x="80" y="106" text-anchor="middle" font-size="18">😊</text>
-      <circle cx="420" cy="80" r="22" fill="#A8D8EA" opacity="0.7" class="svg-float-d"/>
-      <text x="420" y="86" text-anchor="middle" font-size="18">😢</text>
-      <circle cx="60" cy="200" r="22" fill="#F4B8B8" opacity="0.7" class="svg-float-d"/>
-      <text x="60" y="206" text-anchor="middle" font-size="18">😡</text>
-      <circle cx="440" cy="190" r="22" fill="#D4C4E8" opacity="0.7" class="svg-float"/>
-      <text x="440" y="196" text-anchor="middle" font-size="18">😨</text>
-      <circle cx="100" cy="300" r="22" fill="#C8E8C0" opacity="0.7" class="svg-float"/>
-      <text x="100" y="306" text-anchor="middle" font-size="18">😲</text>
-      <circle cx="400" cy="300" r="22" fill="#F4E4A6" opacity="0.7" class="svg-float-d"/>
-      <text x="400" y="306" text-anchor="middle" font-size="18">🥰</text>
+    <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" style="max-width:600px;">
+      <!-- Classroom background -->
+      <rect x="40" y="40" width="420" height="220" rx="16" fill="#F5F0E1" stroke="#E0D8C8" stroke-width="2"/>
+      <!-- Floor -->
+      <rect x="40" y="200" width="420" height="60" rx="0 0 16 16" fill="#E8E0D0"/>
+      <!-- Window -->
+      <rect x="60" y="60" width="80" height="60" rx="6" fill="#D4EEF8" stroke="#B8D4E0" stroke-width="2"/>
+      <line x1="100" y1="60" x2="100" y2="120" stroke="#B8D4E0" stroke-width="2"/>
+      <line x1="60" y1="90" x2="140" y2="90" stroke="#B8D4E0" stroke-width="2"/>
+      <!-- Sun through window -->
+      <circle cx="90" cy="78" r="10" fill="#F4E4A6" class="svg-pulse"/>
+      <!-- Board -->
+      <rect x="180" y="55" width="140" height="80" rx="6" fill="#FFFFFF" stroke="#D4CFC5" stroke-width="2"/>
+      <text x="250" y="85" text-anchor="middle" font-size="11" fill="#4A4458" font-family="'Noto Sans SC'">情绪教育课</text>
+      <text x="250" y="105" text-anchor="middle" font-size="10" fill="#7A7486" font-family="'Noto Sans SC'">🎨 画出你的感受</text>
+      <!-- Teacher (center) -->
+      <circle cx="250" cy="175" r="14" fill="#F5D9D3" class="svg-breathe"/>
+      <path d="M238 168 Q244 155 250 157 Q256 155 262 168" fill="#4A4458"/>
+      <circle cx="246" cy="174" r="1.8" fill="#4A4458"/>
+      <circle cx="254" cy="174" r="1.8" fill="#4A4458"/>
+      <path d="M246 179 Q250 183 254 179" stroke="#4A4458" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="250" cy="200" rx="16" ry="18" fill="#9B8FA8"/>
+      <line x1="236" y1="196" x2="220" y2="185" stroke="#F5D9D3" stroke-width="5" stroke-linecap="round"/>
+      <line x1="264" y1="196" x2="280" y2="185" stroke="#F5D9D3" stroke-width="5" stroke-linecap="round"/>
+      <!-- Student 1 (left) -->
+      <circle cx="120" cy="190" r="11" fill="#F5D9D3" class="svg-float"/>
+      <path d="M111 184 Q116 174 120 176 Q124 174 129 184" fill="#6EC4B8"/>
+      <circle cx="117" cy="189" r="1.5" fill="#4A4458"/>
+      <circle cx="123" cy="189" r="1.5" fill="#4A4458"/>
+      <path d="M117 194 Q120 197 123 194" stroke="#4A4458" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="120" cy="210" rx="12" ry="14" fill="#7BA7CC"/>
+      <!-- Student 2 (right) -->
+      <circle cx="380" cy="190" r="11" fill="#F5D9D3" class="svg-float-d"/>
+      <path d="M371 184 Q376 174 380 176 Q384 174 389 184" fill="#E08B7A"/>
+      <circle cx="377" cy="189" r="1.5" fill="#4A4458"/>
+      <circle cx="383" cy="189" r="1.5" fill="#4A4458"/>
+      <path d="M377 194 Q380 197 383 194" stroke="#4A4458" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="380" cy="210" rx="12" ry="14" fill="#8BC9A8"/>
+      <!-- Student 3 (front left) -->
+      <circle cx="180" cy="220" r="10" fill="#F5D9D3" class="svg-float-d"/>
+      <path d="M172 215 Q176 206 180 207 Q184 206 188 215" fill="#C9A84C"/>
+      <ellipse cx="180" cy="238" rx="10" ry="12" fill="#D4899A"/>
+      <!-- Student 4 (front right) -->
+      <circle cx="320" cy="220" r="10" fill="#F5D9D3" class="svg-float"/>
+      <path d="M312 215 Q316 206 320 207 Q324 206 328 215" fill="#A68BB5"/>
+      <ellipse cx="320" cy="238" rx="10" ry="12" fill="#7EB5D6"/>
+      <!-- Desks -->
+      <rect x="105" y="215" width="30" height="4" rx="2" fill="#C4B99A"/>
+      <rect x="365" y="215" width="30" height="4" rx="2" fill="#C4B99A"/>
+      <rect x="165" y="242" width="30" height="4" rx="2" fill="#C4B99A"/>
+      <rect x="305" y="242" width="30" height="4" rx="2" fill="#C4B99A"/>
+      <!-- Hearts floating -->
+      <text x="160" y="160" font-size="14" class="svg-float" opacity="0.6">💛</text>
+      <text x="340" y="155" font-size="14" class="svg-float-d" opacity="0.6">💚</text>
+      <text x="250" y="150" font-size="12" class="svg-pulse" opacity="0.5">✨</text>
     </svg>
   </div>
 </section>
@@ -839,64 +829,6 @@ a { color: inherit; text-decoration: none; }
         <h3>教学团队</h3>
         <p>心理教师 + 美术教师<br>+ 班主任</p>
       </div>
-    </div>
-    <div class="overview-svg-wrap reveal-scale">
-      <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" style="max-width:440px;">
-        <!-- Classroom background -->
-        <rect x="40" y="40" width="420" height="220" rx="16" fill="#F5F0E1" stroke="#E0D8C8" stroke-width="2"/>
-        <!-- Floor -->
-        <rect x="40" y="200" width="420" height="60" rx="0 0 16 16" fill="#E8E0D0"/>
-        <!-- Window -->
-        <rect x="60" y="60" width="80" height="60" rx="6" fill="#D4EEF8" stroke="#B8D4E0" stroke-width="2"/>
-        <line x1="100" y1="60" x2="100" y2="120" stroke="#B8D4E0" stroke-width="2"/>
-        <line x1="60" y1="90" x2="140" y2="90" stroke="#B8D4E0" stroke-width="2"/>
-        <!-- Sun through window -->
-        <circle cx="90" cy="78" r="10" fill="#F4E4A6" class="svg-pulse"/>
-        <!-- Board -->
-        <rect x="180" y="55" width="140" height="80" rx="6" fill="#FFFFFF" stroke="#D4CFC5" stroke-width="2"/>
-        <text x="250" y="85" text-anchor="middle" font-size="11" fill="#4A4458" font-family="'Noto Sans SC'">情绪教育课</text>
-        <text x="250" y="105" text-anchor="middle" font-size="10" fill="#7A7486" font-family="'Noto Sans SC'">🎨 画出你的感受</text>
-        <!-- Teacher (center) -->
-        <circle cx="250" cy="175" r="14" fill="#F5D9D3" class="svg-breathe"/>
-        <path d="M238 168 Q244 155 250 157 Q256 155 262 168" fill="#4A4458"/>
-        <circle cx="246" cy="174" r="1.8" fill="#4A4458"/>
-        <circle cx="254" cy="174" r="1.8" fill="#4A4458"/>
-        <path d="M246 179 Q250 183 254 179" stroke="#4A4458" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-        <ellipse cx="250" cy="200" rx="16" ry="18" fill="#9B8FA8"/>
-        <line x1="236" y1="196" x2="220" y2="185" stroke="#F5D9D3" stroke-width="5" stroke-linecap="round"/>
-        <line x1="264" y1="196" x2="280" y2="185" stroke="#F5D9D3" stroke-width="5" stroke-linecap="round"/>
-        <!-- Student 1 (left) -->
-        <circle cx="120" cy="190" r="11" fill="#F5D9D3" class="svg-float"/>
-        <path d="M111 184 Q116 174 120 176 Q124 174 129 184" fill="#6EC4B8"/>
-        <circle cx="117" cy="189" r="1.5" fill="#4A4458"/>
-        <circle cx="123" cy="189" r="1.5" fill="#4A4458"/>
-        <path d="M117 194 Q120 197 123 194" stroke="#4A4458" stroke-width="1" fill="none" stroke-linecap="round"/>
-        <ellipse cx="120" cy="210" rx="12" ry="14" fill="#7BA7CC"/>
-        <!-- Student 2 (right) -->
-        <circle cx="380" cy="190" r="11" fill="#F5D9D3" class="svg-float-d"/>
-        <path d="M371 184 Q376 174 380 176 Q384 174 389 184" fill="#E08B7A"/>
-        <circle cx="377" cy="189" r="1.5" fill="#4A4458"/>
-        <circle cx="383" cy="189" r="1.5" fill="#4A4458"/>
-        <path d="M377 194 Q380 197 383 194" stroke="#4A4458" stroke-width="1" fill="none" stroke-linecap="round"/>
-        <ellipse cx="380" cy="210" rx="12" ry="14" fill="#8BC9A8"/>
-        <!-- Student 3 (front left) -->
-        <circle cx="180" cy="220" r="10" fill="#F5D9D3" class="svg-float-d"/>
-        <path d="M172 215 Q176 206 180 207 Q184 206 188 215" fill="#C9A84C"/>
-        <ellipse cx="180" cy="238" rx="10" ry="12" fill="#D4899A"/>
-        <!-- Student 4 (front right) -->
-        <circle cx="320" cy="220" r="10" fill="#F5D9D3" class="svg-float"/>
-        <path d="M312 215 Q316 206 320 207 Q324 206 328 215" fill="#A68BB5"/>
-        <ellipse cx="320" cy="238" rx="10" ry="12" fill="#7EB5D6"/>
-        <!-- Desks -->
-        <rect x="105" y="215" width="30" height="4" rx="2" fill="#C4B99A"/>
-        <rect x="365" y="215" width="30" height="4" rx="2" fill="#C4B99A"/>
-        <rect x="165" y="242" width="30" height="4" rx="2" fill="#C4B99A"/>
-        <rect x="305" y="242" width="30" height="4" rx="2" fill="#C4B99A"/>
-        <!-- Hearts floating -->
-        <text x="160" y="160" font-size="14" class="svg-float" opacity="0.6">💛</text>
-        <text x="340" y="155" font-size="14" class="svg-float-d" opacity="0.6">💚</text>
-        <text x="250" y="150" font-size="12" class="svg-pulse" opacity="0.5">✨</text>
-      </svg>
     </div>
   </div>
 </section>
@@ -3053,6 +2985,5 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
 </body>
 </html>

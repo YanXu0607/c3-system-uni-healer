@@ -69,10 +69,11 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   .hero-badge,.hero-title,.hero-subtitle,.hero-meta,.hero-illustration { transform: translateY(30px); }
 
-  .scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; animation: fadeUp 0.8s 1.4s forwards; }
+  .scroll-hint { position: absolute; bottom: 30px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; animation: fadeUp 0.8s 1.4s forwards; }
   .scroll-hint span { font-size: 11px; color: var(--soft); letter-spacing: 1px; }
-  .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid var(--warm); border-bottom: 2px solid var(--warm); transform: rotate(45deg); animation: scrollBounce 2s ease-in-out infinite; }
-  @keyframes scrollBounce { 0%,100% { transform: rotate(45deg) translate(0,0); opacity: 0.4; } 50% { transform: rotate(45deg) translate(4px,4px); opacity: 1; } }
+  .scroll-arrow{width:20px;height:20px;display:flex;align-items:center;justify-content:center;animation:scrollBounce 2s ease-in-out infinite}
+    .scroll-arrow::after{content:'';width:10px;height:10px;border-right:2px solid var(--warm);border-bottom:2px solid var(--warm);transform:rotate(45deg)}
+  @keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(6px);opacity:1}}
 
   /* ===== SESSION SECTIONS ===== */
   .session-section { min-height: 100vh; display: flex; align-items: center; padding: 80px 24px; position: relative; }
@@ -1305,6 +1306,5 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
 </body>
 </html>

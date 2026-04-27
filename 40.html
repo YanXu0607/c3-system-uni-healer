@@ -249,6 +249,12 @@ body {
   height: auto;
 }
 
+.scroll-hint{position:absolute;bottom:32px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--soft);font-size:12px;letter-spacing:1px;opacity:0;animation:fadeUp .8s 1.2s forwards;z-index:2}
+.scroll-arrow{width:20px;height:20px;display:flex;align-items:center;justify-content:center;animation:scrollBounce 2s ease-in-out infinite}
+.scroll-arrow::after{content:'';width:10px;height:10px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg)}
+@keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(6px);opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
 /* Phase Header */
 .phase-header {
   text-align: center;
@@ -948,9 +954,8 @@ body {
       </svg>
     </div>
   </div>
+  <div class="scroll-hint"><span>向下滚动探索</span><div class="scroll-arrow"></div></div>
 </section>
-
-<!-- ==================== PHASE 1 ==================== -->
 <div id="phase1">
   <div class="phase-header reveal">
     <span class="phase-badge p1">第一阶段</span>
@@ -2122,6 +2127,5 @@ document.querySelectorAll('.reveal').forEach(el => {
 updateActiveDot();
 </script>
 
-<a href="index.html" class="plan-back-btn"><span class="back-arrow">←</span> 返回首页</a>
 </body>
 </html>

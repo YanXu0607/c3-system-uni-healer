@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN" >
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>C³ System · 疗愈师知识库与工具</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Noto+Serif+SC:wght@400;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+    --coral:#D97A6A;--coral-light:#F5D9D3;--coral-pale:#FAF0EC;
+    --teal:#5BA89C;--teal-light:#D4EDE8;--teal-pale:#E8F5F2;
+    --lavender:#967BA5;--lavender-light:#E8E3EE;--lavender-pale:#F5EEF8;
+    --sage:#5A988C;--sage-light:#D6E8DA;--sage-pale:#EBF5EE;
+    --amber:#B89840;--amber-light:#F5EDCF;--amber-pale:#FBF6E6;
+    --rose:#C47888;--rose-light:#F2DDE2;--rose-pale:#FAF0F3;
+    --blue:#5A8FB5;--blue-light:#D6E6F2;--blue-pale:#EEF6FC;
+    --forest:#4A7C59;--forest-light:#D4E8DA;--forest-pale:#EAF5EE;
+    --water:#6BA3BE;--water-light:#D6EAF2;--water-pale:#EBF4FA;
+    --navy:#3A5A7C;--navy-light:#D0DEF0;--navy-pale:#E8F0F8;
+    --plum:#8A6B9A;--plum-light:#E8D8F0;--plum-pale:#F5EEF8;
+    --cream:#F5F0E1;--cream-pale:#FAF8F2;
+    --warm:#C47860;--warm-light:#FBF2E4;
+    --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
+    --gold:#C9A84C;--gold-light:#F5EDCF;
+    --violet-50:#f0f7f4;--violet-100:#e0f0eb;--violet-200:#c8e0d7;--violet-400:#5BA89C;--violet-500:#4A8C7E;--violet-600:#3D7569;
+    --blue-50:#faf8f2;--blue-100:#f3efe6;--blue-400:#B89840;--blue-500:#9A7E35;
+    --indigo-50:#f5f0f7;--indigo-100:#ebe4f0;--indigo-400:#967BA5;--indigo-500:#7D6590;
+    --bg-body:#FAF8F2;--bg-surface:rgba(255,255,255,.85);--bg-surface-solid:#FFFFFF;--bg-elevated:rgba(255,255,255,.92);--bg-glass:rgba(255,255,255,.6);--bg-glass-strong:rgba(255,255,255,.85);
+    --text-primary:#3A3448;--text-secondary:#5A5466;--text-tertiary:#8a8494;
+    --border-subtle:rgba(0,0,0,.04);--border-default:rgba(0,0,0,.08);--border-strong:rgba(0,0,0,.15);
+    --grad-primary:linear-gradient(135deg,#5BA89C 0%,#7BAE8F 40%,#967BA5 100%);
+    --grad-primary-soft:linear-gradient(135deg,rgba(91,168,156,.06),rgba(123,174,143,.04));
+    --grad-hero:linear-gradient(160deg,#d4ede8 0%,#f0ece4 30%,#ebe4f0 60%,#f5d9d3 100%);
+    --grad-mesh:radial-gradient(ellipse at 20% 50%,rgba(91,168,156,.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(123,174,143,.06) 0%,transparent 50%),radial-gradient(ellipse at 60% 80%,rgba(150,123,165,.05) 0%,transparent 50%);
+    --shadow-glow-violet:0 0 40px rgba(91,168,156,.15);--shadow-glow-blue:0 0 40px rgba(123,174,143,.12);
+    --status-reviewed:#5BA89C;--status-reviewed-bg:#e0f0eb;--status-mastered:#7BAE8F;--status-mastered-bg:#d4ede8;--status-weak:#D97A6A;--status-weak-bg:#f5d9d3;--status-review:#B89840;--status-review-bg:#f5edcf;
+    --font-body:'Noto Sans SC',sans-serif;--font-display:'Noto Serif SC',serif;
+    --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-full:9999px;
+    --dur-fast:150ms;--dur-normal:250ms;--dur-slow:400ms;
+    --ease-out:cubic-bezier(0,0,0.2,1);--ease-in-out:cubic-bezier(0.4,0,0.2,1);
+    --shadow-sm:0 2px 8px rgba(0,0,0,.06);--shadow-md:0 8px 24px rgba(0,0,0,.08);--shadow-lg:0 16px 40px rgba(0,0,0,.12);
+  }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.8; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; padding-top: env(safe-area-inset-top); padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); padding-bottom: env(safe-area-inset-bottom); }
+body::before { content: ''; position: fixed; inset: 0; background: var(--grad-mesh); pointer-events: none; z-index: 0; transition: background var(--dur-slow) var(--ease-out); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(91,168,156,0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(91,168,156,0.35); }
+  /* ===== Navigation ===== */
+  .main-nav{position:fixed;top:0;left:0;right:0;z-index:998;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;transition:all .4s cubic-bezier(.4,0,.2,1)}
+  .main-nav.scrolled{background:linear-gradient(135deg,rgba(213,237,232,.92),rgba(240,236,228,.92),rgba(235,228,240,.92),rgba(245,217,211,.92));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 2px 20px rgba(0,0,0,.06);padding:12px 40px}
+  .nav-logo{font-family:'Noto Serif SC',serif!important;font-size:18px!important;font-weight:700!important;color:#3A3448!important;text-decoration:none;display:flex;align-items:center;gap:10px}
+  .nav-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#5BA89C,#5A988C);display:flex;align-items:center;justify-content:center}
+  .nav-logo-icon svg{width:22px;height:22px}
+  .nav-links{display:flex;gap:32px;align-items:center}
+  .nav-link{font-family:'Noto Sans SC',sans-serif!important;font-size:14px!important;color:#5A5466!important;text-decoration:none;font-weight:500!important;letter-spacing:.5px;transition:color .3s;position:relative}
+  .nav-link:hover,.nav-link.active{color:#3A3448!important}
+  .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,#5BA89C,#D97A6A);transition:width .3s;border-radius:2px}
+  .nav-link:hover::after,.nav-link.active::after{width:100%}
+  .nav-cta{padding:8px 20px;border-radius:20px;background:linear-gradient(135deg,#5BA89C,#5A988C);color:#fff;font-size:13px;font-weight:500;text-decoration:none;letter-spacing:1px;transition:transform .3s,box-shadow .3s;min-height:44px;display:inline-flex;align-items:center}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,168,156,.3)}
+  .nav-mobile-btn{display:none;width:44px;height:44px;border:none;background:none;cursor:pointer;flex-direction:column;gap:5px;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+  .nav-mobile-btn span{width:22px;height:2px;background:var(--deep);border-radius:2px;transition:all .3s}
+  .nav-mobile-btn.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .nav-mobile-btn.open span:nth-child(2){opacity:0}
+  .nav-mobile-btn.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+.main { margin-top: 88px; padding: 0 24px 60px; max-width: 1320px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
+.page { display: none; animation: pageIn 0.35s var(--ease-out) both; }
+.page.active { display: block; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.page-header { margin-bottom: 36px; padding: 40px 0 32px; position: relative; }
+.page-header::before { content: ''; position: absolute; top: 0; left: -24px; right: -24px; bottom: 0; background: var(--grad-hero); border-radius: 0 0 var(--r-xl) var(--r-xl); z-index: -1; opacity: 1; }
+.page-header .brand-line { font-size: 12px; font-weight: 600; color: var(--violet-500); font-family: 'Noto Serif SC', serif; letter-spacing: 0.04em; margin-bottom: 12px; }
+.page-header .header-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; background: var(--bg-glass-strong); backdrop-filter: blur(12px); border: 1px solid var(--border-default); border-radius: var(--r-full); font-size: 13px; font-weight: 700; color: var(--violet-500); font-family: 'Noto Serif SC', serif; margin-bottom: 12px; letter-spacing: 0.02em; }
+.page-header h1 { font-family: 'Noto Serif SC', serif; font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; color: var(--text-primary); margin-bottom: 8px; }
+.page-header p { color: var(--text-secondary); font-size: 15px; font-weight: 500; max-width: 600px; line-height: 1.7; }
+
+.filters { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; align-items: center; }
+.filter-group { display: flex; align-items: center; gap: 6px; background: var(--bg-glass); backdrop-filter: blur(16px); border: 1px solid var(--border-subtle); border-radius: var(--r-full); padding: 4px 6px 4px 14px; min-height: 44px; }
+.filter-label { font-size: 12px; font-weight: 600; color: var(--text-tertiary); white-space: nowrap; font-family: 'Noto Serif SC', serif; text-transform: uppercase; letter-spacing: 0.04em; }
+.filter-select { padding: 8px 32px 8px 12px; min-height: 44px; border-radius: var(--r-full); font-size: 12px; font-family: 'Noto Serif SC', serif; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; outline: none; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%239892b0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+.search-box { flex: 1; max-width: 280px; }
+.search-box input { width: 100%; padding: 10px 16px 10px 38px; min-height: 44px; border-radius: var(--r-full); border: 1px solid var(--border-subtle); background: rgba(255,255,255,.7); backdrop-filter: blur(8px); font-family: 'Noto Sans SC', sans-serif; font-size: 13px; color: var(--text-primary); outline: none; transition: border-color .3s, box-shadow .3s; }
+.search-box input:focus { border-color: rgba(91,168,156,.3); box-shadow: 0 0 0 3px rgba(91,168,156,.08); }
+.search-box input::placeholder { color: var(--text-tertiary); }
+.search-box .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 14px; pointer-events: none; }
+.no-results { text-align: center; padding: 48px 24px; color: var(--text-tertiary); font-size: 14px; display: none; }
+.no-results.visible { display: block; }
+.kb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 18px; }
+.kb-card { background: rgba(255,255,255,.85); backdrop-filter: blur(8px); border: 1px solid rgba(0,0,0,.04); border-radius: var(--r-lg); box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden; transition: all var(--dur-normal) var(--ease-out); position: relative; }
+.kb-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.kb-card-header { padding: 22px 24px; background: linear-gradient(135deg,#5BA89C,#7BAE8F); color: white; position: relative; overflow: hidden; }
+.kb-card-header::after { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); pointer-events: none; }
+.kb-card-header h3 { font-size: 18px; font-weight: 700!important; margin-bottom: 4px; font-family: 'Noto Serif SC', serif!important; letter-spacing: -0.01em; position: relative; }
+.kb-card-body { padding: 22px 24px; }
+.kb-section { margin-bottom: 18px; }
+.kb-section:last-child { margin-bottom: 0; }
+.kb-section-title { font-size: 12px; font-weight: 700; color: var(--violet-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'Noto Serif SC', serif; }
+.kb-section p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; white-space: pre-line; font-weight: 500; }
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+.tool-card { background: rgba(255,255,255,.85); backdrop-filter: blur(8px); border: 1px solid rgba(0,0,0,.04); border-radius: var(--r-lg); box-shadow: 0 2px 8px rgba(0,0,0,.06); padding: 22px; transition: all var(--dur-normal) var(--ease-out); position: relative; overflow: hidden; }
+.tool-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--grad-primary); opacity: 0; transition: opacity var(--dur-normal) var(--ease-out); }
+.tool-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tool-card:hover::before { opacity: 1; }
+.tool-card-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 4px; padding-right: 180px; }
+.tool-card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; padding-right: 180px; }
+.tool-card h3 { font-size: 16px; font-weight: 700!important; color: #3A3448!important; font-family: 'Noto Serif SC', serif!important; letter-spacing: -0.01em; }
+.tool-card .tool-fullname { font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px; font-family: 'Noto Serif SC', serif; font-weight: 600; }
+.tool-card .tool-purpose { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.6; font-weight: 500; }
+.tool-card .tool-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-tertiary); margin-bottom: 0; font-family: 'Noto Serif SC', serif; font-weight: 600; flex-wrap: nowrap; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tool-card .tool-meta span { display: flex; align-items: center; gap: 4px; }
+.tool-card-actions { position: absolute; top: 18px; right: 18px; display: flex; gap: 6px; }
+.tool-action-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 8px 14px; min-height: 44px; border-radius: var(--r-full); border: 1px solid var(--border-default); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 500; font-family: 'Noto Sans SC', sans-serif; cursor: pointer; transition: all var(--dur-fast) var(--ease-out); white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+.tool-action-btn:hover { border-color: #5BA89C; color: #4A8C7E; background: #e0f0eb; }
+.tool-action-btn.primary { background: linear-gradient(135deg,#5BA89C,#5A988C); color: #fff; border-color: transparent; }
+.tool-action-btn.primary:hover { box-shadow: 0 4px 12px rgba(91,168,156,.3); transform: translateY(-1px); }
+.tool-detail { padding: 14px 16px; background: var(--grad-primary-soft); border-radius: var(--r-md); margin-top: 14px; border: 1px solid var(--border-subtle); }
+.tool-detail .detail-row { margin-bottom: 10px; }
+.tool-detail .detail-row:last-child { margin-bottom: 0; }
+.tool-detail .detail-label { font-size: 11px; font-weight: 700; color: var(--violet-500); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'Noto Serif SC', serif; margin-bottom: 3px; }
+.tool-detail .detail-value { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+.tool-detail .detail-value.desc { line-height: 1.75; }
+.back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; border-radius: var(--r-full); background: var(--bg-glass-strong); backdrop-filter: blur(20px); border: 1px solid var(--border-default); color: var(--text-secondary); cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 18px; box-shadow: var(--shadow-md); z-index: 999; transition: all var(--dur-normal) var(--ease-out); }
+.back-to-top.visible { display: flex; }
+.back-to-top:hover { transform: translateY(-2px) scale(1.05); box-shadow: var(--shadow-lg), var(--shadow-glow-violet); color: var(--violet-500); border-color: var(--violet-400); }
+.pdf-loading { display: none; position: fixed; inset: 0; background: rgba(12,10,26,0.5); backdrop-filter: blur(6px); z-index: 3000; justify-content: center; align-items: center; }
+.pdf-loading.active { display: flex; }
+.pdf-loading-box { background: var(--bg-elevated); backdrop-filter: blur(40px); border: 1px solid var(--border-default); border-radius: var(--r-lg); padding: 32px 48px; text-align: center; box-shadow: var(--shadow-xl); }
+.pdf-loading-box .spinner { width: 36px; height: 36px; border: 3px solid var(--border-default); border-top-color: var(--violet-500); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.pdf-loading-box p { font-size: 14px; color: var(--text-secondary); font-family: 'Noto Serif SC', serif; }
+
+.page-tabs { display: flex; gap: 4px; margin-bottom: 24px; background: rgba(0,0,0,.04); border-radius: var(--r-full); padding: 4px; width: fit-content; }
+.page-tab { padding: 10px 24px; min-height: 44px; border-radius: var(--r-full); font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all .3s; border: none; background: transparent; font-family: 'Noto Sans SC', sans-serif; -webkit-tap-highlight-color: transparent; }
+.page-tab.active { background: rgba(255,255,255,.9); color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.page-tab:hover:not(.active) { color: var(--text-primary); }
+@media (max-width: 1024px) {
+    .main { max-width: 100%; padding: 0 20px 48px; }
+    .kb-grid { grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; }
+    .tools-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+    .page-header h1 { font-size: 30px; }
+}
+
+@media (max-width: 768px) {
+    
+    .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:24px;z-index:997}
+    .nav-links.open{display:flex}
+    .nav-link{font-size:18px}
+    .nav-mobile-btn{display:flex}
+.main { margin-top: 64px; padding: 0 12px 32px; }
+    .page-header { padding: 20px 0 16px; }
+    .page-header::before { left: -12px; right: -12px; border-radius: 0 0 var(--r-lg) var(--r-lg); }
+    .page-header .header-badge { font-size: 11px; padding: 4px 10px; }
+    .page-header h1 { font-size: 24px; letter-spacing: -0.02em; }
+    .page-header p { font-size: 13.5px; }
+    .filters { gap: 6px; margin-bottom: 18px; }
+    .filter-group { padding: 3px 4px 3px 10px; gap: 4px; }
+    .search-box { max-width: none; }
+    .filter-label { font-size: 11px; }
+    .filter-select { padding: 6px 28px 6px 10px; font-size: 11px; min-height: 44px; }
+    .kb-grid { grid-template-columns: 1fr; gap: 14px; }
+    .kb-card { border-radius: var(--r-md); }
+    .kb-card-header { padding: 18px 18px; }
+    .kb-card-header h3 { font-size: 15px; }
+    .kb-card-body { padding: 16px 18px; }
+    .kb-section-title { font-size: 10.5px; }
+    .kb-section p { font-size: 13px; }
+    .tools-grid { grid-template-columns: 1fr; gap: 10px; }
+    .tool-card { padding: 16px; border-radius: var(--r-md); overflow: visible; }
+    .tool-card h3 { font-size: 14px; }
+    .tool-card .tool-fullname { font-size: 11px; }
+    .tool-card .tool-purpose { font-size: 13px; margin-bottom: 10px; }
+    .tool-card .tool-meta { gap: 12px; font-size: 11px; margin-bottom: 10px; }
+    .tool-detail { padding: 12px 14px; }
+    .tool-detail .detail-label { font-size: 10.5px; }
+    .tool-detail .detail-value { font-size: 12.5px; }
+    .tool-card-actions { position: static; display: flex; flex-direction: row; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-subtle); }
+    .tool-action-btn { padding: 8px 16px; font-size: 12px; min-height: 44px; flex: 1; }
+    .tool-card-header { padding-right: 0; }
+    .tool-card-tags { padding-right: 0; }
+    .back-to-top { bottom: 20px; right: 16px; width: 44px; height: 44px; font-size: 16px; }
+}
+@media (max-width: 480px) {
+    .main { margin-top: 58px; padding: 0 10px 24px; }
+    .page-header h1 { font-size: 22px; }
+    .page-header p { font-size: 13px; }
+    .kb-card-header { padding: 14px; }
+    .kb-card-body { padding: 14px; }
+    .tool-card { padding: 14px; overflow: visible; }
+    .tool-card-actions { position: static; display: flex; flex-direction: row; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+    .tool-action-btn { padding: 8px 12px; font-size: 11px; min-height: 44px; flex: 1; }
+    .back-to-top { bottom: 16px; right: 12px; width: 44px; height: 44px; font-size: 14px; }
+}
+@media (min-width: 1400px) {
+    .main { max-width: 1440px; }
+    .kb-grid { grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 20px; }
+    .tools-grid { grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; }
+    .page-header h1 { font-size: 40px; }
+}
+@media print {
+    body::before { display: none; }
+    .main { margin-top: 0; padding: 20px; }
+    .page { display: block !important; page-break-after: always; animation: none; }
+    .page-header::before { display: none; }
+    .kb-card, .tool-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; backdrop-filter: none; }
+    body { background: #f8f8f8; color: #1a1a1a; }
+    .nav, .back-to-top, .pdf-loading, .page-tabs { display: none !important; }
+    .tool-card-actions { position: static; display: none; }
+}
+
+  /* ===== Touch & Stability ===== */
+  a, button, input, textarea, select, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .nav-link { touch-action: manipulation; }
+  .page-tab { touch-action: manipulation; }
+  .tool-action-btn { touch-action: manipulation; }
+  .filter-select { touch-action: manipulation; }
+  .kb-card { touch-action: pan-y; }
+  .tool-card { touch-action: pan-y; }
+
+  /* Prevent iOS bounce overscroll on fixed elements */
+  .back-to-top { position: fixed; }
+
+  /* Prevent text selection on interactive elements */
+  .page-tab, .tool-action-btn, .nav-cta, .nav-mobile-btn, .back-to-top, .filter-select { user-select: none; -webkit-user-select: none; }
+
+  /* Smooth scrolling for anchor links */
+  html { scroll-behavior: smooth; }
+
+  /* Prevent horizontal overflow from cards */
+  .kb-grid, .tools-grid { overflow: visible; }
+  .main { overflow-x: hidden; }
+
+  /* Ensure adequate spacing for mobile nav overlay */
+  .nav-links.open { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+  /* ===== Footer ===== */
+  .footer{padding:60px 24px;text-align:center;background:linear-gradient(180deg,var(--cream-pale),var(--surface))}
+  .footer-logo{font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;margin-bottom:12px}
+  .footer-text{font-size:14px;color:var(--soft);max-width:500px;margin:0 auto 24px}
+  .footer-links{display:flex;gap:24px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+  .footer-link{font-size:13px;color:var(--soft);text-decoration:none;transition:color .3s}
+  .footer-link:hover{color:var(--teal)}
+  .footer-hearts{font-size:20px;letter-spacing:8px;opacity:.3}
+  .footer-copy{font-size:12px;color:var(--soft);opacity:.6;margin-top:12px}
+</style>
+</head>
+<body>
+
+
+<nav class="main-nav" id="mainNav">
+  <a href="index.html#hero" class="nav-logo">
+    <span class="nav-logo-icon">
+      <img src="logo-icon.png" style="width:24px;height:24px;" alt="">
+    </span>
+    C³ · UNI Healer
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#services" class="nav-link">疗愈服务</a>
+    <a href="index.html#portfolio" class="nav-link">项目案例</a>
+    <a href="index.html#methodology" class="nav-link">方法理念</a>
+    <a href="index.html#about" class="nav-link">关于 C³ System</a>
+    <a href="knowledge-tools.html" class="nav-link active">知识库</a>
+    <a href="knowledge-tools.html#tools" class="nav-link">工具</a>
+    <a href="index.html#contact" class="nav-link">联系</a>
+    <a href="index.html#contact" class="nav-cta">预约咨询</a>
+  </div>
+  <button class="nav-mobile-btn" id="mobileBtn" aria-label="菜单">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="pdf-loading" id="pdfLoading">
+    <div class="pdf-loading-box">
+        <div class="spinner"></div>
+        <p id="pdfLoadingText">正在生成 PDF...</p>
+    </div>
+</div>
+<main class="main">
+<div class="page-tabs">
+  <button class="page-tab active" id="tabKb" onclick="switchPage('kb')">知识库</button>
+  <button class="page-tab" id="tabTools" onclick="switchPage('tools')">工具</button>
+</div>
+    <div class="page active" id="page-kb">
+        <div class="page-header">
+            <div class="brand-line">C³ System · UNI Healer · EAP · CAP</div>
+            <div class="header-badge">疗愈知识体系</div>
+            <h1>知识库</h1>
+            <p>涵盖正念冥想、呼吸疗法等 20 种核心疗愈方法的理论基础与实践指南。</p>
+        </div>
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">排序</span>
+                <select class="filter-select" id="kbSort">
+                    <option value="default">默认顺序</option>
+                    <option value="name">按名称</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">分类</span>
+                <select class="filter-select" id="kbCategory">
+                    <option value="all">全部</option>
+                    <option value="正念冥想">正念冥想</option>
+                    <option value="身体放松">身体放松</option>
+                    <option value="表达艺术">表达艺术</option>
+                    <option value="认知行为">认知行为</option>
+                    <option value="情绪关系">情绪关系</option>
+                    <option value="自然团体">自然团体</option>
+                </select>
+            </div>
+            <div class="search-box">
+                <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+                <input type="text" id="kbSearch" placeholder="搜索知识库...">
+            </div>
+        </div>
+        <div class="kb-grid" id="kbGrid"></div>
+        <div class="no-results" id="kbNoResults">没有找到匹配的知识库内容</div>
+    </div>
+    <div class="page" id="page-tools">
+        <div class="page-header">
+            <div class="brand-line">C³ System · UNI Healer · EAP · CAP</div>
+            <div class="header-badge">评估工具集</div>
+            <h1>工具</h1>
+            <p>收录 30 个国际标准化心理评估工具，涵盖抑郁、焦虑、压力、正念、<br>韧性、睡眠等核心维度，提供详细的评估维度、评分方式和完成时间信息。</p>
+        </div>
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">排序</span>
+                <select class="filter-select" id="toolsSort">
+                    <option value="default">默认顺序</option>
+                    <option value="name">按名称</option>
+                    <option value="time">按完成时间</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">分类</span>
+                <select class="filter-select" id="toolsCategory">
+                    <option value="all">全部</option>
+                    <option value="抑郁">抑郁</option>
+                    <option value="焦虑">焦虑</option>
+                    <option value="压力">压力</option>
+                    <option value="睡眠">睡眠</option>
+                    <option value="正念">正念</option>
+                    <option value="韧性">韧性</option>
+                    <option value="创伤">创伤</option>
+                    <option value="倦怠">倦怠</option>
+                    <option value="社交">社交</option>
+                    <option value="情绪">情绪</option>
+                    <option value="儿童">儿童</option>
+                    <option value="认知">认知</option>
+                    <option value="积极">积极</option>
+                    <option value="躯体">躯体</option>
+                    <option value="行为">行为</option>
+                </select>
+            </div>
+            <div class="search-box">
+                <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+                <input type="text" id="toolsSearch" placeholder="搜索评估工具...">
+            </div>
+        </div>
+        <div class="tools-grid" id="toolsGrid"></div>
+        <div class="no-results" id="toolsNoResults">没有找到匹配的评估工具</div>
+    </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-logo">C³ · UNI Healer</div>
+  <p class="footer-text">以设计之力，唤醒内在的疗愈之光</p>
+  <div class="footer-links">
+    <a href="index.html#services" class="footer-link">疗愈服务</a>
+    <a href="index.html#portfolio" class="footer-link">项目案例</a>
+    <a href="index.html#about" class="footer-link">关于 C³ System</a>
+    <a href="knowledge-tools.html" class="footer-link">知识库</a>
+    <a href="knowledge-tools.html#tools" class="footer-link">工具</a>
+    <a href="index.html#contact" class="footer-link">联系</a>
+  </div>
+  <div class="footer-hearts">🌿 ✦ 🌿 ✦ 🌿</div>
+  <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(0,0,0,.06);max-width:720px;margin-left:auto;margin-right:auto">
+    <p style="font-size:12px;color:var(--soft);line-height:1.8;text-align:center;opacity:.7">
+      © 2026 C³ · UNI Healer. All Rights Reserved. 本网站展示的所有疗愈方案、用户体验设计及服务框架均为原创作品，受《中华人民共和国著作权法》保护。未经书面授权，任何机构或个人不得复制、转载、改编或用于商业用途。网站中涉及的案例均为脱敏后的通用框架，不包含任何参与者的个人身份信息、互动细节或隐私数据。所有服务均严格遵守《中华人民共和国个人信息保护法》及心理咨询职业伦理规范，服务前签署保密协议（NDA）。
+    </p>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" title="回到顶部">&#x2191;</button>
+
+<script>
+function initMobileNav(){
+  var btn=document.getElementById('mobileBtn');
+  var links=document.getElementById('navLinks');
+  btn.addEventListener('click',function(){btn.classList.toggle('open');links.classList.toggle('open');});
+  links.querySelectorAll('.nav-link,.nav-cta').forEach(function(link){link.addEventListener('click',function(){btn.classList.remove('open');links.classList.remove('open');});});
+}
+// ==================== DATA ====================
+var BRAND='C\u00B3 System \u00B7 UNI Healer \u00B7 EAP \u00B7 CAP';
+var BRAND_FOOTER='C\u00B3 System \u00B7 UNI Healer \u00B7 EAP \u00B7 CAP<br>C³ System';
+var knowledgeBase=[
+{name:"正念冥想(MBSR)",principle:"正念减压疗法(Mindfulness-Based Stress Reduction)由Jon Kabat-Zinn于1979年创立，基于佛教禅修传统与西方医学的结合。核心是通过有目的的、不加评判的当下觉察，帮助个体建立与身心体验的新关系。研究表明正念练习能降低杏仁核活性、增强前额叶皮层功能，从而改善情绪调节能力。",scenarios:"慢性压力管理、焦虑与抑郁辅助治疗、睡眠障碍改善、慢性疼痛管理、职场倦怠预防、情绪调节能力提升",population:"职场高压人群、焦虑/抑郁倾向个体、慢性病患者、学生群体、老年人",steps:"1. 选择安静环境，采取舒适坐姿\n2. 闭眼或半闭眼，将注意力集中在呼吸上\n3. 觉察腹部起伏，感受空气进出鼻腔\n4. 当思绪飘走时，温和地将注意力拉回呼吸\n5. 不评判任何想法或感受，仅观察\n6. 从5-10分钟开始，逐步延长至20-45分钟\n7. 每日固定时间练习，建立习惯"},
+{name:"呼吸疗法",principle:"呼吸疗法基于自主神经系统理论，通过有意识地调节呼吸模式影响交感神经与副交感神经的平衡。延长呼气可激活副交感神经系统，降低心率、血压和皮质醇水平，促进放松反应。不同呼吸模式对应不同的生理效应。",scenarios:"急性焦虑发作、失眠、演讲/考试前紧张、疼痛管理、情绪风暴调节、创伤后应激反应",population:"所有年龄段人群，特别适合焦虑倾向者、睡眠障碍者、高压职场人士",steps:"4-7-8呼吸法：\n1. 舌尖抵住上颚门牙后方\n2. 用鼻子吸气4秒\n3. 屏住呼吸7秒\n4. 用嘴缓慢呼气8秒（发出呼气声）\n5. 重复4个循环\n\n箱式呼吸法：\n1. 吸气4秒\n2. 屏息4秒\n3. 呼气4秒\n4. 屏息4秒\n5. 重复4-8个循环"},
+{name:"RAIN情绪处理",principle:"RAIN是Tara Brach提出的情绪处理框架：R-Recognize(识别)、A-Allow(允许)、I-Investigate(探究)、N-Non-identification(非认同)。该技术帮助个体不被情绪淹没，而是以观察者的视角与情绪建立健康关系，特别适合处理强烈或反复出现的负面情绪。",scenarios:"情绪风暴处理、焦虑/愤怒管理、情绪性进食、社交焦虑、创伤触发反应、情绪调节训练",population:"情绪调节困难者、焦虑/抑郁患者、创伤幸存者、高压职场人士",steps:"1. R-识别(Recognize)：觉察当下正在经历的情绪，给它命名（如'这是焦虑'）\n2. A-允许(Allow)：允许情绪存在，不试图推开或压抑它\n3. I-探究(Investigate)：好奇地探索情绪在身体中的感受——在哪里？什么质感？\n4. N-非认同(Non-identification)：认识到'我有这种情绪'但不等于'我就是这种情绪'\n5. 温和地回到当下，继续日常活动"},
+{name:"渐进式肌肉放松(PMR)",principle:"由Edmund Jacobson于1930年代创立，基于肌肉紧张-放松对比原理。通过系统性地收紧然后放松身体各肌群，帮助个体区分紧张与放松状态，深度放松身体。PMR能有效降低肌肉紧张度、减少躯体化焦虑症状、改善睡眠质量。",scenarios:"肌肉紧张与躯体化症状、失眠、焦虑症辅助治疗、头痛/颈肩痛缓解、术前焦虑、运动后恢复",population:"肌肉紧张型焦虑者、失眠患者、慢性疼痛患者、办公室综合征人群、运动员",steps:"1. 找到安静舒适的位置，可躺可坐\n2. 从双脚开始，用力收紧脚趾肌肉5秒\n3. 突然放松，感受放松与紧张的区别15秒\n4. 依次向上：小腿→大腿→臀部→腹部→胸部→手部→手臂→肩部→颈部→面部\n5. 每个肌群重复收紧-放松2-3次\n6. 全程配合深呼吸\n7. 最后做一次全身扫描，感受整体放松\n8. 全程约15-20分钟"},
+{name:"艺术疗愈/绘画疗愈",principle:"基于Malchiodi的表达性艺术治疗理论，艺术创作能绕过语言中枢，直接激活右脑情绪加工区域。绘画过程本身具有疗愈功能——通过色彩、线条、形状的非言语表达，帮助个体安全地外化内在体验，特别适用于语言表达困难或防御较强的个体。",scenarios:"创伤后心理恢复、儿童情绪发展、焦虑/抑郁辅助治疗、自我探索与成长、哀伤辅导、跨文化心理支持",population:"所有年龄段（特别适合儿童和青少年）、创伤幸存者、语言表达困难者、跨文化群体",steps:"1. 准备材料：蜡笔、彩色铅笔、水彩、A3/A4纸张\n2. 不设主题限制，引导自由创作\n3. 常用引导主题：安全岛、情绪天气、生命之树、关系地图\n4. 创作过程中不干预、不评价\n5. 创作后邀请分享（自愿原则）\n6. 引导反思：'画中最让你感到力量的是什么？'\n7. 作品由创作者保留，尊重创作意图"},
+{name:"音乐疗愈",principle:"音乐治疗基于神经音乐治疗理论(Thaut)和音乐心理学研究。音乐能同时激活大脑的多个区域（听觉皮层、边缘系统、运动皮层），通过节奏、旋律、和声等元素影响情绪、生理和心理状态。包括接受式（聆听）和主动式（演奏/创作）两种形式。",scenarios:"职业倦怠干预、情绪调节、疼痛管理、认知功能维持（老年痴呆）、创伤康复、团体凝聚力建设",population:"职业倦怠人群、老年人、儿童、创伤幸存者、特殊需要群体、普通压力管理",steps:"接受式音乐治疗：\n1. 选择与当前情绪匹配的音乐（先共鸣后转化）\n2. 闭眼聆听，注意身体感受\n3. 引导想象(GIM)：让音乐引导内心画面\n4. 分享聆听体验\n\n主动式音乐治疗：\n1. 鼓圈/打击乐即兴（无需音乐基础）\n2. 歌词改写/歌曲创作\n3. 音乐与绘画结合\n4. 集体合唱/合奏"},
+{name:"叙事疗法",principle:"由Michael White和David Epston于1980年代创立，核心理念是'人不是问题，问题才是问题'。通过外化技术将人与问题分离，帮助个体重新审视和重写自己的生命故事，从'充满问题的故事'转向'充满可能性的故事'。强调每个人的生命都是多故事的。",scenarios:"身份认同危机、创伤后叙事重建、家庭关系困境、哀伤与丧失、成瘾问题、跨文化适应",population:"经历生活困境的个体、创伤幸存者、家庭关系困扰者、青少年、难民/移民群体",steps:"1. 外化：将问题拟人化（'焦虑是怎么来到你生活中的？'）\n2. 解构：探索问题叙事的社会文化根源\n3. 独特结果：寻找'问题没有完全控制你'的时刻\n4. 重写：基于独特结果建构新的生命故事\n5. 见证：邀请重要他人见证新故事\n6. 常用技术：生命之树、关系地图、外部化对话、治疗性文件"},
+{name:"表达性书写疗法",principle:"由James Pennebaker于1980年代创立，基于情绪表露理论。通过将创伤性或情绪性经历转化为书面语言，帮助个体组织混乱的思维、加工未完成的情绪、整合创伤记忆。研究表明表达性书写能改善免疫功能、降低就医频率、改善睡眠和情绪状态。",scenarios:"创伤经历加工、情绪困扰管理、压力释放、重大生活转变适应、慢性疾病心理适应、职场压力管理",population:"有书写能力的所有成年人、经历重大生活事件者、慢性压力人群、职场人士",steps:"Pennebaker范式：\n1. 连续3-4天，每天15-20分钟\n2. 书写内心最深处的感受和想法\n3. 可以反复写同一主题，也可以探索不同方面\n4. 不用在意语法、拼写或文体\n5. 写完后可以撕掉（强调过程而非结果）\n\n引导式书写：\n1. 情绪日记：记录每日情绪事件\n2. 感恩书写：记录3件感恩的事\n3. 未来书写：想象问题解决后的生活"},
+{name:"创伤知情照护",principle:"创伤知情照护(Trauma-Informed Care, TIC)不是一种具体技术，而是一种服务理念框架。核心原则：安全(Safety)、信任(Trustworthiness)、选择(Choice)、协作(Collaboration)、赋权(Empowerment)。强调理解创伤的普遍性和深远影响，避免二次伤害，将权力交还给服务对象。",scenarios:"灾后心理援助、难民/流离失所者支持、家庭暴力干预、儿童保护服务、医疗环境中的创伤敏感实践、社区心理恢复",population:"创伤幸存者、难民儿童、受暴妇女、经历灾难的社区、一线服务提供者",steps:"1. 建立物理和情感安全感\n2. 确保透明度和可预测性\n3. 提供选择权（参与/退出/暂停）\n4. 以协作而非权威方式工作\n5. 关注优势而非缺陷\n6. 文化敏感性适配\n7. 建立分级转介机制\n8. 工作者自我关怀（避免替代性创伤）"},
+{name:"认知行为疗法(CBT)",principle:"由Aaron Beck创立，基于认知三角理论：想法-情绪-行为相互影响。核心是通过识别和挑战不合理认知（自动化思维、核心信念、认知扭曲），建立更适应性的思维模式，从而改善情绪和行为。CBT是循证支持最充分的心理治疗之一。",scenarios:"焦虑症、抑郁症、恐惧症、强迫症、失眠(CBT-I)、进食障碍、职业倦怠认知重构",population:"焦虑/抑郁患者、失眠患者、职业倦怠人群、青少年（适应版）、老年人（适应版）",steps:"1. 识别自动化思维（'当...时我脑子里出现什么想法？'）\n2. 记录思维-情绪-行为的关联\n3. 评估证据：支持这个想法的证据？反对的证据？\n4. 识别认知扭曲（非黑即白、灾难化、过度概括等）\n5. 生成替代性想法\n6. 行为实验验证新想法\n7. 巩固新的认知模式"},
+{name:"身体扫描冥想",principle:"身体扫描是MBSR的核心练习之一，源自内观(Vipassana)传统。通过系统性地将注意力从头顶到脚趾扫过全身，培养对身体感觉的精细觉察力。帮助个体识别习惯性的紧张模式，建立身心联结，促进深度放松。",scenarios:"躯体化症状管理、压力释放、睡眠准备、身体觉察训练、慢性疼痛辅助管理、正念入门练习",population:"所有人群，特别适合与身体失联者、躯体化症状患者、高压工作者",steps:"1. 躺卧或坐姿，闭眼\n2. 从头顶开始，觉察该区域的感受\n3. 不带评判地感受温度、触感、紧张或放松\n4. 如果某区域没有感觉，就觉察'没有感觉'本身\n5. 依次扫描：头顶→额头→面部→颈部→肩部→手臂→胸部→腹部→背部→臀部→大腿→小腿→脚部\n6. 全程约20-45分钟\n7. 结束时感受整体身体的存在"},
+{name:"慈悲冥想",principle:"慈悲冥想(Loving-Kindness Meditation/Metta)源自南传佛教传统，经现代心理学研究验证。通过系统性地向自己和他人发送善意和祝福，培养慈爱、同理心和利他精神。研究表明慈悲冥想能增强积极情绪、减少自我批判、改善人际关系、降低炎症指标。",scenarios:"自我批判与低自尊、人际关系困难、愤怒管理、社交焦虑、职业倦怠恢复、团体凝聚力建设",population:"自我批判倾向者、人际关系困扰者、职场倦怠人群、社交焦虑者、团体/组织",steps:"1. 安静坐姿，闭眼，做几次深呼吸\n2. 首先向自己发送慈悲：'愿我平安，愿我快乐，愿我健康，愿我自在'\n3. 想象一个你深爱的人，向其发送同样的祝福\n4. 扩展到一个中性的人（如邻居、同事）\n5. 扩展到一个有冲突的人（从容易的开始）\n6. 扩展到所有众生\n7. 每个阶段停留2-3分钟\n8. 全程约15-20分钟"},
+{name:"森林浴/自然疗愈",principle:"森林浴(Shinrin-yoku)由日本林野厅于1982年提出，基于注意力恢复理论(ART, Kaplan)和亲生命假说(Biophilia Hypothesis, Wilson)。自然环境中的视觉、听觉、嗅觉、触觉刺激能激活副交感神经系统，降低皮质醇和血压，增强NK细胞活性。研究表明森林环境能显著改善情绪、注意力和免疫功能。",scenarios:"压力管理、注意力恢复、免疫力提升、情绪调节、团队建设活动、社区健康促进、可持续教育",population:"城市居民、职场高压人群、老年人、儿童、康复期患者、社区居民",steps:"1. 选择植被丰富的自然区域\n2. 放下手机，慢速行走（非运动目的）\n3. 五感觉察：观察树冠光影、聆听鸟鸣风声、嗅闻泥土和植物气息、触摸树皮和叶片\n4. 停下来静坐15-30分钟\n5. 可配合正念呼吸或身体扫描\n6. 行程约2-4小时，2公里以内\n7. 活动后分享感受"},
+{name:"园艺疗愈",principle:"园艺治疗基于注意力恢复理论和社会情感选择理论。通过种植、养护植物的过程，个体与自然建立联结，在植物生长周期中体验生命的力量与节奏。园艺活动提供结构化的任务感、可控的成果反馈和与自然的深度联结，对认知功能、情绪状态和社交参与均有积极影响。",scenarios:"老年认知功能维持、情绪障碍康复、社区凝聚力建设、职业技能培训、创伤后恢复、可持续生活教育",population:"老年人（特别是认知退化者）、抑郁症患者、社区群体、特殊需要群体、农村女性赋能",steps:"1. 根据参与者能力选择合适的植物和工具\n2. 容器种植（适合空间有限或行动不便者）\n3. 从播种/扦插开始，全程参与植物生长\n4. 结合感官体验：触摸土壤、嗅闻花香、观察变化\n5. 团体形式：共同维护社区花园\n6. 收获与分享环节\n7. 结合自然艺术创作（植物拓印、花艺等）"},
+{name:"声音疗愈",principle:"声音疗愈基于声音频率对生理和心理的影响。颂钵、音叉等工具产生的泛音和共振能诱导脑波进入放松状态（alpha和theta波），激活副交感神经系统。声音振动还能在身体层面产生按摩效果，释放肌肉紧张。不同频率对应不同的疗愈效果。",scenarios:"深度放松、冥想辅助、嗓音疲劳康复、情绪释放、能量平衡、睡眠改善",population:"高压职场人士、嗓音职业者（教师、客服、歌手）、失眠患者、冥想练习者",steps:"1. 选择安静空间，躺卧或舒适坐姿\n2. 闭眼，聆听颂钵/音叉的声音\n3. 注意声音的起始、持续和消散\n4. 感受声音在身体中的振动\n5. 当思绪飘走时，回到声音上\n6. 全程约20-45分钟\n7. 结束后静坐片刻，感受余韵"},
+{name:"戏剧治疗",principle:"戏剧治疗基于Jacob Moreno的心理剧理论和更多当代发展。通过角色扮演、即兴表演、叙事剧场等形式，帮助个体在安全的虚构空间中探索现实问题、尝试新的行为模式、外化内在冲突。戏剧的'距离感'(aesthetic distance)让参与者能够安全地接触敏感议题。",scenarios:"跨文化适应、社交技能训练、创伤叙事重建、团体凝聚力建设、身份认同探索、儿童情绪发展",population:"儿童和青少年、跨文化群体、创伤幸存者、需要社交技能训练者、团体",steps:"1. 热身游戏：建立安全感和信任\n2. 戏剧化：将问题或故事转化为戏剧场景\n3. 角色扮演：尝试不同的角色和反应方式\n4. 角色交换：站在他人视角体验\n5. 外化技术：将问题拟人化并与之对话\n6. 即兴创作：集体创作故事和场景\n7. 分享与反思：讨论戏剧体验与现实生活的联结"},
+{name:"生物反馈",principle:"生物反馈基于操作性条件反射原理，通过传感器实时监测生理指标（心率、肌电、皮肤电、呼吸频率等），并将数据转化为可视/可听的反馈信号。个体通过观察反馈信号，学习自主调节生理功能，达到放松或激活的目标状态。",scenarios:"焦虑管理、偏头痛/紧张性头痛、注意力训练、嗓音康复、压力管理、运动表现优化",population:"焦虑症患者、慢性疼痛患者、ADHD患者、嗓音职业者、运动员、高压职场人士",steps:"1. 佩戴传感器（心率带/肌电贴片/呼吸带等）\n2. 观察基线生理数据\n3. 在引导下尝试不同的呼吸/放松技术\n4. 实时观察生理指标的变化\n5. 找到最有效的自我调节策略\n6. 反复练习，建立稳定的调节能力\n7. 逐步减少对设备的依赖"},
+{name:"游戏治疗",principle:"游戏治疗基于维果茨基社会文化理论和依恋理论。对于儿童而言，游戏是自然的语言和沟通方式。通过结构化或非结构化的游戏活动，儿童能在安全的环境中表达情绪、处理创伤、练习社交技能、重建控制感。团体游戏还能促进同伴关系和社会化发展。",scenarios:"儿童创伤恢复、社交技能发展、情绪调节训练、焦虑/抑郁辅助治疗、跨文化融合、行为问题干预",population:"儿童（3-12岁为主）、青少年（适应版）、难民儿童、特殊需要儿童",steps:"1. 建立安全空间和基本规则\n2. 提供多样化的游戏材料\n3. 观察儿童的游戏行为和主题\n4. 适时参与但不主导\n5. 通过游戏反映儿童的情绪和需求\n6. 结构化游戏：安全岛、情绪卡片、合作搭建\n7. 非结构化游戏：自由沙盘、角色扮演\n8. 与家长/教师沟通，形成支持网络"},
+{name:"情绪聚焦疗法",principle:"情绪聚焦疗法(Emotion-Focused Therapy, EFT)由Les Greenberg创立，基于情绪理论和依恋理论。核心观点是'只有先接触到核心情绪，才能转化它'。通过帮助个体识别、接纳和转化原发适应性情绪（如悲伤中的需要、愤怒中的边界），促进情绪改变和自我整合。",scenarios:"亲密关系困境、情绪调节障碍、自我批评与低自尊、哀伤与丧失、创伤后情绪处理",population:"经历关系困扰的成人、情绪调节困难者、创伤幸存者、抑郁患者",steps:"1. 觉察当下情绪：'你现在感受到什么？'\n2. 区分原发情绪和继发情绪\n3. 接纳原发适应性情绪（悲伤、恐惧、愤怒中的健康部分）\n4. 探索情绪背后的核心需要\n5. 表达未满足的需要\n6. 体验情绪的转化（如从羞耻到愤怒再到自尊）\n7. 整合新的情绪体验"},
+{name:"团体动力学",principle:"基于Irvin Yalom的疗效因子理论和Kurt Lewin的场论。团体治疗中的疗效因子包括：普同感（我不孤单）、利他性（帮助他人）、团体凝聚力、人际学习、情绪宣泄、存在性因素等。团体提供微型社会环境，成员在其中获得反馈、练习新行为、重建人际信任。",scenarios:"团体心理干预、团队建设、社区心理恢复、职业倦怠支持小组、哀伤辅导团体、跨文化融合",population:"经历共同困境的群体、职场团队、社区群体、康复期患者、特殊需要群体",steps:"1. 团体形成期：建立规则、信任和安全\n2. 风暴期：处理冲突和权力动态\n3. 规范期：形成团体文化和凝聚力\n4. 执行期：深度工作和改变\n5. 结束期：整合收获、告别\n6. 带领者角色：促进而非主导\n7. 注意团体中的沉默、对抗、同盟等现象"}
+];
+
+var assessmentTools=[
+{name:"PHQ-9",full_name:"患者健康问卷-9 (Patient Health Questionnaire-9)",purpose:"筛查和评估抑郁症状的严重程度",items:9,population:"12岁以上青少年及成人",dimensions:"抑郁症状(9项)",scoring:"0-3分Likert量表,总分0-27分;0-4无抑郁,5-9轻度,10-14中度,15-19中重度,20-27重度",time:"约5分钟",description:"基于DSM-IV抑郁诊断标准开发的简明筛查工具，是世界范围内使用最广泛的抑郁筛查量表之一。评估过去两周内的9项核心抑郁症状，包括情绪低落、兴趣丧失、睡眠问题、疲劳感等。适用于初级医疗、心理健康筛查和研究场景。"},
+{name:"GAD-7",full_name:"广泛性焦虑障碍量表-7 (Generalized Anxiety Disorder 7-item)",purpose:"筛查和评估广泛性焦虑症状",items:7,population:"青少年及成人",dimensions:"焦虑症状(7项)",scoring:"0-3分Likert量表,总分0-21分;0-4无焦虑,5-9轻度,10-14中度,15-21重度",time:"约3分钟",description:"专门用于筛查广泛性焦虑障碍的标准化工具，评估过去两周内的7项核心焦虑症状，包括过度担忧、紧张不安、难以放松等。与PHQ-9常联合使用，构成心理健康初筛的标准组合。"},
+{name:"PSS-10",full_name:"知觉压力量表-10 (Perceived Stress Scale)",purpose:"测量个体对生活事件的压力感知水平",items:10,population:"成人",dimensions:"压力感知(10项)",scoring:"0-4分Likert量表,总分0-40分;分数越高压力越大",time:"约3分钟",description:"由Cohen于1983年编制，测量个体对生活事件的主观压力感知，不关注具体压力源而是评估个体对压力的整体感受。广泛应用于职业健康、流行病学研究和社区健康调查。"},
+{name:"PSQI",full_name:"匹兹堡睡眠质量指数 (Pittsburgh Sleep Quality Index)",purpose:"评估过去一个月的睡眠质量",items:19,population:"成人",dimensions:"睡眠质量7个维度(主观质量、潜伏期、时长、效率、障碍、催眠药、日间功能障碍)",scoring:"各维度0-3分,总分0-21分;>5分提示睡眠质量差",time:"约10分钟",description:"由Buysse等于1989年开发，评估过去一个月的睡眠质量，是睡眠研究领域使用最广泛的工具。涵盖主观睡眠质量、入睡潜伏期、实际睡眠时间、睡眠效率、睡眠障碍、催眠药物使用和日间功能障碍7个维度。"},
+{name:"MBI",full_name:"马斯兰职业倦怠量表 (Maslach Burnout Inventory)",purpose:"评估职业倦怠的三个维度：情绪衰竭、去人格化、低成就感",items:22,population:"职场人士（各行业）",dimensions:"情绪衰竭(EE)、去人格化(DP)、低成就感(PA)三个维度",scoring:"0-6分频率量表;EE>27高/Dp>10高/PA<33高为倦怠高风险",time:"约15分钟",description:"由Maslach和Jackson于1981年编制，是职业倦怠研究的金标准工具。评估情绪衰竭（情感资源耗尽）、去人格化（对服务对象冷漠疏离）和个人成就感降低三个维度。广泛用于教育、医疗、社工等助人行业。"},
+{name:"DASS-21",full_name:"抑郁焦虑压力量表-21 (Depression Anxiety Stress Scales)",purpose:"同时评估抑郁、焦虑和压力三个维度",items:21,population:"成人（17岁以上）",dimensions:"抑郁(7项)、焦虑(7项)、压力(7项)三个维度",scoring:"0-3分Likert量表;各维度0-21分;0-4正常,5-6轻度,7-10中度,11-14重度,15+极重度",time:"约5分钟",description:"由Lovibond于1995年编制，是DASS-42的精简版。同时评估抑郁、焦虑和压力三个相互关联但独立的心理维度。适用于区分抑郁和焦虑症状，帮助制定更有针对性的干预方案。"},
+{name:"MAAS",full_name:"正念注意觉知量表 (Mindful Attention Awareness Scale)",purpose:"测量个体在日常生活中的正念/觉知水平",items:15,population:"成人及青少年（适应版）",dimensions:"正念觉知(15项)",scoring:"1-6分频率量表,总分15-90分;分数越高正念水平越高",time:"约10分钟",description:"由Brown和Ryan于2003年编制，测量个体在日常生活中的正念注意觉知水平。评估对当下体验的注意和觉知程度，包括对内在体验（思想、情绪）和外在体验（环境、活动）的觉察。"},
+{name:"CD-RISC",full_name:"Connor-Davidson心理韧性量表 (Connor-Davidson Resilience Scale)",purpose:"测量心理韧性和应对压力的能力",items:25,population:"成人及青少年（适应版）",dimensions:"能力(8项)、忍受消极情感(7项)、接受改变(5项)、控制感(3项)、精神信仰(2项)五个维度",scoring:"0-4分Likert量表,总分0-100分;分数越高心理韧性越强",time:"约5分钟",description:"由Connor和Davidson于2003年编制，测量个体应对压力和逆境的心理韧性。涵盖能力、忍受消极情感、接受改变、控制感和精神信仰五个维度。广泛用于创伤研究、压力管理和心理健康促进领域。"},
+{name:"SDQ",full_name:"优势与困难问卷 (Strengths and Difficulties Questionnaire)",purpose:"筛查儿童和青少年的情绪、行为和社交功能",items:25,population:"4-17岁儿童和青少年",dimensions:"情绪症状(5项)、品行问题(5项)、多动(5项)、同伴关系(5项)、亲社会行为(5项)五个维度",scoring:"3级评分(0-2分),总分0-40分;困难总分>17分提示异常",time:"约5分钟",description:"由Goodman于1997年编制，是国际上使用最广泛的儿童青少年心理筛查工具。评估情绪症状、品行问题、多动/注意力不集中、同伴关系问题和亲社会行为五个维度。有家长版、教师版和自评版三种形式。"},
+{name:"STAI-S",full_name:"状态-特质焦虑量表-状态版 (State-Trait Anxiety Inventory-State)",purpose:"评估当前（状态）焦虑水平",items:20,population:"成人",dimensions:"状态焦虑(20项)",scoring:"1-4分Likert量表,总分20-80分;分数越高焦虑水平越高",time:"约10分钟",description:"由Spielberger于1970年编制，区分状态焦虑（当前的情绪状态）和特质焦虑（人格特质）。状态焦虑量表评估个体在特定时刻的焦虑感受，适用于评估急性焦虑反应和干预效果。"},
+{name:"CTSS",full_name:"儿童创伤症状量表 (Child Trauma Symptom Scale)",purpose:"评估儿童创伤后症状的严重程度",items:38,population:"8-16岁儿童",dimensions:"创伤症状(38项),含侵入性思维、回避、觉醒、性焦虑等维度",scoring:"0-3分频率量表,各维度分数越高症状越严重",time:"约15分钟",description:"专门评估儿童和青少年创伤后心理症状的标准化工具。涵盖侵入性思维、回避行为、觉醒反应、性焦虑和与创伤相关的不良信念五个维度。适用于评估虐待、事故、灾难等创伤事件对儿童的影响。"},
+{name:"IES-R",full_name:"事件影响量表-修订版 (Impact of Event Scale-Revised)",purpose:"评估创伤事件后的心理影响（侵入、回避、高警觉）",items:22,population:"成人",dimensions:"侵入(8项)、回避(8项)、高警觉(6项)三个维度",scoring:"0-4分Likert量表,总分0-88分;>24分提示可能PTSD",time:"约10分钟",description:"由Horowitz于1979年编制、Weiss于1997年修订，评估个体对特定创伤事件的心理反应。测量侵入性症状（闪回、噩梦）、回避行为和过度警觉三个维度，是PTSD筛查的重要工具。"},
+{name:"NASA-TLX",full_name:"NASA任务负荷指数 (NASA Task Load Index)",purpose:"评估认知负荷和工作压力",items:6,population:"职场人士",dimensions:"脑力需求、体力需求、时间需求、绩效水平、努力程度、挫折感六个维度",scoring:"0-100分视觉模拟量表;可计算加权或未加权总分",time:"约5分钟",description:"由Hart和Staveland于1988年在NASA开发，评估任务执行过程中的主观工作负荷。广泛用于人机交互研究、系统设计和职业工效学评估，是工作负荷测量领域最权威的工具之一。"},
+{name:"LSAS",full_name:"利伯维茨社交焦虑量表 (Liebowitz Social Anxiety Scale)",purpose:"评估社交焦虑的恐惧和回避程度",items:24,population:"成人及青少年",dimensions:"恐惧(11项)、回避(11项)两个维度",scoring:"0-3分Likert量表,恐惧和回避各0-33分;总分0-66分",time:"约15分钟",description:"由Liebowitz于1987年编制，评估社交焦虑的恐惧和回避两个维度。涵盖11种社交互动情境（如与权威人士交谈、在公共场合吃东西等），同时评估恐惧程度和回避频率。是社交焦虑障碍研究和临床评估的标准工具。"},
+{name:"PANAS",full_name:"积极情感与消极情感量表 (Positive and Negative Affect Schedule)",purpose:"测量积极和消极情感状态",items:20,population:"成人及青少年",dimensions:"积极情感(10项)、消极情感(10项)两个维度",scoring:"1-5分Likert量表,各维度总分10-50分",time:"约3分钟",description:"由Watson、Clark和Tellegen于1988年编制，测量积极情感（如热情、自豪、精力充沛）和消极情感（如紧张、内疚、恐惧）两个独立维度。可用于评估特质情感（通常情况）或状态情感（特定时刻）。"},
+{name:"VHI-30",full_name:"嗓音障碍指数-30 (Voice Handicap Index-30)",purpose:"评估嗓音问题对生理、功能和情感的影响",items:30,population:"嗓音职业者",dimensions:"功能(10项)、生理(10项)、情感(10项)三个维度",scoring:"0-4分频率量表,总分0-120分;分数越高障碍越严重",time:"约10分钟",description:"由Jacobson等于1997年编制，评估嗓音问题对个体功能、生理和情感三个维度的影响。适用于嗓音职业者（教师、歌手、客服等）的嗓音健康筛查和嗓音障碍治疗效果评估。"},
+{name:"OCQ",full_name:"组织承诺量表 (Organizational Commitment Questionnaire)",purpose:"评估员工对组织的承诺程度",items:15,population:"职场人士",dimensions:"情感承诺、持续承诺、规范承诺三个维度",scoring:"1-7分Likert量表,各维度均分1-7分",time:"约10分钟",description:"由Mowday等于1979年编制，评估员工对组织的承诺程度。情感承诺反映对组织的情感依恋，持续承诺反映离开组织的感知成本，规范承诺反映留在组织的道德义务。广泛用于组织行为学和人力资源管理研究。"},
+{name:"UWES",full_name:"乌得勒支工作投入量表 (Utrecht Work Engagement Scale)",purpose:"评估工作投入的三个维度：活力、奉献、专注",items:17,population:"职场人士",dimensions:"活力(6项)、奉献(5项)、专注(6项)三个维度",scoring:"0-6分频率量表,总分0-54分;分数越高工作投入越高",time:"约5分钟",description:"由Schaufeli等于2002年编制，评估工作投入的三个核心维度。活力指工作中的精力水平，奉献指工作意义感和热情，专注指工作中的全神贯注状态。是积极组织心理学领域最重要的测量工具之一。"},
+{name:"EQ-i:YV",full_name:"情绪智力量表-青年版 (Emotional Quotient Inventory: Youth Version)",purpose:"评估青少年情绪智力水平",items:60,population:"7-18岁儿童和青少年",dimensions:"intrapersonal skills, interpersonal skills, stress management, adaptability, general mood 五大维度",scoring:"4点评分,各维度转化为标准分(均值100,标准差15)",time:"约30分钟",description:"由Bar-On编制的青年版情绪智力量表，评估7-18岁儿童青少年的情绪智力水平。涵盖内省能力、人际能力、压力管理、适应性和一般心境五大维度，是青少年情绪智力评估的权威工具。"},
+{name:"GRI 403",full_name:"GRI 403职业健康与安全标准 (Global Reporting Initiative 403)",purpose:"ESG报告中员工职业健康与安全信息披露标准",items:"N/A",population:"企业组织",dimensions:"职业健康安全管理体系:政策、管理、工人参与、危害识别、培训、健康监测、工伤记录等",scoring:"定性披露评估,非量化评分",time:"N/A(年度报告)",description:"全球报告倡议组织(GRI)发布的可持续发展报告标准中关于职业健康与安全的披露要求。指导企业系统性地报告工作场所健康安全管理实践、工伤数据和健康促进措施。是ESG报告中职业健康安全信息披露的国际标准。"},
+{name:"PCL-5",full_name:"PTSD检查表-5 (PTSD Checklist for DSM-5)",purpose:"筛查和评估创伤后应激障碍症状",items:20,population:"成人",dimensions:"侵入(5项)、回避(2项)、认知与情绪负性改变(7项)、觉醒与反应性改变(6项)四个维度",scoring:"0-4分Likert量表,总分0-80分;\u226531-33分提示可能PTSD",time:"约10分钟",description:"由美国国家PTSD中心基于DSM-5开发，是PTSD筛查和诊断辅助的标准工具。评估与创伤事件相关的四大类症状，可用于评估症状严重程度、监测治疗进展和辅助PTSD诊断。"},
+{name:"VAS",full_name:"视觉模拟评分法 (Visual Analogue Scale)",purpose:"主观感受的快速评估（疼痛、疲劳、焦虑等）",items:1,population:"所有年龄段",dimensions:"单一维度(主观感受强度)",scoring:"0-100mm视觉模拟;0=无,100=最严重",time:"约1分钟",description:"最简单直观的主观感受评估工具，使用一条100mm的直线，一端标记「无」，另一端标记「最严重」。被评估者在直线上标记自己的感受程度。可用于评估疼痛、疲劳、焦虑、满意度等多种主观感受。"},
+{name:"BDI-II",full_name:"贝克抑郁量表第二版 (Beck Depression Inventory-II)",purpose:"评估抑郁症状的严重程度",items:21,population:"13岁以上青少年及成人",dimensions:"抑郁症状(21项):认知-情感、躯体-表现、体重变化等",scoring:"0-3分Likert量表,总分0-63分;0-13极轻,14-19轻度,20-28中度,29-63重度",time:"约10分钟",description:"由Beck等于1996年修订，是抑郁症状评估的经典工具。评估过去两周内的21项抑郁相关症状，涵盖情绪、认知、躯体和功能等多个方面。广泛用于临床诊断辅助、治疗效果评估和抑郁研究。"},
+{name:"BAI",full_name:"贝克焦虑量表 (Beck Anxiety Inventory)",purpose:"评估焦虑症状的严重程度",items:21,population:"成人",dimensions:"焦虑症状(21项):生理、认知和情感层面",scoring:"0-3分Likert量表,总分0-63分;0-7极轻,8-15轻度,16-25中度,26-63重度",time:"约10分钟",description:"由Beck等于1988年编制，专门评估焦虑症状的严重程度。21项条目主要聚焦于焦虑的生理症状（如头晕、心悸），有助于区分焦虑和抑郁症状。广泛用于临床评估和研究。"},
+{name:"WHOQOL-BREF",full_name:"世界卫生组织生活质量量表简版 (WHO Quality of Life-BREF)",purpose:"评估生理、心理、社会关系和环境四个领域的生活质量",items:26,population:"成人",dimensions:"生理健康(7项)、心理健康(6项)、社会关系(3项)、环境(8项)四个领域+总体QOL(2项)",scoring:"1-5分Likert量表,各领域转化为4-20分标准分;分数越高生活质量越好",time:"约10分钟",description:"世界卫生组织开发的生活质量评估工具简版，评估生理健康、心理健康、社会关系和环境四个核心领域。跨文化适用性强，已被翻译成50余种语言，是国际生活质量研究的标准工具。"},
+{name:"SWLS",full_name:"生活满意度量表 (Satisfaction With Life Scale)",purpose:"评估整体生活满意度",items:5,population:"成人及青少年",dimensions:"生活满意度(5项)",scoring:"1-7分同意度量表,总分5-35分;31-35非常满意,26-30满意,21-25略不满意,20以下不满意",time:"约2分钟",description:"由Diener等于1985年编制，测量个体对整体生活的主观满意度。仅5个条目，简洁高效，是全球使用最广泛的生活满意度测量工具。评估个体对自己生活状况的整体认知判断。"},
+{name:"RSES",full_name:"罗森伯格自尊量表 (Rosenberg Self-Esteem Scale)",purpose:"评估个体的整体自尊水平",items:10,population:"青少年及成人",dimensions:"自尊水平(10项):正向(5项)+反向(5项)",scoring:"1-4分同意度量表,总分10-40分;分数越高自尊水平越高",time:"约3分钟",description:"由Rosenberg于1965年编制，是全球使用最广泛的自尊测量工具。10个条目中5个为正向陈述、5个为反向计分，评估个体对自我价值的整体感受。适用于青少年和成人群体。"},
+{name:"SCS",full_name:"自我关怀量表 (Self-Compassion Scale)",purpose:"评估自我关怀的三个维度：自我友善、共同人性、正念",items:26,population:"成人",dimensions:"自我友善(6项)、自我评判(5项)、共同人性(4项)、孤立感(4项)、正念(4项)、过度认同(5项)六个维度",scoring:"1-5分Likert量表,总分26-130分;分数越高自我关怀水平越高",time:"约10分钟",description:"由Neff于2003年编制，测量自我关怀的三个核心成分：自我友善（vs自我评判）、共同人性（vs孤立感）和正念（vs过度认同）。是自我关怀研究和实践领域最重要的测量工具。"},
+{name:"FACIT-Sp",full_name:"慢性病治疗功能评估-精神健康版 (Functional Assessment of Chronic Illness Therapy-Spiritual Well-Being)",purpose:"评估慢性病患者的意义/平和和信仰维度",items:12,population:"慢性病患者及一般人群",dimensions:"意义/平和(8项)、信仰(4项)两个维度",scoring:"0-4分同意度量表,总分0-48分;分数越高精神健康越好",time:"约5分钟",description:"由Cella于1998年编制，是FACIT量表系统的精神健康模块。评估慢性病患者及一般人群的意义感/平和感和信仰两个维度。广泛用于姑息治疗、癌症康复和慢性病管理领域。"},
+{name:"TAI",full_name:"考试焦虑量表 (Test Anxiety Inventory)",purpose:"评估考试焦虑的严重程度",items:20,population:"学生群体",dimensions:"担忧(8项)、情绪性(8项)、考试无关思维(4项)三个维度",scoring:"1-4分Likert量表,总分20-80分;分数越高考试焦虑越严重",time:"约10分钟",description:"由Spielberger于1980年编制，专门评估考试焦虑的严重程度。涵盖考试前的担忧和紧张（忧虑性）以及考试中的情绪和认知干扰（情绪性）。适用于学生群体的考试焦虑筛查和干预效果评估。"}
+];
+
+var assessmentQuestions={"PHQ-9":{scaleLabels:["完全不会","好几天","一半以上天数","几乎每天"],questions:["做事时提不起劲或没有兴趣","感到心情低落、沮丧或绝望","入睡困难、睡不安稳或睡眠过多","感觉疲倦或没有活力","食欲不振或吃太多","觉得自己很糟，或觉得自己很失败，或让自己和家人失望","对事物专注有困难，例如看报纸或看电视","动作或说话速度缓慢到别人可以察觉，或正好相反","有不如死掉或用某种方式伤害自己的念头"]},"GAD-7":{scaleLabels:["完全不会","好几天","一半以上天数","几乎每天"],questions:["感到紧张、不安或急切","不能停止或控制担忧","对各种各样的事情担忧过多","很难放松下来","由于不安而无法静坐","变得容易烦恼或急躁","感到似乎将有可怕的事情发生而害怕"]},"PSS-10":{scaleLabels:["从不","偶尔","有时","时常","总是"],questions:["因为发生意外而感到烦恼","感觉不能控制生活中的重要事情","感到紧张和压力很大","成功处理日常生活中的麻烦有信心(反向计分)","感觉事情进展顺利(反向计分)","感到无法处理所有必须做的事情","能够控制生活中愤怒的方式(反向计分)","觉得自己在控制事情方面做得很好(反向计分)","因为事情超出控制而感到压力","感到困难堆积如山无法克服"]},"PSQI":{scaleLabels:["0","1","2","3"],questions:["晚上通常几点上床","通常需要多少分钟才能入睡","晚上通常几点起床","每晚实际睡眠时间","过去一个月，因下列情况而难以入睡的频率：入睡困难","夜间醒来难以再次入睡","需要起床上厕所","感觉呼吸不畅","咳嗽或打鼾声大","感觉太冷或太热","做噩梦","感到疼痛","过去一个月总体睡眠质量","需要服药才能入睡的频率","保持清醒有困难而难以做事的频率","感到精力不足","白天情绪低落","白天活动减少","白天打瞌睡"]},"MBI":{scaleLabels:["从不","一年几次","一个月一次","一个月几次","一周一次","一周几次","每天"],categories:[{name:"情绪衰竭 (EE)",items:["工作让我感到情绪耗尽","下班时我感觉精疲力竭","早上起床面对工作时感到疲惫","整天与人打交道让我感到累","感觉工作压力很大","自从开始这份工作后对事情越来越不关心","工作让我感到沮丧","我觉得自己在透支","工作让我接近崩溃边缘"]},{name:"去人格化 (DP)",items:["工作中对待服务对象像对待物品一样","自从开始这份工作后对事情越来越不关心","担心工作让我变得冷漠","我觉得服务对象会因为我而怪我","工作让我变得麻木"]},{name:"个人成就感 (PA)",items:["能有效处理服务对象的问题","感觉自己在积极影响他人的生活","工作中能让人感到轻松","感觉自己能理解服务对象的感受","能很好地处理工作中的情感问题","感觉自己通过工作取得了很大成就","在工作中感到充满活力","能创造轻松的工作氛围"]}]},"DASS-21":{scaleLabels:["不符合","有时符合","常常符合","总是符合"],categories:[{name:"抑郁",items:["感到很难放松下来","感到口干舌燥","感到呼吸困难(没有体力活动时)","感到几乎要崩溃","感到难以决定任何事情","感到无法忍受","感到难以集中注意力"]},{name:"焦虑",items:["感到口干舌燥","感到呼吸困难","感到颤抖(没有明显原因)","感到担心可能发生恐慌","感到头晕目眩"]},{name:"压力",items:["感到容易激动","感到难以放松","感到缺乏耐心","感到容易反应过度"]}]},"MAAS":{scaleLabels:["几乎总是","很经常","经常","有时","很少","几乎从不"],questions:["我会因为注意力不集中而犯错","我会很快注意到自己内心的紧张和不适","我会忘记别人的名字","我会因为心不在焉而做错事","我会注意到食物和饮料的味道和气味","我会一边做一件事一边想着别的事","我会很快注意到身体的感觉变化","我会不自觉地开车到目的地后不记得路","我会注意到自己情绪的变化","我会发现自己边听别人说话边做别的事","我会边走边想事情而没注意周围环境","我会清楚地知道自己想要什么和需要什么","我会注意到自己情绪的变化","我会很快注意到周围环境的变化","我会一边吃东西一边做别的事"]},"CD-RISC":{scaleLabels:["完全不符合","很少符合","有时符合","经常符合","几乎总是符合"],questions:["能够适应变化","能够处理不愉快的事情","感到沮丧后能恢复过来","能够应对困难","能够控制自己的情绪","能够在压力下保持冷静","能够从疾病中恢复","能够相信事情会好转","能够改变自己的计划","能够找到解决问题的方法","能够在压力下保持积极","能够从失败中学习","能够感到自己有能力","能够面对困难","能够保持乐观","能够从创伤中恢复","能够接受无法改变的事情","能够感到自己有价值","能够在逆境中成长","能够保持幽默感","能够感到生活有意义","能够感到自己不孤单","能够寻求帮助","能够从他人那里获得力量","能够感到自己有精神支持"]},"SDQ":{scaleLabels:["不符合","有点符合","完全符合"],categories:[{name:"情绪症状",items:["经常感到头痛、肚子痛或恶心","经常感到担忧","经常感到不快乐","经常感到害怕","经常感到紧张"]},{name:"品行问题",items:["经常发脾气","经常与大人争吵","经常撒谎或欺骗","经常偷东西","经常打架"]},{name:"多动",items:["坐不住，经常动来动去","注意力不集中，容易分心","经常打断别人","经常不能安静地玩耍","经常冲动行事"]},{name:"同伴关系",items:["没有朋友","不被其他孩子喜欢","经常被欺负","经常与朋友争吵","经常独处"]},{name:"亲社会行为",items:["会帮助别人","会关心别人","会与别人分享","会安慰别人","会帮助有困难的人"]}]},"STAI-S":{scaleLabels:["完全没有","有些","中等程度","非常"],questions:["我感到平静","我感到安全","我感到紧张","我感到拘束","我感到自在","我感到烦恼","我感到担心","我感到高兴","我感到犹豫不决","我感到舒适","我感到自信","我感到紧张","我感到慌张","我感到轻松","我感到焦虑","我感到不安","我感到满足","我感到担心","我感到困惑","我感到愉快"]},"CTSS":{scaleLabels:["没有","很少","有时","经常"],categories:[{name:"侵入性思维",items:["会突然想起创伤事件","做与创伤事件相关的噩梦","感觉创伤事件正在重演","会因为某些事物想起创伤事件","会不由自主地想起创伤事件"]},{name:"回避",items:["尽量避免想起创伤事件","尽量避免与创伤相关的事物","尽量避免谈论创伤事件","尽量避免去与创伤相关的地方","尽量避免与创伤相关的人"]},{name:"觉醒",items:["感到容易受惊","感到警觉","感到难以入睡","感到容易发脾气","感到注意力不集中"]},{name:"性关注",items:["对性感到恐惧","对身体接触感到不安","对亲密关系感到困难"]},{name:"分离症状",items:["感到与现实脱节","感到麻木","感到时间感改变"]}],note:"共38项，以上为各维度的代表性条目"},"IES-R":{scaleLabels:["完全没有","很少","中等","较高","极高"],categories:[{name:"侵入 (8项)",items:["关于创伤事件的画面会突然出现在脑海中","会做与创伤事件相关的梦","会突然感到创伤事件正在重演","会因为某些事物想起创伤事件","会不由自主地想起创伤事件","会因为想起创伤事件而感到情绪波动","会因为与创伤相关的事物而感到身体不适","会因为想起创伤事件而失眠"]},{name:"回避 (8项)",items:["尽量避免想起创伤事件","尽量避免谈论创伤事件","尽量避免与创伤相关的感受","尽量避免与创伤相关的想法","尽量避免去与创伤相关的地方","尽量避免与创伤相关的人","尽量避免与创伤相关的活动","感到对创伤事件的记忆变得模糊"]},{name:"高警觉 (6项)",items:["感到容易受惊","感到警觉","感到难以入睡","感到容易发脾气","感到注意力不集中","感到身体紧张"]}]},"NASA-TLX":{scaleLabels:["0-100分视觉模拟量表"],questions:["脑力需求: 任务需要多少脑力活动?","体力需求: 任务需要多少体力活动?","时间需求: 任务的时间压力有多大?","绩效水平: 您觉得自己完成任务的绩效如何?","努力程度: 您为完成任务付出了多大努力?","挫折感: 您在任务过程中感到多大挫折?"],isVAS:true},"LSAS":{scaleLabels:["无","轻度","中度","重度"],categories:[{name:"恐惧 (11项)",items:["在权威人士面前打电话","在权威人士面前参加聚会","在权威人士面前讲话","与陌生人交谈","在公共场合吃东西","在公共场合写字","使用公共卫生间","进入已有人的房间","成为关注的中心","在公共场合讲话","与权威人士交谈"]},{name:"回避 (11项)",items:["在权威人士面前打电话(频率)","在权威人士面前参加聚会(频率)","在权威人士面前讲话(频率)","与陌生人交谈(频率)","在公共场合吃东西(频率)","在公共场合写字(频率)","使用公共卫生间(频率)","进入已有人的房间(频率)","成为关注的中心(频率)","在公共场合讲话(频率)","与权威人士交谈(频率)"]}]},"PANAS":{scaleLabels:["非常轻微或没有","有一点","中等程度","相当强烈","非常强烈"],categories:[{name:"积极情感",items:["感兴趣的","精力充沛的","警觉的","兴奋的","自豪的","坚强的","热情的","自信的","受鼓舞的","决心坚定的"]},{name:"消极情感",items:["感到痛苦的","感到害怕的","感到紧张的","感到愤怒的","感到内疚的","感到羞愧的","感到烦躁的","感到焦虑的","感到悲伤的","感到害怕的"]}]},"VHI-30":{scaleLabels:["从不","几乎不","有时","经常","总是"],categories:[{name:"功能 (10项)",items:["我的声音问题影响我与人交谈","我的声音问题影响我在电话中交谈","我的声音问题影响我在嘈杂环境中说话","我的声音问题影响我与家人交流"]},{name:"生理 (10项)",items:["我说话时声音嘶哑","我说话时嗓子干涩","我说话时嗓子疼痛","我说话时嗓子紧绷"]},{name:"情感 (10项)",items:["因为声音问题我感到沮丧","因为声音问题我感到焦虑","因为声音问题我感到尴尬","因为声音问题我感到不自信"]}],note:"共30项，以上为各维度的代表性条目"},"OCQ":{scaleLabels:["完全不同意","不同意","有点不同意","不确定","有点同意","同意","完全同意"],questions:["我愿意在这个组织中付出大量努力","我对组织的忠诚度很高","我非常认同组织的目标和价值观","我愿意接受几乎任何类型的工作来帮助组织","我觉得组织的问题就是我的问题","我感到与组织有很强的情感联系","我不会立即离开组织去接受其他工作","我觉得离开组织会付出很大代价","我觉得留在组织是最佳选择","即使有更好的机会，我也不会离开","我觉得有义务留在组织中","我觉得离开组织是不对的","我觉得组织值得我忠诚","我觉得留在组织是负责任的选择","我觉得离开组织会感到内疚"]},"UWES":{scaleLabels:["从不","几乎从不","很少","有时","经常","非常经常","总是"],categories:[{name:"活力 (6项)",items:["工作时我感到精力充沛","工作时我感到充满活力","早上醒来时我想去工作","工作时我感到充满力量","我能长时间工作而不感到疲倦","工作时我感到精力旺盛"]},{name:"奉献 (5项)",items:["我对工作充满热情","我的工作能激励我","我为自己的工作感到自豪","我觉得自己的工作有意义","我对工作感到投入"]},{name:"专注 (6项)",items:["工作时我会忘记周围的一切","工作时时间过得飞快","我会完全沉浸在工作中","我觉得工作很有趣","我会全身心投入工作","工作时我感到很快乐"]}]},"EQ-i:YV":{scaleLabels:["非常不符合","不太符合","有点符合","非常符合"],categories:[{name:"内省能力 (Intrapersonal)",items:["我能清楚地表达自己的感受","我了解自己的优点和缺点","我能认识到自己的情绪变化","我能独立做出决定","我对自己有信心"]},{name:"人际能力 (Interpersonal)",items:["我能理解别人的感受","我善于与人交往","我能有效地解决人际冲突","我关心他人的需要","我能与他人建立良好的关系"]},{name:"压力管理 (Stress Management)",items:["我能在压力下保持冷静","我能有效地管理自己的情绪","我能在困难情况下控制自己的冲动","我能应对日常压力","我不会轻易发脾气"]},{name:"适应性 (Adaptability)",items:["我能适应新的环境","我能灵活地解决问题","我能客观地看待事物","我能有效地应对变化","我能从不同角度看问题"]},{name:"一般心境 (General Mood)",items:["我通常感到快乐","我对生活持乐观态度","我感到生活有意义","我对未来充满希望","我感到满足"]}],note:"共60项，涵盖5大维度，以上为各维度的代表性条目"},"GRI 403":{isChecklist:true,categories:[{name:"职业健康安全管理体系",items:["职业健康安全政策是否已建立并传达?","管理层是否对职业健康安全做出明确承诺?","工人是否参与职业健康安全相关决策?","是否建立了工人协商机制?","是否有危害识别和风险评估流程?","是否定期进行工作场所安全检查?","是否提供职业健康安全培训?","是否有健康监测和体检制度?","是否记录和报告工伤和职业病?","是否有工作相关健康问题的管理措施?","是否有持续改进措施?","是否向利益相关方披露相关信息?"]}]},"PCL-5":{scaleLabels:["完全没有","轻度","中度","重度","极重度"],categories:[{name:"侵入 (5项)",items:["反复出现与创伤事件相关的痛苦记忆","做与创伤事件相关的噩梦","感觉创伤事件正在重演","遇到与创伤相关的线索时产生强烈心理反应","遇到与创伤相关的线索时产生强烈的生理反应"]},{name:"回避 (2项)",items:["努力避免与创伤相关的记忆或想法","努力避免与创伤相关的外部提示"]},{name:"认知与情绪负性改变 (7项)",items:["无法记住创伤事件的重要方面","对自己、他人或世界产生持续的消极信念","对创伤事件的原因产生持续的消极认知","感到与他人的疏离或疏远","持续无法体验积极情绪","对活动失去兴趣","感到情感麻木"]},{name:"觉醒与反应性改变 (6项)",items:["容易发怒或表现出攻击行为","鲁莽或自我毁灭行为","过度警觉","夸大的惊吓反应","注意力难以集中","睡眠障碍"]}]},"VAS":{isVAS:true,scaleLabels:["0-100mm视觉模拟量表"],questions:["请在下方标尺上标记您当前的主观感受程度"]},"BDI-II":{scaleLabels:["无","轻度","中度","重度"],questions:["感到悲伤","感到失望","感到失败","对自己失去满足感","感到内疚","感到受到惩罚","对自己感到失望","感到自己很糟糕","感到想哭","感到烦躁","对他人失去兴趣","难以做决定","感到自己看起来不吸引人","感到无法工作","感到睡眠困难","感到疲劳","感到食欲不振","感到体重减轻","感到对身体健康的担忧","感到对性的兴趣降低","感到生活没有意义"]},"BAI":{scaleLabels:["无","轻度(不影响我)","中度(很不舒服但还能忍受)","重度(几乎无法忍受)"],questions:["感到麻木或刺痛","感到发热","腿部颤抖","感到无法放松","害怕最坏的事情发生","感到头晕目眩","感到心跳加速","感到不稳定","感到惊恐","感到紧张","感到窒息","手发抖","感到摇晃","感到害怕失去控制","感到呼吸困难","感到害怕死亡","感到害怕发疯","感到腹部不适","感到脸红","感到出汗","感到心悸"]},"WHOQOL-BREF":{scaleLabels:["非常不满意","不满意","一般","满意","非常满意"],categories:[{name:"生理健康 (7项)",items:["您如何评价您的生活质量?","您对自己的健康状况满意吗?","疼痛影响您的日常生活吗?","您需要医疗帮助来日常生活吗?","您有足够的精力吗?","您能到处走动吗?","您能进行日常活动吗?"]},{name:"心理健康 (6项)",items:["您享受生活吗?","您觉得生活有意义吗?","您能集中注意力吗?","您对自己满意吗?","您的身体外观让您感觉如何?","您对自己的学习能力满意吗?"]},{name:"社会关系 (3项)",items:["您对自己的人际关系满意吗?","您有足够的性生活支持吗?","您有朋友的支持吗?"]},{name:"环境 (8项)",items:["您住的地方安全吗?","您的生活环境健康吗?","您有足够的钱吗?","您能获得所需信息吗?","您能获得休闲活动吗?","您对居住条件满意吗?","您能获得医疗服务吗?","您对交通条件满意吗?"]}]},"SWLS":{scaleLabels:["强烈不同意","不同意","有点不同意","中立","有点同意","同意","强烈同意"],questions:["在大多数方面，我的生活接近我的理想状态","我的生活条件非常优越","我对自己的生活感到满意","到目前为止，我已经得到了我想要的重要东西","如果可以重新来过，我几乎不会改变什么"]},"RSES":{scaleLabels:["非常不同意","不同意","同意","非常同意"],questions:["总的来说，我对自己是满意的","有时候我觉得自己一无是处(反向)","我觉得自己有很多优点","我能做的事情大多数都能做好","我觉得自己没什么值得骄傲的(反向)","有时候我确实觉得自己很没用(反向)","我觉得自己是一个有价值的人","我希望能更尊重自己一些(反向)","总的来说，我倾向于觉得自己是个失败者(反向)","我对自己持积极的态度"]},"SCS":{scaleLabels:["几乎从不","很少","有时","经常","几乎总是"],categories:[{name:"自我友善 (6项)",items:["当我失败或感到不足时，我给自己温暖和理解","当我感到痛苦时，我努力对自己友善","当我经历困难时期时，我对自己有耐心","我尝试理解自己的不足和失败","当我感到情绪低落时，我关心自己","我对自己宽容"]},{name:"自我评判 (5项)",items:["当我失败时，我会批评自己","当我感到痛苦时，我会对自己不耐烦","当我经历困难时期时，我会对自己苛刻","我会关注自己的缺点而不是优点","我对自己过于严厉"]},{name:"共同人性 (4项)",items:["当我失败时，我会想到其他人也会失败","当我感到痛苦时，我会想到这是人类共同的经历","当我经历困难时期时，我会想到很多人也有类似的经历","我会意识到痛苦是生活的一部分"]},{name:"孤立感 (4项)",items:["当我失败时，我会觉得自己是唯一一个失败的人","当我感到痛苦时，我会觉得自己是孤独的","当我经历困难时期时，我会觉得自己与世隔绝","我会觉得自己与他人的经历完全不同"]},{name:"正念 (4项)",items:["当我感到情绪低落时，我会尝试平衡自己的情绪","当我感到痛苦时，我会观察自己的感受而不被淹没","当我经历困难时期时，我会保持对自己情绪的觉察","我会以一种平衡的方式处理困难情绪"]},{name:"过度认同 (3项)",items:["当我感到情绪低落时，我会被自己的情绪淹没","当我感到痛苦时，我会放大自己的痛苦","当我经历困难时期时，我会被自己的困难所吞噬"]}]},"FACIT-Sp":{scaleLabels:["完全不符合","有点符合","中等符合","很符合","非常符合"],categories:[{name:"意义/平和 (8项)",items:["我感到内心平静","我的生活有意义","我感到与更伟大的力量有联系","我找到了生活的意义","我感到精神上的满足","我感到内心和谐","我感到与自然有联系","我感到与宇宙有联系"]},{name:"信仰 (4项)",items:["我从信仰中获得安慰","我的信仰给了我力量","我的信仰帮助我面对困难","我的信仰是我生活的重要部分"]}]},"TAI":{scaleLabels:["从不","有时","经常","总是"],categories:[{name:"担忧 (8项)",items:["考试前我会感到紧张","考试时我会担心失败","我会想到考试的结果","考试后我会担心成绩","我会担心考试的内容","我会担心自己的准备是否充分","我会担心考试的环境","我会担心考试的时间"]},{name:"情绪性 (8项)",items:["考试前我会感到心跳加速","考试时我会感到紧张","考试时我会感到胃部不适","考试时我会感到出汗","考试时我会感到手抖","考试时我会感到呼吸困难","考试时我会感到头晕","考试时我会感到想上厕所"]},{name:"考试无关思维 (4项)",items:["考试时我会想到与考试无关的事情","考试时我会难以集中注意力","考试时我会走神","考试时我会感到思维混乱"]}]}};
+
+// ==================== PDF FORM GENERATION ====================
+function esc(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function generateAssessmentFormHTML(tool){
+  var q=assessmentQuestions[tool.name];
+  if(!q)return '<p style="padding:20px;">暂无评估表单数据</p>';
+  var h='';
+  h+='<div style="background:linear-gradient(135deg,#5BA898 0%,#7BAE8F 40%,#967BA5 100%);color:white;padding:20px 24px;">';
+  h+='<div style="font-size:11px;opacity:0.85;margin-bottom:6px;font-family:DM Sans,sans-serif;">'+BRAND+'</div>';
+  h+='<div style="font-size:20px;font-weight:700;margin-bottom:4px;font-family:DM Sans,&quot;Noto Sans SC&quot;,sans-serif;">'+esc(tool.name)+'</div>';
+  h+='<div style="font-size:13px;opacity:0.9;margin-bottom:8px;">'+esc(tool.full_name)+'</div>';
+  h+='<div style="width:60px;height:2px;background:rgba(255,255,255,0.4);margin-bottom:8px;"></div>';
+  h+='<div style="font-size:12px;opacity:0.85;line-height:1.6;">评估用途: '+esc(tool.purpose)+'<br>适用人群: '+esc(tool.population)+'<br>完成时间: '+esc(tool.time)+'</div></div>';
+  h+='<div style="padding:16px 24px;border-bottom:1px solid #e5e7eb;"><div style="font-size:13px;font-weight:600;color:#7BAE8F;margin-bottom:10px;font-family:DM Sans,sans-serif;">填写信息</div><div style="display:flex;gap:24px;font-size:13px;color:#374151;flex-wrap:wrap;"><div>姓名: ________________</div><div>日期: ________________</div><div>年龄: ________________</div><div>性别: ________________</div><div>所在地: ________________</div><div>国籍: ________________</div></div></div>';
+  h+='<div style="padding:12px 24px;border-bottom:1px solid #e5e7eb;background:#f9fafb;"><div style="font-size:12px;font-weight:600;color:#374151;margin-bottom:8px;">当前支持方式（可多选）</div><div style="display:flex;gap:16px;font-size:12px;color:#374151;flex-wrap:wrap;line-height:2;"><div>&#x2610; 无专业支持</div><div>&#x2610; 自我调节</div><div>&#x2610; 心理咨询</div><div>&#x2610; 药物治疗</div><div>&#x2610; 亲友陪伴支持</div><div>&#x2610; 其他: ________</div></div></div>';
+  h+='<div style="padding:12px 24px;border-bottom:1px solid #e5e7eb;"><div style="font-size:12px;font-weight:600;color:#374151;margin-bottom:8px;">评估用途 / 填写目的（单选）</div><div style="display:flex;gap:16px;font-size:12px;color:#374151;flex-wrap:wrap;line-height:2;"><div>&#x2610; 自我情绪筛查</div><div>&#x2610; 心理咨询建档</div><div>&#x2610; 专业疗愈干预</div><div>&#x2610; 课程学习自测</div></div></div>';
+  h+='<div style="padding:14px 24px;border-bottom:1px solid #e5e7eb;background:#f9fafb;"><div style="font-size:13px;font-weight:600;color:#7BAE8F;margin-bottom:8px;font-family:DM Sans,sans-serif;">评估信息</div><div style="font-size:12px;color:#374151;line-height:1.8;"><b>评估维度:</b> '+esc(tool.dimensions)+'<br><b>评分方式:</b> '+esc(tool.scoring)+'</div></div>';
+  h+='<div style="padding:16px 24px;"><div style="font-size:13px;font-weight:600;color:#7BAE8F;margin-bottom:12px;font-family:DM Sans,sans-serif;">评估题目</div>';
+  if(q.isChecklist){
+    q.categories.forEach(function(cat){
+      h+='<div style="font-size:12px;font-weight:600;color:#1e1b3a;margin:12px 0 8px;">'+esc(cat.name)+'</div>';
+      h+='<table style="width:100%;border-collapse:collapse;font-size:12px;">';
+      cat.items.forEach(function(item,i){
+        h+='<tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:8px 4px;color:#374151;width:30px;text-align:center;">'+(i+1)+'</td><td style="padding:8px 4px;color:#374151;">'+esc(item)+'</td><td style="padding:8px 4px;text-align:center;width:80px;">&#x2610; 是 &nbsp; &#x2610; 否</td></tr>';
+      });
+      h+='</table>';
+    });
+  }else if(q.isVAS&&tool.name==='VAS'){
+    h+='<div style="margin:16px 0;"><div style="font-size:12px;color:#374151;margin-bottom:12px;">请在下方标尺上标记您当前的主观感受程度：</div>';
+    h+='<div style="position:relative;height:40px;margin:20px 0;"><div style="position:absolute;left:0;right:0;top:18px;height:4px;background:linear-gradient(to right,#10b981,#f59e0b,#f43f5e);border-radius:2px;"></div>';
+    h+='<div style="position:absolute;left:0;top:12px;font-size:11px;color:#374151;">0<br><span style="font-size:10px;">无</span></div>';
+    h+='<div style="position:absolute;right:0;top:12px;font-size:11px;color:#374151;text-align:right;">100<br><span style="font-size:10px;">最严重</span></div></div>';
+    h+='<div style="font-size:12px;color:#374151;">标记位置读数: ______ mm</div></div>';
+  }else if(q.isVAS&&tool.name==='NASA-TLX'){
+    q.questions.forEach(function(item,i){
+      h+='<div style="margin-bottom:14px;"><div style="font-size:12px;color:#374151;margin-bottom:6px;">'+(i+1)+'. '+esc(item)+'</div>';
+      h+='<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:#6b7280;">0</span><div style="flex:1;height:6px;background:#e5e7eb;border-radius:3px;"></div><span style="font-size:11px;color:#6b7280;">100</span><span style="font-size:11px;color:#374151;">得分: ____</span></div></div>';
+    });
+  }else if(q.categories){
+    q.categories.forEach(function(cat){
+      h+='<div style="font-size:12px;font-weight:600;color:#1e1b3a;margin:14px 0 8px;padding:4px 8px;background:#f3f4f6;border-radius:4px;display:inline-block;">'+esc(cat.name)+'</div>';
+      var labels=q.scaleLabels;
+      h+='<table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:8px;"><thead><tr style="background:#f9fafb;"><th style="padding:6px 4px;text-align:center;width:30px;border:1px solid #e5e7eb;">#</th><th style="padding:6px 4px;text-align:left;border:1px solid #e5e7eb;">题目内容</th>';
+      labels.forEach(function(l){h+='<th style="padding:6px 4px;text-align:center;width:50px;border:1px solid #e5e7eb;font-size:10px;">'+esc(l)+'</th>';});
+      h+='</tr></thead><tbody>';
+      cat.items.forEach(function(item,i){
+        h+='<tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:6px 4px;text-align:center;color:#6b7280;border:1px solid #e5e7eb;">'+(i+1)+'</td><td style="padding:6px 4px;color:#374151;border:1px solid #e5e7eb;">'+esc(item)+'</td>';
+        labels.forEach(function(){h+='<td style="padding:6px 4px;text-align:center;border:1px solid #e5e7eb;">&#x2610;</td>';});
+        h+='</tr>';
+      });
+      h+='</tbody></table>';
+    });
+    if(q.note)h+='<div style="font-size:11px;color:#6b7280;font-style:italic;margin-top:4px;">注: '+esc(q.note)+'</div>';
+  }else{
+    var labels=q.scaleLabels;
+    h+='<table style="width:100%;border-collapse:collapse;font-size:11px;"><thead><tr style="background:#f9fafb;"><th style="padding:6px 4px;text-align:center;width:30px;border:1px solid #e5e7eb;">#</th><th style="padding:6px 4px;text-align:left;border:1px solid #e5e7eb;">题目内容</th>';
+    labels.forEach(function(l){h+='<th style="padding:6px 4px;text-align:center;width:50px;border:1px solid #e5e7eb;font-size:10px;">'+esc(l)+'</th>';});
+    h+='</tr></thead><tbody>';
+    q.questions.forEach(function(item,i){
+      h+='<tr style="border-bottom:1px solid #e5e7eb;"><td style="padding:6px 4px;text-align:center;color:#6b7280;border:1px solid #e5e7eb;">'+(i+1)+'</td><td style="padding:6px 4px;color:#374151;border:1px solid #e5e7eb;">'+esc(item)+'</td>';
+      labels.forEach(function(){h+='<td style="padding:6px 4px;text-align:center;border:1px solid #e5e7eb;">&#x2610;</td>';});
+      h+='</tr>';
+    });
+    h+='</tbody></table>';
+  }
+  h+='</div>';
+  h+='<div style="padding:14px 24px;border-top:1px solid #e5e7eb;background:#f9fafb;"><div style="font-size:13px;font-weight:600;color:#7BAE8F;margin-bottom:8px;font-family:DM Sans,sans-serif;">评分标准</div><div style="font-size:12px;color:#374151;line-height:1.8;">'+esc(tool.scoring)+'</div></div>';
+  h+='<div style="padding:16px 24px;border-top:1px solid #e5e7eb;"><div style="display:flex;gap:32px;flex-wrap:wrap;font-size:13px;color:#374151;"><div>总分: ________________</div><div>评估结果: ________________</div></div><div style="display:flex;gap:32px;margin-top:16px;flex-wrap:wrap;font-size:13px;color:#374151;"><div>评估者签名: ________________</div><div>日期: ________________</div></div></div>';
+  h+='<div style="padding:8px 24px;border-top:1px solid #d1d5db;font-size:10px;color:#9ca3af;text-align:center;">C\u00B3 System \u00B7 UNI Healer \u00B7 EAP \u00B7 CAP</div>';
+  return h;
+}
+
+// ==================== PDF DOWNLOAD ====================
+function showPDFLoading(t){document.getElementById('pdfLoadingText').textContent=t||'正在生成 PDF...';document.getElementById('pdfLoading').classList.add('active');}
+function updatePDFLoadingText(t){document.getElementById('pdfLoadingText').textContent=t;}
+function hidePDFLoading(){document.getElementById('pdfLoading').classList.remove('active');}
+
+async function viewToolPDF(index){
+  var tool=assessmentTools[index];
+  showPDFLoading('正在生成 '+tool.name+' PDF...');
+  try{
+    var c=document.createElement('div');
+    c.id='pdf-render-container';
+    c.style.cssText='position:fixed;left:-9999px;top:0;width:210mm;background:white;padding:0;font-family:"Noto Sans SC",sans-serif;';
+    c.innerHTML=generateAssessmentFormHTML(tool);
+    document.body.appendChild(c);
+    await new Promise(function(r){setTimeout(r,600);});
+    var canvas=await html2canvas(c,{scale:2,useCORS:true,backgroundColor:'#ffffff',width:c.scrollWidth,height:c.scrollHeight});
+    var jsPDF=window.jspdf.jsPDF;
+    var pdf=new jsPDF('p','mm','a4');
+    var imgData=canvas.toDataURL('image/png');
+    var pdfWidth=210;
+    var pdfHeight=(canvas.height*pdfWidth)/canvas.width;
+    var position=0;var pageHeight=297;
+    while(position<pdfHeight){if(position>0)pdf.addPage();pdf.addImage(imgData,'PNG',0,-position,pdfWidth,pdfHeight);position+=pageHeight;}
+    document.body.removeChild(c);
+    var pdfBlob=pdf.output('blob');
+    var url=URL.createObjectURL(pdfBlob);
+    var win=window.open(url,'_blank');
+    if(!win){alert('请允许弹出窗口以查看PDF');}
+  }catch(err){console.error('PDF generation error:',err);alert('PDF 生成失败，请重试。');}
+  finally{hidePDFLoading();}
+}
+
+async function downloadToolPDF(index){
+  var tool=assessmentTools[index];
+  showPDFLoading('正在生成 '+tool.name+' PDF...');
+  try{
+    var c=document.createElement('div');
+    c.id='pdf-render-container';
+    c.style.cssText='position:fixed;left:-9999px;top:0;width:210mm;background:white;padding:0;font-family:"Noto Sans SC",sans-serif;';
+    c.innerHTML=generateAssessmentFormHTML(tool);
+    document.body.appendChild(c);
+    await new Promise(function(r){setTimeout(r,600);});
+    var canvas=await html2canvas(c,{scale:2,useCORS:true,backgroundColor:'#ffffff',width:c.scrollWidth,height:c.scrollHeight});
+    var jsPDF=window.jspdf.jsPDF;
+    var pdf=new jsPDF('p','mm','a4');
+    var imgData=canvas.toDataURL('image/png');
+    var pdfWidth=210;
+    var pdfHeight=(canvas.height*pdfWidth)/canvas.width;
+    var position=0;var pageHeight=297;
+    while(position<pdfHeight){if(position>0)pdf.addPage();pdf.addImage(imgData,'PNG',0,-position,pdfWidth,pdfHeight);position+=pageHeight;}
+    pdf.save(tool.name+'_评估量表.pdf');
+    document.body.removeChild(c);
+  }catch(err){console.error('PDF generation error:',err);alert('PDF 生成失败，请重试。');}
+  finally{hidePDFLoading();}
+}
+
+async function downloadAllTools(){
+  showPDFLoading('正在生成全部量表 PDF（共30个），请耐心等待...');
+  try{
+    var jsPDF=window.jspdf.jsPDF;
+    var pdf=new jsPDF('p','mm','a4');
+    var firstPage=true;
+    for(var i=0;i<assessmentTools.length;i++){
+      var tool=assessmentTools[i];
+      updatePDFLoadingText('正在生成: '+tool.name+' ('+(i+1)+'/'+assessmentTools.length+')');
+      var c=document.createElement('div');
+      c.id='pdf-render-container-'+i;
+      c.style.cssText='position:fixed;left:-9999px;top:0;width:210mm;background:white;padding:0;font-family:"Noto Sans SC",sans-serif;';
+      c.innerHTML=generateAssessmentFormHTML(tool);
+      document.body.appendChild(c);
+      await new Promise(function(r){setTimeout(r,300);});
+      var canvas=await html2canvas(c,{scale:2,useCORS:true,backgroundColor:'#ffffff',width:c.scrollWidth,height:c.scrollHeight});
+      var imgData=canvas.toDataURL('image/png');
+      var pdfWidth=210;
+      var pdfHeight=(canvas.height*pdfWidth)/canvas.width;
+      var position=0;var pageHeight=297;
+      while(position<pdfHeight){if(!firstPage)pdf.addPage();firstPage=false;pdf.addImage(imgData,'PNG',0,-position,pdfWidth,pdfHeight);position+=pageHeight;}
+      document.body.removeChild(c);
+    }
+    pdf.save('疗愈师评估量表全集_30种.pdf');
+  }catch(err){console.error('PDF generation error:',err);alert('PDF 生成失败，请重试。');}
+  finally{hidePDFLoading();}
+}
+
+
+// ==================== KB COLOR MAPPING ====================
+var kbColors = {
+  // 1. 正念冥想类 (蓝绿色系)
+  '正念': 'linear-gradient(135deg,#5BA89C,#7BAE8F)',
+  '身体扫描': 'linear-gradient(135deg,#5BA89C,#7BAE8F)',
+  '慈悲': 'linear-gradient(135deg,#5BA89C,#7BAE8F)',
+  '内观': 'linear-gradient(135deg,#5BA89C,#7BAE8F)',
+  'RAIN': 'linear-gradient(135deg,#5BA89C,#7BAE8F)',
+  // 2. 身体与放松类 (青绿色系)
+  '呼吸': 'linear-gradient(135deg,#6EC4B8,#5A988C)',
+  '渐进': 'linear-gradient(135deg,#6EC4B8,#5A988C)',
+  '身体': 'linear-gradient(135deg,#6EC4B8,#5A988C)',
+  '睡眠': 'linear-gradient(135deg,#6EC4B8,#5A988C)',
+  '生物': 'linear-gradient(135deg,#6EC4B8,#5A988C)',
+  '声音': 'linear-gradient(135deg,#6EC4B8,#5A988C)',
+  // 3. 表达与艺术类 (薰衣草紫色系)
+  '艺术': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  '音乐': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  '戏剧': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  '舞蹈': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  '诗歌': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  '照片': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  '沙盘': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  '表达': 'linear-gradient(135deg,#967BA5,#A68BB5)',
+  // 4. 认知与行为类 (暖金色系)
+  '认知': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '叙事': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '辩证': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '焦点': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '动机': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '格式塔': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '意义': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '接纳': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  '积极': 'linear-gradient(135deg,#B89840,#C9A84C)',
+  // 5. 情绪与关系类 (珊瑚色系)
+  '情绪聚焦': 'linear-gradient(135deg,#D97A6A,#E08B7A)',
+  '创伤': 'linear-gradient(135deg,#D97A6A,#E08B7A)',
+  '哀伤': 'linear-gradient(135deg,#D97A6A,#E08B7A)',
+  '家庭': 'linear-gradient(135deg,#D97A6A,#E08B7A)',
+  '人际': 'linear-gradient(135deg,#D97A6A,#E08B7A)',
+  '危机': 'linear-gradient(135deg,#D97A6A,#E08B7A)',
+  '自我关怀': 'linear-gradient(135deg,#D97A6A,#E08B7A)',
+  // 6. 自然与团体类 (森林绿色系)
+  '森林': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '园艺': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '团体': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '游戏': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '跨文化': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '文化': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '灵性': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '能量': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '芳香': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '动物': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '冒险': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '幽默': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '整合': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '心理教育': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '眼动': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '梦境': 'linear-gradient(135deg,#5A988C,#7BAE8F)',
+  '躯体': 'linear-gradient(135deg,#5A988C,#7BAE8F)'
+};
+
+function getKBColor(name) {
+  for (var key in kbColors) {
+    if (name.indexOf(key) !== -1) return kbColors[key];
+  }
+  return 'linear-gradient(135deg,#5BA89C,#7BAE8F)';
+}
+
+
+function getKBCategoryColor(name) {
+  var kbCategoryColors = {
+    // 正念冥想类 - 蓝绿
+    '正念': '#5BA89C', '身体扫描': '#5BA89C', '慈悲': '#5BA89C', '内观': '#5BA89C', 'RAIN': '#5BA89C',
+    // 身体与放松类 - 青绿
+    '呼吸': '#6EC4B8', '渐进': '#6EC4B8', '身体': '#6EC4B8', '睡眠': '#6EC4B8', '生物': '#6EC4B8', '声音': '#6EC4B8',
+    // 表达与艺术类 - 薰衣草紫
+    '艺术': '#967BA5', '音乐': '#967BA5', '戏剧': '#967BA5', '舞蹈': '#967BA5', '诗歌': '#967BA5', '照片': '#967BA5', '沙盘': '#967BA5', '表达': '#967BA5',
+    // 认知与行为类 - 暖金
+    '认知': '#B89840', '叙事': '#B89840', '辩证': '#B89840', '焦点': '#B89840', '动机': '#B89840', '格式塔': '#B89840', '意义': '#B89840', '接纳': '#B89840', '积极': '#B89840',
+    // 情绪与关系类 - 珊瑚
+    '情绪聚焦': '#D97A6A', '创伤': '#D97A6A', '哀伤': '#D97A6A', '家庭': '#D97A6A', '人际': '#D97A6A', '危机': '#D97A6A', '自我关怀': '#D97A6A',
+    // 自然与团体类 - 森林绿
+    '森林': '#5A988C', '园艺': '#5A988C', '团体': '#5A988C', '游戏': '#5A988C', '跨文化': '#5A988C', '文化': '#5A988C', '灵性': '#5A988C', '能量': '#5A988C', '芳香': '#5A988C', '动物': '#5A988C', '冒险': '#5A988C', '幽默': '#5A988C', '整合': '#5A988C', '心理教育': '#5A988C', '眼动': '#5A988C', '梦境': '#5A988C', '躯体': '#5A988C'
+  };
+  for (var key in kbCategoryColors) {
+    if (name.indexOf(key) !== -1) return kbCategoryColors[key];
+  }
+  return '#5BA89C';
+}
+
+function getKBCategoryLabel(name) {
+  var categories = {
+    '正念': '正念冥想', '身体扫描': '正念冥想', '慈悲': '正念冥想', '内观': '正念冥想', 'RAIN': '正念冥想',
+    '呼吸': '身体放松', '渐进': '身体放松', '身体': '身体放松', '睡眠': '身体放松', '生物': '身体放松', '声音': '身体放松',
+    '艺术': '表达艺术', '音乐': '表达艺术', '戏剧': '表达艺术', '舞蹈': '表达艺术', '诗歌': '表达艺术', '照片': '表达艺术', '沙盘': '表达艺术', '表达': '表达艺术',
+    '认知': '认知行为', '叙事': '认知行为', '辩证': '认知行为', '焦点': '认知行为', '动机': '认知行为', '格式塔': '认知行为', '意义': '认知行为', '接纳': '认知行为', '积极': '认知行为',
+    '情绪聚焦': '情绪关系', '创伤': '情绪关系', '哀伤': '情绪关系', '家庭': '情绪关系', '人际': '情绪关系', '危机': '情绪关系', '自我关怀': '情绪关系',
+    '森林': '自然团体', '园艺': '自然团体', '团体': '自然团体', '游戏': '自然团体', '跨文化': '自然团体', '文化': '自然团体', '灵性': '自然团体', '能量': '自然团体', '芳香': '自然团体', '动物': '自然团体', '冒险': '自然团体', '幽默': '自然团体', '整合': '自然团体', '心理教育': '自然团体', '眼动': '自然团体', '梦境': '自然团体', '躯体': '自然团体'
+  };
+  for (var key in categories) {
+    if (name.indexOf(key) !== -1) return categories[key];
+  }
+  return '其他';
+}
+// ==================== RENDER FUNCTIONS ====================
+function renderKB(data){
+  var grid=document.getElementById('kbGrid');
+  if(!data)data=knowledgeBase;
+  grid.innerHTML=data.map(function(item){
+    var catColor=getKBCategoryColor(item.name);
+    var catLabel=getKBCategoryLabel(item.name);
+    return '<div class="kb-card" data-color="'+catColor+'"><div class="kb-card-header"><h3>'+escapeHtml(item.name)+'<span style="display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600;background:rgba(255,255,255,.25);color:rgba(255,255,255,.9);margin-left:10px;vertical-align:middle;">'+catLabel+'</span></h3></div><div class="kb-card-body"><div class="kb-section"><div class="kb-section-title" style="color:'+catColor+'">核心原理</div><p>'+escapeHtml(item.principle)+'</p></div><div class="kb-section"><div class="kb-section-title" style="color:'+catColor+'">适用场景</div><p>'+escapeHtml(item.scenarios)+'</p></div><div class="kb-section"><div class="kb-section-title" style="color:'+catColor+'">适用人群</div><p>'+escapeHtml(item.population)+'</p></div><div class="kb-section"><div class="kb-section-title" style="color:'+catColor+'">操作步骤</div><p>'+escapeHtml(item.steps)+'</p></div></div></div>';
+  }).join('');
+}
+
+// ==================== DIMENSION COLOR TAGS ====================
+var dimColors = {
+  '抑郁': { bg: '#f5d9d3', color: '#D97A6A', label: '抑郁' },
+  '焦虑': { bg: '#f5edcf', color: '#B89840', label: '焦虑' },
+  '压力': { bg: '#e0f0eb', color: '#4A8C7E', label: '压力' },
+  '睡眠': { bg: '#ebe4f0', color: '#7D6590', label: '睡眠' },
+  '正念': { bg: '#e0f0eb', color: '#5BA89C', label: '正念' },
+  '韧性': { bg: '#d4ede8', color: '#5A988C', label: '韧性' },
+  '创伤': { bg: '#f5d9d3', color: '#D97A6A', label: '创伤' },
+  '倦怠': { bg: '#f5edcf', color: '#9A7E35', label: '倦怠' },
+  '社交': { bg: '#ddd0e4', color: '#967BA5', label: '社交' },
+  '情绪': { bg: '#f5d9d3', color: '#E08B7A', label: '情绪' },
+  '儿童': { bg: '#e0f0eb', color: '#7BAE8F', label: '儿童' },
+  '认知': { bg: '#ebe0c0', color: '#B89840', label: '认知' },
+  '负荷': { bg: '#f5edcf', color: '#9A7E35', label: '负荷' },
+  '积极': { bg: '#e0f0eb', color: '#5BA89C', label: '积极' },
+  '恐惧': { bg: '#f5d9d3', color: '#D97A6A', label: '恐惧' },
+  '躯体': { bg: '#ddd0e4', color: '#967BA5', label: '躯体' },
+  '行为': { bg: '#ebe0c0', color: '#B89840', label: '行为' },
+  '注意力': { bg: '#e0f0eb', color: '#4A8C7E', label: '注意力' },
+  '同伴': { bg: '#ddd0e4', color: '#7D6590', label: '同伴' },
+  '亲社会': { bg: '#d4ede8', color: '#5A988C', label: '亲社会' }
+};
+
+function getDimTags(dimensions) {
+  var tags = [];
+  for (var key in dimColors) {
+    if (dimensions.indexOf(key) !== -1) {
+      tags.push(dimColors[key]);
+    }
+  }
+  return tags;
+}
+
+function renderTools(data){
+  var grid=document.getElementById('toolsGrid');
+  if(!data)data=assessmentTools;
+  grid.innerHTML=data.map(function(item,idx){var tags=getDimTags(item.dimensions);var tagsHtml=tags.map(function(tag){return '<span style="display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;background:'+tag.bg+';color:'+tag.color+';">'+tag.label+'</span>';}).join('');return '<div class="tool-card"><div class="tool-card-actions"><button class="tool-action-btn" onclick="viewToolPDF('+idx+')">查看 PDF</button><button class="tool-action-btn primary" onclick="downloadToolPDF('+idx+')">下载 PDF</button></div><div class="tool-card-header"><h3>'+escapeHtml(item.name)+'</h3></div><div class="tool-card-tags">'+tagsHtml+'</div><div class="tool-fullname">'+escapeHtml(item.full_name)+'</div><div class="tool-purpose">'+escapeHtml(item.purpose)+'</div><div class="tool-meta"><span>'+escapeHtml(item.population)+'</span><span>'+escapeHtml(item.time)+'</span></div><div class="tool-detail"><div class="detail-row"><div class="detail-label">评估维度</div><div class="detail-value">'+escapeHtml(item.dimensions)+'</div></div><div class="detail-row"><div class="detail-label">评分方式</div><div class="detail-value">'+escapeHtml(item.scoring)+'</div></div><div class="detail-row"><div class="detail-label">详细描述</div><div class="detail-value desc">'+escapeHtml(item.description)+'</div></div></div></div>';}).join('');
+}
+
+// ==================== UTILITY ====================
+function escapeHtml(str){if(!str)return '';var div=document.createElement('div');div.textContent=str;return div.innerHTML;}
+
+// ==================== PAGE SWITCHING ====================
+function switchPage(pageName){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('page-'+pageName).classList.add('active');
+  // 更新导航栏active状态
+  document.querySelectorAll('.nav-links .nav-link').forEach(function(l){l.classList.remove('active');});
+  if(pageName==='tools'){
+    document.querySelectorAll('.nav-links .nav-link').forEach(function(l){
+      if(l.getAttribute('href')==='knowledge-tools.html#tools') l.classList.add('active');
+    });
+  } else {
+    document.querySelectorAll('.nav-links .nav-link').forEach(function(l){
+      if(l.getAttribute('href')==='knowledge-tools.html') l.classList.add('active');
+    });
+  }
+  document.getElementById('tabKb').classList.toggle('active', pageName === 'kb');
+  document.getElementById('tabTools').classList.toggle('active', pageName === 'tools');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ==================== SORT ====================
+function sortKB(value){var data=knowledgeBase.slice();if(value==='name')data.sort(function(a,b){return a.name.localeCompare(b.name,'zh');});renderKB(data);}
+function filterKBByCategory(category) {
+  var q = document.getElementById('kbSearch').value.toLowerCase().trim();
+  var data = knowledgeBase.slice();
+  if (category !== 'all') {
+    data = data.filter(function(item) { return getKBCategoryLabel(item.name) === category; });
+  }
+  if (q) {
+    data = data.filter(function(item) { return item.name.toLowerCase().indexOf(q) !== -1 || (item.sections && item.sections.some(function(s) { return (s.title + s.content).toLowerCase().indexOf(q) !== -1; })); });
+  }
+  renderKB(data);
+  document.getElementById('kbNoResults').classList.toggle('visible', data.length === 0);
+}
+
+function searchKB(query){
+  var q=query.toLowerCase().trim();
+  var category=document.getElementById('kbCategory').value;
+  var data=knowledgeBase.slice();
+  if(category!=='all'){data=data.filter(function(item){return getKBCategoryLabel(item.name)===category;});}
+  if(q){data=data.filter(function(item){return item.name.toLowerCase().indexOf(q)!==-1||(item.sections&&item.sections.some(function(s){return(s.title+s.content).toLowerCase().indexOf(q)!==-1;}));});}
+  renderKB(data);
+  document.getElementById('kbNoResults').classList.toggle('visible',data.length===0&&(q!==''||category!=='all'));
+}
+function parseTimeToMinutes(timeStr){if(!timeStr||timeStr==='N/A(年度报告)'||timeStr==='N/A')return 9999;var match=timeStr.match(/(\d+)/);if(match)return parseInt(match[1],10);return 9999;}
+function sortTools(value){
+  var data=assessmentTools.slice();
+  if(value==='name')data.sort(function(a,b){return a.name.localeCompare(b.name,'zh');});
+  else if(value==='time')data.sort(function(a,b){return parseTimeToMinutes(a.time)-parseTimeToMinutes(b.time);});
+  renderTools(data);
+}
+function filterToolsByCategory(category) {
+  var q = document.getElementById('toolsSearch').value.toLowerCase().trim();
+  var data = assessmentTools.slice();
+  if (category !== 'all') {
+    data = data.filter(function(t) { return t.dimensions.indexOf(category) !== -1; });
+  }
+  if (q) {
+    data = data.filter(function(t) { return t.name.toLowerCase().indexOf(q) !== -1 || t.fullname.toLowerCase().indexOf(q) !== -1 || t.purpose.toLowerCase().indexOf(q) !== -1; });
+  }
+  renderTools(data);
+  document.getElementById('toolsNoResults').classList.toggle('visible', data.length === 0);
+}
+
+function searchTools(query){
+  var q=query.toLowerCase().trim();
+  var category=document.getElementById('toolsCategory').value;
+  var data=assessmentTools.slice();
+  if(category!=='all'){data=data.filter(function(t){return t.dimensions.indexOf(category)!==-1;});}
+  if(q){data=data.filter(function(t){return t.name.toLowerCase().indexOf(q)!==-1||t.fullname.toLowerCase().indexOf(q)!==-1||t.purpose.toLowerCase().indexOf(q)!==-1||t.dimensions.toLowerCase().indexOf(q)!==-1;});}
+  renderTools(data);
+  document.getElementById('toolsNoResults').classList.toggle('visible',data.length===0&&(q!==''||category!=='all'));
+}
+
+// ==================== BACK TO TOP ====================
+function handleScroll(){var nav=document.querySelector('.main-nav');if(window.scrollY>50)nav.classList.add('scrolled');else nav.classList.remove('scrolled');var btn=document.getElementById('backToTop');if(window.scrollY>300)btn.classList.add('visible');else btn.classList.remove('visible');}
+
+// KB card hover glow effect
+document.addEventListener('DOMContentLoaded',function(){
+  document.addEventListener('mouseover',function(e){
+    var card=e.target.closest('.kb-card');
+    if(card){
+      var color=card.getAttribute('data-color')||'#5BA89C';
+      card.style.boxShadow='0 8px 24px rgba(0,0,0,.1), 0 0 20px '+color+'40, 0 0 40px '+color+'20';
+      card.style.transform='translateY(-4px)';
+    }
+  });
+  document.addEventListener('mouseout',function(e){
+    var card=e.target.closest('.kb-card');
+    if(card){
+      card.style.boxShadow='';
+      card.style.transform='';
+    }
+  });
+});
+
+// ==================== INIT ====================
+function init(){
+  initMobileNav();
+  renderKB();
+  renderTools();
+  document.getElementById('kbSort').addEventListener('change',function(e){sortKB(e.target.value);});
+  document.getElementById('toolsSort').addEventListener('change',function(e){sortTools(e.target.value);});
+  document.getElementById('kbSearch').addEventListener('input',function(e){searchKB(e.target.value);});
+  document.getElementById('kbCategory').addEventListener('change',function(e){filterKBByCategory(e.target.value);});
+  document.getElementById('toolsSearch').addEventListener('input',function(e){searchTools(e.target.value);});
+  document.getElementById('toolsCategory').addEventListener('change',function(e){filterToolsByCategory(e.target.value);});
+  document.getElementById('backToTop').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  window.addEventListener('scroll',handleScroll,{passive:true});
+  // URL hash 切换
+  if(window.location.hash==='#tools'){switchPage('tools');}
+  window.addEventListener('hashchange',function(){
+    if(window.location.hash==='#tools'){switchPage('tools');}
+    else{switchPage('kb');}
+  });
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
