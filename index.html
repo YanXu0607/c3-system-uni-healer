@@ -13,6 +13,8 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  img,video,svg{max-width:100%;height:auto}
+  .nav-logo-icon img,.nav-logo img{display:inline;max-width:none;height:auto}
   :root{
     --coral:#D97A6A;--coral-light:#F5D9D3;--coral-pale:#FAF0EC;
     --teal:#5BA89C;--teal-light:#D4EDE8;--teal-pale:#E8F5F2;
@@ -31,7 +33,7 @@
     --gold:#C9A84C;--gold-light:#F5EDCF;
   }
   html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
-  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8;padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;max-width:100vw;box-sizing:border-box}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8;padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;max-width:100vw;box-sizing:border-box;overflow-wrap:break-word;word-break:break-word}
 
   /* ===== Progress Bar ===== */
   .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--coral),var(--teal),var(--lavender),var(--amber),var(--sage));width:0%;transition:width .1s linear}
@@ -253,7 +255,7 @@
   .contact-form{padding:36px;border-radius:24px;background:rgba(255,255,255,.7);backdrop-filter:blur(12px);border:1px solid rgba(0,0,0,.04)}
   .form-group{margin-bottom:20px}
   .form-group label{display:block;font-size:13px;font-weight:500;margin-bottom:8px;color:var(--deep)}
-  .form-group input,.form-group textarea{width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:14px;color:var(--deep);transition:border-color .3s,box-shadow .3s;outline:none}
+  .form-group input,.form-group textarea{width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:16px;color:var(--deep);transition:border-color .3s,box-shadow .3s;outline:none}
   .form-group input:focus,.form-group textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(91,168,156,.1)}
   .form-group textarea{min-height:120px;resize:vertical}
   .form-submit{width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,var(--teal),var(--sage));color:#fff;font-size:15px;font-weight:500;border:none;cursor:pointer;letter-spacing:1px;transition:transform .3s,box-shadow .3s}
@@ -314,6 +316,7 @@
     .services-grid,.portfolio-grid{grid-template-columns:1fr}
     .philosophy-pillars{grid-template-columns:1fr}
     .method-steps{grid-template-columns:1fr}
+    .element-grid{grid-template-columns:1fr!important;gap:16px!important}
     .hero-tags{gap:8px}
     .hero-actions{flex-direction:column;align-items:center}
     .about-stats{grid-template-columns:repeat(3,1fr);gap:12px}
@@ -1005,7 +1008,7 @@
         <h2 class="section-title" style="font-size:clamp(24px,3.5vw,36px)">项目与共创经验</h2>
         <p class="section-subtitle">跨越文化、空间与媒介的疗愈设计实践</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div class="element-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
         <div class="element-card reveal" style="padding:28px;border-radius:18px;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,0.04);transition:transform .3s,box-shadow .3s;cursor:default">
           <div class="element-card-icon" style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:rgba(91,168,156,0.1)">🏛️</div>
           <h3 style="font-size:16px;font-weight:700;margin-bottom:4px;font-family:'Noto Serif SC',serif">宇宙之家 Cosmic House</h3>
@@ -1250,10 +1253,20 @@
               <option value="CAP儿童心理援助">CAP儿童心理援助</option>
               <option value="正念领导力培训">正念领导力培训</option>
               <option value="跨文化疗愈沟通">跨文化疗愈沟通</option>
-              <option value="设计作品集合作">设计作品集合作</option>
               <option value="项目合作意向">项目合作意向</option>
               <option value="其他咨询沟通">其他咨询沟通</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label>您的联系方式 <span style="font-weight:400;font-size:11px;color:var(--soft);margin-left:4px">优先推荐邮箱</span></label>
+            <div style="display:flex;gap:8px">
+              <select id="contactMethod" style="flex-shrink:0;width:auto;min-width:80px;padding:12px 28px 12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:16px;color:var(--deep);outline:none;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg width=\"12\" height=\"8\" viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"%235A5466\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>');background-repeat:no-repeat;background-position:right 8px center;cursor:pointer">
+                <option value="邮箱">邮箱</option>
+                <option value="微信">微信</option>
+                <option value="电话">电话</option>
+              </select>
+              <input type="text" id="contactValue" placeholder="请输入您的邮箱地址" style="flex:1;min-width:0">
+            </div>
           </div>
           <div class="form-group">
             <label>期望预算范围</label>
@@ -1613,7 +1626,8 @@ function initParticles() {
     canvas.height = canvas.offsetHeight;
   }
   resize();
-  window.addEventListener('resize', resize);
+  var resizeTimer;
+  window.addEventListener('resize', function(){ clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 200); });
 
   class Particle {
     constructor() {this.reset()}
@@ -1694,7 +1708,7 @@ function initScrollEffects() {
 
     // Back to top button
     document.getElementById('backToTop').classList.toggle('visible', scrollTop > 400);
-  });
+  }, {passive: true});
 
   // Back to top click
   document.getElementById('backToTop').addEventListener('click', () => {
@@ -1838,6 +1852,8 @@ function initContactForm() {
       from_name: this.from_name.value || '匿名访客',
       consult_type: this.consult_type.value,
       budget: this.budget.value || '未填写',
+      contact_method: document.getElementById('contactMethod').value,
+      contact_value: document.getElementById('contactValue').value || '未填写',
       message: this.message.value
     };
 
@@ -1927,6 +1943,13 @@ function initFAQ() {
 </script>
 
 <script>
+// 联系方式类型切换
+document.getElementById('contactMethod').addEventListener('change', function(){
+  var input = document.getElementById('contactValue');
+  var placeholders = { '邮箱': '请输入您的邮箱地址', '微信': '请输入您的微信号', '电话': '请输入您的手机号码' };
+  input.placeholder = placeholders[this.value] || '请输入联系方式';
+});
+
 window.showContactTab = function(tab){
   var formTab = document.getElementById('contactFormTab');
   var calTab = document.getElementById('contactCalendarTab');

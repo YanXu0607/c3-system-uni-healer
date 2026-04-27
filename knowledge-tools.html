@@ -47,8 +47,10 @@
   }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+img, video, svg { max-width: 100%; height: auto; }
+.nav-logo-icon img, .nav-logo img { display: inline; max-width: none; height: auto; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
-body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.8; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; padding-top: env(safe-area-inset-top); padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); padding-bottom: env(safe-area-inset-bottom); }
+body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg-body); color: var(--text-primary); line-height: 1.8; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; padding-top: env(safe-area-inset-top); padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); padding-bottom: env(safe-area-inset-bottom); overflow-wrap: break-word; word-break: break-word; }
 body::before { content: ''; position: fixed; inset: 0; background: var(--grad-mesh); pointer-events: none; z-index: 0; transition: background var(--dur-slow) var(--ease-out); }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -89,7 +91,7 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
 .filter-label { font-size: 12px; font-weight: 600; color: var(--text-tertiary); white-space: nowrap; font-family: 'Noto Serif SC', serif; text-transform: uppercase; letter-spacing: 0.04em; }
 .filter-select { padding: 8px 32px 8px 12px; min-height: 44px; border-radius: var(--r-full); font-size: 12px; font-family: 'Noto Serif SC', serif; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; outline: none; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%239892b0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
 .search-box { flex: 1; max-width: 280px; }
-.search-box input { width: 100%; padding: 10px 16px 10px 38px; min-height: 44px; border-radius: var(--r-full); border: 1px solid var(--border-subtle); background: rgba(255,255,255,.7); backdrop-filter: blur(8px); font-family: 'Noto Sans SC', sans-serif; font-size: 13px; color: var(--text-primary); outline: none; transition: border-color .3s, box-shadow .3s; }
+.search-box input { width: 100%; padding: 10px 16px 10px 38px; min-height: 44px; border-radius: var(--r-full); border: 1px solid var(--border-subtle); background: rgba(255,255,255,.7); backdrop-filter: blur(8px); font-family: 'Noto Sans SC', sans-serif; font-size: 16px; color: var(--text-primary); outline: none; transition: border-color .3s, box-shadow .3s; }
 .search-box input:focus { border-color: rgba(91,168,156,.3); box-shadow: 0 0 0 3px rgba(91,168,156,.08); }
 .search-box input::placeholder { color: var(--text-tertiary); }
 .search-box .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 14px; pointer-events: none; }
@@ -165,9 +167,9 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
     body.menu-open{overflow:hidden!important;position:fixed!important;width:100vw!important;left:0!important;right:0!important}
     /* 防止页面水平偏移 */
     .main,.page,.kb-grid,.tools-grid,.page-header{max-width:100vw;overflow-x:hidden;box-sizing:border-box}
-.main { margin-top: 64px; padding: 0 12px 32px; }
+.main { margin-top: 64px; padding: 0 16px 32px; margin-left: auto; margin-right: auto; }
     .page-header { padding: 20px 0 16px; }
-    .page-header::before { left: -12px; right: -12px; border-radius: 0 0 var(--r-lg) var(--r-lg); }
+    .page-header::before { left: -16px; right: -16px; border-radius: 0 0 var(--r-lg) var(--r-lg); }
     .page-header .header-badge { font-size: 11px; padding: 4px 10px; }
     .page-header h1 { font-size: 24px; letter-spacing: -0.02em; }
     .page-header p { font-size: 13.5px; }
@@ -199,7 +201,7 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
     .back-to-top { bottom: 20px; right: 16px; width: 44px; height: 44px; font-size: 16px; }
 }
 @media (max-width: 480px) {
-    .main { margin-top: 58px; padding: 0 10px 24px; }
+    .main { margin-top: 58px; padding: 0 16px 24px; margin-left: auto; margin-right: auto; }
     .page-header h1 { font-size: 22px; }
     .page-header p { font-size: 13px; }
     .kb-card-header { padding: 14px; }
@@ -382,7 +384,7 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
 
 <footer class="footer">
   <div class="footer-logo">C³ · UNI Healer</div>
-  <p class="footer-text">以设计之力，唤醒内在的疗愈之光</p>
+  <p class="footer-text">以循证之力，点亮内在疗愈之光</p>
   <div class="footer-links">
     <a href="index.html#services" class="footer-link">疗愈服务</a>
     <a href="index.html#portfolio" class="footer-link">项目案例</a>
