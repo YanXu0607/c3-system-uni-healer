@@ -30,8 +30,8 @@
     --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
     --gold:#C9A84C;--gold-light:#F5EDCF;
   }
-  html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
-  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8;padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh}
+  html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8;padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;max-width:100vw;box-sizing:border-box}
 
   /* ===== Progress Bar ===== */
   .progress-bar{position:fixed;top:0;left:0;height:3px;z-index:1000;background:linear-gradient(90deg,var(--coral),var(--teal),var(--lavender),var(--amber),var(--sage));width:0%;transition:width .1s linear}
@@ -295,11 +295,21 @@
     .sdg-grid{grid-template-columns:repeat(2,1fr)}
   }
   @media(max-width:768px){
-    .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(250,248,242,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:24px;z-index:997}
+    .main-nav{padding:12px 16px}
+    .main-nav.scrolled{padding:10px 16px}
+    .nav-logo{font-size:16px;gap:8px}
+    .nav-logo-icon{width:32px;height:32px;border-radius:8px}
+    .nav-logo-icon img{width:20px!important;height:20px!important}
+    .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(250,248,242,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:9999;padding:80px 24px 40px}
     .nav-links.open{display:flex}
-    .nav-link{font-size:18px}
+    .nav-link{font-size:18px;padding:12px 24px;border-radius:12px;min-height:48px;display:flex;align-items:center;transition:background .2s}
+    .nav-link:hover,.nav-link:active{background:rgba(91,168,156,.08)}
+    .nav-cta{margin-top:12px;padding:14px 40px;font-size:15px;min-height:52px;border-radius:16px}
     .nav-mobile-btn{display:flex}
     .nav-dots{display:none}
+    body.menu-open{overflow:hidden!important;position:fixed!important;width:100vw!important;left:0!important;right:0!important}
+    /* 防止页面水平偏移 */
+    .section,.reveal,.hero,.main{max-width:100vw;overflow-x:hidden;box-sizing:border-box}
     .about-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
     .services-grid,.portfolio-grid{grid-template-columns:1fr}
     .philosophy-pillars{grid-template-columns:1fr}
@@ -409,6 +419,7 @@
     C³ · UNI Healer
   </a>
   <div class="nav-links" id="navLinks">
+    <button class="nav-close-btn" id="navCloseBtn" aria-label="关闭菜单" style="position:absolute;top:16px;right:16px;width:44px;height:44px;border:none;background:rgba(0,0,0,.04);border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--soft);transition:all .2s;z-index:998" onmouseover="this.style.background='rgba(0,0,0,.08)'" onmouseout="this.style.background='rgba(0,0,0,.04)'">✕</button>
     <a href="#services" class="nav-link">疗愈服务</a>
     <a href="#portfolio" class="nav-link">项目案例</a>
     <a href="#methodology" class="nav-link">方法理念</a>
@@ -1240,6 +1251,7 @@
               <option value="正念领导力培训">正念领导力培训</option>
               <option value="跨文化疗愈沟通">跨文化疗愈沟通</option>
               <option value="设计作品集合作">设计作品集合作</option>
+              <option value="项目合作意向">项目合作意向</option>
               <option value="其他咨询沟通">其他咨询沟通</option>
             </select>
           </div>
@@ -1728,16 +1740,28 @@ function initScrollEffects() {
 function initMobileNav() {
   const btn = document.getElementById('mobileBtn');
   const links = document.getElementById('navLinks');
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('open');
-    links.classList.toggle('open');
-  });
-  links.querySelectorAll('.nav-link,.nav-cta').forEach(link => {
-    link.addEventListener('click', () => {
-      btn.classList.remove('open');
-      links.classList.remove('open');
-    });
-  });
+  const closeBtn = document.getElementById('navCloseBtn');
+  const scrollY = { value: 0 };
+
+  function openMenu() {
+    scrollY.value = window.scrollY;
+    document.body.classList.add('menu-open');
+    document.body.style.top = '-' + scrollY.value + 'px';
+    btn.classList.add('open');
+    links.classList.add('open');
+  }
+
+  function closeMenu() {
+    document.body.classList.remove('menu-open');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollY.value);
+    btn.classList.remove('open');
+    links.classList.remove('open');
+  }
+
+  btn.addEventListener('click', () => { btn.classList.contains('open') ? closeMenu() : openMenu(); });
+  if (closeBtn) { closeBtn.addEventListener('click', closeMenu); }
+  links.querySelectorAll('.nav-link,.nav-cta').forEach(link => { link.addEventListener('click', closeMenu); });
 }
 
 // ==================== Contact Form ====================
