@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-<title>C³ System · 疗愈师知识库与工具</title>
+<title>C³ System · 疗愈师知识库与评估表单</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Noto+Serif+SC:wght@400;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -63,7 +63,7 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
   .nav-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#5BA89C,#5A988C);display:flex;align-items:center;justify-content:center}
   .nav-logo-icon svg{width:22px;height:22px}
   .nav-links{display:flex;gap:32px;align-items:center}
-  .nav-link{font-family:'Noto Sans SC',sans-serif!important;font-size:14px!important;color:#5A5466!important;text-decoration:none;font-weight:500!important;letter-spacing:.5px;transition:color .3s;position:relative}
+  .nav-link{font-family:'Noto Sans SC',sans-serif;font-size:14px;color:var(--soft);text-decoration:none;font-weight:400;letter-spacing:.5px;transition:color .3s;position:relative}
   .nav-link:hover,.nav-link.active{color:#3A3448!important}
   .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,#5BA89C,#D97A6A);transition:width .3s;border-radius:2px}
   .nav-link:hover::after,.nav-link.active::after{width:100%}
@@ -158,15 +158,15 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
     .nav-logo{font-size:16px;gap:8px}
     .nav-logo-icon{width:32px;height:32px;border-radius:8px}
     .nav-logo-icon img{width:20px!important;height:20px!important}
-    .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:9999;padding:80px 24px 40px}
-    .nav-links.open{display:flex}
+    .nav-links{display:flex;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(250,248,242,.98);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:9999;padding:80px 24px 40px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s ease,visibility .25s ease,transform .25s ease;pointer-events:none;will-change:opacity,transform}
+    .nav-links.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
     .nav-link{font-size:18px;padding:12px 24px;border-radius:12px;min-height:48px;display:flex;align-items:center;transition:background .2s}
     .nav-link:hover,.nav-link:active{background:rgba(91,168,156,.08)}
     .nav-cta{margin-top:12px;padding:14px 40px;font-size:15px;min-height:52px;border-radius:16px}
     .nav-mobile-btn{display:flex}
-    body.menu-open{overflow:hidden!important;position:fixed!important;width:100vw!important;left:0!important;right:0!important}
+    body.menu-open{overflow:hidden!important;position:fixed!important;width:100%;left:0;right:0}
     /* 防止页面水平偏移 */
-    .main,.page,.kb-grid,.tools-grid,.page-header{max-width:100vw;overflow-x:hidden;box-sizing:border-box}
+    .main,.page,.kb-grid,.tools-grid,.page-header{max-width:100vw;box-sizing:border-box}
 .main { margin-top: 64px; padding: 0 16px 32px; margin-left: auto; margin-right: auto; }
     .page-header { padding: 20px 0 16px; }
     .page-header::before { left: -16px; right: -16px; border-radius: 0 0 var(--r-lg) var(--r-lg); }
@@ -275,14 +275,13 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
     C³ · UNI Healer
   </a>
   <div class="nav-links" id="navLinks">
-    <button class="nav-close-btn" id="navCloseBtn" aria-label="关闭菜单" style="position:absolute;top:16px;right:16px;width:44px;height:44px;border:none;background:rgba(0,0,0,.04);border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--soft);transition:all .2s;z-index:998" onmouseover="this.style.background='rgba(0,0,0,.08)'" onmouseout="this.style.background='rgba(0,0,0,.04)'">✕</button>
+    <button class="nav-close-btn" id="navCloseBtn" aria-label="关闭菜单" style="display:none;position:absolute;top:16px;right:16px;width:44px;height:44px;border:none;background:rgba(0,0,0,.04);border-radius:12px;cursor:pointer;align-items:center;justify-content:center;font-size:22px;color:var(--soft);transition:all .2s;z-index:998" onmouseover="this.style.background='rgba(0,0,0,.08)'" onmouseout="this.style.background='rgba(0,0,0,.04)'">✕</button>
     <a href="index.html#services" class="nav-link">疗愈服务</a>
     <a href="index.html#portfolio" class="nav-link">项目案例</a>
     <a href="index.html#methodology" class="nav-link">方法理念</a>
     <a href="index.html#about" class="nav-link">关于 C³ System</a>
     <a href="knowledge-tools.html" class="nav-link active">知识库</a>
-    <a href="knowledge-tools.html#tools" class="nav-link">工具</a>
-    <a href="index.html#contact" class="nav-link">联系</a>
+    <a href="index.html#faq" class="nav-link">问答中心</a>
     <a href="index.html#contact" class="nav-cta">预约咨询</a>
   </div>
   <button class="nav-mobile-btn" id="mobileBtn" aria-label="菜单">
@@ -298,7 +297,7 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
 <main class="main">
 <div class="page-tabs">
   <button class="page-tab active" id="tabKb" onclick="switchPage('kb')">知识库</button>
-  <button class="page-tab" id="tabTools" onclick="switchPage('tools')">工具</button>
+  <button class="page-tab" id="tabTools" onclick="switchPage('tools')">评估表单</button>
 </div>
     <div class="page active" id="page-kb">
         <div class="page-header">
@@ -338,9 +337,9 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
     <div class="page" id="page-tools">
         <div class="page-header">
             <div class="brand-line">C³ System · UNI Healer · EAP · CAP</div>
-            <div class="header-badge">评估工具集</div>
-            <h1>工具</h1>
-            <p>收录 30 个国际标准化心理评估工具，涵盖抑郁、焦虑、压力、正念、<br>韧性、睡眠等核心维度，提供详细的评估维度、评分方式和完成时间信息。</p>
+            <div class="header-badge">评估表单集</div>
+            <h1>评估表单</h1>
+            <p>收录 30 个国际标准化心理评估表单，涵盖抑郁、焦虑、压力、正念、<br>韧性、睡眠等核心维度，提供详细的评估维度、评分方式和完成时间信息。</p>
         </div>
         <div class="filters">
             <div class="filter-group">
@@ -374,11 +373,11 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
             </div>
             <div class="search-box">
                 <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
-                <input type="text" id="toolsSearch" placeholder="搜索评估工具...">
+                <input type="text" id="toolsSearch" placeholder="搜索评估表单...">
             </div>
         </div>
         <div class="tools-grid" id="toolsGrid"></div>
-        <div class="no-results" id="toolsNoResults">没有找到匹配的评估工具</div>
+        <div class="no-results" id="toolsNoResults">没有找到匹配的评估表单</div>
     </div>
 </main>
 
@@ -390,8 +389,7 @@ body::before { content: ''; position: fixed; inset: 0; background: var(--grad-me
     <a href="index.html#portfolio" class="footer-link">项目案例</a>
     <a href="index.html#about" class="footer-link">关于 C³ System</a>
     <a href="knowledge-tools.html" class="footer-link">知识库</a>
-    <a href="knowledge-tools.html#tools" class="footer-link">工具</a>
-    <a href="index.html#contact" class="footer-link">联系</a>
+    <a href="index.html#faq" class="footer-link">问答中心</a>
   </div>
   <div class="footer-hearts">🌿 ✦ 🌿 ✦ 🌿</div>
   <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(0,0,0,.06);max-width:720px;margin-left:auto;margin-right:auto">
@@ -412,23 +410,27 @@ function initMobileNav(){
 
   function openMenu(){
     scrollY.value=window.scrollY;
-    document.body.classList.add('menu-open');
     document.body.style.top='-'+scrollY.value+'px';
+    document.body.classList.add('menu-open');
     btn.classList.add('open');
     links.classList.add('open');
+    if(closeBtn) closeBtn.style.display='flex';
   }
 
-  function closeMenu(){
+  function closeMenu(restoreScroll){
     document.body.classList.remove('menu-open');
     document.body.style.top='';
-    window.scrollTo(0,scrollY.value);
+    if(closeBtn) closeBtn.style.display='none';
+    if(restoreScroll!==false){
+      requestAnimationFrame(function(){window.scrollTo(0,scrollY.value);});
+    }
     btn.classList.remove('open');
     links.classList.remove('open');
   }
 
   btn.addEventListener('click',function(){btn.classList.contains('open')?closeMenu():openMenu();});
   if(closeBtn){closeBtn.addEventListener('click',closeMenu);}
-  links.querySelectorAll('.nav-link,.nav-cta').forEach(function(link){link.addEventListener('click',closeMenu);});
+  links.querySelectorAll('.nav-link,.nav-cta').forEach(function(link){link.addEventListener('click',function(){closeMenu(false);});});
 }
 // ==================== DATA ====================
 var BRAND='C\u00B3 System \u00B7 UNI Healer \u00B7 EAP \u00B7 CAP';
@@ -836,7 +838,7 @@ function filterKBByCategory(category) {
     data = data.filter(function(item) { return getKBCategoryLabel(item.name) === category; });
   }
   if (q) {
-    data = data.filter(function(item) { return item.name.toLowerCase().indexOf(q) !== -1 || (item.sections && item.sections.some(function(s) { return (s.title + s.content).toLowerCase().indexOf(q) !== -1; })); });
+    data = data.filter(function(item) { return item.name.toLowerCase().indexOf(q) !== -1 || (item.principle && item.principle.toLowerCase().indexOf(q) !== -1) || (item.scenarios && item.scenarios.toLowerCase().indexOf(q) !== -1) || (item.population && item.population.toLowerCase().indexOf(q) !== -1) || (item.steps && item.steps.toLowerCase().indexOf(q) !== -1); });
   }
   renderKB(data);
   document.getElementById('kbNoResults').classList.toggle('visible', data.length === 0);
@@ -847,7 +849,7 @@ function searchKB(query){
   var category=document.getElementById('kbCategory').value;
   var data=knowledgeBase.slice();
   if(category!=='all'){data=data.filter(function(item){return getKBCategoryLabel(item.name)===category;});}
-  if(q){data=data.filter(function(item){return item.name.toLowerCase().indexOf(q)!==-1||(item.sections&&item.sections.some(function(s){return(s.title+s.content).toLowerCase().indexOf(q)!==-1;}));});}
+  if(q){data=data.filter(function(item){return item.name.toLowerCase().indexOf(q)!==-1||(item.principle&&item.principle.toLowerCase().indexOf(q)!==-1)||(item.scenarios&&item.scenarios.toLowerCase().indexOf(q)!==-1)||(item.population&&item.population.toLowerCase().indexOf(q)!==-1)||(item.steps&&item.steps.toLowerCase().indexOf(q)!==-1);});}
   renderKB(data);
   document.getElementById('kbNoResults').classList.toggle('visible',data.length===0&&(q!==''||category!=='all'));
 }
@@ -865,7 +867,7 @@ function filterToolsByCategory(category) {
     data = data.filter(function(t) { return t.dimensions.indexOf(category) !== -1; });
   }
   if (q) {
-    data = data.filter(function(t) { return t.name.toLowerCase().indexOf(q) !== -1 || t.fullname.toLowerCase().indexOf(q) !== -1 || t.purpose.toLowerCase().indexOf(q) !== -1; });
+    data = data.filter(function(t) { return t.name.toLowerCase().indexOf(q) !== -1 || t.full_name.toLowerCase().indexOf(q) !== -1 || t.purpose.toLowerCase().indexOf(q) !== -1; });
   }
   renderTools(data);
   document.getElementById('toolsNoResults').classList.toggle('visible', data.length === 0);
@@ -876,7 +878,7 @@ function searchTools(query){
   var category=document.getElementById('toolsCategory').value;
   var data=assessmentTools.slice();
   if(category!=='all'){data=data.filter(function(t){return t.dimensions.indexOf(category)!==-1;});}
-  if(q){data=data.filter(function(t){return t.name.toLowerCase().indexOf(q)!==-1||t.fullname.toLowerCase().indexOf(q)!==-1||t.purpose.toLowerCase().indexOf(q)!==-1||t.dimensions.toLowerCase().indexOf(q)!==-1;});}
+  if(q){data=data.filter(function(t){return t.name.toLowerCase().indexOf(q)!==-1||t.full_name.toLowerCase().indexOf(q)!==-1||t.purpose.toLowerCase().indexOf(q)!==-1||t.dimensions.toLowerCase().indexOf(q)!==-1;});}
   renderTools(data);
   document.getElementById('toolsNoResults').classList.toggle('visible',data.length===0&&(q!==''||category!=='all'));
 }

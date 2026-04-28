@@ -32,7 +32,7 @@
     --deep:#3A3448;--soft:#5A5466;--surface:#F0ECE4;
     --gold:#C9A84C;--gold-light:#F5EDCF;
   }
-  html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+  html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
   body{font-family:'Noto Sans SC',sans-serif;background:var(--cream-pale);color:var(--deep);overflow-x:hidden;line-height:1.8;padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;max-width:100vw;box-sizing:border-box;overflow-wrap:break-word;word-break:break-word}
 
   /* ===== Progress Bar ===== */
@@ -41,9 +41,9 @@
   /* ===== Navigation ===== */
   .main-nav{position:fixed;top:0;left:0;right:0;z-index:998;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;transition:all .4s cubic-bezier(.4,0,.2,1)}
   .main-nav.scrolled{background:rgba(250,248,242,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 4px 30px rgba(0,0,0,.04);padding:12px 40px}
-  .nav-logo{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:var(--deep);text-decoration:none;display:flex;align-items:center;gap:10px}
-  .nav-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--sage));display:flex;align-items:center;justify-content:center}
-  .nav-logo-icon svg{width:22px;height:22px}
+  .nav-logo{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:var(--deep);text-decoration:none;display:flex;align-items:center;gap:12px}
+  .nav-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--sage));display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .nav-logo-icon img{width:24px;height:24px;object-fit:contain}
   .nav-links{display:flex;gap:32px;align-items:center}
   .nav-link{font-size:14px;color:var(--soft);text-decoration:none;font-weight:400;letter-spacing:.5px;transition:color .3s;position:relative}
   .nav-link:hover,.nav-link.active{color:var(--deep)}
@@ -67,7 +67,7 @@
   /* ===== Nav Dots ===== */
   .nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:10px}
   .nav-dot{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.1);cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative}
-  .nav-dot.active{background:var(--matcha);transform:scale(1.4);box-shadow:0 0 12px rgba(91,168,156,.4)}
+  .nav-dot.active{background:var(--teal);transform:scale(1.4);box-shadow:0 0 12px rgba(91,168,156,.4)}
   .nav-dot:hover{transform:scale(1.3)}
   .nav-dot .tooltip{position:absolute;right:20px;top:50%;transform:translateY(-50%);background:var(--deep);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
   .nav-dot:hover .tooltip{opacity:1}
@@ -114,6 +114,7 @@
   .section-tag{display:inline-block;padding:6px 20px;border-radius:20px;font-size:12px;letter-spacing:3px;font-weight:500;margin-bottom:18px;text-transform:uppercase}
   .section-tag.teal{background:rgba(91,168,156,.1);color:var(--teal)}
   .section-tag.coral{background:rgba(217,122,106,.1);color:var(--coral)}
+  .section-tag.rose{background:rgba(196,120,136,.1);color:var(--rose)}
   .section-tag.lavender{background:rgba(150,123,165,.1);color:var(--lavender)}
   .section-tag.amber{background:rgba(184,152,64,.12);color:var(--amber)}
   .section-tag.forest{background:rgba(74,124,89,.1);color:var(--forest)}
@@ -195,6 +196,26 @@
   .portfolio-card-link:hover{gap:8px}
   .portfolio-card-link svg{width:14px;height:14px}
 
+  /* ===== Portfolio Detail Modal ===== */
+  .detail-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px}
+  .detail-modal.open{display:flex}
+  .detail-overlay{position:absolute;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .detail-content{position:relative;background:#fff;border-radius:24px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:32px 28px;box-shadow:0 24px 80px rgba(0,0,0,.15);animation:detailIn .3s ease}
+  @keyframes detailIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .detail-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:rgba(0,0,0,.04);border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--soft);transition:all .2s;z-index:1}
+  .detail-close:hover{background:rgba(0,0,0,.08)}
+  .detail-cat{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+  .detail-title{font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;line-height:1.4;margin-bottom:12px;color:var(--deep)}
+  .detail-desc{font-size:15px;color:var(--soft);line-height:1.8;margin-bottom:20px}
+  .detail-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+  .detail-cta{display:block;width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,var(--teal),var(--sage));color:#fff;font-size:15px;font-weight:500;text-align:center;text-decoration:none;letter-spacing:1px;transition:transform .3s,box-shadow .3s;cursor:pointer;border:none;font-family:'Noto Sans SC',sans-serif}
+  .detail-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,168,156,.3)}
+  @media(max-width:768px){
+    .detail-content{max-height:80vh;padding:24px 20px;border-radius:20px}
+    .detail-title{font-size:18px}
+    .detail-desc{font-size:14px}
+  }
+
   /* ===== Methodology Section ===== */
   .methodology-section{background:linear-gradient(180deg,var(--surface),var(--cream-pale))!important}
   .method-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
@@ -255,9 +276,10 @@
   .contact-form{padding:36px;border-radius:24px;background:rgba(255,255,255,.7);backdrop-filter:blur(12px);border:1px solid rgba(0,0,0,.04)}
   .form-group{margin-bottom:20px}
   .form-group label{display:block;font-size:13px;font-weight:500;margin-bottom:8px;color:var(--deep)}
-  .form-group input,.form-group textarea{width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:16px;color:var(--deep);transition:border-color .3s,box-shadow .3s;outline:none}
-  .form-group input:focus,.form-group textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(91,168,156,.1)}
+  .form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:16px;color:var(--deep);transition:border-color .3s,box-shadow .3s;outline:none}
+  .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(91,168,156,.1)}
   .form-group textarea{min-height:120px;resize:vertical}
+  .form-group select{appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="%235A5466" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');background-repeat:no-repeat;background-position:right 16px center;cursor:pointer;padding-right:40px}
   .form-submit{width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,var(--teal),var(--sage));color:#fff;font-size:15px;font-weight:500;border:none;cursor:pointer;letter-spacing:1px;transition:transform .3s,box-shadow .3s}
   .form-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,168,156,.3)}
 
@@ -295,28 +317,75 @@
     .method-steps{grid-template-columns:repeat(2,1fr);gap:32px}
     .method-steps::before{display:none}
     .sdg-grid{grid-template-columns:repeat(2,1fr)}
-  }
+    /* 平板端 font-size 过渡 */
+    .section{padding:80px 20px}
+    .section-header{margin-bottom:48px}
+    .section-title{font-size:36px!important}
+    .section-subtitle{font-size:15px!important}
+    .about-text h3,.contact-info h3{font-size:22px!important}
+    .stat-num{font-size:28px!important}
+    .method-step-num{font-size:24px!important}
+    .sdg-num{font-size:30px!important}
+    .philosophy-quote{font-size:28px!important}
+    .footer{padding:48px 20px!important}
+    .contact-form{padding:32px!important}
+}
   @media(max-width:768px){
     .main-nav{padding:12px 16px}
     .main-nav.scrolled{padding:10px 16px}
-    .nav-logo{font-size:16px;gap:8px}
+    .nav-logo{font-size:16px;gap:10px}
     .nav-logo-icon{width:32px;height:32px;border-radius:8px}
     .nav-logo-icon img{width:20px!important;height:20px!important}
-    .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(250,248,242,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:9999;padding:80px 24px 40px}
-    .nav-links.open{display:flex}
+    .nav-links{display:flex;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(250,248,242,.98);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:9999;padding:80px 24px 40px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s ease,visibility .25s ease,transform .25s ease;pointer-events:none;will-change:opacity,transform}
+    .nav-links.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
     .nav-link{font-size:18px;padding:12px 24px;border-radius:12px;min-height:48px;display:flex;align-items:center;transition:background .2s}
     .nav-link:hover,.nav-link:active{background:rgba(91,168,156,.08)}
     .nav-cta{margin-top:12px;padding:14px 40px;font-size:15px;min-height:52px;border-radius:16px}
     .nav-mobile-btn{display:flex}
     .nav-dots{display:none}
-    body.menu-open{overflow:hidden!important;position:fixed!important;width:100vw!important;left:0!important;right:0!important}
+    body.menu-open{overflow:hidden!important;position:fixed!important;width:100%;left:0;right:0}
     /* 防止页面水平偏移 */
-    .section,.reveal,.hero,.main{max-width:100vw;overflow-x:hidden;box-sizing:border-box}
+    .section,.reveal,.hero,.main{max-width:100vw;box-sizing:border-box}
+    .section{padding:60px 16px}
+    .section-header{margin-bottom:40px}
+    .section-title{font-size:26px!important}
+    .section-subtitle{font-size:14px!important}
+    .hero-title{font-size:36px!important}
+    .hero-subtitle{font-size:16px!important}
     .about-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
     .services-grid,.portfolio-grid{grid-template-columns:1fr}
     .philosophy-pillars{grid-template-columns:1fr}
     .method-steps{grid-template-columns:1fr}
     .element-grid{grid-template-columns:1fr!important;gap:16px!important}
+    #testimonialTrack>div{min-width:calc(100% - 0px)!important;padding:20px!important}
+    #testimonialTrack{gap:16px!important}
+    /* 标题字号适配 */
+    .about-text h3,.contact-info h3{font-size:20px!important}
+    .stat-num{font-size:24px!important}
+    .method-step-num{font-size:22px!important}
+    .sdg-num{font-size:28px!important}
+    /* 联系表单/footer padding */
+    .contact-form{padding:24px!important}
+    .footer{padding:40px 16px!important}
+    .nav-dropdown-menu{min-width:200px!important}
+    /* 保密承诺 + 日历预约适配 */
+    .confidential-box{padding:24px 16px!important}
+    .confidential-grid{grid-template-columns:1fr!important;gap:8px 16px!important}
+    .calendar-box{padding:32px 20px!important}
+    /* 经验卡片紧凑布局 */
+    .element-card{padding:20px!important}
+    .element-card .element-card-icon{margin-bottom:10px!important;width:36px!important;height:36px!important;font-size:16px!important;border-radius:10px!important}
+    .element-card h3{font-size:15px!important;margin-bottom:2px!important}
+    .faq-question{font-size:14px!important}
+    .faq-answer-inner{font-size:13px!important}
+    .contact-choose-btn{font-size:13px!important}
+    /* 合作反馈卡片手机端适配 */
+    .t-card-stars{font-size:14px!important;margin-bottom:12px!important}
+    .t-card-quote{font-size:13px!important;line-height:1.7!important;margin-bottom:16px!important}
+    .t-card-name{font-size:12px!important}
+    .t-card-role{font-size:11px!important}
+    /* 合作反馈卡片圆角完整性 */
+    #testimonialTrack>div{overflow:hidden!important;border-radius:18px!important}
     .hero-tags{gap:8px}
     .hero-actions{flex-direction:column;align-items:center}
     .about-stats{grid-template-columns:repeat(3,1fr);gap:12px}
@@ -333,7 +402,7 @@
   .loading-tree-leaf:nth-child(5){top:14px;right:4px;background:var(--teal);opacity:.4;animation-delay:.8s}
   .loading-tree-leaf:nth-child(6){top:22px;left:2px;background:var(--sage);opacity:.5;animation-delay:.3s}
   @keyframes treeBreathe{0%,100%{transform:translateX(-50%) scale(1);opacity:.2}50%{transform:translateX(-50%) scale(1.12);opacity:.35}}
-  .loading-text{margin-top:20px;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--soft);letter-spacing:3px;animation:treeBreathe 2.5s ease-in-out infinite}
+  .loading-text{margin-top:20px;font-family:'Noto Serif SC',serif;font-size:13px;color:var(--soft);letter-spacing:2px;animation:treeBreathe 2.5s ease-in-out infinite;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw;text-align:center}
 
   /* ===== Back to Top ===== */
   .back-to-top{position:fixed;bottom:32px;right:32px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--sage));color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(91,168,156,.3);opacity:0;visibility:hidden;transform:translateY(20px);transition:opacity .3s,visibility .3s,transform .3s,box-shadow .3s;z-index:997}
@@ -374,6 +443,7 @@
     .portfolio-card{padding:16px}
     .service-card{padding:20px}
     .contact-choose-btn{font-size:13px;padding:14px 10px!important}
+    .sdg-grid{grid-template-columns:1fr!important}
   }
   @media(min-width:1400px){
     .hero-title{font-size:48px}
@@ -407,7 +477,7 @@
     <div class="loading-tree-trunk"></div>
   </div>
   <div class="loading-text">C³ · UNI Healer</div>
-  <div style="margin-top:8px;font-size:11px;color:var(--soft);letter-spacing:2px;opacity:.6;animation:treeBreathe 2.5s ease-in-out infinite .3s both">CREATE · CONSCIOUS · COMPASSION</div>
+  <div style="margin-top:8px;font-size:10px;color:var(--soft);letter-spacing:1.5px;opacity:.6;animation:treeBreathe 2.5s ease-in-out infinite .3s both;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw;text-align:center">CREATE · CONSCIOUS · COMPASSION</div>
 </div>
 
 <!-- Progress Bar -->
@@ -422,14 +492,13 @@
     C³ · UNI Healer
   </a>
   <div class="nav-links" id="navLinks">
-    <button class="nav-close-btn" id="navCloseBtn" aria-label="关闭菜单" style="position:absolute;top:16px;right:16px;width:44px;height:44px;border:none;background:rgba(0,0,0,.04);border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--soft);transition:all .2s;z-index:998" onmouseover="this.style.background='rgba(0,0,0,.08)'" onmouseout="this.style.background='rgba(0,0,0,.04)'">✕</button>
+    <button class="nav-close-btn" id="navCloseBtn" aria-label="关闭菜单" style="display:none;position:absolute;top:16px;right:16px;width:44px;height:44px;border:none;background:rgba(0,0,0,.04);border-radius:12px;cursor:pointer;align-items:center;justify-content:center;font-size:22px;color:var(--soft);transition:all .2s;z-index:998" onmouseover="this.style.background='rgba(0,0,0,.08)'" onmouseout="this.style.background='rgba(0,0,0,.04)'">✕</button>
     <a href="#services" class="nav-link">疗愈服务</a>
     <a href="#portfolio" class="nav-link">项目案例</a>
     <a href="#methodology" class="nav-link">方法理念</a>
     <a href="#about" class="nav-link">关于 C³ System</a>
     <a href="knowledge-tools.html" class="nav-link">知识库</a>
-    <a href="knowledge-tools.html#tools" class="nav-link">工具</a>
-    <a href="#contact" class="nav-link">联系</a>
+    <a href="#faq" class="nav-link">问答中心</a>
     <a href="#contact" class="nav-cta">预约咨询</a>
   </div>
   <button class="nav-mobile-btn" id="mobileBtn" aria-label="菜单">
@@ -448,7 +517,7 @@
   <div class="nav-dot" data-section="sdg"><span class="tooltip">SDG</span></div>
   <div class="nav-dot" data-section="testimonials"><span class="tooltip">合作反馈</span></div>
   <div class="nav-dot" data-section="faq"><span class="tooltip">常见问题</span></div>
-  <div class="nav-dot" data-section="contact"><span class="tooltip">联系</span></div>
+  <div class="nav-dot" data-section="contact"><span class="tooltip">问答中心</span></div>
 </div>
 
 <!-- ==================== HERO ==================== -->
@@ -783,14 +852,14 @@
     </div>
 
     <!-- Confidentiality & Ethics -->
-    <div class="reveal" style="margin-top:56px;padding:36px 40px;border-radius:20px;background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);border:1px solid rgba(91,168,156,0.1);position:relative;overflow:hidden">
+    <div class="confidential-box reveal" style="margin-top:56px;padding:36px 40px;border-radius:20px;background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);border:1px solid rgba(91,168,156,0.1);position:relative;overflow:hidden">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--lavender),var(--coral));border-radius:20px 20px 0 0"></div>
       <div style="display:flex;align-items:flex-start;gap:20px">
         <div style="width:52px;height:52px;border-radius:16px;background:rgba(91,168,156,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:26px">🛡️</div>
         <div>
           <h3 style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;margin-bottom:10px;color:var(--deep)">保密承诺与职业伦理</h3>
           <p style="font-size:14px;color:var(--soft);line-height:1.9;margin-bottom:14px">所有疗愈服务均严格遵守<strong style="color:var(--deep)">心理咨询职业伦理规范</strong>与<strong style="color:var(--deep)">《中华人民共和国个人信息保护法》</strong>要求。服务启动前，将与委托方签署正式保密协议（NDA），明确以下条款：</p>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px 24px">
+          <div class="confidential-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px 24px">
             <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--soft);line-height:1.7">
               <span style="color:var(--teal);font-weight:700;flex-shrink:0">①</span>
               <span><strong style="color:var(--deep)">身份信息保密</strong>：参与者的姓名、职位、联系方式等个人身份信息绝不对外披露</span>
@@ -950,7 +1019,7 @@
         <h3><span class="accent">C³ · UNI Healer</span> · <span style="color:var(--soft);font-weight:600;font-size:.85em">彦旭 (L)</span></h3>
         <p><strong>C³ System 创始人</strong>，跨学科疗愈设计师，致力于将<strong>用户体验设计思维</strong>与<strong>心理健康实践</strong>深度融合。拥有伦敦艺术大学用户体验设计硕士学位和联合国国际疗愈师资格认证，具备从学术研究到项目落地的全链路能力。</p>
         <p>C³ System 是一套以循证方法为核心的跨学科疗愈体系，汇聚具有专业资质的疗愈师团队。根据不同项目需求，匹配最合适的疗愈师——涵盖<strong>颂钵疗愈、自然疗愈、艺术疗愈、正念冥想</strong>等领域，确保每一位服务对象获得专业、有针对性的疗愈支持。</p>
-        <p>曾在英国<strong>宇宙之家 Cosmic House</strong>担任文化讲解与体验引导，参与<strong>Stby Studio</strong>全球服务设计工作坊、<strong>AXA Health</strong>社区孤独干预项目、<strong>Glass-House</strong>城市空间女性议题共创等国际项目。自主开发潜意识投射卡牌疗愈工具，策划主持心流绘画冥想工作坊，具备丰富的跨文化、跨社群共创经验。</p>
+        <p>曾在英国首个列入一级保护的后现代主义建筑遗产空间 <strong>Cosmic House（宇宙之家）</strong>，担任文化讲解与体验引导工作，参与<strong>Stby Studio</strong>全球服务设计工作坊、<strong>AXA Health</strong>社区孤独干预项目、<strong>Glass-House</strong>城市空间女性议题共创等国际项目。自主开发潜意识投射卡牌疗愈工具，策划主持心流绘画冥想工作坊，具备丰富的跨文化、跨社群共创经验。</p>
 
         <div class="about-stats">
           <div class="stat-card">
@@ -1013,19 +1082,19 @@
           <div class="element-card-icon" style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:rgba(91,168,156,0.1)">🏛️</div>
           <h3 style="font-size:16px;font-weight:700;margin-bottom:4px;font-family:'Noto Serif SC',serif">宇宙之家 Cosmic House</h3>
           <p style="font-size:12px;color:var(--teal);font-weight:500;margin-bottom:10px">文化讲解 × 体验引导 · 伦敦 · 2024-2025</p>
-          <p style="font-size:13px;color:var(--soft);line-height:1.7">在英国最具代表性的非物质文化建筑空间担任文化讲解与体验引导，积累空间策展、叙事化导览、人群互动与象征性转译的实践经验。</p>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7">曾在英国标志性建筑遗产博物馆空间 Cosmic House（宇宙之家）担任文化讲解与体验引导，深耕空间体验设计、沉浸式文化叙事、公众互动交流，沉淀了建筑空间疗愈感知、场景化导览与人文文化转译的实战经验。</p>
         </div>
         <div class="element-card reveal" style="padding:28px;border-radius:18px;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,0.04);transition:transform .3s,box-shadow .3s;cursor:default">
           <div class="element-card-icon" style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:rgba(217,122,106,0.1)">🃏</div>
           <h3 style="font-size:16px;font-weight:700;margin-bottom:4px;font-family:'Noto Serif SC',serif">潜意识投射卡牌</h3>
           <p style="font-size:12px;color:var(--coral);font-weight:500;margin-bottom:10px">艺术疗愈工具开发 · 伦敦 · 2024-2025</p>
-          <p style="font-size:13px;color:var(--soft);line-height:1.7">自主设计基于"非逻辑思维×图像投射×自我探索"的潜意识疗愈卡牌系统，融合视觉语言构建、情绪映射与共感式提问机制。</p>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7">原创研发图像智系统，依托图像投射×内在感知×创作探索核心逻辑，搭建潜意识投射卡牌艺术疗愈体系；融合 UXD 设计方法论，以视觉语言建构、情绪意象映射为路径，建立非语言互动模式与共感式内在表达机制。</p>
         </div>
         <div class="element-card reveal" style="padding:28px;border-radius:18px;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,0.04);transition:transform .3s,box-shadow .3s;cursor:default">
           <div class="element-card-icon" style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:rgba(150,123,165,0.1)">🌱</div>
-          <h3 style="font-size:16px;font-weight:700;margin-bottom:4px;font-family:'Noto Serif SC',serif">《Root》服务设计工作坊</h3>
+          <h3 style="font-size:16px;font-weight:700;margin-bottom:4px;font-family:'Noto Serif SC',serif">Stby Studio 全球服务设计工作坊</h3>
           <p style="font-size:12px;color:var(--lavender);font-weight:500;margin-bottom:10px">Stby Studio · 伦敦 · 2024</p>
-          <p style="font-size:13px;color:var(--soft);line-height:1.7">参与以"跨代沟通与家庭记忆"为主题的48小时服务设计项目，聚焦亲密关系中的非语言沟通与敏感性用户研究。</p>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7">参与 Root「跨代沟通与家庭记忆」48 小时服务设计项目，聚焦亲密关系里的非语言沟通逻辑，深耕敏感性用户研究与代际情感隐性表达洞察。</p>
         </div>
         <div class="element-card reveal" style="padding:28px;border-radius:18px;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,0.04);transition:transform .3s,box-shadow .3s;cursor:default">
           <div class="element-card-icon" style="width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:rgba(184,152,64,0.12)">🤝</div>
@@ -1094,78 +1163,78 @@
       <h2 class="section-title">合作反馈</h2>
       <p class="section-subtitle">来自不同领域合作伙伴的真实评价</p>
     </div>
-    <div class="reveal" style="position:relative;overflow:hidden">
-      <div id="testimonialTrack" style="display:flex;gap:24px;transition:transform .5s cubic-bezier(.4,0,.2,1)">
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"第一次参加艺术疗愈工作坊，本来很紧张，但那个氛围让我完全放松下来了。画画的时候突然就哭了，但不是难过，是终于被看见了。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--sage));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">L</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">工作坊参与者</p><p style="font-size:11px;color:var(--soft)">企业员工 · 艺术疗愈体验</p></div>
+    <div class="reveal" style="position:relative;overflow:hidden;padding-bottom:4px;margin-bottom:-4px">
+      <div id="testimonialTrack" style="display:flex;gap:16px;transition:transform .5s cubic-bezier(.4,0,.2,1)">
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★★</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"第一次参加潜意识投射卡牌工作坊，翻开那张卡的时候愣住了——画面里那个蜷缩的人就是我自己。那一刻突然理解了很多说不清的情绪。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--sage));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">L</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">工作坊参与者</p><p style="font-size:11px;color:var(--soft)">企业员工 · 潜意识卡牌体验</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"工作坊中学到的心理急救技巧真的很实用，后来在社区服务中用上了。不是那种空洞的理论，而是真正能落地的操作方法。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">H</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">社区志愿者</p><p style="font-size:11px;color:var(--soft)">公益服务 · 灾后心理援助工作坊</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★☆</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"心流绘画冥想工作坊的体验很特别，闭着眼睛画画反而画出了自己都没意识到的画面。引导师说这叫'潜意识书写'，我觉得挺有道理的。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">H</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">自由职业者</p><p style="font-size:11px;color:var(--soft)">个人成长 · 心流绘画工作坊</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"8周正念体验结束后，我失眠的问题真的改善了很多。身体扫描练习现在成了我每晚的睡前习惯，终于能睡个好觉了。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--lavender),var(--plum));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">Z</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">体验参与者</p><p style="font-size:11px;color:var(--soft)">金融行业 · 正念减压MBSR</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★★</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"卡牌工作坊让我第一次用非语言的方式跟自己的内心对话。选卡、解读、再创作，整个过程像是在做一场深层的自我梳理。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--lavender),var(--plum));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">Z</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">心理咨询师</p><p style="font-size:11px;color:var(--soft)">专业进修 · 潜意识卡牌培训</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"我女儿参加完夏令营回来变化很大，以前不爱说话，现在会主动跟我分享她的画和感受。作为家长真的很欣慰。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--rose));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">W</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">学生家长</p><p style="font-size:11px;color:var(--soft)">CAP儿童心理援助 · 夏令营</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★☆</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"我女儿参加完艺术疗愈夏令营回来变化很大，以前不爱说话，现在会主动跟我分享她的画和感受。作为家长真的很欣慰。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--rose));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">W</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">学生家长</p><p style="font-size:11px;color:var(--soft)">CAP儿童心理援助 · 艺术疗愈夏令营</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"作为班主任，经常遇到学生情绪崩溃的情况。工作坊中学到的艺术疗愈引导方法，让我在班级里也能帮到孩子们。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--coral));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">M</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">小学班主任</p><p style="font-size:11px;color:var(--soft)">基础教育 · 教师心理工作坊</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★★</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"作为班主任，经常遇到学生情绪崩溃的情况。工作坊中学到的艺术疗愈引导方法，让我在班级里也能用绘画和卡牌帮到孩子们。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--coral));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">M</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">小学班主任</p><p style="font-size:11px;color:var(--soft)">基础教育 · 教师艺术疗愈工作坊</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"做了三年社工，第一次遇到把设计思维和个案工作结合的工作坊体验。学完之后回访服务对象的方式都变了，效果确实不一样。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--forest),var(--sage));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">C</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">一线社工</p><p style="font-size:11px;color:var(--soft)">社区服务 · 设计思维工作坊</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★☆</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"做了三年社工，第一次遇到把设计思维和艺术疗愈结合的工作坊。学完之后回访服务对象的方式都变了，用卡牌做破冰效果特别好。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--forest),var(--sage));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">C</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">一线社工</p><p style="font-size:11px;color:var(--soft)">社区服务 · 艺术疗愈×设计思维工作坊</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"自然疗愈那次体验太特别了，在花园里做正念行走，听着风声画画。好久没有那种完全放空的感觉了，像重新充了一次电。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--coral));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">S</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">自由职业者</p><p style="font-size:11px;color:var(--soft)">个人成长 · 自然疗愈体验</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★★</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"自然疗愈那次体验太特别了，在花园里做正念行走，然后用水彩记录当下的感受。好久没有那种完全放空的感觉了，像重新充了一次电。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--coral));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">S</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">设计师</p><p style="font-size:11px;color:var(--soft)">个人成长 · 自然艺术疗愈体验</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"跨文化工作坊让我意识到，很多情绪困扰其实和文化身份有关。通过艺术表达，我第一次认真思考了自己的文化根源。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--plum),var(--lavender));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">K</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">留学生</p><p style="font-size:11px;color:var(--soft)">跨文化适应 · 疗愈工作坊</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★☆</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"跨文化疗愈工作坊让我意识到，很多情绪困扰其实和文化身份有关。通过卡牌投射和艺术表达，我第一次认真梳理了自己的文化根源。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--plum),var(--lavender));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">K</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">留学生</p><p style="font-size:11px;color:var(--soft)">跨文化适应 · 卡牌疗愈工作坊</p></div>
           </div>
         </div>
-        <div style="min-width:calc(33.333% - 16px);padding:28px;border-radius:18px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
-          <div style="display:flex;gap:4px;margin-bottom:16px;color:var(--amber);font-size:16px">★★★★★</div>
-          <p style="font-size:14px;color:var(--soft);line-height:1.8;margin-bottom:20px;font-style:italic">"我们社区的老人们特别喜欢音乐疗愈活动，好几位奶奶说好久没这么开心了。看着他们跟着音乐拍手唱歌，真的很感动。"</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:auto">
-            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;flex-shrink:0">Q</div>
-            <div><p style="font-size:13px;font-weight:600;color:var(--deep)">社区工作者</p><p style="font-size:11px;color:var(--soft)">养老服务 · 音乐疗愈活动</p></div>
+        <div style="min-width:calc(33.333% - 11px);padding:20px;border-radius:16px;background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.04);flex-shrink:0">
+          <div style="display:flex;gap:3px;margin-bottom:12px;color:var(--amber);font-size:14px">★★★★★</div>
+          <p style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px;font-style:italic">"我们社区的老人们特别喜欢艺术疗愈活动，用卡牌讲故事、用色彩表达心情，好几位奶奶说好久没这么开心了。看着他们的作品真的很感动。"</p>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0">Q</div>
+            <div><p style="font-size:12px;font-weight:600;color:var(--deep)">社区工作者</p><p style="font-size:11px;color:var(--soft)">养老服务 · 艺术疗愈活动</p></div>
           </div>
         </div>
       </div>
@@ -1240,7 +1309,7 @@
           </div>
           <div class="form-group">
             <label>咨询类型</label>
-            <select name="consult_type" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:14px;color:var(--deep);transition:border-color .3s,box-shadow .3s;outline:none;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg width=\"12\" height=\"8\" viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"%235A5466\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>');background-repeat:no-repeat;background-position:right 16px center;cursor:pointer">
+            <select name="consult_type" required>
               <option value="" disabled selected style="color:#aaa">请选择咨询类型</option>
               <option value="疗愈服务预约">疗愈服务预约</option>
               <option value="艺术疗愈体验">艺术疗愈体验</option>
@@ -1260,17 +1329,18 @@
           <div class="form-group">
             <label>您的联系方式 <span style="font-weight:400;font-size:11px;color:var(--soft);margin-left:4px">优先推荐邮箱</span></label>
             <div style="display:flex;gap:8px">
-              <select id="contactMethod" style="flex-shrink:0;width:auto;min-width:80px;padding:12px 28px 12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:16px;color:var(--deep);outline:none;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg width=\"12\" height=\"8\" viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"%235A5466\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>');background-repeat:no-repeat;background-position:right 8px center;cursor:pointer">
+              <select id="contactMethod" style="flex-shrink:0;width:auto;min-width:80px;padding-right:28px;background-position:right 8px center">
                 <option value="邮箱">邮箱</option>
                 <option value="微信">微信</option>
                 <option value="电话">电话</option>
+                <option value="WhatsApp">WhatsApp</option>
               </select>
               <input type="text" id="contactValue" placeholder="请输入您的邮箱地址" style="flex:1;min-width:0">
             </div>
           </div>
           <div class="form-group">
             <label>期望预算范围</label>
-            <select name="budget" required style="width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.8);font-family:'Noto Sans SC',sans-serif;font-size:14px;color:var(--deep);transition:border-color .3s,box-shadow .3s;outline:none;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml;utf8,<svg width=\"12\" height=\"8\" viewBox=\"0 0 12 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1 1.5L6 6.5L11 1.5\" stroke=\"%235A5466\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>');background-repeat:no-repeat;background-position:right 16px center;cursor:pointer">
+            <select name="budget" required>
               <option value="" disabled selected style="color:#aaa">请选择预算范围</option>
               <option value="暂不确定，后续再沟通">暂不确定，后续再沟通</option>
               <option value="¥300 - ¥500">¥300 - ¥500</option>
@@ -1293,7 +1363,7 @@
 
     <!-- Tab 2: 日历预约 -->
     <div id="contactCalendarTab" class="reveal" style="display:none">
-      <div class="contact-form" style="max-width:100%;margin:0 auto 40px;text-align:center;padding:48px 36px">
+      <div class="contact-form calendar-box" style="max-width:100%;margin:0 auto 40px;text-align:center;padding:48px 36px">
         <div style="width:64px;height:64px;margin:0 auto 20px;border-radius:20px;background:linear-gradient(135deg,rgba(91,168,156,.1),rgba(123,174,143,.06));display:flex;align-items:center;justify-content:center">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="20" rx="4" stroke="#5BA898" stroke-width="1.5"/><path d="M4 14h24" stroke="#5BA898" stroke-width="1.5"/><path d="M10 6v4M22 6v4" stroke="#5BA898" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="21" r="2.5" fill="#5BA898" opacity=".4"/></svg>
         </div>
@@ -1329,8 +1399,7 @@
     <a href="#portfolio" class="footer-link">项目案例</a>
     <a href="#about" class="footer-link">关于 C³ System</a>
     <a href="knowledge-tools.html" class="footer-link">知识库</a>
-    <a href="knowledge-tools.html#tools" class="footer-link">工具</a>
-    <a href="#contact" class="footer-link">联系</a>
+    <a href="#faq" class="footer-link">问答中心</a>
   </div>
   <div class="footer-hearts">🌿 ✦ 🌿 ✦ 🌿</div>
   <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(0,0,0,.06);max-width:720px;margin-left:auto;margin-right:auto">
@@ -1455,10 +1524,10 @@ const catSVG = {
     <circle cx="155" cy="88" r="3" fill="${c1}" opacity=".15" class="svg-pulse" style="animation-delay:.4s;transform-origin:155px 88px"/>
   </svg>`,
   'eap': (c1,c2) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-    <rect x="30" y="25" width="55" height="70" rx="8" fill="${c1}" opacity=".08" stroke="${c1}" stroke-width="1" opacity=".2"/>
+    <rect x="30" y="25" width="55" height="70" rx="8" fill="${c1}" fill-opacity=".08" stroke="${c1}" stroke-width="1" stroke-opacity=".2"/>
     <rect x="38" y="35" width="20" height="3" rx="1.5" fill="${c1}" opacity=".25"/><rect x="38" y="43" width="38" height="2" rx="1" fill="${c1}" opacity=".15"/><rect x="38" y="50" width="32" height="2" rx="1" fill="${c1}" opacity=".12"/>
     <circle cx="50" cy="78" r="8" fill="${c2}" opacity=".1"/><circle cx="50" cy="78" r="4" fill="${c2}" opacity=".15"/>
-    <rect x="100" y="30" width="65" height="60" rx="8" fill="${c2}" opacity=".06" stroke="${c2}" stroke-width="1" opacity=".18"/>
+    <rect x="100" y="30" width="65" height="60" rx="8" fill="${c2}" fill-opacity=".06" stroke="${c2}" stroke-width="1" stroke-opacity=".18"/>
     <rect x="108" y="40" width="25" height="3" rx="1.5" fill="${c2}" opacity=".2"/><rect x="108" y="48" width="48" height="2" rx="1" fill="${c2}" opacity=".12"/><rect x="108" y="55" width="40" height="2" rx="1" fill="${c2}" opacity=".1"/>
     <path d="M120 75 L130 65 L140 75" stroke="${c1}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".3"/>
     <path d="M130 65 L130 82" stroke="${c1}" stroke-width="1.5" stroke-linecap="round" opacity=".3"/>
@@ -1529,7 +1598,7 @@ const catSVG = {
     <circle cx="155" cy="55" r="3" fill="${c1}" opacity=".15" class="svg-pulse" style="animation-delay:1.2s;transform-origin:155px 55px"/>
   </svg>`,
   'special': (c1,c2) => `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-    <polygon points="100,15 108,42 136,42 114,58 122,85 100,68 78,85 86,58 64,42 92,42" fill="${c1}" opacity=".08" stroke="${c1}" stroke-width="1" opacity=".15" class="svg-pulse" style="animation-delay:0s;transform-origin:100px 50px"/>
+    <polygon points="100,15 108,42 136,42 114,58 122,85 100,68 78,85 86,58 64,42 92,42" fill="${c1}" fill-opacity=".08" stroke="${c1}" stroke-width="1" stroke-opacity=".15" class="svg-pulse" style="animation-delay:0s;transform-origin:100px 50px"/>
     <circle cx="100" cy="50" r="25" fill="${c2}" opacity=".05"/>
     <circle cx="100" cy="50" r="15" fill="${c1}" opacity=".06"/>
     <circle cx="100" cy="50" r="5" fill="${c2}" opacity=".15"/>
@@ -1759,23 +1828,29 @@ function initMobileNav() {
 
   function openMenu() {
     scrollY.value = window.scrollY;
-    document.body.classList.add('menu-open');
     document.body.style.top = '-' + scrollY.value + 'px';
+    document.body.classList.add('menu-open');
     btn.classList.add('open');
     links.classList.add('open');
+    if (closeBtn) closeBtn.style.display = 'flex';
   }
 
-  function closeMenu() {
+  function closeMenu(restoreScroll) {
     document.body.classList.remove('menu-open');
     document.body.style.top = '';
-    window.scrollTo(0, scrollY.value);
+    if (closeBtn) closeBtn.style.display = 'none';
+    if (restoreScroll !== false) {
+      requestAnimationFrame(function() {
+        window.scrollTo(0, scrollY.value);
+      });
+    }
     btn.classList.remove('open');
     links.classList.remove('open');
   }
 
   btn.addEventListener('click', () => { btn.classList.contains('open') ? closeMenu() : openMenu(); });
   if (closeBtn) { closeBtn.addEventListener('click', closeMenu); }
-  links.querySelectorAll('.nav-link,.nav-cta').forEach(link => { link.addEventListener('click', closeMenu); });
+  links.querySelectorAll('.nav-link,.nav-cta').forEach(link => { link.addEventListener('click', function() { closeMenu(false); }); });
 }
 
 // ==================== Contact Form ====================
@@ -1792,7 +1867,8 @@ function initTestimonialCarousel() {
     if (index < 0) index = total - 1;
     if (index >= total) index = 0;
     current = index;
-    const cardWidth = track.children[0].offsetWidth + 24; // card width + gap
+    const gap = parseInt(getComputedStyle(track).gap) || 24;
+    const cardWidth = track.children[0].offsetWidth + gap;
     track.style.transform = `translateX(-${current * cardWidth}px)`;
     dots.forEach((d, i) => {
       d.style.background = i === current ? 'var(--rose)' : 'rgba(0,0,0,.12)';
@@ -1911,11 +1987,11 @@ function initLoadingScreen() {
 // ==================== FAQ Accordion ====================
 function initFAQ() {
   const faqData = [
-    {q: '如何预约疗愈服务？', a: '您可以通过本页的官方咨询表单提交需求，或发送邮件至 <a href="mailto:universenergy9767@outlook.com" style="color:var(--teal);text-decoration:underline">universenergy9767@outlook.com</a>，我们会尽快与您联系。初步沟通后，根据您的需求提供定制化方案建议。'},
-    {q: '疗愈方案的定制流程是怎样的？', a: '一般分为四个阶段：①需求调研（访谈/问卷）→②方案设计（框架+内容）→③工具开发（材料/引导语）→④落地执行与效果评估。通常需要2-4周完成方案设计。'},
-    {q: '服务报价大概是多少？', a: '报价根据服务类型、项目规模、交付周期和定制程度综合评估。建议在咨询表单中填写您的期望预算范围，这样我可以在初步沟通中给出更精准的方案与报价，避免双方时间浪费。'},
-    {q: '服务适用于哪些群体？', a: '服务覆盖企业员工、儿童与青少年、老年人、创业者、海外劳工、社区群体、医护护理人员及国际志愿者等多元人群。'},
-    {q: '是否提供线上服务？', a: '目前主要提供线下服务，面对面交流能带来更好的疗愈体验与互动效果。具体服务地点可根据项目需求协商确定。'},
+    {q: '如何预约疗愈服务？', a: '您可以通过本页的官方咨询表单提交需求，或发送邮件至 <a href="mailto:universenergy9767@outlook.com" style="color:var(--teal);text-decoration:underline">universenergy9767@outlook.com</a>，也可以直接点击页面中的"预约咨询"按钮，选择线上 15 分钟免费初步沟通时段（通过 Calendly 预约），我们会尽快与您联系。初步沟通后，根据您的需求提供定制化方案建议。'},
+    {q: '疗愈方案的定制流程是怎样的？', a: '服务分为四个阶段：① 用户调研与需求摸排（访谈+量表问卷）→ ② 疗愈方案框架设计与内容定制 → ③ 配套物料、疗愈产品及引导工具研发 → ④ 落地执行与效果复盘评估。方案设计常规周期 2–4 周，可根据项目档期灵活调整。'},
+    {q: '服务报价大概是多少？', a: '服务报价将根据服务类型、项目规模、交付周期及定制化程度综合评估而定。您可在咨询表单中填写大致期望预算范围，便于我在初次沟通时为您匹配更贴合需求的方案与报价，也能节省双方沟通时间、提升对接效率。'},
+    {q: '服务适用于哪些群体？', a: '服务适配企业团体、校园青少年、社区居民、创业人群、医护从业者、老年群体、海外务工及国际志愿群体等多元机构与社群。'},
+    {q: '是否提供线上服务？', a: '可提供线上服务，具体包含：个性化疗愈方案定制策划（含 EAP、CAP 等专项定制需求）、一对一专属心理个案咨询、线上潜意识投射卡牌艺术疗愈服务；目前业务仍以线下服务为核心，开设各类疗愈主题体验工作坊及团体互动活动，具体服务地点可根据项目实际需求协商确定。'},
     {q: '如何保障参与者的隐私？', a: '所有服务均签署保密协议（NDA），严格遵守心理咨询职业伦理规范与《个人信息保护法》，具体条款请参阅"保密承诺与职业伦理"板块。'}
   ];
   const faqList = document.getElementById('faqList');
@@ -1943,10 +2019,57 @@ function initFAQ() {
 </script>
 
 <script>
+// Portfolio Detail Modal
+window.showPortfolioDetail = function(id) {
+  var item = typeof portfolioData !== 'undefined' ? portfolioData.find(function(p) { return p.id === id; }) : null;
+  if (!item) return;
+
+  var colorMap = {
+    c1: {bg:'rgba(91,168,156,.1)',text:'#5BA898'},
+    c2: {bg:'rgba(196,120,136,.1)',text:'#C47888'},
+    c3: {bg:'rgba(156,136,196,.1)',text:'#9C88C4'},
+    c4: {bg:'rgba(222,170,100,.1)',text:'#DEAA64'},
+    c5: {bg:'rgba(100,149,196,.1)',text:'#6495C4'},
+    c6: {bg:'rgba(90,84,102,.1)',text:'#5A5466'},
+    c7: {bg:'rgba(196,120,136,.1)',text:'#C47888'},
+    c8: {bg:'rgba(91,138,110,.1)',text:'#5B8A6E'},
+    c9: {bg:'rgba(123,174,143,.1)',text:'#7BAE8F'},
+    c10:{bg:'rgba(120,100,160,.1)',text:'#7864A0'}
+  };
+  var c = colorMap[item.color] || colorMap.c1;
+
+  document.getElementById('detailCat').textContent = item.catLabel;
+  document.getElementById('detailCat').style.color = c.text;
+  document.getElementById('detailTitle').textContent = item.title;
+  document.getElementById('detailDesc').textContent = item.desc;
+  document.getElementById('detailTags').innerHTML = item.tags.map(function(t) {
+    return '<span class="portfolio-card-tag" style="background:' + c.bg + ';color:' + c.text + '">' + t + '</span>';
+  }).join('');
+
+  document.getElementById('detailModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeDetailModal = function() {
+  document.getElementById('detailModal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+// 为 testimonial 卡片添加响应式 class
+document.querySelectorAll('#testimonialTrack>div').forEach(function(card){
+  var stars=card.querySelector('div[style*="font-size:14px"]');
+  if(stars) stars.classList.add('t-card-stars');
+  card.querySelectorAll('p').forEach(function(p){
+    if(p.style.fontStyle==='italic') p.classList.add('t-card-quote');
+    else if(p.style.fontWeight==='600') p.classList.add('t-card-name');
+    else if(p.style.fontSize==='11px') p.classList.add('t-card-role');
+  });
+});
+
 // 联系方式类型切换
 document.getElementById('contactMethod').addEventListener('change', function(){
   var input = document.getElementById('contactValue');
-  var placeholders = { '邮箱': '请输入您的邮箱地址', '微信': '请输入您的微信号', '电话': '请输入您的手机号码' };
+  var placeholders = { '邮箱': '请输入您的邮箱地址', '微信': '请输入您的微信号', '电话': '请输入您的手机号码', 'WhatsApp': '请输入您的 WhatsApp 号码' };
   input.placeholder = placeholders[this.value] || '请输入联系方式';
 });
 
@@ -1972,5 +2095,18 @@ window.showContactTab = function(tab){
   }
 };
 </script>
+<!-- Portfolio Detail Modal -->
+<div class="detail-modal" id="detailModal">
+  <div class="detail-overlay" onclick="closeDetailModal()"></div>
+  <div class="detail-content">
+    <button class="detail-close" onclick="closeDetailModal()">✕</button>
+    <div class="detail-cat" id="detailCat"></div>
+    <h3 class="detail-title" id="detailTitle"></h3>
+    <p class="detail-desc" id="detailDesc"></p>
+    <div class="detail-tags" id="detailTags"></div>
+    <a href="#contact" class="detail-cta" onclick="closeDetailModal()">咨询此方案</a>
+  </div>
+</div>
+
 </body>
 </html>
